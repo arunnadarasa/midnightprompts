@@ -40,6 +40,14 @@ function SiteHeader() {
             Hackathon ↗
           </a>
           <a
+            href="https://devcon.org/en/"
+            target="_blank"
+            rel="noreferrer"
+            className="ml-2 px-3 py-2 border border-border text-foreground text-[10px] font-semibold tracking-[0.28em] uppercase hover:border-primary/60 hover:text-primary transition-colors duration-500"
+          >
+            Devcon 8 ↗
+          </a>
+          <a
             href="https://sepolia.etherscan.io/"
             target="_blank"
             rel="noreferrer"
@@ -74,6 +82,15 @@ function SiteHeader() {
                 className="mt-3 px-4 py-3 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
               >
                 Hackathon ↗
+              </a>
+              <a
+                href="https://devcon.org/en/"
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+                className="mt-2 px-4 py-3 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+              >
+                Devcon 8 ↗
               </a>
               <a
                 href="https://sepolia.etherscan.io/"
