@@ -84,6 +84,15 @@ function SiteHeader() {
                 Hackathon ↗
               </a>
               <a
+                href="https://devcon.org/en/"
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+                className="mt-2 px-4 py-3 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+              >
+                Devcon 8 ↗
+              </a>
+              <a
                 href="https://sepolia.etherscan.io/"
                 target="_blank"
                 rel="noreferrer"
