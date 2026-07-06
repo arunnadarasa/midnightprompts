@@ -1,30 +1,37 @@
-# Mobile UX pass
 
-Screenshot shows the mega-prompt `<pre>` block on `/ideas/:id` blowing past the viewport — long unbreakable URLs (`https://sepolia.etherscan.io/address/<addre…`) push horizontal scroll on the whole page. Same pattern in `strategy.tsx`.
+## Goal
 
-## Fixes
+Make "Log on Sepolia" a truly gas-sponsored transaction — no fee shown, and (optionally) no Privy approval sheet.
 
-1. **`<pre>` overflow** — `src/routes/ideas.$id.tsx` and `src/routes/strategy.tsx`
-   - Add `break-words [overflow-wrap:anywhere]` to every `<pre className="whitespace-pre-wrap …">`. Long URLs and CIDs will wrap instead of pushing the page wide.
-   - Tighten mobile padding: `p-4 sm:p-6` (currently `p-6 sm:p-8` / `p-5`).
-   - Drop mobile font to `text-[12px]` so wrapped lines stay readable.
+## Root cause
 
-2. **Page horizontal containment**
-   - Add `overflow-x-hidden` to `<main>` in `src/components/site-shell.tsx` as a safety net so a single misbehaving child can't shift the whole page.
+`src/components/privy-client-entry.tsx` calls `sendTransaction(tx, { address })` without `sponsor: true`. Privy's native gas sponsorship (App pays) is a per-call opt-in — the flag is missing, so Privy treats it as a user-paid tx and shows the approval sheet with a fee.
 
-3. **Showcase demo input** — `src/routes/showcase.choreo-ledger.tsx`
-   - Address line + tx-hash links: already `break-all` for the contract address; apply the same to the feed entry CID column (`break-all` on the `font-mono` cell) so long CIDs wrap.
-   - Submit input: `text-[13px]` on mobile so a typed CID fits.
+Sepolia is fully supported by Privy's native sponsorship — no ZeroDev / smart wallets required.
 
-4. **Header** — `src/components/site-shell.tsx`
-   - The "Vol. 01" eyebrow + long title can crowd the burger on small screens. Hide the eyebrow below `sm` (already `hidden sm:inline` — keep). Shrink title to `text-lg` on the smallest widths to give the burger button breathing room.
+## Steps
 
-5. **Idea card grids** — verify `min-w-0` is present on flex children that hold long titles; add where missing in `src/components/idea-card.tsx` if a long title would push the badge.
+1. **Dashboard (user, one-time)** — I'll spell this out in the reply:
+   - Privy Dashboard → Gas sponsorship → **App pays** → add **Ethereum Sepolia** to the sponsored chains → toggle **Allow transactions from the client** ON. (Requires the app to be on TEE execution, which is the current Privy default.)
+
+2. **`src/components/privy-client-entry.tsx`** — one-line change: pass `sponsor: true` in the `sendTransaction` options:
+   ```ts
+   sendTransaction(
+     { to: contractCfg.address, data, chainId: contractCfg.chainId },
+     { address: embedded.address, uiOptions: { showWalletUIs: false } }
+   )
+   ```
+   Add `sponsor: true` alongside `address`. Also set `uiOptions.showWalletUIs: false` so the approval sheet is skipped entirely — with sponsorship on and no value transfer this is safe for the demo. If Privy rejects the flag on this SDK version we keep the sheet but the fee will read $0.
+
+3. No changes anywhere else — contract, route, ledger feed, UI copy stay as-is.
 
 ## Out of scope
 
-- No redesign, no palette/type changes.
-- No new routes or components.
-- No backend changes.
+- No ZeroDev / smart wallets.
+- No new npm packages, no new secrets.
+- No changes to other routes.
 
-Five small file edits, then a Playwright check at 390px to confirm no horizontal scroll on `/ideas/:id`, `/strategy`, `/showcase/choreo-ledger`.
+## Verification
+
+- Sign in → tap "Log on Sepolia" → tx is submitted with no fee dialog (or a $0 fee dialog if `showWalletUIs` is unsupported), returns a hash, and appears in the ledger feed.
+- Etherscan shows `From = embedded wallet`, gas paid by Privy's sponsor account.

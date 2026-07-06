@@ -55,7 +55,11 @@ function Bridge({ children }: { children: ReactNode }) {
             data,
             chainId: contractCfg.chainId,
           },
-          { address: embedded.address }
+          {
+            address: embedded.address,
+            sponsor: true,
+            uiOptions: { showWalletUIs: false },
+          } as never
         );
         return receipt.hash as Hex;
       },
