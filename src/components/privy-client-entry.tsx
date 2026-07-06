@@ -49,18 +49,27 @@ function Bridge({ children }: { children: ReactNode }) {
       logCid: async (cid: string) => {
         if (!embedded) throw new Error("Embedded wallet not ready");
         const data = encodeFunctionData({ abi: ABI, functionName: "log", args: [cid] });
-        const receipt = await sendTransaction(
-          {
-            to: contractCfg.address as Hex,
-            data,
-            chainId: contractCfg.chainId,
-          },
-          {
-            address: embedded.address,
-            sponsor: true,
-            uiOptions: { showWalletUIs: false },
-          } as never
-        );
+        const receipt = await Promise.race([
+          sendTransaction(
+            {
+              to: contractCfg.address as Hex,
+              data,
+              chainId: contractCfg.chainId,
+            },
+            { address: embedded.address, sponsor: true } as never
+          ),
+          new Promise<never>((_, reject) =>
+            setTimeout(
+              () =>
+                reject(
+                  new Error(
+                    "Privy sendTransaction timed out after 45s. In the Privy dashboard, enable Gas sponsorship → App pays → Ethereum Sepolia and turn on 'Allow transactions from the client'."
+                  )
+                ),
+              45_000
+            )
+          ),
+        ]);
         return receipt.hash as Hex;
       },
     }),
