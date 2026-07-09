@@ -1,0 +1,14 @@
+{
+  "network": "Midnight Preview Testnet",
+  "networkId": "preview",
+  "compactVersion": "0.23",
+  "sdkVersion": "4.1.1",
+  "proofServerVersion": "8.1.0",
+  "address": "0000000000000000000000000000000000000000000000000000000000000000",
+  "deployTx": null,
+  "explorer": "https://preview.midnightexplorer.com",
+  "indexerHttp": "https://indexer.preview.midnight.network/api/v4/graphql",
+  "indexerWs": "wss://indexer.preview.midnight.network/api/v4/graphql/ws",
+  "faucet": "https://midnight-tmnight-preview.nethermind.dev/",
+  "note": "Contract address populates the moment we deploy the sandbox-compiled TimestampLog contract. Until then the showcase runs in read-only Indexer mode."
+}

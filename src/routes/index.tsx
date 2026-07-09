@@ -6,10 +6,10 @@ import { THEMES, ALL_IDEAS, HOOKS } from "@/data/ideas";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Creative Blockchain — 1,000 web3 hackathon ideas for Lovable" },
-      { name: "description", content: "A browseable repo of 1,000 mega-prompts that wire MetaMask, Sepolia, Etherscan, Privy and Pinata into ten creative disciplines. Built during the Creative AI & Quantum Hackathon." },
-      { property: "og:title", content: "Creative Blockchain — 1,000 web3 hackathon ideas" },
-      { property: "og:description", content: "Mega-prompts + onchain primitives across 10 creative disciplines, ready to paste into Lovable." },
+      { title: "Creative Midnight — 1,000 ZK hackathon ideas for Lovable" },
+      { name: "description", content: "A browseable repo of 1,000 mega-prompts pairing ten creative disciplines with Midnight's private-by-default ZK primitives: Compact contracts, Lace wallet, private witnesses, and IPFS content. Built during the Creative AI & Quantum Hackathon." },
+      { property: "og:title", content: "Creative Midnight — 1,000 ZK hackathon ideas" },
+      { property: "og:description", content: "Mega-prompts + Compact ZK primitives across 10 creative disciplines, ready to paste into Lovable." },
     ],
   }),
   component: Index,
@@ -24,14 +24,15 @@ function Index() {
       <section className="max-w-7xl mx-auto px-5 sm:px-8 pt-12 sm:pt-24 pb-12 sm:pb-20 animate-fade-in">
         <header className="flex flex-col lg:flex-row justify-between items-start lg:items-end border-b border-border pb-10 lg:pb-12 gap-8">
           <div className="max-w-3xl">
-            <span className="eyebrow block mb-6">Collection No. 01 — 1,000 Blockchain Ideas</span>
+            <span className="eyebrow block mb-6">Collection No. 01 — 1,000 Midnight Ideas</span>
             <h1 className="font-display text-[clamp(3.25rem,9vw,8.5rem)] leading-[0.92] tracking-tight text-foreground">
-              Creative <span className="italic text-primary">Blockchain</span>
+              Creative <span className="italic text-primary">Midnight</span>
             </h1>
             <p className="mt-8 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed font-light">
               One thousand conceptual threads where the world's creative
-              disciplines meet a verifiable onchain primitive — MetaMask on
-              Sepolia, Etherscan, Privy sign-in, Pinata IPFS — each one ready
+              disciplines meet a private ZK primitive — Compact smart contracts
+              on Midnight, the Lace wallet, private witnesses that never leave
+              the browser, and IPFS-committed provenance — each one ready
               to ship in a single Lovable build.
             </p>
           </div>
@@ -43,19 +44,18 @@ function Index() {
               Browse the Index
             </Link>
             <a
-              href="https://cloud.google.com/application/web3/faucet/ethereum/sepolia"
+              href="https://midnight-tmnight-preview.nethermind.dev/"
               target="_blank"
               rel="noreferrer"
               className="px-6 py-3 bg-primary text-primary-foreground hover:bg-foreground transition-colors duration-500"
             >
-              Sepolia Faucet ↗
+              tDUST Faucet ↗
             </a>
           </div>
         </header>
 
         {/* BENTO — primary repository grid */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-4 auto-rows-[260px] gap-4 md:gap-5">
-          {/* Feature tile */}
           <Link
             to="/ideas/$id"
             params={{ id: featured.id }}
@@ -79,7 +79,6 @@ function Index() {
             </div>
           </Link>
 
-          {/* Portrait tile */}
           <Link
             to="/ideas/$id"
             params={{ id: portrait.id }}
@@ -99,24 +98,22 @@ function Index() {
             </div>
           </Link>
 
-          {/* Gold stat tile */}
           <div className="bg-primary text-primary-foreground p-8 flex flex-col justify-center items-center text-center relative overflow-hidden">
             <span className="font-display text-7xl italic leading-none">1k</span>
             <span className="eyebrow text-primary-foreground/80 mt-3" style={{ color: "var(--color-primary-foreground)", opacity: 0.85 }}>
-              Onchain Entries
+              ZK Entries
             </span>
           </div>
 
-          {/* Detail tile */}
           <Link
             to="/quantum-primer"
             className="group bg-card border border-border p-7 flex flex-col justify-between hover:border-primary/50 transition-colors duration-500"
           >
             <span className="eyebrow">Section II</span>
             <div>
-              <h3 className="font-display text-2xl leading-tight text-foreground italic">Four onchain primitives.</h3>
+              <h3 className="font-display text-2xl leading-tight text-foreground italic">Four Midnight primitives.</h3>
               <p className="text-[11px] text-muted-foreground leading-relaxed mt-3 font-light">
-                Sepolia deploys, IPFS pins, Privy sign-in, ERC-721 provenance — the four kernels every entry leans on.
+                Compact contract deploys, private witnesses, Lace wallet + tDUST, and IPFS content commits — the four kernels every entry leans on.
               </p>
             </div>
             <div className="flex gap-1">
@@ -127,7 +124,6 @@ function Index() {
             </div>
           </Link>
 
-          {/* Wide tile */}
           <Link
             to="/strategy"
             className="md:col-span-2 group relative bg-background border border-primary/30 p-8 sm:p-10 flex items-center justify-between gap-6 hover:border-primary transition-colors duration-500"
@@ -136,7 +132,7 @@ function Index() {
               <span className="eyebrow">Appendix · Build Strategy</span>
               <h3 className="font-display text-2xl sm:text-3xl mt-3 text-foreground">The Five-Secret Protocol</h3>
               <p className="text-sm text-muted-foreground mt-2 font-light leading-relaxed">
-                Five secrets, one Lovable build, every contract verified on Etherscan.
+                Five secrets, one Lovable build, every contract provable on Midnight preview.
               </p>
             </div>
             <span className="w-12 h-12 shrink-0 rounded-full border border-primary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500">
@@ -144,11 +140,10 @@ function Index() {
             </span>
           </Link>
 
-          {/* Final tile */}
           <div className="bg-card border border-border p-7">
             <div className="h-full border-l border-primary/30 pl-5 flex flex-col justify-center">
               <span className="eyebrow mb-2">Status</span>
-              <p className="font-display text-2xl italic text-foreground leading-tight">Live on Sepolia.</p>
+              <p className="font-display text-2xl italic text-foreground leading-tight">Live on Midnight preview.</p>
             </div>
           </div>
         </div>
@@ -158,7 +153,7 @@ function Index() {
         <div className="flex items-end justify-between mb-10 gap-6 flex-wrap">
           <div>
             <span className="eyebrow block mb-3">Chapter I · Disciplines</span>
-            <h2 className="font-display text-4xl sm:text-5xl text-foreground italic">Ten houses, one chain.</h2>
+            <h2 className="font-display text-4xl sm:text-5xl text-foreground italic">Ten houses, one private chain.</h2>
           </div>
           <Link to="/themes" className="story-gold text-sm tracking-[0.24em] uppercase text-primary">See full index →</Link>
         </div>
@@ -213,11 +208,11 @@ function Index() {
         <h2 className="font-display text-4xl sm:text-5xl text-foreground italic max-w-2xl">Three movements, ten minutes.</h2>
         <ol className="mt-10 grid md:grid-cols-3 gap-px bg-border">
           <Step n={1} title="Choose a house" body="Skim ten disciplines. Open the one that suits your team." />
-          <Step n={2} title="Read an entry" body="Pitch, onchain primitive, plain-language proposition, market sizing." />
-          <Step n={3} title="Copy the mega-prompt" body="Add five secrets, paste into Lovable, deploy to Sepolia. Ship." />
+          <Step n={2} title="Read an entry" body="Pitch, ZK primitive, plain-language proposition, market sizing." />
+          <Step n={3} title="Copy the mega-prompt" body="Add five secrets, paste into Lovable, deploy to Midnight preview. Ship." />
         </ol>
         <p className="mt-10 eyebrow text-muted-foreground">
-          {ALL_IDEAS.length.toLocaleString()} entries indexed · zero backend · ready to publish onchain
+          {ALL_IDEAS.length.toLocaleString()} entries indexed · zero backend · ready to prove on Midnight
         </p>
       </section>
     </SiteShell>
