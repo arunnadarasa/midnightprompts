@@ -43,7 +43,7 @@ SECRETS = """REQUIRED SECRETS (Lovable → Project Settings → Secrets):
 - VITE_PROOF_SERVER_URL     http://localhost:6300   (run `docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`)
 - VITE_DEFAULT_CONTRACT     the hex address printed by your first deploy — paste it here so users skip the deploy step
 
-Faucet:  https://faucet.preprod.midnight.network/  (tDUST — pays proof / balance fees)
+Faucet:  https://cloud.google.com/application/web3/faucet/midnight/testnet  (tDUST — pays proof / balance fees)
 Explorer: https://preview.midnightexplorer.com/
 Docs:    https://docs.midnight.network/llms-full.txt"""
 

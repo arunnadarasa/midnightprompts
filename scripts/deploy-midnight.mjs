@@ -48,7 +48,7 @@ const INDEXER_WS =
   "wss://indexer.preprod.midnight.network/api/v4/graphql/ws";
 const NODE_RPC = process.env.VITE_NODE_RPC ?? "https://rpc.preprod.midnight.network";
 const PROOF_SERVER = process.env.VITE_PROOF_SERVER_URL ?? "http://localhost:6300";
-const FAUCET = "https://faucet.preprod.midnight.network/";
+const FAUCET = "https://cloud.google.com/application/web3/faucet/midnight/testnet";
 const EXPLORER = "https://preprod.midnightexplorer.com";
 
 function log(...a) {

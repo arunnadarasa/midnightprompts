@@ -4,7 +4,7 @@ Goal: sign the deploy with a fresh Midnight wallet generated inside the Lovable 
 
 ## The address you'll fund
 
-A brand-new 24-word mnemonic is generated on first run of the deploy script. From it the script derives the **Midnight shielded address** (`mn_shield-…preview1…`). That address is the only thing that needs tDUST — paste it into https://faucet.preprod.midnight.network/ (drips ~1000 tDUST in ~30s). Deploy needs roughly 1 tDUST.
+A brand-new 24-word mnemonic is generated on first run of the deploy script. From it the script derives the **Midnight shielded address** (`mn_shield-…preview1…`). That address is the only thing that needs tDUST — paste it into https://cloud.google.com/application/web3/faucet/midnight/testnet (drips ~1000 tDUST in ~30s). Deploy needs roughly 1 tDUST.
 
 There is no separate Ethereum-style "deployer EOA" — the same shielded address is both the funder and the contract's initial owner witness.
 
