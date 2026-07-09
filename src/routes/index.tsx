@@ -8,8 +8,8 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "Creative Midnight — 1,000 ZK hackathon ideas for Lovable" },
       { name: "description", content: "A browseable repo of 1,000 mega-prompts pairing ten creative disciplines with Midnight's private-by-default ZK primitives: Compact contracts, Lace wallet, private witnesses, and IPFS content. Built during the Creative AI & Quantum Hackathon." },
-      { property: "og:title", content: "Creative Midnight — 1,000 ZK hackathon ideas" },
-      { property: "og:description", content: "Mega-prompts + Compact ZK primitives across 10 creative disciplines, ready to paste into Lovable." },
+      { property: "og:title", content: "Creative Midnight — 1,000 ZK hackathon ideas for Lovable" },
+      { property: "og:description", content: "A browseable repo of 1,000 mega-prompts pairing ten creative disciplines with Midnight's private-by-default ZK primitives: Compact contracts, Lace wallet, private witnesses, and IPFS content. Built during the Creative AI & Quantum Hackathon." },
     ],
   }),
   component: Index,
