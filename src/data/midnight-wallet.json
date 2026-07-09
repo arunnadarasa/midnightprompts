@@ -1,6 +1,6 @@
 {
   "network": "preprod",
-  "address": "mn_shield-addr_test1p80250rdclndzgl0586dwwpp93393th3cywm9ulzc565cads9l8qxq9kfs2lr7q2z2qdd388pfclys3qhpymtzpsu9dcnajet9al3wew05ls7x0p2klmnxl8y4ku57pd3wy6myg9urjsdrc0hu70m4",
-  "createdAt": "2026-07-09T10:51:04.551Z",
+  "address": "mn_shield-addr_test1mw3knwt3zv7enpau0rpejtr6l7advkaqxdqpvk05hmcwh56lnchqxqrwhee8k7vmpk7r896mpgc6pevugxa4k3ma85jn35t05grphmsraw5zgxs0c28dtjfrn7xz2yucwhh7zna9ftqse9y978n8jf",
+  "createdAt": "2026-07-09T10:51:18.440Z",
   "faucet": "https://cloud.google.com/application/web3/faucet/midnight/testnet"
 }
