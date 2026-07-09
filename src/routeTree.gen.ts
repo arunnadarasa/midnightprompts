@@ -18,7 +18,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ThemesIndexRouteImport } from './routes/themes.index'
 import { Route as ShowcaseIndexRouteImport } from './routes/showcase.index'
 import { Route as ThemesThemeRouteImport } from './routes/themes.$theme'
-import { Route as ShowcaseChoreoLedgerRouteImport } from './routes/showcase.choreo-ledger'
+import { Route as ShowcaseMidnightLedgerRouteImport } from './routes/showcase.midnight-ledger'
 import { Route as IdeasIdRouteImport } from './routes/ideas.$id'
 
 const ThemesRoute = ThemesRouteImport.update({
@@ -66,9 +66,9 @@ const ThemesThemeRoute = ThemesThemeRouteImport.update({
   path: '/$theme',
   getParentRoute: () => ThemesRoute,
 } as any)
-const ShowcaseChoreoLedgerRoute = ShowcaseChoreoLedgerRouteImport.update({
-  id: '/choreo-ledger',
-  path: '/choreo-ledger',
+const ShowcaseMidnightLedgerRoute = ShowcaseMidnightLedgerRouteImport.update({
+  id: '/midnight-ledger',
+  path: '/midnight-ledger',
   getParentRoute: () => ShowcaseRoute,
 } as any)
 const IdeasIdRoute = IdeasIdRouteImport.update({
@@ -85,7 +85,7 @@ export interface FileRoutesByFullPath {
   '/strategy': typeof StrategyRoute
   '/themes': typeof ThemesRouteWithChildren
   '/ideas/$id': typeof IdeasIdRoute
-  '/showcase/choreo-ledger': typeof ShowcaseChoreoLedgerRoute
+  '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
   '/themes/$theme': typeof ThemesThemeRoute
   '/showcase/': typeof ShowcaseIndexRoute
   '/themes/': typeof ThemesIndexRoute
@@ -96,7 +96,7 @@ export interface FileRoutesByTo {
   '/quantum-primer': typeof QuantumPrimerRoute
   '/strategy': typeof StrategyRoute
   '/ideas/$id': typeof IdeasIdRoute
-  '/showcase/choreo-ledger': typeof ShowcaseChoreoLedgerRoute
+  '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
   '/themes/$theme': typeof ThemesThemeRoute
   '/showcase': typeof ShowcaseIndexRoute
   '/themes': typeof ThemesIndexRoute
@@ -110,7 +110,7 @@ export interface FileRoutesById {
   '/strategy': typeof StrategyRoute
   '/themes': typeof ThemesRouteWithChildren
   '/ideas/$id': typeof IdeasIdRoute
-  '/showcase/choreo-ledger': typeof ShowcaseChoreoLedgerRoute
+  '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
   '/themes/$theme': typeof ThemesThemeRoute
   '/showcase/': typeof ShowcaseIndexRoute
   '/themes/': typeof ThemesIndexRoute
@@ -125,7 +125,7 @@ export interface FileRouteTypes {
     | '/strategy'
     | '/themes'
     | '/ideas/$id'
-    | '/showcase/choreo-ledger'
+    | '/showcase/midnight-ledger'
     | '/themes/$theme'
     | '/showcase/'
     | '/themes/'
@@ -136,7 +136,7 @@ export interface FileRouteTypes {
     | '/quantum-primer'
     | '/strategy'
     | '/ideas/$id'
-    | '/showcase/choreo-ledger'
+    | '/showcase/midnight-ledger'
     | '/themes/$theme'
     | '/showcase'
     | '/themes'
@@ -149,7 +149,7 @@ export interface FileRouteTypes {
     | '/strategy'
     | '/themes'
     | '/ideas/$id'
-    | '/showcase/choreo-ledger'
+    | '/showcase/midnight-ledger'
     | '/themes/$theme'
     | '/showcase/'
     | '/themes/'
@@ -230,11 +230,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ThemesThemeRouteImport
       parentRoute: typeof ThemesRoute
     }
-    '/showcase/choreo-ledger': {
-      id: '/showcase/choreo-ledger'
-      path: '/choreo-ledger'
-      fullPath: '/showcase/choreo-ledger'
-      preLoaderRoute: typeof ShowcaseChoreoLedgerRouteImport
+    '/showcase/midnight-ledger': {
+      id: '/showcase/midnight-ledger'
+      path: '/midnight-ledger'
+      fullPath: '/showcase/midnight-ledger'
+      preLoaderRoute: typeof ShowcaseMidnightLedgerRouteImport
       parentRoute: typeof ShowcaseRoute
     }
     '/ideas/$id': {
@@ -248,12 +248,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface ShowcaseRouteChildren {
-  ShowcaseChoreoLedgerRoute: typeof ShowcaseChoreoLedgerRoute
+  ShowcaseMidnightLedgerRoute: typeof ShowcaseMidnightLedgerRoute
   ShowcaseIndexRoute: typeof ShowcaseIndexRoute
 }
 
 const ShowcaseRouteChildren: ShowcaseRouteChildren = {
-  ShowcaseChoreoLedgerRoute: ShowcaseChoreoLedgerRoute,
+  ShowcaseMidnightLedgerRoute: ShowcaseMidnightLedgerRoute,
   ShowcaseIndexRoute: ShowcaseIndexRoute,
 }
 
