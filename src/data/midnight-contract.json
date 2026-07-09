@@ -9,6 +9,6 @@
   "explorer": "https://preview.midnightexplorer.com",
   "indexerHttp": "https://indexer.preview.midnight.network/api/v4/graphql",
   "indexerWs": "wss://indexer.preview.midnight.network/api/v4/graphql/ws",
-  "faucet": "https://midnight-tmnight-preview.nethermind.dev/",
+  "faucet": "https://faucet.preprod.midnight.network/",
   "note": "Contract address populates the moment we deploy the sandbox-compiled TimestampLog contract. Until then the showcase runs in read-only Indexer mode."
 }
