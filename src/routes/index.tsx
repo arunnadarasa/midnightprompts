@@ -44,7 +44,7 @@ function Index() {
               Browse the Index
             </Link>
             <a
-              href="https://faucet.preprod.midnight.network/"
+              href="https://cloud.google.com/application/web3/faucet/midnight/testnet"
               target="_blank"
               rel="noreferrer"
               className="px-6 py-3 bg-primary text-primary-foreground hover:bg-foreground transition-colors duration-500"

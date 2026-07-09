@@ -10,6 +10,6 @@
   "rpc": "https://rpc.preprod.midnight.network",
   "indexerHttp": "https://indexer.preprod.midnight.network/api/v4/graphql",
   "indexerWs": "wss://indexer.preprod.midnight.network/api/v4/graphql/ws",
-  "faucet": "https://faucet.preprod.midnight.network/",
+  "faucet": "https://cloud.google.com/application/web3/faucet/midnight/testnet",
   "note": "Deploy from your own machine (Docker required for the proof server). Once deployed, paste the printed hex address into this file and the showcase page will hydrate from the Preprod Indexer on the next refresh."
 }

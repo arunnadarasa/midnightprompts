@@ -46,11 +46,11 @@ Output looks like:
 [midnight-deploy] generated new 24-word mnemonic → .midnight-wallet.local
   Shielded address (fund this one):
   mn_shield-…preprod1…
-  Faucet: https://faucet.preprod.midnight.network/
+  Faucet: https://cloud.google.com/application/web3/faucet/midnight/testnet
 ```
 
 - Copy the shielded address.
-- Paste it into <https://faucet.preprod.midnight.network/> and request a drip
+- Paste it into <https://cloud.google.com/application/web3/faucet/midnight/testnet> and request a drip
   (arrives in ~30s).
 - The mnemonic is saved to `.midnight-wallet.local` (mode 0600, gitignored) so
   re-runs reuse the same address. Back it up if you want to fund the same
