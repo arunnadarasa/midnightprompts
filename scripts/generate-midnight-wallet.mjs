@@ -21,7 +21,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const OUT = path.join(ROOT, "src/data/midnight-wallet.json");
 
-const NETWORK_ID = "TestNet"; // preprod runs the TestNet network id
+const NETWORK_ID = NetworkId.TestNet; // preprod runs the TestNet network id
 const INDEXER_HTTP = "https://indexer.preprod.midnight.network/api/v4/graphql";
 const INDEXER_WS = "wss://indexer.preprod.midnight.network/api/v4/graphql/ws";
 const NODE_RPC = "https://rpc.preprod.midnight.network";
