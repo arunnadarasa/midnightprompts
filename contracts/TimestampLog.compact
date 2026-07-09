@@ -14,7 +14,6 @@ witness localSecretKey(): Bytes<32>;
 
 constructor() {
   entry_count.increment(1);
-  last_message = disclose("(empty)");
 }
 
 export circuit authorCommitment(sk: Bytes<32>, seq: Bytes<32>): Bytes<32> {
