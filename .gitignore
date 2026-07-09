@@ -30,3 +30,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Midnight local wallet artefacts (never commit)
+.midnight-wallet.local
+.midnight-witness.local

@@ -1,14 +1,15 @@
 {
-  "network": "Midnight Preview Testnet",
-  "networkId": "preview",
+  "network": "Midnight Preprod Testnet",
+  "networkId": "preprod",
   "compactVersion": "0.23",
-  "sdkVersion": "4.1.1",
-  "proofServerVersion": "8.1.0",
+  "sdkVersion": "midnight-js-contracts@4.1.1 · wallet@4.0.0 · wallet-sdk-hd@3.1.0-beta.1",
+  "proofServerVersion": "docker: midnightntwrk/proof-server:latest",
   "address": "0000000000000000000000000000000000000000000000000000000000000000",
   "deployTx": null,
-  "explorer": "https://preview.midnightexplorer.com",
-  "indexerHttp": "https://indexer.preview.midnight.network/api/v4/graphql",
-  "indexerWs": "wss://indexer.preview.midnight.network/api/v4/graphql/ws",
+  "explorer": "https://preprod.midnightexplorer.com",
+  "rpc": "https://rpc.preprod.midnight.network",
+  "indexerHttp": "https://indexer.preprod.midnight.network/api/v4/graphql",
+  "indexerWs": "wss://indexer.preprod.midnight.network/api/v4/graphql/ws",
   "faucet": "https://faucet.preprod.midnight.network/",
-  "note": "Contract address populates the moment we deploy the sandbox-compiled TimestampLog contract. Until then the showcase runs in read-only Indexer mode."
+  "note": "Deploy from your own machine (Docker required for the proof server). Once deployed, paste the printed hex address into this file and the showcase page will hydrate from the Preprod Indexer on the next refresh."
 }
