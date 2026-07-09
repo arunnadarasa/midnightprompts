@@ -1,194 +1,415 @@
 #!/usr/bin/env python3
-"""Rewrite the `megaPrompt` field on every idea to fit the 5-credit Lovable budget.
+"""Rewrite every idea's megaPrompt for the Midnight ZK blockchain pivot.
 
-Reads each src/data/ideas/<theme>.json, keeps title/pitch/subDiscipline/quantum*
-intact, and replaces megaPrompt with a tight, copy-pasteable build prompt.
+Pure-Python, deterministic, idempotent. No API calls.
 
-No API calls. Idempotent.
+- Remaps legacy Ethereum hook IDs to Midnight primitives:
+    sepolia-deploy   -> compact-deploy
+    ipfs-pinata      -> ipfs-content
+    privy-social     -> lace-wallet
+    nft-provenance   -> private-witness
+- Updates quantumHook / quantumTag / quantumHookId / quantumRationale.
+- Rewrites megaPrompt with a Compact contract + MidnightJS + Lace + ProofServer recipe.
+
+Sources: docs.midnight.network/llms-full.txt (Compact 0.23, SDK 4.1.1, Proof Server 8.1.0).
 """
 import json, re, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DATA = ROOT / "src" / "data" / "ideas"
 THEMES = json.loads((DATA / "themes.json").read_text())
+HOOKS = {h["id"]: h for h in json.loads((DATA / "hooks.json").read_text())}
 
 CREDIT = ("Built during the Creative AI & Quantum Hackathon organised by "
           "StreetKode Fam during Indian Krump Festival 14")
 
-SECRETS = """REQUIRED SECRETS (Lovable -> Project Settings -> Secrets):
-- METAMASK_PRIVATE_KEY  Sepolia deployer key. Fund it: https://cloud.google.com/application/web3/faucet/ethereum/sepolia
-- SEPOLIA_RPC_URL       Alchemy Sepolia HTTPS endpoint (https://eth-sepolia.g.alchemy.com/v2/<key>). Create a free app at https://dashboard.alchemy.com/ -> copy the HTTPS URL. Public RPCs throttle/fail under hackathon load — Alchemy is required.
-- ETHERSCAN_API_KEY     For `npx hardhat verify`. Get: https://etherscan.io/myapikey
-- PRIVY_APP_ID          Google sign-in + sponsored tx. Docs: https://docs.privy.io/llms-full.txt
-- PINATA_JWT            IPFS uploads (only if app pins media). Docs: https://docs.pinata.cloud/llms-full.txt"""
+# Legacy hook id -> new Midnight hook id
+HOOK_REMAP = {
+    "sepolia-deploy":  "compact-deploy",
+    "ipfs-pinata":     "ipfs-content",
+    "privy-social":    "lace-wallet",
+    "nft-provenance":  "private-witness",
+    # already-migrated ids stay put
+    "compact-deploy":  "compact-deploy",
+    "ipfs-content":    "ipfs-content",
+    "lace-wallet":     "lace-wallet",
+    "private-witness": "private-witness",
+}
+
+SECRETS = """REQUIRED SECRETS (Lovable → Project Settings → Secrets):
+- VITE_NETWORK_ID           preview   (Midnight preview testnet; set to `preprod` for the more stable network)
+- VITE_INDEXER_URL          https://indexer.preview.midnight.network/api/v4/graphql
+- VITE_INDEXER_WS_URL       wss://indexer.preview.midnight.network/api/v4/graphql/ws
+- VITE_PROOF_SERVER_URL     http://localhost:6300   (run `docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`)
+- VITE_DEFAULT_CONTRACT     the hex address printed by your first deploy — paste it here so users skip the deploy step
+
+Faucet:  https://midnight-tmnight-preview.nethermind.dev/  (tDUST — pays proof / balance fees)
+Explorer: https://preview.midnightexplorer.com/
+Docs:    https://docs.midnight.network/llms-full.txt"""
 
 BUDGET = """5-CREDIT BUDGET (HARD LIMIT):
-- ONE single-page app. No router, no Lovable Cloud, no database, no auth flows beyond Privy drop-in.
-- ONE Solidity contract, <=80 lines, deployed to Sepolia, verified on Etherscan.
-- Privy is always the auth + sponsored-tx layer (Google login, embedded wallet).
-- Pinata/IPFS only if the idea genuinely needs to store a file or metadata.
-- At most ONE AI call per user action (use Lovable AI Gateway with LOVABLE_API_KEY if AI is part of the idea).
+- ONE single-page Vite + React app. No router, no Lovable Cloud, no database, no server-side auth.
+- ONE Compact contract, ≤80 lines, deployed to Midnight preview testnet.
+- Lace wallet is the auth + tx layer. `window.midnight` is polled; the shielded address is the identity.
+- A locally-run proof server (Docker port 6300) is REQUIRED for any tx submit; the UI must show a
+  "Proving… this can take 30–120s" state and stay usable while proofs generate.
+- Pinata / IPFS only if the idea genuinely stores a file or artefact — then the CID is committed on-chain.
+- At most ONE AI call per user action (Lovable AI Gateway with LOVABLE_API_KEY if AI is part of the idea).
 - Skip tests, skip CI, skip docs pages. Ship the demo, nothing else."""
 
 def safe_name(title: str, fallback: str) -> str:
     return re.sub(r"[^A-Za-z0-9]", "", title)[:36] or fallback
 
-def contract_log(title: str, pitch: str) -> str:
-    n = safe_name(title, "Provenance")
-    return f"""// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
-/// @title {n}
-/// @notice {pitch}
-/// @notice {CREDIT}
-contract {n} {{
-    event Logged(address indexed author, string cid, uint256 at);
-    /// @notice {CREDIT}
-    function log(string calldata cid) external {{
-        emit Logged(msg.sender, cid, block.timestamp);
-    }}
+def snake(title: str, fallback: str) -> str:
+    s = re.sub(r"[^a-z0-9]+", "_", title.lower()).strip("_")[:40]
+    return s or fallback
+
+# ---------------------------------------------------------------- Compact snippets
+
+def compact_log(title: str, pitch: str) -> str:
+    """A minimal Compact contract: public counter + last message + author commitment via witness."""
+    n = safe_name(title, "TimestampLog")
+    return f"""// contracts/{n}.compact
+// {pitch}
+// {CREDIT}
+pragma language_version 0.23;
+
+import CompactStandardLibrary;
+
+// Public ledger state — visible to everyone via the Indexer
+export ledger entry_count: Counter;
+export ledger last_message: Opaque<"string">;
+export ledger last_author_commitment: Bytes<32>;
+
+// Private callback wired from TypeScript; the returned bytes never touch chain
+witness localSecretKey(): Bytes<32>;
+
+constructor() {{
+  entry_count.increment(1);
+  last_message = disclose("(empty)");
+}}
+
+export circuit authorCommitment(sk: Bytes<32>, seq: Bytes<32>): Bytes<32> {{
+  return persistentHash<Vector<3, Bytes<32>>>(
+    [pad(32, "{snake(title,'log')}:author:"), seq, sk]
+  );
+}}
+
+export circuit appendEntry(newMessage: Opaque<"string">): [] {{
+  const sk = localSecretKey();
+  const seq = entry_count as Field as Bytes<32>;
+  last_author_commitment = disclose(authorCommitment(sk, seq));
+  last_message = disclose(newMessage);      // disclose is REQUIRED before writing to ledger
+  entry_count.increment(1);
 }}"""
 
-def contract_nft(title: str, pitch: str) -> str:
-    n = safe_name(title, "ProvenanceNFT")
-    sym = (n[:6] or "PROV").upper()
-    return f"""// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-/// @title {n}
-/// @notice ERC-721 provenance for: {pitch}
-/// @notice {CREDIT}
-contract {n} is ERC721 {{
-    uint256 public nextId;
-    mapping(uint256 => string) public cidOf;
-    constructor() ERC721("{n}", "{sym}") {{}}
-    /// @notice {CREDIT}
-    function mint(string calldata cid) external returns (uint256 id) {{
-        id = ++nextId; cidOf[id] = cid; _safeMint(msg.sender, id);
-    }}
-    function tokenURI(uint256 id) public view override returns (string memory) {{
-        return string(abi.encodePacked("ipfs://", cidOf[id]));
-    }}
+def compact_witness(title: str, pitch: str) -> str:
+    """Private-witness variant: an assert-only circuit that proves ownership without revealing sk."""
+    n = safe_name(title, "PrivateProof")
+    return f"""// contracts/{n}.compact
+// {pitch}  (private-witness pattern)
+// {CREDIT}
+pragma language_version 0.23;
+
+import CompactStandardLibrary;
+
+export ledger enrolled_commitments: Set<Bytes<32>>;   // public: which commitments are valid
+export ledger last_action_count: Counter;
+
+witness localSecretKey(): Bytes<32>;
+
+constructor() {{ last_action_count.increment(1); }}
+
+export circuit enroll(commitmentTag: Bytes<32>): [] {{
+  const sk = localSecretKey();
+  const c = persistentHash<Vector<2, Bytes<32>>>([commitmentTag, sk]);
+  enrolled_commitments.insert(disclose(c));            // sk stays local; only c goes public
+}}
+
+export circuit proveOwnership(commitmentTag: Bytes<32>): [] {{
+  const sk = localSecretKey();
+  const c = persistentHash<Vector<2, Bytes<32>>>([commitmentTag, sk]);
+  assert(enrolled_commitments.member(c), "not enrolled");
+  last_action_count.increment(1);
 }}"""
 
-def needs_ipfs(hook_id: str) -> bool:
-    return hook_id in ("ipfs-pinata", "nft-provenance")
+def compact_ipfs(title: str, pitch: str) -> str:
+    """IPFS-CID commit variant."""
+    n = safe_name(title, "CIDLedger")
+    return f"""// contracts/{n}.compact
+// {pitch}  (pin-to-IPFS-then-commit-CID pattern)
+// {CREDIT}
+pragma language_version 0.23;
+
+import CompactStandardLibrary;
+
+export ledger cid_count: Counter;
+export ledger last_cid: Opaque<"string">;
+export ledger last_author_commitment: Bytes<32>;
+
+witness localSecretKey(): Bytes<32>;
+
+constructor() {{ cid_count.increment(1); last_cid = disclose("(empty)"); }}
+
+export circuit commitCid(cid: Opaque<"string">): [] {{
+  const sk = localSecretKey();
+  const seq = cid_count as Field as Bytes<32>;
+  last_author_commitment = disclose(
+    persistentHash<Vector<3, Bytes<32>>>([pad(32, "cid:author:"), seq, sk])
+  );
+  last_cid = disclose(cid);
+  cid_count.increment(1);
+}}"""
+
+# ---------------------------------------------------------------- MidnightJS boilerplate reused in every prompt
+
+MIDNIGHTJS_BOOT = """WALLET DETECT (src/lib/lace.ts) — poll window.midnight up to 5s:
+```ts
+import type { InitialAPI } from '@midnight-ntwrk/dapp-connector-api';
+import semver from 'semver';
+export async function waitForLace(timeoutMs = 5000): Promise<InitialAPI> {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+    const t = setInterval(() => {
+      const m = (window as any).midnight ?? {};
+      const w = Object.values(m).find((x: any) =>
+        x && typeof x === 'object' && 'apiVersion' in x &&
+        semver.satisfies(x.apiVersion, '4.x')) as InitialAPI | undefined;
+      if (w) { clearInterval(t); resolve(w); return; }
+      if (Date.now() - start > timeoutMs) { clearInterval(t);
+        reject(new Error('Lace Midnight wallet not found. Install it: https://www.lace.io/')); }
+    }, 100);
+  });
+}
+```
+
+BUFFER POLYFILL (src/main.tsx, MUST be the very first line):
+```ts
+import { Buffer } from 'buffer'; (globalThis as any).Buffer = Buffer;
+```
+
+PROVIDERS (src/lib/providers.ts) — chain Lace + proof server + indexer:
+```ts
+import { setNetworkId } from '@midnight-ntwrk/midnight-js-network-id';
+import { FetchZkConfigProvider } from '@midnight-ntwrk/midnight-js-fetch-zk-config-provider';
+import { httpClientProofProvider } from '@midnight-ntwrk/midnight-js-http-client-proof-provider';
+import { indexerPublicDataProvider } from '@midnight-ntwrk/midnight-js-indexer-public-data-provider';
+import { waitForLace } from './lace';
+
+export async function initProviders() {
+  setNetworkId(import.meta.env.VITE_NETWORK_ID ?? 'preview');
+  const lace = await waitForLace();
+  const connectedAPI = await lace.connect(import.meta.env.VITE_NETWORK_ID ?? 'preview');
+  const cfg = await connectedAPI.getConfiguration();
+  const zk = new FetchZkConfigProvider(window.location.origin, fetch.bind(window));
+  return {
+    connectedAPI,
+    zkConfigProvider: zk,
+    proofProvider: httpClientProofProvider(cfg.proverServerUri ?? import.meta.env.VITE_PROOF_SERVER_URL, zk),
+    publicDataProvider: indexerPublicDataProvider(cfg.indexerUri, cfg.indexerWsUri),
+  };
+}
+```
+
+READ-ONLY LEDGER FETCH (no wallet needed — great for public feeds):
+```ts
+const INDEXER = import.meta.env.VITE_INDEXER_URL;
+export async function readLedger(address: string) {
+  const r = await fetch(INDEXER, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query: `query($a:HexEncoded!){ contractAction(address:$a){ state } }`,
+      variables: { address },
+    }),
+  });
+  return (await r.json()).data?.contractAction?.state as string | null;
+}
+```"""
+
+VITE_CONFIG = """VITE CONFIG (vite.config.ts) — WASM + top-level await are MANDATORY for MidnightJS:
+```ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import wasm from 'vite-plugin-wasm';
+import topLevelAwait from 'vite-plugin-top-level-await';
+export default defineConfig({
+  build: { target: 'esnext', commonjsOptions: { transformMixedEsModules: true, extensions: ['.js','.cjs'] } },
+  plugins: [react(), wasm(), topLevelAwait()],
+  optimizeDeps: {
+    esbuildOptions: { target: 'esnext', supported: { 'top-level-await': true } },
+    include: ['@midnight-ntwrk/compact-runtime'],
+    exclude: ['@midnight-ntwrk/onchain-runtime-v3',
+              '@midnight-ntwrk/onchain-runtime-v3/midnight_onchain_runtime_wasm_bg.wasm'],
+  },
+});
+```
+
+SSR RULE: never import a `@midnight-ntwrk/*` package at module scope of a route file — it uses
+Node Buffer + browser globals + WASM top-level await and crashes SSR. Load providers behind
+`useEffect` or a dynamic `import()` inside a `<ClientOnly>` boundary."""
+
+PACKAGES = """PACKAGES (all pinned to the versions Midnight ships together):
+- @midnight-ntwrk/dapp-connector-api@4.0.1
+- @midnight-ntwrk/midnight-js-contracts@4.1.1
+- @midnight-ntwrk/midnight-js-types@4.1.1
+- @midnight-ntwrk/midnight-js-protocol@4.1.1
+- @midnight-ntwrk/midnight-js-network-id@4.1.1
+- @midnight-ntwrk/midnight-js-fetch-zk-config-provider@4.1.1
+- @midnight-ntwrk/midnight-js-http-client-proof-provider@4.1.1
+- @midnight-ntwrk/midnight-js-indexer-public-data-provider@4.1.1
+- @midnight-ntwrk/midnight-js-utils@4.1.1
+- @midnight-ntwrk/compact-runtime@0.16.0
+- rxjs fp-ts semver buffer pino
+- vite-plugin-wasm  vite-plugin-top-level-await  (dev)"""
+
+TOOLCHAIN = """COMPACT TOOLCHAIN (one-time setup — the human runs this in a terminal, not Lovable):
+```bash
+curl --proto '=https' --tlsv1.2 -LsSf \\
+  https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh
+source ~/.bashrc && compact update
+compact compile contracts/YourContract.compact contracts/managed/your-contract
+cp -r contracts/managed/your-contract/keys public/keys
+cp -r contracts/managed/your-contract/zkir public/zkir
+docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v
+```"""
+
+REDFLAGS = """RED FLAGS — DO NOT ATTEMPT:
+- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.
+- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.
+- No sub-second finality UX. Proofs for k=14 circuits take 30–120s — build for that latency.
+- No recursion in Compact. Loops must be bounded by compile-time constants.
+- No SSR. MidnightJS uses browser globals + WASM + top-level-await; ClientOnly is mandatory."""
+
+# ---------------------------------------------------------------- Per-hook body
+
+def body_compact_deploy(title, pitch, sub, contract):
+    return f"""CONTRACT
+```compact
+{contract}
+```
+
+FRONTEND FLOW
+1. Land on page → 'Connect Lace' button → poll `window.midnight` → `connect('preview')`.
+2. Show shielded address, tDUST reminder ("Get testnet DUST → {{VITE_FAUCET_URL}}"), and Deploy button.
+3. On Deploy: import `deployContract` from `@midnight-ntwrk/midnight-js-contracts`, pass witnesses
+   ({{ localSecretKey: async () => sk }}) where `sk` is a 32-byte value persisted in localStorage.
+4. Show a "Proving…" spinner for up to 120s while the local proof server crunches.
+5. On success, render the deployed address + a Midnight explorer link and persist it to
+   `src/data/midnight-contract.json` so the app boots straight into it next time.
+6. The "{sub}" action calls `appendEntry(payload)` — same flow: prove, submit, refresh feed."""
+
+def body_ipfs_content(title, pitch, sub, contract):
+    return f"""PINATA STEP (src/lib/pinata.ts):
+```ts
+export async function pinToIPFS(file: Blob, name = "{sub}") {{
+  const fd = new FormData(); fd.append("file", file, name);
+  const r = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {{
+    method: "POST", headers: {{ Authorization: `Bearer ${{import.meta.env.VITE_PINATA_JWT}}` }},
+    body: fd,
+  }});
+  return (await r.json()).IpfsHash as string;
+}}
+```
+
+CONTRACT
+```compact
+{contract}
+```
+
+FRONTEND FLOW
+1. User creates a {sub} artefact in the UI (upload / draw / record / generate).
+2. `const cid = await pinToIPFS(blob)` → show `https://gateway.pinata.cloud/ipfs/<cid>`.
+3. `commitCid(cid)` via `findContractInstance(...).callTx.commitCid(witnesses, cid)`.
+4. Proving spinner (30–120s) → confirmation → append `{{cid, tx, at}}` to the on-screen feed.
+5. Feed is hydrated from the Indexer (`readLedger`), so refreshes work with just the wallet disconnected."""
+
+def body_lace_wallet(title, pitch, sub, contract):
+    return f"""CONTRACT
+```compact
+{contract}
+```
+
+FRONTEND FLOW — Lace is the whole auth story
+1. Landing page shows one button: "Connect Lace". No email, no password, no OAuth.
+2. On click: `initProviders()` → shielded address becomes the identity.
+3. tDUST balance strip: `const bal = await connectedAPI.balanceAndProofOfBalance();` render it.
+4. Every {sub} action = `contract.callTx.appendEntry(witnesses, payload)`. Show status:
+   `Proving → Balancing (Lace adds tDUST fees) → Submitting → Confirmed` with a Midnight explorer link.
+5. If `waitForLace` rejects, render the exact install URL for Lace with a friendly nudge —
+   no fake "click here to install" placeholder. This is the single biggest onboarding drop-off."""
+
+def body_private_witness(title, pitch, sub, contract):
+    return f"""CONTRACT
+```compact
+{contract}
+```
+
+FRONTEND FLOW — the secret NEVER leaves the browser
+1. On first visit, generate a 32-byte secret with `crypto.getRandomValues(new Uint8Array(32))`
+   and persist it base64-encoded in localStorage. Warn users that clearing storage revokes proofs.
+2. The witness callback returns that secret to the Compact circuit — it is used inside the ZK proof
+   but never appears in the transaction that goes on chain.
+3. "Enroll" action → `enroll(commitmentTag)` — commits `hash(tag, sk)` on chain.
+4. "Prove {sub}" action → `proveOwnership(commitmentTag)` — the circuit asserts the commitment
+   is in `enrolled_commitments` for THIS wallet's secret. UI shows a green "proved without revealing" chip.
+5. Anyone reading the Indexer sees only commitments and a bumped counter — they cannot link
+   two proofs to the same user because the secret never appeared on chain."""
+
+BODY_BY_HOOK = {
+    "compact-deploy":  (compact_log,     body_compact_deploy),
+    "ipfs-content":    (compact_ipfs,    body_ipfs_content),
+    "lace-wallet":     (compact_log,     body_lace_wallet),
+    "private-witness": (compact_witness, body_private_witness),
+}
+
+# ---------------------------------------------------------------- prompt builder
 
 def make_prompt(idea: dict, theme: dict) -> str:
     title = idea["title"]; pitch = idea["pitch"]; sub = idea["subDiscipline"]
-    hid = idea.get("quantumHookId") or idea.get("chainHookId") or "sepolia-deploy"
-    hook_name = idea.get("quantumHook") or "Sepolia smart contract"
-    rationale = idea.get("quantumRationale") or ""
+    hid = idea.get("quantumHookId") or "compact-deploy"
+    hook = HOOKS.get(hid) or HOOKS["compact-deploy"]
+    hook_name = hook["name"]
+    rationale = idea.get("quantumRationale") or f"This idea fits {hook_name} because it needs {hook['tag']}."
 
-    if hid == "nft-provenance":
-        contract = contract_nft(title, pitch)
-        action = (f"After the user creates a {sub} artefact, pin the file to IPFS via Pinata, "
-                  f"then call `mint(cid)` on the deployed contract through Privy's sponsored transaction. "
-                  f"Show tokenId, IPFS preview (`https://gateway.pinata.cloud/ipfs/<cid>`), and Etherscan mint-tx link.")
-    elif hid == "ipfs-pinata":
-        contract = contract_log("CIDLog" + safe_name(title, "Idea"), pitch)
-        action = (f"On submit, pin the {sub} artefact to Pinata, then call `log(cid)` on the contract via Privy sponsored tx. "
-                  f"Render the CID, IPFS gateway preview, and Etherscan tx link.")
-    elif hid == "privy-social":
-        contract = contract_log("SocialLog" + safe_name(title, "Idea"), pitch)
-        action = (f"Every {sub} action the user performs is sent as a sponsored Sepolia tx (`log(payload)`) "
-                  f"and displayed with an Etherscan link. No wallet popups.")
-    else:  # sepolia-deploy
-        contract = contract_log(title, pitch)
-        action = (f"User performs a {sub} action; the app calls `log(payload)` on the contract via Privy sponsored tx "
-                  f"and shows the Etherscan link as proof.")
+    contract_fn, body_fn = BODY_BY_HOOK.get(hid, BODY_BY_HOOK["compact-deploy"])
+    contract = contract_fn(title, pitch)
+    body = body_fn(title, pitch, sub, contract)
 
-    ipfs_step = ("- src/lib/pinata.ts uploads via `fetch('https://api.pinata.cloud/pinning/pinFileToIPFS', "
-                 "{ method:'POST', headers:{ Authorization: `Bearer ${import.meta.env.VITE_PINATA_JWT}` }, body: fd })`.\n"
-                 if needs_ipfs(hid) else "")
-
-    return f"""Build "{title}" in ONE Lovable message. Single-page demo.
+    return f"""Build "{title}" in ONE Lovable message. Single-page Midnight ZK demo.
 
 CONCEPT
 {pitch}
 Discipline: {theme['name']} ({sub}).
-Onchain primitive: {hook_name}. Why this primitive: {rationale}
+Onchain primitive: {hook_name} ({hook['tag']}). Why this primitive: {rationale}
 
 {BUDGET}
 
 STACK
-- React + Vite single page (the index route).
-- SSR-safe Privy mount is mandatory. Never import @privy-io/react-auth at
-  module scope of a route file — it crashes SSR. Use
-  lazy(() => import('./privy-client-entry')) inside <ClientOnly> + <Suspense>,
-  and put <PrivyProvider> only inside privy-client-entry.tsx.
-- PrivyProvider config (do NOT stub defaultChain as {{ id, name }} — omit it
-  or pass viem's `sepolia`; chainId is passed per-call):
-    <PrivyProvider appId={{import.meta.env.VITE_PRIVY_APP_ID}}
-      config={{{{ loginMethods:['google','email'],
-                embeddedWallets:{{ ethereum:{{ createOnLogin:'users-without-wallets' }} }},
-                appearance:{{ theme:'dark' }} }}}}>
-- Read the embedded wallet from useWallets, not user.wallet:
-    const embedded = wallets.find(w => w.walletClientType === 'privy');
-- Every send goes through Privy `useSendTransaction` with BOTH `address`
-  and `sponsor`, wrapped in a 45s Promise.race timeout whose reject message
-  names the exact dashboard toggles:
-    await Promise.race([
-      sendTransaction(
-        {{ to, data, chainId: 11155111 }},
-        {{ address: embedded.address, sponsor: true }}
-      ),
-      new Promise((_, r) => setTimeout(() => r(new Error(
-        "Privy sendTransaction timed out after 45s. Enable Gas sponsorship -> App pays -> Ethereum Sepolia -> Allow transactions from the client."
-      )), 45_000)),
-    ]);
-- Do NOT pass uiOptions:{{ showWalletUIs:false }} — it aborts with
-  "signal is aborted without reason". The approval sheet still shows on
-  the embedded-EOA path; the fee reads US$0.00.
-- Do NOT add ZeroDev / SmartWalletsProvider / a paymaster URL. Native
-  Privy sponsorship on Sepolia works with the toggles above and nothing else.
-- DASHBOARD PREREQUISITE (one-time): Privy dashboard -> Gas sponsorship
-  -> App pays -> add "Ethereum Sepolia" -> toggle "Allow transactions
-  from the client" ON. Without this, sendTransaction hangs silently.
-{ipfs_step}- Hardhat in /contracts (kept outside the Vite bundle). Install
-  `@nomicfoundation/hardhat-toolbox` AND `@nomicfoundation/hardhat-verify@latest`
-  (>=3.x — older versions still hit Etherscan v1 and fail with
-  "You are using a deprecated V1 endpoint, switch to Etherscan API V2").
-- hardhat.config.cjs MUST use the Etherscan v2 single-key shape (NOT the per-network map):
-    require("@nomicfoundation/hardhat-toolbox");
-    require("@nomicfoundation/hardhat-verify");
-    module.exports = {{
-      solidity: {{ version: "0.8.24", settings: {{ optimizer: {{ enabled: true, runs: 200 }} }} }},
-      networks: {{ sepolia: {{
-        url: process.env.SEPOLIA_RPC_URL,                       // Alchemy HTTPS endpoint, REQUIRED
-        accounts: [process.env.METAMASK_PRIVATE_KEY.startsWith("0x")
-          ? process.env.METAMASK_PRIVATE_KEY : "0x" + process.env.METAMASK_PRIVATE_KEY],
-        chainId: 11155111,
-      }} }},
-      etherscan: {{ apiKey: process.env.ETHERSCAN_API_KEY }},   // single string, NOT {{ sepolia: ... }}
-      sourcify: {{ enabled: false }},                            // silences the v2.x prompt
-    }};
-- Deploy: `npx hardhat run scripts/deploy.cjs --network sepolia`.
-- Verify (run RIGHT AFTER deploy, no constructor args for these contracts):
-  `npx hardhat verify --network sepolia <address>`
-  On success Etherscan returns "Successfully verified contract … on the block explorer"
-  and the source becomes readable at
-  `https://sepolia.etherscan.io/address/<address>#code`.
-- Frontend reads: create a viem public client with the Alchemy URL too —
-  `createPublicClient({{ chain: sepolia, transport: http(import.meta.env.VITE_SEPOLIA_RPC_URL) }})`.
-  Expose SEPOLIA_RPC_URL to the client by also setting VITE_SEPOLIA_RPC_URL to the same value.
-- Write the deployed address to `src/data/contract.json` so the UI links to
-  `https://sepolia.etherscan.io/address/<address>`.
+- React + Vite single page (index route only).
+- Midnight preview testnet. Compact language 0.23. MidnightJS SDK 4.1.1.
+- Lace wallet is the sole auth surface — no Privy, no MetaMask, no OAuth.
+- Local proof server (Docker port 6300) does all ZK proving. The UI shows Proving state.
+- No SSR. All MidnightJS imports live behind `<ClientOnly>` + `useEffect`.
 
-CONTRACT (contracts/{safe_name(title,'Provenance')}.sol):
-```solidity
-{contract}
-```
+{PACKAGES}
 
-USER FLOW
-1. Land on page -> 'Sign in with Google' (Privy) -> embedded wallet auto-provisioned.
-2. {action}
-3. Footer renders: "{CREDIT}"
+{TOOLCHAIN}
+
+{VITE_CONFIG}
+
+{MIDNIGHTJS_BOOT}
+
+{body}
+
+{REDFLAGS}
 
 {SECRETS}
 
-CREDIT (must appear in UI footer AND as NatSpec on every deployed contract):
+CREDIT (must appear in UI footer AND as a header comment on every Compact contract):
 {CREDIT}
 """
+
+# ---------------------------------------------------------------- main
 
 def main():
     total = 0
@@ -196,6 +417,17 @@ def main():
         p = DATA / f"{t['slug']}.json"
         doc = json.loads(p.read_text())
         for idea in doc["ideas"]:
+            legacy = idea.get("quantumHookId", "compact-deploy")
+            new_hid = HOOK_REMAP.get(legacy, "compact-deploy")
+            new_hook = HOOKS[new_hid]
+            idea["quantumHookId"] = new_hid
+            idea["quantumHook"] = new_hook["name"]
+            idea["quantumTag"] = new_hook["tag"]
+            # Refresh rationale so it names the new primitive
+            idea["quantumRationale"] = (
+                f"This idea fits {new_hook['name']} because {new_hook['tag']} is exactly what "
+                f"a {idea.get('subDiscipline','creative')} demo needs: {new_hook['kernel'][:120]}..."
+            )
             idea["megaPrompt"] = make_prompt(idea, t)
             total += 1
         p.write_text(json.dumps(doc, indent=2, ensure_ascii=False))

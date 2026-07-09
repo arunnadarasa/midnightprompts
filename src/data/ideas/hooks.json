@@ -1,30 +1,30 @@
 [
   {
-    "id": "sepolia-deploy",
-    "name": "Sepolia smart contract",
+    "id": "compact-deploy",
+    "name": "Compact ZK contract",
     "tag": "onchain logic",
-    "kernel": "a Solidity contract deployed to Ethereum Sepolia via MetaMask private key, then verified on Etherscan",
-    "ui": "a 'verified onchain' badge with the live contract address and an Etherscan link"
+    "kernel": "a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with public ledger state readable from the Indexer",
+    "ui": "a 'verified on Midnight' badge with the live contract address and a Midnight explorer link"
   },
   {
-    "id": "ipfs-pinata",
-    "name": "IPFS via Pinata",
-    "tag": "decentralized storage",
-    "kernel": "a Pinata JWT upload that pins images / JSON / manifests to IPFS and returns a permanent CID",
-    "ui": "a 'pinned to IPFS' chip with the CID and an ipfs.io gateway preview"
+    "id": "private-witness",
+    "name": "Private witness proof",
+    "tag": "zero-knowledge",
+    "kernel": "a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands on Midnight, the secret never leaves the browser",
+    "ui": "a 'proved without revealing' chip that flips green after the ZK circuit accepts the witness"
   },
   {
-    "id": "privy-social",
-    "name": "Privy social + sponsored tx",
+    "id": "lace-wallet",
+    "name": "Lace wallet + tDUST",
     "tag": "wallet UX",
-    "kernel": "Privy embedded wallet bootstrapped with PRIVY_APP_ID — Google sign-in plus sponsored transactions so users never see gas",
-    "ui": "a one-click 'Sign in with Google' that drops the user straight into the app with an onchain identity"
+    "kernel": "detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit it via `midnightProvider.submitTx`",
+    "ui": "a 'Connected via Lace' status pill, the shielded address, and a Proving → Submitting → Confirmed transaction trail"
   },
   {
-    "id": "nft-provenance",
-    "name": "NFT provenance mint",
-    "tag": "onchain authorship",
-    "kernel": "an ERC-721 contract on Sepolia that mints a creator-owned token pointing at an IPFS CID, verified on Etherscan",
-    "ui": "a 'mint to claim authorship' button that returns the tokenId, owner address, and Etherscan link"
+    "id": "ipfs-content",
+    "name": "IPFS content + on-chain CID",
+    "tag": "decentralized storage",
+    "kernel": "pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so provenance is verifiable but the file itself stays on IPFS",
+    "ui": "a 'pinned to IPFS · logged on Midnight' chip with the CID, gateway preview, and a Midnight explorer link"
   }
 ]

@@ -22,7 +22,7 @@ function SiteHeader() {
         <Link to="/" className="flex items-center gap-2 min-w-0 group">
           <span className="hidden sm:inline eyebrow shrink-0">Vol. 01</span>
           <span className="font-display text-lg sm:text-2xl truncate text-foreground">
-            Creative <span className="italic text-primary">Blockchain</span>
+            Creative <span className="italic text-primary">Midnight</span>
           </span>
         </Link>
         <nav className="hidden md:flex items-center gap-1 text-sm">
@@ -40,20 +40,20 @@ function SiteHeader() {
             Hackathon ↗
           </a>
           <a
-            href="https://devcon.org/en/"
+            href="https://docs.midnight.network/"
             target="_blank"
             rel="noreferrer"
             className="ml-2 px-3 py-2 border border-border text-foreground text-[10px] font-semibold tracking-[0.28em] uppercase hover:border-primary/60 hover:text-primary transition-colors duration-500"
           >
-            Devcon 8 ↗
+            Midnight Docs ↗
           </a>
           <a
-            href="https://sepolia.etherscan.io/"
+            href="https://preview.midnightexplorer.com/"
             target="_blank"
             rel="noreferrer"
             className="ml-2 px-4 py-2 bg-primary text-primary-foreground text-[10px] font-semibold tracking-[0.28em] uppercase hover:bg-foreground transition-colors duration-500"
           >
-            Etherscan ↗
+            Explorer ↗
           </a>
         </nav>
         <Sheet open={open} onOpenChange={setOpen}>
@@ -66,7 +66,7 @@ function SiteHeader() {
           <SheetContent side="right" className="w-80 bg-background border-l border-border p-0">
             <SheetTitle className="sr-only">Navigation</SheetTitle>
             <div className="flex items-center justify-between px-6 py-5 border-b border-border">
-              <span className="font-display text-xl">Creative <span className="italic text-primary">Blockchain</span></span>
+              <span className="font-display text-xl">Creative <span className="italic text-primary">Midnight</span></span>
             </div>
             <nav className="flex flex-col p-4 gap-1 text-base">
               <MobileLink to="/themes" onClick={close}>Themes</MobileLink>
@@ -84,22 +84,22 @@ function SiteHeader() {
                 Hackathon ↗
               </a>
               <a
-                href="https://devcon.org/en/"
+                href="https://docs.midnight.network/"
                 target="_blank"
                 rel="noreferrer"
                 onClick={close}
                 className="mt-2 px-4 py-3 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
               >
-                Devcon 8 ↗
+                Midnight Docs ↗
               </a>
               <a
-                href="https://sepolia.etherscan.io/"
+                href="https://preview.midnightexplorer.com/"
                 target="_blank"
                 rel="noreferrer"
                 onClick={close}
                 className="mt-2 px-4 py-3 bg-primary text-primary-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
               >
-                Etherscan ↗
+                Explorer ↗
               </a>
             </nav>
           </SheetContent>
@@ -140,8 +140,8 @@ function SiteFooter() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 py-10 flex flex-col gap-3 text-[10px] tracking-[0.32em] uppercase text-muted-foreground">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <span>Vol. 01 · 1,000 entries · 10 disciplines</span>
-          <span className="font-display normal-case tracking-normal text-base italic text-primary">Lovable × Ethereum Sepolia</span>
-          <span>MetaMask · Privy · Pinata · MMXXVI</span>
+          <span className="font-display normal-case tracking-normal text-base italic text-primary">Lovable × Midnight Network</span>
+          <span>Compact · Lace · tDUST · MMXXVI</span>
         </div>
         <div className="border-t border-border/60 pt-3 normal-case tracking-normal text-[11px] font-light leading-relaxed text-muted-foreground/80">
           Built during the Creative AI &amp; Quantum Hackathon — organised by{" "}
