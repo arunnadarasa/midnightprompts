@@ -5,31 +5,34 @@ import { HOOKS, ALL_IDEAS } from "@/data/ideas";
 export const Route = createFileRoute("/quantum-primer")({
   head: () => ({
     meta: [
-      { title: "Blockchain primer · Creative Blockchain" },
-      { name: "description", content: "Four onchain primitives every idea in this repo leans on: Sepolia deploys via MetaMask, IPFS pinning via Pinata, Privy social sign-in, ERC-721 provenance." },
-      { property: "og:title", content: "Blockchain primer · Creative Blockchain" },
-      { property: "og:description", content: "Four web3 primitives that drive UI features in a Lovable hackathon app." },
+      { title: "Midnight primer · Creative Midnight" },
+      { name: "description", content: "Four ZK primitives every idea in this repo leans on: Compact contract deploy on Midnight, private witnesses, Lace wallet + tDUST, and IPFS content commits." },
+      { property: "og:title", content: "Midnight primer · Creative Midnight" },
+      { property: "og:description", content: "Four Midnight primitives that drive UI features in a Lovable hackathon app." },
     ],
   }),
   component: Primer,
 });
 
 const SECRETS_BLURB = [
-  { name: "METAMASK_PRIVATE_KEY", note: "Exported from MetaMask. Fund on Sepolia via the Google Cloud faucet.", href: "https://cloud.google.com/application/web3/faucet/ethereum/sepolia" },
-  { name: "ETHERSCAN_API_KEY", note: "For npx hardhat verify after deploy.", href: "https://etherscan.io/myapikey" },
-  { name: "PRIVY_APP_ID", note: "Google sign-in + sponsored transactions.", href: "https://docs.privy.io/llms-full.txt" },
-  { name: "PINATA_JWT", note: "Pin to IPFS.", href: "https://docs.pinata.cloud/llms-full.txt" },
+  { name: "VITE_NETWORK_ID", note: "`preview` (or `preprod`). Matches Lace's network setting.", href: "https://docs.midnight.network/relnotes/network" },
+  { name: "VITE_INDEXER_URL", note: "Midnight GraphQL Indexer for public ledger reads.", href: "https://docs.midnight.network/relnotes/network" },
+  { name: "VITE_INDEXER_WS_URL", note: "WebSocket endpoint for realtime ledger subscriptions.", href: "https://docs.midnight.network/relnotes/network" },
+  { name: "VITE_PROOF_SERVER_URL", note: "Local Docker proof server (port 6300) — required for tx submits.", href: "https://docs.midnight.network/getting-started/installation" },
+  { name: "VITE_DEFAULT_CONTRACT", note: "Pre-deployed contract address so users skip the deploy step.", href: "https://docs.midnight.network/getting-started/hello-world" },
 ];
 
 function Primer() {
   return (
     <SiteShell>
       <section className="max-w-3xl mx-auto px-5 pt-14 pb-10">
-        <span className="eyebrow">primer · onchain</span>
-        <h1 className="font-display text-4xl sm:text-5xl font-bold mt-3 text-foreground">Four onchain primitives, demystified.</h1>
+        <span className="eyebrow">primer · midnight</span>
+        <h1 className="font-display text-4xl sm:text-5xl font-bold mt-3 text-foreground">Four ZK primitives, demystified.</h1>
         <p className="mt-4 text-muted-foreground leading-relaxed font-light">
-          Every idea in this repo leans on one of four web3 primitives. Each one runs against Ethereum Sepolia
-          (a free, real testnet) so you can ship a verifiable demo with zero hosting and zero gas spent by your users.
+          Every idea in this repo leans on one of four Midnight primitives. Each runs against
+          the Midnight <strong className="text-foreground">preview testnet</strong> — a real ZK L1
+          funded by a tDUST faucet, so you can ship a provably private demo with zero hosting
+          and no real DUST spent.
         </p>
       </section>
 
@@ -48,10 +51,15 @@ function Primer() {
               </li>
             ))}
             <li className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 pt-2 border-t border-border">
-              <span className="font-mono text-[12px] text-muted-foreground shrink-0">SEPOLIA_RPC_URL</span>
-              <span className="text-foreground/60 font-light flex-1">Optional. A public RPC is used if omitted.</span>
+              <span className="font-mono text-[12px] text-muted-foreground shrink-0">PINATA_JWT</span>
+              <span className="text-foreground/60 font-light flex-1">Optional. Only for ideas that pin artefacts to IPFS.</span>
             </li>
           </ul>
+          <div className="mt-5 pt-4 border-t border-border text-[11px] text-muted-foreground/80 leading-relaxed font-light">
+            <strong className="text-foreground">Terminal (one-time):</strong> install the Compact toolchain
+            (<code>compact update</code>), run <code>compact compile</code>, then start the proof server:
+            <code className="block mt-2 font-mono text-[10.5px] break-all">docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v</code>
+          </div>
         </div>
       </section>
 
