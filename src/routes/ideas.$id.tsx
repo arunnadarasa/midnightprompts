@@ -8,8 +8,8 @@ import { getPlainProposition } from "@/lib/plain-language";
 export const Route = createFileRoute("/ideas/$id")({
   head: ({ params }) => {
     const idea = getIdea(params.id);
-    const title = idea ? `${idea.title} · Creative Blockchain idea` : "Idea · Creative Blockchain";
-    const desc = idea ? idea.pitch : "An onchain hackathon idea.";
+    const title = idea ? `${idea.title} · Creative Midnight idea` : "Idea · Creative Midnight";
+    const desc = idea ? idea.pitch : "A Midnight ZK hackathon idea.";
     return {
       meta: [
         { title },
@@ -32,11 +32,11 @@ export const Route = createFileRoute("/ideas/$id")({
 });
 
 const SECRETS = [
-  { name: "METAMASK_PRIVATE_KEY", note: "Exported from MetaMask. Fund on Sepolia via the Google Cloud faucet.", href: "https://cloud.google.com/application/web3/faucet/ethereum/sepolia" },
-  { name: "SEPOLIA_RPC_URL", note: "Alchemy Sepolia HTTPS endpoint. Create a free app → copy the HTTPS URL.", href: "https://dashboard.alchemy.com/" },
-  { name: "ETHERSCAN_API_KEY", note: "Required for npx hardhat verify after deploy.", href: "https://etherscan.io/myapikey" },
-  { name: "PRIVY_APP_ID", note: "Enables Google sign-in and sponsored transactions.", href: "https://docs.privy.io/llms-full.txt" },
-  { name: "PINATA_JWT", note: "Pins images / JSON / manifests to IPFS.", href: "https://docs.pinata.cloud/llms-full.txt" },
+  { name: "VITE_NETWORK_ID", note: "`preview` (or `preprod`). Matches Lace's network setting.", href: "https://docs.midnight.network/relnotes/network" },
+  { name: "VITE_INDEXER_URL", note: "Midnight GraphQL Indexer for public ledger reads.", href: "https://docs.midnight.network/relnotes/network" },
+  { name: "VITE_INDEXER_WS_URL", note: "WebSocket endpoint for realtime ledger subscriptions.", href: "https://docs.midnight.network/relnotes/network" },
+  { name: "VITE_PROOF_SERVER_URL", note: "Local Docker proof server (port 6300) — required for tx submits.", href: "https://docs.midnight.network/getting-started/installation" },
+  { name: "VITE_DEFAULT_CONTRACT", note: "Pre-deployed contract address so users skip the deploy step.", href: "https://docs.midnight.network/getting-started/hello-world" },
 ];
 
 function IdeaPage() {
@@ -150,12 +150,12 @@ function IdeaPage() {
               Open in Lovable ↗
             </a>
             <a
-              href="https://sepolia.etherscan.io/"
+              href="https://preview.midnightexplorer.com/"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 border border-primary/40 text-foreground hover:bg-primary hover:text-primary-foreground transition-colors duration-500"
             >
-              Sepolia Etherscan ↗
+              Midnight Explorer ↗
             </a>
           </div>
         </section>
