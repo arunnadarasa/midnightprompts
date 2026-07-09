@@ -118,7 +118,7 @@ VITE_PINATA_JWT=eyJhbGciOi...
 open https://www.lace.io/
 
 # 3. Get testnet DUST from the faucet:
-open https://midnight-tmnight-preview.nethermind.dev/
+open https://faucet.preprod.midnight.network/
 
 # 4. Start the local proof server (one terminal tab, leave running):
 docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v
