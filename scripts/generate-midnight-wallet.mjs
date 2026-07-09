@@ -14,6 +14,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { generateMnemonic, mnemonicToSeedSync } from "bip39";
 import { WalletBuilder } from "@midnight-ntwrk/wallet";
+import { NetworkId } from "@midnight-ntwrk/zswap";
 import { firstValueFrom, filter } from "rxjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
