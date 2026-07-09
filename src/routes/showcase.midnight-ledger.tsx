@@ -6,11 +6,12 @@ export const Route = createFileRoute("/showcase/midnight-ledger")({
   head: () => ({
     meta: [
       { title: "Midnight Ledger — Showcase" },
-      { name: "description", content: "Timestamp choreography privately on the Midnight ZK testnet. Compact contract + private witness + public ledger via Indexer." },
-      { property: "og:title", content: "Midnight Ledger — Live on Midnight preview" },
+      { name: "description", content: "Timestamp choreography privately on the Midnight ZK preprod testnet. Compact contract + private witness + public ledger via Indexer." },
+      { property: "og:title", content: "Midnight Ledger — Live on Midnight preprod" },
       { property: "og:description", content: "Timestamp choreography privately on Midnight. Private witnesses, public commitments." },
     ],
   }),
+
   component: MidnightLedgerDemo,
 });
 
@@ -71,7 +72,7 @@ function MidnightLedgerDemo() {
 
   return (
     <div className="max-w-4xl mx-auto px-5 sm:px-8 py-12 sm:py-20">
-      <span className="eyebrow">Demo · Live on Midnight preview</span>
+      <span className="eyebrow">Demo · Live on Midnight preprod</span>
       <h1 className="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
         Midnight <span className="italic text-primary">Ledger</span>
       </h1>
@@ -115,13 +116,18 @@ function MidnightLedgerDemo() {
 
         {!DEPLOYED && (
           <div className="mt-6 p-5 border border-primary/30 bg-background text-sm text-foreground/80 leading-relaxed">
-            <strong className="text-primary">Awaiting first deploy.</strong> Compile{" "}
-            <code>contracts/TimestampLog.compact</code> in the Lovable sandbox, deploy it to
-            Midnight preview, then paste the printed hex address into{" "}
-            <code>src/data/midnight-contract.json</code>. The page will hydrate from the Indexer
-            on the next refresh.
+            <strong className="text-primary">Awaiting first deploy.</strong> Run{" "}
+            <code>bun scripts/deploy-midnight.mjs</code> on your own machine (Docker + Midnight
+            proof server required — the Lovable sandbox can't run the ZK prover). The script
+            prints a shielded address to fund at{" "}
+            <a href={midnightCfg.faucet} target="_blank" rel="noreferrer" className="text-primary underline">
+              the preprod faucet
+            </a>
+            , then re-run to deploy. It writes the hex address into{" "}
+            <code>src/data/midnight-contract.json</code> automatically.
           </div>
         )}
+
 
         {DEPLOYED && status === "loading" && (
           <div className="mt-6 text-sm text-muted-foreground">Reading ledger from Indexer…</div>
@@ -163,7 +169,7 @@ function MidnightLedgerDemo() {
           full recipe from the strategy page and run it on your machine.
         </p>
         <ol className="mt-4 space-y-1.5 text-sm text-foreground/90 font-light list-decimal pl-5">
-          <li>Install Lace, switch it to <em>Midnight preview</em>, get tDUST from the faucet.</li>
+          <li>Install Lace, switch it to <em>Midnight preprod</em>, get tDUST from the faucet.</li>
           <li>
             <code>compact update</code> → <code>compact compile</code> your{" "}
             <code>.compact</code> file.
