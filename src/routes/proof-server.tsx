@@ -247,7 +247,8 @@ function ProofServer() {
           <h2 className="font-display text-2xl mt-2 text-foreground">Deploy TimestampLog.compact</h2>
           <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">
             Clone this repo, paste your funded 24-word mnemonic into{" "}
-            <span className="font-mono text-foreground">.midnight-wallet.local</span> (mode 0600, gitignored),
+            <span className="font-mono text-foreground">.midnight-wallet.local</span>{" "}
+            ({platform === "windows" ? "restricted permissions via icacls, gitignored" : "mode 0600, gitignored"}),
             then run the deploy script. It syncs the wallet, loads the compiled ZK keys from{" "}
             <span className="font-mono text-foreground">contracts/managed/timestamp-log/</span>, and
             calls <span className="font-mono text-foreground">deployContract</span> — proving happens
