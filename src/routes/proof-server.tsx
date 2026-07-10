@@ -182,7 +182,7 @@ function ProofServer() {
           <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">
             The faucet dispenses <span className="text-foreground">tNIGHT</span>, not tDUST. Paste your{" "}
             <span className="text-foreground">unshielded</span> Lace address (starts with{" "}
-            <span className="font-mono">mn_addr_preview1…</span>) into the preprod faucet, then in Lace
+            <span className="font-mono">mn_addr_preview1…</span>) into the preview faucet, then in Lace
             click <span className="text-foreground">Generate tDUST</span> to delegate. Deploy spends tDUST.
           </p>
           <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -192,7 +192,7 @@ function ProofServer() {
               rel="noreferrer"
               className="border border-border hover:border-primary/50 p-4 flex flex-col gap-1 transition"
             >
-              <span className="eyebrow text-primary">preprod</span>
+              <span className="eyebrow text-primary">preview</span>
               <span className="text-foreground text-sm">Faucet ↗</span>
               <span className="text-[10px] text-muted-foreground font-mono break-all">midnight-tmnight-preview.nethermind.dev</span>
             </a>

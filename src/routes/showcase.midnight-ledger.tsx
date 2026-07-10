@@ -8,8 +8,8 @@ export const Route = createFileRoute("/showcase/midnight-ledger")({
   head: () => ({
     meta: [
       { title: "Midnight Ledger — Showcase" },
-      { name: "description", content: "Timestamp choreography privately on the Midnight ZK preprod testnet. Compact contract + private witness + public ledger via Indexer." },
-      { property: "og:title", content: "Midnight Ledger — Live on Midnight preprod" },
+      { name: "description", content: "Timestamp choreography privately on the Midnight ZK preview testnet. Compact contract + private witness + public ledger via Indexer." },
+      { property: "og:title", content: "Midnight Ledger — Live on Midnight preview" },
       { property: "og:description", content: "Timestamp choreography privately on Midnight. Private witnesses, public commitments." },
     ],
   }),
@@ -74,7 +74,7 @@ function MidnightLedgerDemo() {
 
   return (
     <div className="max-w-4xl mx-auto px-5 sm:px-8 py-12 sm:py-20">
-      <span className="eyebrow">Demo · Live on Midnight preprod</span>
+      <span className="eyebrow">Demo · Live on Midnight preview</span>
       <h1 className="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
         Midnight <span className="italic text-primary">Ledger</span>
       </h1>
@@ -128,7 +128,7 @@ function MidnightLedgerDemo() {
       <div className="mt-6 grid sm:grid-cols-2 gap-3">
 
         {[
-          { label: "preprod", cfg: walletCfg, prefix: "mn_addr_preprod…" },
+          { label: "preview", cfg: walletCfg, prefix: "mn_addr_preview…" },
           { label: "preview", cfg: walletPreviewCfg, prefix: "mn_addr_test…" },
         ].map(({ label, cfg, prefix }) => (
           <div key={label} className="p-5 border border-primary/40 bg-card text-[11px]">
@@ -168,7 +168,7 @@ function MidnightLedgerDemo() {
             <div>
               <strong className="text-primary">Funding gotcha:</strong> the{" "}
               <a href={midnightCfg.faucet} target="_blank" rel="noreferrer" className="text-primary underline">
-                preprod faucet
+                preview faucet
               </a>{" "}
               only accepts an <em>unshielded</em> address (<code>mn_addr_test1…</code>). The
               wallet SDK used here derives only the <em>shielded</em> address — pasting it
@@ -176,7 +176,7 @@ function MidnightLedgerDemo() {
               <a href="https://www.lace.io/" target="_blank" rel="noreferrer" className="text-primary underline">
                 Lace
               </a>{" "}
-              on Midnight preprod, copy its unshielded address, request tNIGHT, then click{" "}
+              on Midnight preview, copy its unshielded address, request tNIGHT, then click{" "}
               <em>Generate tDUST</em> in Lace to delegate. See{" "}
               <a href="https://docs.midnight.network/guides/acquire-tokens" target="_blank" rel="noreferrer" className="text-primary underline">
                 acquire-tokens docs ↗
@@ -232,7 +232,7 @@ function MidnightLedgerDemo() {
           full recipe from the strategy page and run it on your machine.
         </p>
         <ol className="mt-4 space-y-1.5 text-sm text-foreground/90 font-light list-decimal pl-5">
-          <li>Install Lace, switch it to <em>Midnight preprod</em>, get tDUST from the faucet.</li>
+          <li>Install Lace, switch it to <em>Midnight preview</em>, get tDUST from the faucet.</li>
           <li>
             <code>compact update</code> → <code>compact compile</code> your{" "}
             <code>.compact</code> file.
