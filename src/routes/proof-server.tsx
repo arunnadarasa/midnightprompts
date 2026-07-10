@@ -76,6 +76,8 @@ function Code({ children }: { children: string }) {
 }
 
 function ProofServer() {
+  const [platform, setPlatform] = useState<"unix" | "windows">("unix");
+
   return (
     <SiteShell>
       <section className="max-w-3xl mx-auto px-5 pt-14 pb-10">
