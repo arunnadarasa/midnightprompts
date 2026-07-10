@@ -110,6 +110,21 @@ function ProofServer() {
       </section>
 
       <section className="max-w-3xl mx-auto px-5 pb-14 space-y-8">
+        <div className="flex gap-2">
+          <button
+            onClick={() => setPlatform("unix")}
+            className={`px-3 py-2 text-[10px] tracking-[0.28em] uppercase font-semibold border transition ${platform === "unix" ? "bg-primary text-primary-foreground border-primary" : "border-border text-foreground hover:border-primary/60 hover:text-primary"}`}
+          >
+            macOS / Linux
+          </button>
+          <button
+            onClick={() => setPlatform("windows")}
+            className={`px-3 py-2 text-[10px] tracking-[0.28em] uppercase font-semibold border transition ${platform === "windows" ? "bg-primary text-primary-foreground border-primary" : "border-border text-foreground hover:border-primary/60 hover:text-primary"}`}
+          >
+            Windows
+          </button>
+        </div>
+
         <div>
           <span className="eyebrow text-primary">step 01</span>
           <h2 className="font-display text-2xl mt-2 text-foreground">Install Docker Desktop</h2>
