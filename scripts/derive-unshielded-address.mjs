@@ -39,7 +39,7 @@ const unshieldedAddress = keystore.getBech32Address().asString();
 
 // Also derive the shielded address for the same seed at the correct network,
 // so both addresses in the JSON refer to the same wallet on preprod.
-const shieldedKeys = ledger.ZswapSecretKeys.fromSeed(Buffer.from(seeds.shielded).toString("hex"));
+const shieldedKeys = ledger.ZswapSecretKeys.fromSeed(Uint8Array.from(seeds.shielded));
 const shieldedAddrObj = new ShieldedAddress(
   new ShieldedCoinPublicKey(Buffer.from(shieldedKeys.coinPublicKey, "hex")),
   new ShieldedEncryptionPublicKey(Buffer.from(shieldedKeys.encryptionPublicKey, "hex")),
