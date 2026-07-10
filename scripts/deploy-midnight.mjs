@@ -39,7 +39,7 @@ const SEED_FILE = path.join(ROOT, ".midnight-wallet.local");
 const CONTRACT_JSON = path.join(ROOT, "src/data/midnight-contract.json");
 const MANAGED = path.join(ROOT, "contracts/managed/timestamp-log");
 
-const NETWORK_ID = process.env.VITE_NETWORK_ID ?? "preprod";
+const NETWORK_ID = process.env.VITE_NETWORK_ID ?? "preview";
 const INDEXER_HTTP =
   process.env.VITE_INDEXER_URL ??
   "https://indexer.preview.midnight.network/api/v4/graphql";
