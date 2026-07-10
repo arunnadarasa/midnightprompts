@@ -1,28 +1,26 @@
 ## Goal
 
-Derive the **Midnight Preview testnet** shielded + unshielded addresses from the existing `MIDNIGHT_WALLET_SEED` (same 24-word mnemonic already used for preprod), and surface them alongside the preprod pair.
-
-The Preview network is a separate Midnight testnet from preprod. Its bech32m network suffix is `test` (per Midnight's `NetworkId` mapping: `Undeployed`→`undeployed`, `DevNet`→`dev`, `TestNet`→`test`, `MainNet`→ none). So Preview addresses look like `mn_addr_test1…` and `mn_shield-addr_test1…`.
+Let hackathon participants know that Lace ships as a **mobile wallet** (like MetaMask / Phantom) but currently only for **Cardano** — Midnight support on mobile is not out yet, so Midnight dApps still need the Lace **browser extension** on desktop.
 
 ## Changes
 
-1. **`scripts/derive-unshielded-address.mjs`** — make the network suffix a CLI flag / env var instead of a hardcoded `"preprod"`. Default stays `preprod` for back-compat. Also accept an `--out` path so we can write to a different JSON file per network.
+1. **`src/routes/showcase.midnight-ledger.tsx`** — add a small callout block right above the existing "fund this address" grid (preprod / preview cards). Content:
+   - Heading: "Wallet · Lace"
+   - One line: Lace is available as a mobile wallet today, but only for Cardano. Midnight support on mobile is not shipped yet, so use the Lace **desktop browser extension** for these demos.
+   - Three links:
+     - `https://www.lace.io/` — Get Lace
+     - `https://docs.midnight.network/blog/connect-dapp-lace-wallet` — Connect a dApp with Lace
+     - `https://docs.midnight.network/relnotes/overview` — Midnight release notes
+   - Styling: matches existing bordered card look (`border border-primary/30 bg-card`, `eyebrow` label, small text, `text-primary underline` links).
 
-   ```
-   bun scripts/derive-unshielded-address.mjs --network=test --out=src/data/midnight-wallet-preview.json
-   ```
-
-2. **New file `src/data/midnight-wallet-preview.json`** — same shape as `midnight-wallet.json`, populated by running the script with `--network=test`. `network` field = `"preview"`, `faucet` points at the Preview faucet URL (same Nethermind faucet — it exposes a network selector; keep the docs link).
-
-3. **`src/routes/showcase.midnight-ledger.tsx`** — import the new Preview JSON and render a second card ("Preview network") next to the existing preprod card, each showing its shielded + unshielded address with copy buttons. No other UI/business-logic changes.
-
-4. **`scripts/deploy-midnight.README.md`** — add a one-liner showing the `--network=test` invocation for Preview.
+2. **`src/routes/strategy.tsx`** — add the same callout as a standalone section in a location that fits the page's existing rhythm (near any existing wallet / tooling references, or appended as a new section if none exists). Same three links, same wording, same visual treatment as the showcase card so the two pages stay consistent.
 
 ## Out of scope
 
-- Any change to preprod addresses, the deploy script, or the contract/wallet business logic.
-- Generating a *separate* seed for Preview. Same seed → different network suffix → different-looking address, which is the standard Midnight pattern.
+- No changes to wallet derivation scripts, JSON data files, or contract logic.
+- No new dependencies, no image/asset generation.
+- No copy changes to the existing preprod / preview funding cards.
 
 ## Verification
 
-After switching to build mode I'll run the script with `--network=test`, confirm the output starts with `mn_addr_test1` / `mn_shield-addr_test1`, and check the showcase route renders both cards.
+After switching to build mode I'll open both routes in the preview and confirm the callout renders, links open in a new tab, and layout still looks right on mobile widths.

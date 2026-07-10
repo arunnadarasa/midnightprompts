@@ -200,6 +200,24 @@ function StrategyPage() {
           <pre className="whitespace-pre-wrap break-words [overflow-wrap:anywhere] font-mono text-[11px] sm:text-[12px] leading-relaxed p-4 sm:p-5 max-w-full overflow-x-hidden border border-border bg-card text-foreground/90">{LACE_SNIPPET}</pre>
         </section>
 
+        <section className="mt-6 p-5 border border-primary/30 bg-card">
+          <div className="eyebrow text-primary">wallet · lace</div>
+          <p className="mt-2 text-sm text-muted-foreground leading-relaxed font-light">
+            Lace ships as a <strong className="text-foreground">mobile wallet</strong> today
+            (iOS / Android, the MetaMask / Phantom equivalent for the Cardano ecosystem) — but
+            <strong className="text-foreground"> only for Cardano</strong>. Midnight support
+            on mobile is not shipped yet, so for these demos install the Lace
+            <strong className="text-foreground"> desktop browser extension</strong> and switch
+            it to Midnight preview / preprod.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+            <a href="https://www.lace.io/" target="_blank" rel="noreferrer" className="text-primary underline">Get Lace ↗</a>
+            <a href="https://docs.midnight.network/blog/connect-dapp-lace-wallet" target="_blank" rel="noreferrer" className="text-primary underline">Connect a dApp with Lace ↗</a>
+            <a href="https://docs.midnight.network/relnotes/overview" target="_blank" rel="noreferrer" className="text-primary underline">Midnight release notes ↗</a>
+          </div>
+        </section>
+
+
         <section className="mt-10">
           <h2 className="font-display text-2xl font-semibold mb-3 text-foreground italic">4. Pin artefacts to IPFS (optional)</h2>
           <div className="flex items-baseline justify-between mb-2">

@@ -109,7 +109,24 @@ function MidnightLedgerDemo() {
         </div>
       </div>
 
+      <div className="mt-6 p-5 border border-primary/30 bg-card">
+        <div className="eyebrow text-primary">wallet · lace</div>
+        <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+          Lace ships as a <strong className="text-foreground">mobile wallet</strong> today
+          (iOS / Android, the MetaMask / Phantom equivalent for Cardano) — but{" "}
+          <strong className="text-foreground">only for Cardano</strong>. Midnight support on
+          mobile is not shipped yet, so use the Lace{" "}
+          <strong className="text-foreground">desktop browser extension</strong> for these demos.
+        </p>
+        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+          <a href="https://www.lace.io/" target="_blank" rel="noreferrer" className="text-primary underline">Get Lace ↗</a>
+          <a href="https://docs.midnight.network/blog/connect-dapp-lace-wallet" target="_blank" rel="noreferrer" className="text-primary underline">Connect a dApp with Lace ↗</a>
+          <a href="https://docs.midnight.network/relnotes/overview" target="_blank" rel="noreferrer" className="text-primary underline">Midnight release notes ↗</a>
+        </div>
+      </div>
+
       <div className="mt-6 grid sm:grid-cols-2 gap-3">
+
         {[
           { label: "preprod", cfg: walletCfg, prefix: "mn_addr_preprod…" },
           { label: "preview", cfg: walletPreviewCfg, prefix: "mn_addr_test…" },
