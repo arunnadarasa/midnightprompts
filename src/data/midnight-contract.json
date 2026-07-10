@@ -1,6 +1,6 @@
 {
-  "network": "Midnight Preprod Testnet",
-  "networkId": "preprod",
+  "network": "Midnight Preview Testnet",
+  "networkId": "preview",
   "compactVersion": "0.23",
   "sdkVersion": "midnight-js-contracts@4.1.1 · wallet@4.0.0 · wallet-sdk-hd@3.1.0-beta.1",
   "proofServerVersion": "docker: midnightntwrk/proof-server:latest",
