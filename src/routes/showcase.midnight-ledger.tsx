@@ -127,8 +127,7 @@ function MidnightLedgerDemo() {
       <div className="mt-6 grid sm:grid-cols-2 gap-3">
 
         {[
-          { label: "preview", cfg: walletCfg, prefix: "mn_addr_preview…" },
-          { label: "preview", cfg: walletPreviewCfg, prefix: "mn_addr_test…" },
+          { label: "preview", cfg: walletPreviewCfg, prefix: "mn_addr_preview…" },
         ].map(({ label, cfg, prefix }) => (
           <div key={label} className="p-5 border border-primary/40 bg-card text-[11px]">
             <div className="eyebrow text-primary">{label} · fund this address</div>
