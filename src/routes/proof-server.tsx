@@ -1,67 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/site-shell";
-import contractInfo from "@/data/midnight-contract.json";
-
-const PLACEHOLDER_ADDRESS = "0000000000000000000000000000000000000000000000000000000000000000";
-
-function DeployStatus() {
-  const isDeployed = contractInfo.address && contractInfo.address !== PLACEHOLDER_ADDRESS;
-  const explorerBase = contractInfo.explorer?.replace(/\/$/, "") ?? "https://preview.midnightexplorer.com";
-  const addressUrl = isDeployed ? `${explorerBase}/contract/${contractInfo.address}` : null;
-  const txUrl = contractInfo.deployTx ? `${explorerBase}/tx/${contractInfo.deployTx}` : null;
-
-  return (
-    <div className={`border p-5 ${isDeployed ? "border-primary/60 bg-primary/5" : "border-dashed border-border bg-card"}`}>
-      <div className="flex items-center justify-between gap-4">
-        <span className="eyebrow text-primary">deploy status</span>
-        <span className={`text-[10px] tracking-[0.28em] uppercase font-semibold ${isDeployed ? "text-primary" : "text-muted-foreground"}`}>
-          {isDeployed ? "● live on preview" : "○ awaiting deploy"}
-        </span>
-      </div>
-      {isDeployed ? (
-        <div className="mt-3 space-y-2 text-xs font-light text-muted-foreground leading-relaxed">
-          <div>
-            <span className="text-foreground uppercase tracking-[0.2em] text-[10px]">Address</span>
-            <div className="font-mono text-foreground text-[11px] break-all mt-1">{contractInfo.address}</div>
-          </div>
-          {contractInfo.deployTx && (
-            <div>
-              <span className="text-foreground uppercase tracking-[0.2em] text-[10px]">Deploy tx</span>
-              <div className="font-mono text-foreground text-[11px] break-all mt-1">{contractInfo.deployTx}</div>
-            </div>
-          )}
-          <div className="flex flex-wrap gap-2 pt-2">
-            {addressUrl && (
-              <a href={addressUrl} target="_blank" rel="noreferrer" className="px-3 py-2 border border-primary/40 text-primary text-[10px] tracking-[0.28em] uppercase font-semibold hover:bg-primary hover:text-primary-foreground transition">
-                View contract ↗
-              </a>
-            )}
-            {txUrl && (
-              <a href={txUrl} target="_blank" rel="noreferrer" className="px-3 py-2 border border-border text-foreground text-[10px] tracking-[0.28em] uppercase font-semibold hover:border-primary/60 hover:text-primary transition">
-                View tx ↗
-              </a>
-            )}
-          </div>
-        </div>
-      ) : (
-        <p className="mt-3 text-xs text-muted-foreground font-light leading-relaxed">
-          Run the deploy script below. On success it writes the address + tx hash into{" "}
-          <span className="font-mono text-foreground">src/data/midnight-contract.json</span> and this panel
-          hydrates with an explorer link on next refresh.
-        </p>
-      )}
-    </div>
-  );
-}
+import {
+  CONTRACTS,
+  NETWORK_IDS,
+  type NetworkId,
+} from "@/data/midnight-contract";
+import { NetworkToggle } from "@/components/NetworkToggle";
+import { DualDeployStatus } from "@/components/DeployStatusPanel";
 
 export const Route = createFileRoute("/proof-server")({
   head: () => ({
     meta: [
       { title: "Proof Server · Creative Midnight" },
-      { name: "description", content: "Run the Midnight proof server locally with Docker to generate zero-knowledge proofs and deploy Compact contracts to preview." },
+      { name: "description", content: "Run the Midnight proof server locally with Docker to generate zero-knowledge proofs and deploy Compact contracts to preview or preprod." },
       { property: "og:title", content: "Proof Server · Creative Midnight" },
-      { property: "og:description", content: "Run the Midnight proof server locally with Docker to generate zero-knowledge proofs and deploy Compact contracts to preview." },
+      { property: "og:description", content: "Run the Midnight proof server locally with Docker to generate zero-knowledge proofs and deploy Compact contracts to preview or preprod." },
     ],
   }),
   component: ProofServer,
@@ -77,6 +31,12 @@ function Code({ children }: { children: string }) {
 
 function ProofServer() {
   const [platform, setPlatform] = useState<"unix" | "windows">("unix");
+  const [network, setNetwork] = useState<NetworkId>("preprod");
+  const cfg = CONTRACTS[network];
+  const deployCmd =
+    network === "preview"
+      ? "bun scripts/deploy-midnight.mjs"
+      : "VITE_NETWORK_ID=preprod bun scripts/deploy-midnight.mjs";
 
   return (
     <SiteShell>
@@ -106,23 +66,35 @@ function ProofServer() {
       </section>
 
       <section className="max-w-3xl mx-auto px-5 pb-10">
-        <DeployStatus />
+        <div className="flex items-center justify-between gap-4 mb-4 flex-wrap">
+          <span className="eyebrow">deploy status · both networks</span>
+        </div>
+        <DualDeployStatus cfgs={NETWORK_IDS.map((n) => CONTRACTS[n])} />
       </section>
 
       <section className="max-w-3xl mx-auto px-5 pb-14 space-y-8">
-        <div className="flex gap-2">
-          <button
-            onClick={() => setPlatform("unix")}
-            className={`px-3 py-2 text-[10px] tracking-[0.28em] uppercase font-semibold border transition ${platform === "unix" ? "bg-primary text-primary-foreground border-primary" : "border-border text-foreground hover:border-primary/60 hover:text-primary"}`}
-          >
-            macOS / Linux
-          </button>
-          <button
-            onClick={() => setPlatform("windows")}
-            className={`px-3 py-2 text-[10px] tracking-[0.28em] uppercase font-semibold border transition ${platform === "windows" ? "bg-primary text-primary-foreground border-primary" : "border-border text-foreground hover:border-primary/60 hover:text-primary"}`}
-          >
-            Windows
-          </button>
+        <div className="flex flex-col sm:flex-row gap-4 sm:items-end justify-between">
+          <div>
+            <span className="eyebrow block mb-2">platform</span>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setPlatform("unix")}
+                className={`px-3 py-2 text-[10px] tracking-[0.28em] uppercase font-semibold border transition ${platform === "unix" ? "bg-primary text-primary-foreground border-primary" : "border-border text-foreground hover:border-primary/60 hover:text-primary"}`}
+              >
+                macOS / Linux
+              </button>
+              <button
+                onClick={() => setPlatform("windows")}
+                className={`px-3 py-2 text-[10px] tracking-[0.28em] uppercase font-semibold border transition ${platform === "windows" ? "bg-primary text-primary-foreground border-primary" : "border-border text-foreground hover:border-primary/60 hover:text-primary"}`}
+              >
+                Windows
+              </button>
+            </div>
+          </div>
+          <div>
+            <span className="eyebrow block mb-2">network</span>
+            <NetworkToggle value={network} onChange={setNetwork} />
+          </div>
         </div>
 
         <div>
@@ -158,7 +130,8 @@ function ProofServer() {
           <h2 className="font-display text-2xl mt-2 text-foreground">Boot the proof server</h2>
           <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">
             One command. It listens on <span className="text-foreground">http://localhost:6300</span>{" "}
-            — the default the Midnight SDK expects. Keep it running while you deploy.
+            — the default the Midnight SDK expects. The same container handles both preview and
+            preprod proofs; only your <span className="font-mono">VITE_NETWORK_ID</span> changes.
           </p>
           <div className="mt-3">
             <Code>{`docker run -d --name midnight-proof-server \\
@@ -217,19 +190,22 @@ function ProofServer() {
           <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">
             The faucet dispenses <span className="text-foreground">tNIGHT</span>, not tDUST. Paste your{" "}
             <span className="text-foreground">unshielded</span> Lace address (starts with{" "}
-            <span className="font-mono">mn_addr_preview1…</span>) into the preview faucet, then in Lace
-            click <span className="text-foreground">Generate tDUST</span> to delegate. Deploy spends tDUST.
+            <span className="font-mono">{cfg.unshieldedPrefix ?? "mn_addr_…"}</span>) into the{" "}
+            {network} faucet, then in Lace click{" "}
+            <span className="text-foreground">Generate tDUST</span> to delegate. Deploy spends tDUST.
           </p>
           <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <a
-              href="https://midnight-tmnight-preview.nethermind.dev/"
+              href={cfg.faucet}
               target="_blank"
               rel="noreferrer"
               className="border border-border hover:border-primary/50 p-4 flex flex-col gap-1 transition"
             >
-              <span className="eyebrow text-primary">preview</span>
+              <span className="eyebrow text-primary">{network}</span>
               <span className="text-foreground text-sm">Faucet ↗</span>
-              <span className="text-[10px] text-muted-foreground font-mono break-all">midnight-tmnight-preview.nethermind.dev</span>
+              <span className="text-[10px] text-muted-foreground font-mono break-all">
+                {cfg.faucet.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+              </span>
             </a>
             <Link
               to="/wallet"
@@ -249,7 +225,8 @@ function ProofServer() {
             Clone this repo, paste your funded 24-word mnemonic into{" "}
             <span className="font-mono text-foreground">.midnight-wallet.local</span>{" "}
             ({platform === "windows" ? "restricted permissions via icacls, gitignored" : "mode 0600, gitignored"}),
-            then run the deploy script. It syncs the wallet, loads the compiled ZK keys from{" "}
+            then run the deploy script with the {network} network selected. It syncs the wallet,
+            loads compiled ZK keys from{" "}
             <span className="font-mono text-foreground">contracts/managed/timestamp-log/</span>, and
             calls <span className="font-mono text-foreground">deployContract</span> — proving happens
             against your local proof server.
@@ -261,20 +238,25 @@ bun install
 "your twenty four word mnemonic here" | Out-File -Encoding UTF8 .midnight-wallet.local -NoNewline
 icacls .midnight-wallet.local /inheritance:r /grant:r "$env:USERNAME:(R,W)"
 
-bun scripts/deploy-midnight.mjs`}</Code>
+${network === "preview" ? "" : "$env:VITE_NETWORK_ID = \"preprod\"\n"}${deployCmd.replace(/^VITE_NETWORK_ID=preprod /, "")}`}</Code>
             ) : (
               <Code>{`# in the repo root
 bun install
 echo "your twenty four word mnemonic here" > .midnight-wallet.local
 chmod 600 .midnight-wallet.local
 
-bun scripts/deploy-midnight.mjs`}</Code>
+${deployCmd}`}</Code>
             )}
           </div>
           <p className="mt-3 text-xs text-muted-foreground font-light">
-            On success the script writes <span className="font-mono text-foreground">src/data/midnight-contract.json</span>{" "}
-            with <span className="font-mono">address</span>, <span className="font-mono">deployTx</span>, and{" "}
-            <span className="font-mono">verified: true</span>, then prints the MidnightScan preview URL.
+            On success the script writes{" "}
+            <span className="font-mono text-foreground">
+              src/data/midnight-contract.{network}.json
+            </span>{" "}
+            with <span className="font-mono">address</span>,{" "}
+            <span className="font-mono">deployTx</span>, and{" "}
+            <span className="font-mono">verified: true</span>, then prints the MidnightScan{" "}
+            {network} URL.
           </p>
         </div>
 
@@ -282,9 +264,14 @@ bun scripts/deploy-midnight.mjs`}</Code>
           <span className="eyebrow text-primary">step 05</span>
           <h2 className="font-display text-2xl mt-2 text-foreground">Wire it back into the site</h2>
           <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">
-            Paste the resulting address + tx hash back into this project and the showcase page
-            hydrates from the live contract on next refresh. Or, if you deployed via a different
-            path, just paste the two values — no script rerun needed.
+            The deploy status panels above hydrate from the per-network JSON on next refresh — no
+            code changes needed. If you deployed via a different path, paste{" "}
+            <span className="font-mono text-foreground">address</span> and{" "}
+            <span className="font-mono text-foreground">deployTx</span> straight into{" "}
+            <span className="font-mono text-foreground">
+              src/data/midnight-contract.{network}.json
+            </span>
+            .
           </p>
         </div>
       </section>
