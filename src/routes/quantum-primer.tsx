@@ -104,6 +104,63 @@ function Primer() {
           );
         })}
       </section>
+
+      <section className="max-w-3xl mx-auto px-5 pb-20">
+        <div className="p-6 border border-primary/30 bg-card">
+          <div className="eyebrow text-primary">networks</div>
+          <h2 className="font-display text-2xl text-foreground italic mt-1">Preprod vs Preview vs Mainnet</h2>
+          <p className="mt-3 text-sm text-muted-foreground font-light leading-relaxed">
+            Midnight ships three networks. Addresses, faucets, and SDK versions differ by
+            suffix — the wallet you derive from a seed will look different on each.
+          </p>
+
+          <div className="mt-5 overflow-x-auto">
+            <table className="w-full text-xs sm:text-sm border-collapse min-w-[560px]">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left py-2 pr-3 font-normal eyebrow text-muted-foreground"></th>
+                  <th className="text-left py-2 px-3 font-normal eyebrow text-primary">Preprod</th>
+                  <th className="text-left py-2 px-3 font-normal eyebrow text-primary">Preview</th>
+                  <th className="text-left py-2 pl-3 font-normal eyebrow text-primary">Mainnet</th>
+                </tr>
+              </thead>
+              <tbody className="text-foreground/85 font-light align-top">
+                {[
+                  ["Purpose", "Stable testnet mirroring the current mainnet release train.", "Bleeding-edge testnet for upcoming SDK / protocol changes.", "Real network. Real value."],
+                  ["Address prefix", <code className="font-mono text-[11px]">mn_addr_preprod1…</code>, <code className="font-mono text-[11px]">mn_addr_test1…</code>, <code className="font-mono text-[11px]">mn_addr1…</code>],
+                  ["Token", "tNIGHT → tDUST (free test tokens)", "tNIGHT → tDUST (free test tokens)", "NIGHT → DUST (real, purchased)"],
+                  ["Faucet", "Nethermind preprod faucet", "Midnight preview faucet", "None"],
+                  ["SDK version", "Stable, matches current mainnet.", "Next release candidate — may break between drops.", "Stable, audited."],
+                  ["Use for", "Demos, hackathon submissions, integration tests.", "Trying features before they hit preprod.", "Production dApps only."],
+                  ["Reset policy", "Occasional resets around major upgrades.", "Reset frequently without notice.", "Never."],
+                ].map(([label, a, b, c], i) => (
+                  <tr key={i} className="border-b border-border/60">
+                    <td className="py-3 pr-3 eyebrow text-muted-foreground whitespace-nowrap">{label}</td>
+                    <td className="py-3 px-3 leading-relaxed">{a}</td>
+                    <td className="py-3 px-3 leading-relaxed">{b}</td>
+                    <td className="py-3 pl-3 leading-relaxed">{c}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-5 p-4 border border-primary/40 bg-background text-sm text-foreground/85 font-light leading-relaxed">
+            <strong className="text-primary">Which one for the hackathon?</strong>{" "}
+            <strong className="text-foreground">Preprod</strong> is the default in this repo — it
+            tracks mainnet behaviour, the faucet is reliable, and the deploy script + wallet JSON
+            default there. Only reach for Preview if you need an SDK feature that hasn't landed on
+            preprod yet.
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+            <a href="https://docs.midnight.network/relnotes/network" target="_blank" rel="noreferrer" className="text-primary underline">Network endpoints ↗</a>
+            <a href="https://docs.midnight.network/relnotes/overview" target="_blank" rel="noreferrer" className="text-primary underline">Release notes ↗</a>
+            <a href="https://docs.midnight.network/guides/acquire-tokens" target="_blank" rel="noreferrer" className="text-primary underline">Acquire tokens ↗</a>
+          </div>
+        </div>
+      </section>
+
     </SiteShell>
   );
 }
