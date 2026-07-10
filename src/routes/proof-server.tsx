@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { SiteShell } from "@/components/site-shell";
 import contractInfo from "@/data/midnight-contract.json";
 
