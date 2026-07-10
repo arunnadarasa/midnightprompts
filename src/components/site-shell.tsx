@@ -72,6 +72,7 @@ function SiteHeader() {
             <nav className="flex flex-col p-4 gap-1 text-base">
               <MobileLink to="/themes" onClick={close}>Themes</MobileLink>
               <MobileLink to="/showcase" onClick={close}>Showcase</MobileLink>
+              <MobileLink to="/wallet" onClick={close}>Wallet</MobileLink>
               <MobileLink to="/strategy" onClick={close}>Strategy</MobileLink>
               <MobileLink to="/quantum-primer" onClick={close}>Primer</MobileLink>
               <MobileLink to="/about" onClick={close}>About</MobileLink>
