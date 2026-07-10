@@ -9,21 +9,30 @@ Build a Midnight Network dApp in one shot. Midnight is a privacy-first L1 where 
 
 ## Non-negotiables
 
-- **Compact language `0.23`**, MidnightJS SDK `4.1.1`, proof server `8.1.0`.
+- **Compact language `0.23`**, MidnightJS SDK `midnight-js-contracts@4.1.1` + `wallet@4.0.0` + `wallet-sdk-hd@3.1.0-beta.1`, proof server `midnightntwrk/proof-server:latest`.
 - Every `.compact` file starts with `pragma language_version 0.23;` and imports `CompactStandardLibrary`.
 - Every ledger write from a circuit parameter needs an explicit `disclose(...)` — otherwise the compiler rejects it. This is the whole privacy model; don't work around it.
 - `witness` callbacks (private inputs from TypeScript) return values that never touch the chain. Never send the witness value in a transaction — pass it into the circuit only.
 - Circuits are bounded: **no recursion, no dynamic-length loops, no I/O, no oracles.** All loops fold over compile-time constants.
-- Proofs for medium circuits (`k=14`) take **30–120s** on the local proof server. Every write UI must show a `Proving…` state and stay usable.
-- **No SSR.** MidnightJS uses `window`, Node `Buffer`, and WASM with top-level await. Load all `@midnight-ntwrk/*` imports behind `<ClientOnly>` or `useEffect`; put `import { Buffer } from 'buffer'; (globalThis as any).Buffer = Buffer;` as the very first line of `src/main.tsx`.
+- Proofs for medium circuits (`k=14`) take **30–120s** on the local proof server (first proof after container boot is the slowest; warm proofs are seconds). Every write UI must show a `Proving…` state and stay usable.
+- **No SSR.** MidnightJS uses `window`, Node `Buffer`, and WASM with top-level await. Load all `@midnight-ntwrk/*` imports behind a client-only boundary; put `import { Buffer } from 'buffer'; (globalThis as any).Buffer = Buffer;` as the very first line of `src/main.tsx` (Vite SPA) OR of a client-only entry that a `<ClientOnly>` gate loads (TanStack Start).
 - **Do NOT** attempt bridging to Ethereum, oracle calls inside circuits, or sub-second UX.
 
-## Five environment secrets
+## Two live networks
+
+| Network | `VITE_NETWORK_ID` | Address prefix | Faucet | Explorer |
+| --- | --- | --- | --- | --- |
+| Preview (unstable, resets) | `preview` | `mn_shield-addr_test1…` | `midnight-tmnight-preview.nethermind.dev` | `preview.midnightexplorer.com` |
+| Preprod (stable, closer to mainnet) | `preprod` | `mn_shield-addr_preprod1…` / unshielded `mn_addr_preprod1…` | `midnight-tmnight-preprod.nethermind.dev` | `preprod.midnightexplorer.com` |
+
+Both explorers accept a contract address (`/contract/<hex>`) or tx hash (`/tx/<hex>`). Prefer preprod for anything demoed to real users.
+
+## Environment secrets
 
 ```
-VITE_NETWORK_ID=preview                                           # or preprod
-VITE_INDEXER_URL=https://indexer.preview.midnight.network/api/v4/graphql
-VITE_INDEXER_WS_URL=wss://indexer.preview.midnight.network/api/v4/graphql/ws
+VITE_NETWORK_ID=preprod                                            # or preview
+VITE_INDEXER_URL=https://indexer.preprod.midnight.network/api/v4/graphql
+VITE_INDEXER_WS_URL=wss://indexer.preprod.midnight.network/api/v4/graphql/ws
 VITE_PROOF_SERVER_URL=http://localhost:6300
 VITE_DEFAULT_CONTRACT=<hex address printed by first deploy>
 ```
@@ -33,16 +42,43 @@ Optional: `VITE_PINATA_JWT` when the app pins artefacts to IPFS.
 ## One-time terminal setup (the user does this on their machine)
 
 ```bash
+# 1. Compact compiler
 curl --proto '=https' --tlsv1.2 -LsSf \
   https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh
 source ~/.bashrc && compact update
 compact compile contracts/YourContract.compact contracts/managed/your-contract
 cp -r contracts/managed/your-contract/keys ./public/keys
 cp -r contracts/managed/your-contract/zkir ./public/zkir
-docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v
+
+# 2. Proof server — Docker Desktop must be RUNNING first (menubar whale icon).
+#    "Cannot connect to the Docker daemon at unix:///.../docker.sock" = Docker Desktop not started.
+docker run -d --name midnight-proof-server \
+  -p 6300:6300 \
+  midnightntwrk/proof-server:latest \
+  midnight-proof-server -v
+
+# 3. Verify — expect {"status":"ok","timestamp":"..."}.
+curl http://localhost:6300/health
+
+# 4. Lifecycle
+docker ps                                    # confirm running + port 6300:6300
+docker logs -f midnight-proof-server         # tail
+docker stop midnight-proof-server            # pause
+docker start midnight-proof-server           # resume (image already pulled)
 ```
 
-Lace wallet ships from https://www.lace.io/. tDUST comes from the faucet https://midnight-tmnight-preview.nethermind.dev/.
+Lace wallet ships from https://www.lace.io/ (Midnight-enabled build). Install → switch network to Preview or Preprod → create/restore wallet → copy the shielded/unshielded address.
+
+## Funding: tNIGHT ≠ tDUST (the #1 support question)
+
+Deploys and shielded txs spend **tDUST**, but the faucet only dispenses **tNIGHT**. Every user hits this once.
+
+1. Copy your **unshielded** address (`mn_addr_preprod1…`) from Lace.
+2. Paste it into the preprod faucet, click Request → you now hold tNIGHT.
+3. In Lace, click **Generate tDUST** to delegate tNIGHT and mint tDUST.
+4. Refresh — the wallet page should show a tDUST balance. Only now can you deploy.
+
+If a deploy fails with "insufficient tDUST", step 3 was skipped.
 
 ## The four canonical primitives
 
@@ -82,7 +118,7 @@ Type-casting rules learned the hard way:
 - `Counter → Field → Bytes<32>` is two steps: `x as Field as Bytes<32>`. Direct `as Bytes<32>` fails.
 - **String literals in a `constructor()` are `Bytes<N>`, not `Opaque<"string">`.** Do not assign `"(empty)"` to a ledger field of type `Opaque<"string">` — the compiler rejects it. Only `disclose(<circuit-param-of-that-type>)` works.
 
-## Vite config essentials
+## Vite config essentials (classic Vite SPA)
 
 ```ts
 import { defineConfig } from 'vite';
@@ -101,6 +137,15 @@ export default defineConfig({
 });
 ```
 
+## TanStack Start compatibility (Lovable's current default)
+
+TanStack Start SSR-renders every route by default; MidnightJS crashes under SSR (`window is not defined`, top-level-await, WASM). Rules:
+
+- **Never** import `@midnight-ntwrk/*` at module scope of a route file. Do all MidnightJS work inside `useEffect` or a lazy component behind a `useHydrated()` / `<ClientOnly>` gate.
+- Keep the Compact deploy in a **`bun scripts/deploy-midnight.mjs`** Node script that talks to the local proof server on `localhost:6300` — do NOT deploy from a server function (Cloudflare Worker runtime has no Docker, no proof server, no long-lived TCP to localhost).
+- Write the deploy result to `src/data/midnight-contract.json` (address, deployTx, network, versions) so the browser can import it as static JSON and hydrate an explorer link.
+- Read-only Indexer GraphQL queries are the ONLY Midnight surface safe in a loader / server function — and only against the public Indexer HTTPS endpoint, never through the proof server.
+
 ## MidnightJS bootstrap
 
 ```ts
@@ -117,7 +162,7 @@ import { indexerPublicDataProvider } from '@midnight-ntwrk/midnight-js-indexer-p
 import semver from 'semver';
 
 export async function initProviders() {
-  const net = import.meta.env.VITE_NETWORK_ID ?? 'preview';
+  const net = import.meta.env.VITE_NETWORK_ID ?? 'preprod';
   setNetworkId(net);
   const lace = await new Promise<any>((res, rej) => {
     const t0 = Date.now();
@@ -156,17 +201,34 @@ const stateHex = (await r.json()).data?.contractAction?.state;
 
 Decode with the compiled contract's `ledger(state)` helper from `contracts/managed/<name>/contract/index.cjs` — but only in a client-only module.
 
+## Deploy status UI pattern
+
+Ship a small panel that imports `src/data/midnight-contract.json` and branches on address. Treat the all-zero address (`0000…0000`) as "not yet deployed":
+
+```tsx
+import contract from '@/data/midnight-contract.json';
+const PLACEHOLDER = '0'.repeat(64);
+const deployed = contract.address && contract.address !== PLACEHOLDER;
+const explorer = contract.explorer?.replace(/\/$/, '') ?? 'https://preprod.midnightexplorer.com';
+// deployed → link to `${explorer}/contract/${contract.address}` and `${explorer}/tx/${contract.deployTx}`
+// not deployed → show the "run bun scripts/deploy-midnight.mjs" hint
+```
+
+This lets the marketing page hydrate the moment the user's local deploy script writes the JSON, with no rebuild coordination.
+
 ## Failure modes ranked by frequency
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
+| `Cannot connect to the Docker daemon at unix:///…/docker.sock` | Docker Desktop app itself isn't running | Open Docker Desktop from Spotlight, wait for the whale menubar icon, re-run `docker run …` |
 | `compile error: disclose() required` | Assigning a circuit param straight to a ledger field | Wrap in `disclose(...)` |
 | `cannot cast Counter to Bytes<32>` | Direct cast | `x as Field as Bytes<32>` |
 | Assigning a string literal to `Opaque<"string">` ledger field in `constructor()` | Literals are `Bytes<N>`, not `Opaque` | Skip the initial assignment or set from a circuit param via `disclose()` |
+| Deploy fails "insufficient tDUST" but faucet said success | Faucet gave tNIGHT; you never converted | In Lace click **Generate tDUST** — see funding section |
 | `ReferenceError: Buffer is not defined` | Missing Node polyfill | Add the buffer polyfill line as the FIRST line of `src/main.tsx` |
 | Contract state undefined after deploy | ZK keys not served to browser | `cp keys public/keys && cp zkir public/zkir` before `vite dev` |
-| Proof hangs / times out | Proof server not running or blocked by CORS | `docker run -p 6300:6300 …` and verify `curl http://localhost:6300` |
-| `window is not defined` at build | MidnightJS at module scope | Move behind `useEffect` or `<ClientOnly>` |
+| Proof hangs / times out | Proof server not running, wrong port, or first-boot warm-up | `docker ps` → `curl http://localhost:6300/health`; first proof after boot takes ~30–120s |
+| `window is not defined` at build / SSR | MidnightJS at module scope in a TanStack route/loader | Move behind `useEffect` / `useHydrated()`; deploys go through the `bun scripts/deploy-midnight.mjs` Node script, not a server function |
 | `Lace not found` | Extension not installed / page loaded before injection | Poll `window.midnight` for 5s before rejecting |
 
 ## Anti-patterns
@@ -175,3 +237,5 @@ Decode with the compiled contract's `ledger(state)` helper from `contracts/manag
 - Don't store the 32-byte witness secret on the server or in a cookie — localStorage only.
 - Don't pretend a public ledger commitment is private. It's public. Only the witness stays hidden.
 - Don't run the write path under SSR / `build:dev` prerender. Read-only Indexer views are SSR-safe; wallet + proof-server writes are not.
+- Don't try to deploy from a Cloudflare Worker / TanStack server function — no Docker, no proof-server access, no localhost. Deploys are a local `bun` script.
+- Don't hardcode `preview` when the user demoed on `preprod` (or vice versa). Explorer + faucet + indexer URLs all differ.
