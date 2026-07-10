@@ -3,7 +3,7 @@
   "shieldedAddress": "mn_shield-addr_preprod1tew6c2svuqmac32jxx50g4jv68jdwnn8snydlrdn9lhq4vepr6qshktplcu902f4tkvcn2efpavdm5mtckvudlgmjkxcwld840xy88syttd8c",
   "unshieldedAddress": "mn_addr_preprod1kvr0hws7v7uwv5mg7mh3hud336mmd5vmwgw4v7mca422qpp6zrkqa2e795",
   "createdAt": "2026-07-09T10:51:18.440Z",
-  "faucet": "https://midnight-tmnight-preprod.nethermind.dev/",
+  "faucet": "https://midnight-tmnight-preview.nethermind.dev/",
   "docs": "https://docs.midnight.network/guides/acquire-tokens",
   "faucetNote": "Paste the unshieldedAddress into the preprod faucet to receive tNIGHT. Then delegate tNIGHT → tDUST in Lace before deploying."
 }

@@ -6,7 +6,7 @@ const PLACEHOLDER_ADDRESS = "000000000000000000000000000000000000000000000000000
 
 function DeployStatus() {
   const isDeployed = contractInfo.address && contractInfo.address !== PLACEHOLDER_ADDRESS;
-  const explorerBase = contractInfo.explorer?.replace(/\/$/, "") ?? "https://preprod.midnightexplorer.com";
+  const explorerBase = contractInfo.explorer?.replace(/\/$/, "") ?? "https://preview.midnightexplorer.com";
   const addressUrl = isDeployed ? `${explorerBase}/contract/${contractInfo.address}` : null;
   const txUrl = contractInfo.deployTx ? `${explorerBase}/tx/${contractInfo.deployTx}` : null;
 
@@ -187,14 +187,14 @@ function ProofServer() {
           </p>
           <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <a
-              href="https://midnight-tmnight-preprod.nethermind.dev/"
+              href="https://midnight-tmnight-preview.nethermind.dev/"
               target="_blank"
               rel="noreferrer"
               className="border border-border hover:border-primary/50 p-4 flex flex-col gap-1 transition"
             >
               <span className="eyebrow text-primary">preprod</span>
               <span className="text-foreground text-sm">Faucet ↗</span>
-              <span className="text-[10px] text-muted-foreground font-mono break-all">midnight-tmnight-preprod.nethermind.dev</span>
+              <span className="text-[10px] text-muted-foreground font-mono break-all">midnight-tmnight-preview.nethermind.dev</span>
             </a>
             <Link
               to="/wallet"
