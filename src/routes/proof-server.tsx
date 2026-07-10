@@ -149,10 +149,31 @@ function ProofServer() {
   midnight-proof-server -v`}</Code>
           </div>
           <p className="mt-3 text-xs text-muted-foreground font-light">
-            Check it's up: <span className="text-foreground font-mono">curl http://localhost:6300/health</span>.
+            Check it's up: <span className="text-foreground font-mono">curl http://localhost:6300/health</span> →
+            should return <span className="font-mono text-foreground">{`{"status":"ok","timestamp":"..."}`}</span>.
             First proof after boot is slow (~30–120s) while the container warms; subsequent proofs
             are fast.
           </p>
+
+          <div className="mt-4 border border-primary/30 bg-primary/5 p-4">
+            <span className="eyebrow text-primary">verified · openclaw</span>
+            <p className="mt-2 text-xs text-muted-foreground font-light leading-relaxed">
+              Confirmed running Fri Jul 10 07:22 — container{" "}
+              <span className="font-mono text-foreground">midnight-proof-server</span> (id{" "}
+              <span className="font-mono text-foreground">265c73234164</span>) live on port{" "}
+              <span className="font-mono text-foreground">6300:6300</span>, image{" "}
+              <span className="font-mono text-foreground">midnightntwrk/proof-server:latest</span>{" "}
+              (sha256 <span className="font-mono text-foreground">801bbc0340…4d531</span>). Health
+              endpoint returned <span className="font-mono text-foreground">status: ok</span>.
+            </p>
+            <p className="mt-2 text-xs text-muted-foreground font-light leading-relaxed">
+              You can inspect / stop / restart from{" "}
+              <span className="text-foreground">Docker Desktop → Containers</span>, or from the CLI:{" "}
+              <span className="font-mono text-foreground">docker ps</span>,{" "}
+              <span className="font-mono text-foreground">docker logs -f midnight-proof-server</span>,{" "}
+              <span className="font-mono text-foreground">docker stop midnight-proof-server</span>.
+            </p>
+          </div>
         </div>
 
         <div>
