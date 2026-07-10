@@ -1,26 +1,44 @@
 ## Goal
 
-Let hackathon participants know that Lace ships as a **mobile wallet** (like MetaMask / Phantom) but currently only for **Cardano** — Midnight support on mobile is not out yet, so Midnight dApps still need the Lace **browser extension** on desktop.
+Add a clear, at-a-glance comparison of Midnight's three networks — **Preproduction**, **Preview**, and **Mainnet** — to the `/quantum-primer` page so hackathon participants know which one to target and why.
 
-## Changes
+## Where
 
-1. **`src/routes/showcase.midnight-ledger.tsx`** — add a small callout block right above the existing "fund this address" grid (preprod / preview cards). Content:
-   - Heading: "Wallet · Lace"
-   - One line: Lace is available as a mobile wallet today, but only for Cardano. Midnight support on mobile is not shipped yet, so use the Lace **desktop browser extension** for these demos.
-   - Three links:
-     - `https://www.lace.io/` — Get Lace
-     - `https://docs.midnight.network/blog/connect-dapp-lace-wallet` — Connect a dApp with Lace
-     - `https://docs.midnight.network/relnotes/overview` — Midnight release notes
-   - Styling: matches existing bordered card look (`border border-primary/30 bg-card`, `eyebrow` label, small text, `text-primary underline` links).
+`src/routes/quantum-primer.tsx` — append a new section near the end of the article (after the existing primer content, before any final CTAs if present). Section heading: "Preprod vs Preview vs Mainnet".
 
-2. **`src/routes/strategy.tsx`** — add the same callout as a standalone section in a location that fits the page's existing rhythm (near any existing wallet / tooling references, or appended as a new section if none exists). Same three links, same wording, same visual treatment as the showcase card so the two pages stay consistent.
+## Content
+
+Short intro sentence: Midnight ships three networks; addresses, faucets, and tooling differ by suffix.
+
+Then a comparison table (rendered as a responsive grid of three cards on mobile, a real `<table>` on `sm+`) with these rows:
+
+| | Preproduction (`preprod`) | Preview (`test`) | Mainnet (`main`) |
+| --- | --- | --- | --- |
+| Purpose | Stable testnet mirroring mainnet release train | Bleeding-edge testnet for upcoming SDK / protocol changes | Real network, real value |
+| Address prefix | `mn_addr_preprod1…` / `mn_shield-addr_preprod1…` | `mn_addr_test1…` / `mn_shield-addr_test1…` | `mn_addr1…` / `mn_shield-addr1…` (no suffix) |
+| Token | tNIGHT → tDUST (test tokens, free) | tNIGHT → tDUST (test tokens, free) | NIGHT → DUST (real, purchased) |
+| Faucet | Nethermind preprod faucet | Midnight preview faucet | none |
+| SDK version | Stable release matching current mainnet | Next release candidate — may break between drops | Stable release, audited |
+| Use for | Demos, hackathon submissions, integration tests against release-candidate mainnet parity | Trying new SDK features before they hit preprod | Production dApps only |
+| Reset policy | Occasional resets around major upgrades | Reset frequently without notice | Never |
+
+Then a short "which one for the hackathon?" callout: **Preprod** is the default for demos in this repo — it matches mainnet behaviour, faucet is reliable, and the deploy script + wallet JSON default there. Preview is only useful if you need a not-yet-released SDK feature.
+
+Links row (small, at the bottom of the section):
+- `https://docs.midnight.network/relnotes/network` — network endpoints reference
+- `https://docs.midnight.network/relnotes/overview` — release notes / current SDK versions
+- `https://docs.midnight.network/guides/acquire-tokens` — faucet + tDUST delegation guide
+
+## Styling
+
+Reuse existing tokens on the page — `border border-primary/30 bg-card`, `eyebrow text-primary` labels, `font-display` for the heading, `text-muted-foreground` body, `font-mono text-xs` for the address-prefix cells. Table uses `border-border` dividers, small text (`text-xs sm:text-sm`), and `overflow-x-auto` on the wrapper so it scrolls cleanly on narrow screens. No new dependencies.
 
 ## Out of scope
 
-- No changes to wallet derivation scripts, JSON data files, or contract logic.
-- No new dependencies, no image/asset generation.
-- No copy changes to the existing preprod / preview funding cards.
+- No nav changes, no new route.
+- No edits to other pages, JSON, scripts, or contract code.
+- No copy changes to the existing primer content — this is purely additive.
 
 ## Verification
 
-After switching to build mode I'll open both routes in the preview and confirm the callout renders, links open in a new tab, and layout still looks right on mobile widths.
+Open `/quantum-primer` in the preview, confirm the new section renders after the existing content, the table is readable on mobile (scroll or stacked), and all three doc links open in a new tab.
