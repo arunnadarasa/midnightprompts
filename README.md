@@ -1,10 +1,11 @@
 # MidnightPrompts
 
-A TanStack Start site that showcases a live [Compact](https://docs.midnight.network/develop/tutorial/building/) smart contract (`TimestampLog`) deployed on the **Midnight Preview** testnet. Built for the Midnight hackathon.
+A TanStack Start site that showcases a live [Compact](https://docs.midnight.network/develop/tutorial/building/) smart contract (`TimestampLog`) deployed on **both** Midnight testnets — **Preview** (unstable, resets) and **Preprod** (stable, closer to mainnet). Built for the Midnight hackathon.
 
 - Live site: <https://midnightprompts.lovable.app>
 - Midnight docs: <https://docs.midnight.network>
 - Lace wallet: <https://www.lace.io>
+
 
 ## Stack
 
@@ -92,11 +93,17 @@ Expect `{"status":"ok",...}`.
 
 ### 5. Deploy
 
+Pick a network — same script, one env var:
+
 ```bash
+# preview (default) — writes src/data/midnight-contract.preview.json
 bun scripts/deploy-midnight.mjs
+
+# preprod (stable) — writes src/data/midnight-contract.preprod.json
+VITE_NETWORK_ID=preprod bun scripts/deploy-midnight.mjs
 ```
 
-First proof after container boot takes 30–120s; subsequent proofs are seconds. On success the script writes the new address + tx hash into `src/data/midnight-contract.json` and prints the explorer URL.
+First proof after container boot takes 30–120s; subsequent proofs are seconds. On success the script writes the new address + tx hash into `src/data/midnight-contract.<network>.json` and prints the matching explorer URL. Deploy on both networks to light up both panels on the site.
 
 ---
 
@@ -132,7 +139,9 @@ scripts/
   deploy-midnight.README.md       Full deploy reference
 src/
   routes/                         TanStack Start file-based routes
-  data/midnight-contract.json     Address + tx hash of the currently deployed contract
+  data/midnight-contract.preview.json   Preview testnet deploy (address + tx)
+  data/midnight-contract.preprod.json   Preprod testnet deploy (address + tx)
+  data/midnight-contract.ts             Shared config loader
 ```
 
 ## Credits

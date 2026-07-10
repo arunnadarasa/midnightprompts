@@ -1,4 +1,4 @@
-# Local deploy — TimestampLog.compact → Midnight Preprod
+# Local deploy — TimestampLog.compact → Midnight Preview or Preprod
 
 The Lovable sandbox **cannot** run the deploy: Midnight's proof server is only
 distributed as a Docker image (`midnightntwrk/proof-server`), and the sandbox
@@ -8,6 +8,20 @@ and no hosted proving service. See <https://docs.midnight.network/relnotes/netwo
 
 Run this deploy from your own machine. The script is two-phase; you'll run it
 twice with a faucet visit in between.
+
+The same script targets **either testnet** — pick with `VITE_NETWORK_ID`:
+
+```bash
+# preview (default) — writes src/data/midnight-contract.preview.json
+bun scripts/deploy-midnight.mjs
+
+# preprod (stable, closer to mainnet) — writes src/data/midnight-contract.preprod.json
+VITE_NETWORK_ID=preprod bun scripts/deploy-midnight.mjs
+```
+
+Faucet, explorer, and indexer URLs are chosen automatically from the network
+id. Deploy on both to light up both status panels on the site.
+
 
 ## One-time setup
 
