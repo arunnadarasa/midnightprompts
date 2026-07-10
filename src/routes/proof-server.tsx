@@ -1,5 +1,58 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
+import contractInfo from "@/data/midnight-contract.json";
+
+const PLACEHOLDER_ADDRESS = "0000000000000000000000000000000000000000000000000000000000000000";
+
+function DeployStatus() {
+  const isDeployed = contractInfo.address && contractInfo.address !== PLACEHOLDER_ADDRESS;
+  const explorerBase = contractInfo.explorer?.replace(/\/$/, "") ?? "https://preprod.midnightexplorer.com";
+  const addressUrl = isDeployed ? `${explorerBase}/contract/${contractInfo.address}` : null;
+  const txUrl = contractInfo.deployTx ? `${explorerBase}/tx/${contractInfo.deployTx}` : null;
+
+  return (
+    <div className={`border p-5 ${isDeployed ? "border-primary/60 bg-primary/5" : "border-dashed border-border bg-card"}`}>
+      <div className="flex items-center justify-between gap-4">
+        <span className="eyebrow text-primary">deploy status</span>
+        <span className={`text-[10px] tracking-[0.28em] uppercase font-semibold ${isDeployed ? "text-primary" : "text-muted-foreground"}`}>
+          {isDeployed ? "● live on preprod" : "○ awaiting deploy"}
+        </span>
+      </div>
+      {isDeployed ? (
+        <div className="mt-3 space-y-2 text-xs font-light text-muted-foreground leading-relaxed">
+          <div>
+            <span className="text-foreground uppercase tracking-[0.2em] text-[10px]">Address</span>
+            <div className="font-mono text-foreground text-[11px] break-all mt-1">{contractInfo.address}</div>
+          </div>
+          {contractInfo.deployTx && (
+            <div>
+              <span className="text-foreground uppercase tracking-[0.2em] text-[10px]">Deploy tx</span>
+              <div className="font-mono text-foreground text-[11px] break-all mt-1">{contractInfo.deployTx}</div>
+            </div>
+          )}
+          <div className="flex flex-wrap gap-2 pt-2">
+            {addressUrl && (
+              <a href={addressUrl} target="_blank" rel="noreferrer" className="px-3 py-2 border border-primary/40 text-primary text-[10px] tracking-[0.28em] uppercase font-semibold hover:bg-primary hover:text-primary-foreground transition">
+                View contract ↗
+              </a>
+            )}
+            {txUrl && (
+              <a href={txUrl} target="_blank" rel="noreferrer" className="px-3 py-2 border border-border text-foreground text-[10px] tracking-[0.28em] uppercase font-semibold hover:border-primary/60 hover:text-primary transition">
+                View tx ↗
+              </a>
+            )}
+          </div>
+        </div>
+      ) : (
+        <p className="mt-3 text-xs text-muted-foreground font-light leading-relaxed">
+          Run the deploy script below. On success it writes the address + tx hash into{" "}
+          <span className="font-mono text-foreground">src/data/midnight-contract.json</span> and this panel
+          hydrates with an explorer link on next refresh.
+        </p>
+      )}
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/proof-server")({
   head: () => ({
@@ -47,6 +100,10 @@ function ProofServer() {
             trusted VM — never on shared infrastructure.
           </p>
         </div>
+      </section>
+
+      <section className="max-w-3xl mx-auto px-5 pb-10">
+        <DeployStatus />
       </section>
 
       <section className="max-w-3xl mx-auto px-5 pb-14 space-y-8">
