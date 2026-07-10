@@ -29,6 +29,7 @@ function SiteHeader() {
           <NavLink to="/themes">Themes</NavLink>
           <NavLink to="/showcase">Showcase</NavLink>
           <NavLink to="/wallet">Wallet</NavLink>
+          <NavLink to="/proof-server">Proof Server</NavLink>
           <NavLink to="/strategy">Strategy</NavLink>
           <NavLink to="/quantum-primer">Primer</NavLink>
           <NavLink to="/about">About</NavLink>
@@ -73,6 +74,7 @@ function SiteHeader() {
               <MobileLink to="/themes" onClick={close}>Themes</MobileLink>
               <MobileLink to="/showcase" onClick={close}>Showcase</MobileLink>
               <MobileLink to="/wallet" onClick={close}>Wallet</MobileLink>
+              <MobileLink to="/proof-server" onClick={close}>Proof Server</MobileLink>
               <MobileLink to="/strategy" onClick={close}>Strategy</MobileLink>
               <MobileLink to="/quantum-primer" onClick={close}>Primer</MobileLink>
               <MobileLink to="/about" onClick={close}>About</MobileLink>
