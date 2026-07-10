@@ -20,7 +20,7 @@ import * as ledger from "@midnight-ntwrk/ledger-v8";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
-const OUT = path.join(ROOT, "src/data/midnight-wallet.json");
+const DEFAULT_OUT = path.join(ROOT, "src/data/midnight-wallet.json");
 
 const mnemonic = process.env.MIDNIGHT_WALLET_SEED;
 if (!mnemonic || mnemonic.trim().split(/\s+/).length !== 24) {
