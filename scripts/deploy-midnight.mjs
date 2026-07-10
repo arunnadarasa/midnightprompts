@@ -99,12 +99,15 @@ async function buildWallet(mnemonic) {
   }
 
   log(`building wallet for network=${NETWORK_ID} (enum=${networkEnum})`);
+  // Midnight's zswap WASM wants exactly 32 bytes; BIP-39 gives 64. Take the
+  // first 32 bytes — deterministic across re-runs for the same mnemonic.
+  const seedHex = mnemonicToSeedSync(mnemonic).toString("hex").slice(0, 64);
   const wallet = await WalletBuilder.buildFromSeed(
     INDEXER_HTTP,
     INDEXER_WS,
     PROOF_SERVER,
     NODE_RPC,
-    mnemonicToSeedSync(mnemonic).toString("hex"),
+    seedHex,
     networkEnum,
   );
   wallet.start();
