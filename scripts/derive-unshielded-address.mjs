@@ -44,7 +44,7 @@ const shieldedAddrObj = new ShieldedAddress(
   new ShieldedCoinPublicKey(Buffer.from(shieldedKeys.coinPublicKey, "hex")),
   new ShieldedEncryptionPublicKey(Buffer.from(shieldedKeys.encryptionPublicKey, "hex")),
 );
-const shieldedAddress = MidnightBech32m.encode(NETWORK_SUFFIX, ShieldedAddress.codec.dataToBytes(shieldedAddrObj)).toString?.() ?? ShieldedAddress.codec.encode(NETWORK_SUFFIX, shieldedAddrObj).asString();
+const shieldedAddress = ShieldedAddress.codec.encode(NETWORK_SUFFIX, shieldedAddrObj).asString();
 
 console.error("[derive] unshielded address:", unshieldedAddress);
 console.error("[derive] shielded address:  ", shieldedAddress);
