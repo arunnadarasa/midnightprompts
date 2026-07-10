@@ -1,29 +1,49 @@
-## What you're looking at
+## The mismatch
 
-The Lace screen in the screenshot is **Settings → Your Keys**. `Encryption key` and `Coin key` are private key material — not addresses. Nothing to paste into the faucet from there. Also: **do not share those hex strings** with anyone (including me). Whoever holds them controls the wallet.
+- Lace + faucet: **Preview** (`mn_addr_preview1…`, `midnight-tmnight-preview.nethermind.dev`)
+- Deploy script + app config: **Preprod** (`VITE_NETWORK_ID=preprod`, preprod indexer, preprod explorer)
 
-## Where the unshielded address actually lives in Lace
+Preview and Preprod are separate networks with separate ledgers and separate faucets. Funds on one are invisible to the other.
 
-1. Click **Done** to close the "Your Keys" sheet.
-2. In the left/bottom nav of Lace, click **Receive** (icon looks like a down-arrow into a tray). On some Lace builds it's under the wallet name → **Receive funds**.
-3. Lace shows two tabs / two addresses for Midnight:
-   - **Shielded** — starts with `mn_shield-addr_test1…` (long, ~130 chars). This is what the script printed. Faucet REJECTS this.
-   - **Unshielded** — starts with `mn_addr_test1…` or `mn_addr_preprod1…` (much shorter). **This is the one you copy.**
-4. Click the copy icon next to the Unshielded address.
-5. Paste it into the preprod faucet: https://midnight-tmnight-preprod.nethermind.dev/ → Request tokens.
-6. Wait ~1–2 min for tNIGHT to arrive → in Lace click **Generate tDUST** → wait for tDUST balance to appear.
-7. Then re-run `bun scripts/deploy-midnight.mjs` (with the proof server already running on `localhost:6300`).
+Pick one path. **Option A is faster because your wallet is already funded on preview.**
 
-## If Lace only shows one address
+---
 
-Some Lace builds default to hiding the unshielded address. Toggle:
-- Lace **Settings → Preferences → Show unshielded (Midnight)**, or
-- On the Receive screen, look for a **Shielded / Unshielded** switch at the top.
+## Option A — Switch the project to Preview (recommended, ~5 min)
 
-## Sanity check
+**No re-funding needed.** I'll flip every "preprod" reference to "preview".
 
-Confirm you're on **Midnight Preprod** in Lace (network switcher at the top of the wallet). If Lace is on "Midnight Preview" or Cardano, the address it shows won't match the network the script and faucet target.
+Files I'll edit:
+- `src/data/midnight-contract.json` → `network: "preview"`, `explorer: "https://preview.midnightexplorer.com"`, indexer URLs → preview
+- `.env` (or wherever `VITE_NETWORK_ID` / `VITE_INDEXER_URL` / `VITE_INDEXER_WS_URL` / `VITE_NODE_RPC` live) → preview endpoints:
+  - `VITE_NETWORK_ID=preview`
+  - `VITE_INDEXER_URL=https://indexer.preview.midnight.network/api/v4/graphql`
+  - `VITE_INDEXER_WS_URL=wss://indexer.preview.midnight.network/api/v4/graphql/ws`
+  - `VITE_NODE_RPC=https://rpc.preview.midnight.network`
+- `scripts/deploy-midnight.mjs` — no code change; it already reads `VITE_NETWORK_ID` and maps preview → `NetworkId.TestNet`. It'll pick up the new env.
+- Any UI copy on `/proof-server` and `/showcase/midnight-ledger` that hardcodes "Preprod" → "Preview" (labels + explorer/faucet links).
 
-## Next reply
+You then:
+1. In Lace, make sure you clicked **Generate tDUST** (converts your tNIGHT → tDUST). Wait for the tDUST balance to appear.
+2. Confirm proof server is up: `curl http://localhost:6300/health`.
+3. Re-run: `bun scripts/deploy-midnight.mjs`.
+4. Paste the `contract address` + `deploy tx` here.
 
-Once you have the `mn_addr_…` unshielded string, you don't need to paste it here — just use it at the faucet. Ping me after the deploy script finishes and prints `contract address` + `deploy tx`.
+Caveat: Preview resets periodically, so any deployed contract may vanish in a few weeks. Fine for a demo, not for anything long-lived.
+
+---
+
+## Option B — Stay on Preprod (more robust, ~5 min + faucet wait)
+
+Keep the code untouched. You:
+1. In Lace, switch network from **Midnight Preview** to **Midnight Preprod**.
+2. Copy the Preprod unshielded address (`mn_addr_preprod1…`, different from the preview one).
+3. Fund at the preprod faucet: `https://midnight-tmnight-preprod.nethermind.dev/`.
+4. Click **Generate tDUST** in Lace.
+5. Re-run `bun scripts/deploy-midnight.mjs`.
+
+---
+
+## Which do you want?
+
+Reply "A" (switch project to preview) or "B" (stay preprod, I'll re-fund on preprod). Default: A.
