@@ -101,7 +101,7 @@ function MidnightLedgerDemo() {
               explorer ↗
             </a>
             <a href={midnightCfg.faucet} target="_blank" rel="noreferrer" className="story-gold">
-              tDUST faucet ↗
+              tNIGHT faucet ↗
             </a>
           </div>
         </div>
