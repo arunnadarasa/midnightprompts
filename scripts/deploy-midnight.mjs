@@ -42,14 +42,14 @@ const MANAGED = path.join(ROOT, "contracts/managed/timestamp-log");
 const NETWORK_ID = process.env.VITE_NETWORK_ID ?? "preprod";
 const INDEXER_HTTP =
   process.env.VITE_INDEXER_URL ??
-  "https://indexer.preprod.midnight.network/api/v4/graphql";
+  "https://indexer.preview.midnight.network/api/v4/graphql";
 const INDEXER_WS =
   process.env.VITE_INDEXER_WS_URL ??
-  "wss://indexer.preprod.midnight.network/api/v4/graphql/ws";
-const NODE_RPC = process.env.VITE_NODE_RPC ?? "https://rpc.preprod.midnight.network";
+  "wss://indexer.preview.midnight.network/api/v4/graphql/ws";
+const NODE_RPC = process.env.VITE_NODE_RPC ?? "https://rpc.preview.midnight.network";
 const PROOF_SERVER = process.env.VITE_PROOF_SERVER_URL ?? "http://localhost:6300";
-const FAUCET = "https://midnight-tmnight-preprod.nethermind.dev/";
-const EXPLORER = "https://preprod.midnightexplorer.com";
+const FAUCET = "https://midnight-tmnight-preview.nethermind.dev/";
+const EXPLORER = "https://preview.midnightexplorer.com";
 
 function log(...a) {
   console.log("[midnight-deploy]", ...a);
