@@ -18,26 +18,27 @@ function SiteHeader() {
   const close = () => setOpen(false);
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-background/80 border-b border-border">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 py-3 sm:py-5 flex items-center justify-between gap-3">
-        <Link to="/" className="flex items-center gap-2 min-w-0 group">
-          <span className="hidden sm:inline eyebrow shrink-0">Vol. 01</span>
-          <span className="font-display text-lg sm:text-2xl truncate text-foreground">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 py-3 sm:py-4 flex items-center justify-between gap-4">
+        <Link to="/" className="flex items-center gap-3 min-w-0 group shrink-0">
+          <span className="hidden lg:inline eyebrow shrink-0">Vol. 01</span>
+          <span className="font-display text-lg sm:text-xl xl:text-2xl truncate text-foreground leading-none">
             Creative <span className="italic text-primary">Midnight</span>
           </span>
         </Link>
-        <nav className="hidden md:flex items-center gap-1 text-sm">
+        <nav className="hidden md:flex items-center gap-0.5 text-sm">
           <NavLink to="/themes">Themes</NavLink>
           <NavLink to="/showcase">Showcase</NavLink>
           <NavLink to="/wallet">Wallet</NavLink>
-          <NavLink to="/proof-server">Proof Server</NavLink>
+          <NavLink to="/proof-server">Proof</NavLink>
           <NavLink to="/strategy">Strategy</NavLink>
           <NavLink to="/quantum-primer">Primer</NavLink>
           <NavLink to="/about">About</NavLink>
+          <span className="mx-2 h-5 w-px bg-border" aria-hidden />
           <a
             href="https://creativequantum.lovable.app/"
             target="_blank"
             rel="noreferrer"
-            className="ml-3 px-3 py-2 border border-border text-foreground text-[10px] font-semibold tracking-[0.28em] uppercase hover:border-primary/60 hover:text-primary transition-colors duration-500"
+            className="hidden xl:inline-block px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
           >
             Hackathon ↗
           </a>
@@ -45,15 +46,15 @@ function SiteHeader() {
             href="https://docs.midnight.network/"
             target="_blank"
             rel="noreferrer"
-            className="ml-2 px-3 py-2 border border-border text-foreground text-[10px] font-semibold tracking-[0.28em] uppercase hover:border-primary/60 hover:text-primary transition-colors duration-500"
+            className="px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
           >
-            Midnight Docs ↗
+            Docs ↗
           </a>
           <a
             href="https://preview.midnightexplorer.com/"
             target="_blank"
             rel="noreferrer"
-            className="ml-2 px-4 py-2 bg-primary text-primary-foreground text-[10px] font-semibold tracking-[0.28em] uppercase hover:bg-foreground transition-colors duration-500"
+            className="ml-1 px-3 py-1.5 bg-primary text-primary-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:bg-foreground transition-colors duration-500"
           >
             Explorer ↗
           </a>
@@ -117,8 +118,8 @@ function NavLink({ to, children }: { to: string; children: ReactNode }) {
   return (
     <Link
       to={to}
-      className="px-3 py-1.5 text-[11px] tracking-[0.24em] uppercase font-medium text-muted-foreground hover:text-primary transition-colors duration-500"
-      activeProps={{ className: "px-3 py-1.5 text-[11px] tracking-[0.24em] uppercase font-medium text-primary" }}
+      className="px-2.5 py-1.5 text-[11px] tracking-[0.22em] uppercase font-medium text-muted-foreground hover:text-primary transition-colors duration-500 whitespace-nowrap"
+      activeProps={{ className: "px-2.5 py-1.5 text-[11px] tracking-[0.22em] uppercase font-medium text-primary whitespace-nowrap" }}
     >
       {children}
     </Link>
