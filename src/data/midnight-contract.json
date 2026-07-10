@@ -11,5 +11,5 @@
   "indexerHttp": "https://indexer.preview.midnight.network/api/v4/graphql",
   "indexerWs": "wss://indexer.preview.midnight.network/api/v4/graphql/ws",
   "faucet": "https://midnight-tmnight-preview.nethermind.dev/",
-  "note": "Deploy from your own machine (Docker required for the proof server). Once deployed, paste the printed hex address into this file and the showcase page will hydrate from the Preprod Indexer on the next refresh."
+  "note": "Deploy from your own machine (Docker required for the proof server). Once deployed, paste the printed hex address into this file and the showcase page will hydrate from the Preview Indexer on the next refresh."
 }
