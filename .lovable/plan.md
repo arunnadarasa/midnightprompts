@@ -1,98 +1,57 @@
-## You're at: fresh folder, `bun install` done, `.midnight-wallet.local` present
+## Plan: Add `README.md` at repo root for hackathon participants
 
-No `.env` needed — the deploy script now defaults to preview everywhere (network id + indexer + rpc). Move straight to Docker + deploy.
+Currently the repo has `.lovable/plan.md` (my working notes for you) and `scripts/deploy-midnight.README.md` (deep reference), but no top-level `README.md`. Anyone cloning from GitHub lands on a blank repo page. Fix that with a single `README.md` at the repo root focused on: what this project is, how to run it locally, and — the reason you're asking — how to stand up the Midnight proof server in Docker on macOS/Linux/Windows.
 
-Commands below are grouped **macOS/Linux** vs **Windows (PowerShell)**. Pick your row.
+### New file: `README.md` (repo root)
 
-## Run these, in order, from the `midnightprompts-main` folder
+Sections, in order:
 
-1. **Lock down the seed file** (SDK ignores world-readable seeds):
+1. **What this is** — one paragraph. MidnightPrompts: a TanStack Start site showcasing a deployed Compact contract (`TimestampLog`) on Midnight Preview. Links to the live site (`https://midnightprompts.lovable.app`) and to Midnight docs.
 
-   **macOS/Linux:**
+2. **Tech stack (one-liner)** — TanStack Start v1 + Vite 7 + Tailwind v4 + Bun; Midnight SDK 4.x; Compact 0.23.
+
+3. **Prerequisites**
+   - Bun ≥ 1.1 (macOS/Linux: `curl -fsSL https://bun.sh/install | bash`; Windows PowerShell: `powershell -c "irm bun.sh/install.ps1 | iex"`)
+   - Docker Desktop (for the proof server)
+   - Lace wallet browser extension, switched to **Midnight Preview**
+
+4. **Run the site locally**
    ```
-   chmod 600 .midnight-wallet.local
+   bun install
+   bun run dev
    ```
+   Opens `http://localhost:8080`.
 
-   **Windows (PowerShell):**
-   ```powershell
-   icacls .midnight-wallet.local /inheritance:r /grant:r "$($env:USERNAME):(R,W)"
-   ```
-   (removes inherited permissions, grants only your user read/write — the SDK's equivalent of `0600`)
+5. **Deploy the contract yourself (optional)** — brief pointer that this is only needed if you want your own on-chain deployment; the site already reads from `src/data/midnight-contract.json`. Full walkthrough lives in [`scripts/deploy-midnight.README.md`](scripts/deploy-midnight.README.md). Then inline the **condensed 5-step flow from `.lovable/plan.md`** so hackathon folks don't need to open a second doc:
+   - Step 1: seed file permissions (macOS/Linux `chmod 600` **and** Windows `icacls` variant)
+   - Step 2: confirm tDUST in Lace (tNIGHT → Generate tDUST)
+   - Step 3: start Docker Desktop (macOS/Linux notes **and** Windows/WSL 2 notes)
+   - Step 4: start the proof server — both shells side by side:
+     - macOS/Linux (`docker start … || docker run …` + `curl`)
+     - Windows PowerShell (`docker start` + `$LASTEXITCODE` fallback + `curl.exe`)
+   - Step 5: `bun scripts/deploy-midnight.mjs`
 
-2. **Confirm Lace shows tDUST**, not just tNIGHT.
-   - Open Lace → make sure network is **Midnight Preview** (top).
-   - If the balance line reads only tNIGHT, click **Generate tDUST**, wait ~1 min for the tDUST balance to appear.
-   - You cannot deploy without tDUST — the faucet only gives tNIGHT.
+6. **Proof server lifecycle cheatsheet** — small table:
+   | Task | Command |
+   |---|---|
+   | Check it's running | `docker ps` |
+   | Health check | `curl http://localhost:6300/health` (Windows: `curl.exe`) |
+   | Tail logs | `docker logs -f midnight-proof-server` |
+   | Stop | `docker stop midnight-proof-server` |
+   | Resume | `docker start midnight-proof-server` |
 
-3. **Start Docker Desktop.**
+7. **Troubleshooting** — same failure table already in `.lovable/plan.md`, including the Windows-specific `error during connect: ... docker_engine: The system cannot find the file specified` row.
 
-   **macOS/Linux:** if the whale icon isn't in your menu bar, launch Docker Desktop and wait until it says "Docker Desktop is running".
+8. **Repo layout** — 6-line tree pointing to `contracts/`, `scripts/deploy-midnight.mjs`, `src/routes/`, `src/data/midnight-contract.json`.
 
-   **Windows:**
-   - Install Docker Desktop for Windows if you don't have it — use the **WSL 2 backend** (recommended). If Windows prompts you to install/update the WSL 2 kernel on first launch, accept.
-   - Launch Docker Desktop from the Start menu; wait for the whale tray icon (bottom-right) to say "Docker Desktop is running".
+9. **License / credits** — one line noting it's a Lovable-generated project for a Midnight hackathon; links to Midnight docs and Lace.
 
-4. **Start the proof server** (once per machine — the container persists across restarts):
+### What I will NOT do
 
-   **macOS/Linux:**
-   ```
-   docker start midnight-proof-server 2>/dev/null || \
-     docker run -d --name midnight-proof-server -p 6300:6300 \
-       midnightntwrk/proof-server:latest midnight-proof-server -v
-   curl http://localhost:6300/health
-   ```
+- Not editing `.lovable/plan.md` or `scripts/deploy-midnight.README.md` — they stay as-is; the new README cross-links to the script README for the deep dive.
+- No changes to code, contracts, or config.
+- No GitHub API calls or repo settings changes — the README is a plain file in the repo; GitHub renders it automatically once you push (or once Lovable's Git sync propagates the commit).
 
-   **Windows (PowerShell / Windows Terminal — not cmd.exe):**
-   ```powershell
-   docker start midnight-proof-server
-   if ($LASTEXITCODE -ne 0) {
-     docker run -d --name midnight-proof-server -p 6300:6300 `
-       midnightntwrk/proof-server:latest midnight-proof-server -v
-   }
-   curl.exe http://localhost:6300/health
-   ```
-   Use `curl.exe` explicitly — PowerShell's built-in `curl` is an alias for `Invoke-WebRequest` and returns a different shape.
+### After I write the file
 
-   Expect `{"status":"ok",...}`.
-
-5. **Deploy** (same on both platforms):
-   ```
-   bun scripts/deploy-midnight.mjs
-   ```
-   Don't have bun on Windows? Install with:
-   ```powershell
-   powershell -c "irm bun.sh/install.ps1 | iex"
-   ```
-
-## What success looks like
-
-```
-[midnight-deploy] === phase 1: wallet ===
-[midnight-deploy] using existing wallet seed from .midnight-wallet.local
-[midnight-deploy] building wallet for network=preview (enum=2)
-  Shielded address (SDK-side...):
-  mn_shield-addr_test1...
-[midnight-deploy] current tDUST balance: <N ≥ 1>
-[midnight-deploy] === phase 2: deploy ===
-[midnight-deploy] submitting deployContract — proving may take 30–120s…
-[midnight-deploy] deployed in 45.2s
-[midnight-deploy] contract address: <64 hex>
-[midnight-deploy] deploy tx:        <64 hex>
-[midnight-deploy] verified: Indexer returned state
-[midnight-deploy] updated src/data/midnight-contract.json
-```
-
-## Paste back to me
-
-Just the last block — `contract address`, `deploy tx`, and `verified: …`. I'll wire it into the site.
-
-## If it fails
-
-| Error | Cause | Fix |
-|---|---|---|
-| `tDUST balance: 0` | Skipped Generate tDUST | Step 2 |
-| `ECONNREFUSED 127.0.0.1:6300` | Proof server not running | Step 4 |
-| `Cannot connect to the Docker daemon` (macOS/Linux) | Docker Desktop app closed | Launch Docker Desktop, then step 4 |
-| `error during connect: ... docker_engine: The system cannot find the file specified` (Windows) | Docker Desktop not started or WSL 2 backend not ready | Open Docker Desktop, wait for green status, retry step 4 |
-| `insufficient funds` mid-deploy | Lace hasn't finished converting | Wait 60s, retry |
-| Proving hangs > 3 min | First cold proof | Watch `docker logs -f midnight-proof-server` — normal for first run |
+You'll see `README.md` at the repo root. On the next Git sync it appears on the GitHub repo page automatically as the landing README.
