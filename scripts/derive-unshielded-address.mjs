@@ -14,7 +14,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { WalletSeeds } from "@midnight-ntwrk/testkit-js";
-import { createKeystore, NetworkId } from "@midnight-ntwrk/wallet-sdk";
+import { createKeystore } from "@midnight-ntwrk/wallet-sdk";
+import { ShieldedAddress, ShieldedCoinPublicKey, ShieldedEncryptionPublicKey, MidnightBech32m } from "@midnight-ntwrk/wallet-sdk-address-format";
+import * as ledger from "@midnight-ntwrk/ledger-v8";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -26,23 +28,35 @@ if (!mnemonic || mnemonic.trim().split(/\s+/).length !== 24) {
   process.exit(1);
 }
 
+// Midnight preprod uses the bech32m network suffix "preprod".
+// (Per https://docs.midnight.network/sdks/official/wallet-developer-guide,
+// preprod → `_preprod`, mainnet → no suffix, etc.)
+const NETWORK_SUFFIX = "preprod";
+
 const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
-const keystore = createKeystore(seeds.unshielded, NetworkId.TestNet);
+const keystore = createKeystore(seeds.unshielded, NETWORK_SUFFIX);
 const unshieldedAddress = keystore.getBech32Address().asString();
 
+// Also derive the shielded address for the same seed at the correct network,
+// so both addresses in the JSON refer to the same wallet on preprod.
+const shieldedKeys = ledger.ZswapSecretKeys.fromSeed(Buffer.from(seeds.shielded).toString("hex"));
+const shieldedAddrObj = new ShieldedAddress(
+  new ShieldedCoinPublicKey(Buffer.from(shieldedKeys.coinPublicKey, "hex")),
+  new ShieldedEncryptionPublicKey(Buffer.from(shieldedKeys.encryptionPublicKey, "hex")),
+);
+const shieldedAddress = MidnightBech32m.encode(NETWORK_SUFFIX, ShieldedAddress.codec.dataToBytes(shieldedAddrObj)).toString?.() ?? ShieldedAddress.codec.encode(NETWORK_SUFFIX, shieldedAddrObj).asString();
+
 console.error("[derive] unshielded address:", unshieldedAddress);
-if (!unshieldedAddress.startsWith("mn_addr_test1")) {
-  console.error(
-    "[derive] WARNING: unexpected prefix. Got:",
-    unshieldedAddress.slice(0, 20),
-  );
+console.error("[derive] shielded address:  ", shieldedAddress);
+if (!unshieldedAddress.startsWith("mn_addr_preprod1")) {
+  console.error("[derive] WARNING: unexpected unshielded prefix:", unshieldedAddress.slice(0, 24));
 }
+
 
 const existing = fs.existsSync(OUT)
   ? JSON.parse(fs.readFileSync(OUT, "utf8"))
   : {};
-const shieldedAddress =
-  existing.shieldedAddress ?? existing.address ?? null;
+
 
 const payload = {
   network: "preprod",
