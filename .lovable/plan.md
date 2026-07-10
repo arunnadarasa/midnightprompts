@@ -1,40 +1,60 @@
-## Where you are
+## Why I can't push the deploy button myself
 
-Proof server is running locally — `curl http://localhost:6300/health` returned `{"status":"ok"}`. That completes steps 1–2 of the `/proof-server` checklist.
+The Lovable sandbox has no Docker, no access to your `localhost:6300` proof server, and no copy of your 24-word mnemonic. Midnight's privacy model is exactly this — the proof + signing must happen where the secret key lives, which is your machine. So the deploy is one command **you** run; I handle everything before and after.
 
-## What to do next
-
-### 3. Fund your preprod wallet with tDUST
-1. Open the **Wallet** page in this app and copy your preprod address (starts with `mn_addr_preprod1…`).
-2. Go to the **preprod faucet** → `midnight-tmnight-preprod.nethermind.dev`, paste the address, request **tNIGHT**.
-3. Open **Lace** (Midnight preview extension), switch to Preprod, and use **Generate tDUST** to convert tNIGHT → tDUST. Deploys spend tDUST, not tNIGHT.
-4. Confirm the balance shows up on the Wallet page (Preproduction Midnight Explorer link should also show the funded address).
-
-### 4. Deploy `TimestampLog.compact`
-In a terminal at the project root, with Docker + proof server still running:
+## Step 1 — you run (in your Mac terminal, at the project root)
 
 ```bash
+# sanity checks
+docker ps | grep midnight-proof-server            # confirm still running
+curl -s http://localhost:6300/health              # {"status":"ok",...}
+ls -la .midnight-wallet.local                     # must exist, mode 0600
+
+# if the wallet file isn't there yet:
+echo "your twenty four word mnemonic here" > .midnight-wallet.local
 chmod 600 .midnight-wallet.local
+
+# deploy
+bun install
 bun scripts/deploy-midnight.mjs
 ```
 
 The script will:
-- Read your wallet seed from `.midnight-wallet.local`
-- Talk to the local proof server on `localhost:6300` to generate the ZK proof
-- Submit the deploy tx to preprod
-- Write the resulting contract address into `midnight-contract.json`
+1. Load the mnemonic → derive the preprod wallet
+2. Sync the wallet against the preprod indexer (shows tDUST balance)
+3. Load the compiled `TimestampLog` ZK keys
+4. Send the deploy tx via **your local proof server** at `localhost:6300`
+5. Wait for finalization on preprod
+6. Print `address: 0x…` + `deployTx: 0x…` and write both into `src/data/midnight-contract.json`
 
-### 5. Verify on-chain
-- Copy the contract address from `midnight-contract.json`.
-- Paste it into `preprod.midnightexplorer.com` (the Preproduction explorer link already in the Wallet page).
-- Confirm the deploy tx is finalized.
+Expected time: ~30–120s for the first proof (container warm-up), then ~15–30s to finalize.
 
-### 6. Wire it back into the site
-Once `midnight-contract.json` exists, tell me and I'll load that address in the UI so the app reads/writes against your live contract.
+## Step 2 — you paste the output into chat
 
-## If something fails
-- **`insufficient tDUST`** → step 3 didn't complete; tNIGHT ≠ tDUST, you must run Generate tDUST in Lace.
-- **`ECONNREFUSED 127.0.0.1:6300`** → Docker container stopped; `docker start midnight-proof-server`.
-- **Proof takes 30–90s** → normal for the first proof while the container warms.
+Just paste the two lines the script prints (address + deployTx). Or paste the whole new contents of `src/data/midnight-contract.json` if it's easier. Either works.
 
-Want me to also add a small "Deploy status" panel on `/proof-server` that reads `midnight-contract.json` and shows the deployed address + explorer link once it exists?
+## Step 3 — I wire it into the site (build mode)
+
+Once I have the address + tx hash I will, in one turn:
+
+1. Update `src/data/midnight-contract.json` with the real values (address, deployTx, and flip a `verified: true` flag).
+2. Verify the Deploy Status panel on `/proof-server` flips from "○ awaiting deploy" to "● live on preprod" with working explorer links (`preprod.midnightexplorer.com/contract/…` and `/tx/…`).
+3. Update the `/showcase/midnight-ledger` page so the "Contract address" box shows the real hex + a link to the explorer instead of `0x00… (contract not yet deployed on this network)`.
+4. Point the "Read latest entry" call at the live contract via the preprod Indexer GraphQL endpoint so the showcase hydrates from real chain state.
+
+## If the deploy fails, common causes
+
+| Error | Fix |
+|---|---|
+| `insufficient tDUST` | You have tNIGHT but never clicked **Generate tDUST** in Lace. Do that, wait 10s, retry. |
+| `ECONNREFUSED 127.0.0.1:6300` | Proof server container stopped. `docker start midnight-proof-server`. |
+| Script hangs at "Proving…" for >3 min | First proof after boot; give it another minute. If still stuck, `docker logs -f midnight-proof-server` and paste the tail here. |
+| `wallet sync: 0 tDUST` even though Lace shows a balance | The mnemonic in `.midnight-wallet.local` isn't the same wallet you funded. Double-check it matches the Lace account you funded. |
+
+## Optional — want me to make the deploy script safer first?
+
+Before you run it I can, if useful:
+- Add a preflight check to the script (health check + tDUST balance + confirms address before broadcasting).
+- Print the derived address at the top so you can compare it to Lace before it spends anything.
+
+Say **"add preflight"** and I'll do that in this turn; otherwise just run the deploy and paste the output.
