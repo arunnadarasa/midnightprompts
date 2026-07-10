@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { SiteShell } from "@/components/site-shell";
 import contractInfo from "@/data/midnight-contract.json";
 
@@ -75,6 +76,8 @@ function Code({ children }: { children: string }) {
 }
 
 function ProofServer() {
+  const [platform, setPlatform] = useState<"unix" | "windows">("unix");
+
   return (
     <SiteShell>
       <section className="max-w-3xl mx-auto px-5 pt-14 pb-10">
@@ -107,6 +110,21 @@ function ProofServer() {
       </section>
 
       <section className="max-w-3xl mx-auto px-5 pb-14 space-y-8">
+        <div className="flex gap-2">
+          <button
+            onClick={() => setPlatform("unix")}
+            className={`px-3 py-2 text-[10px] tracking-[0.28em] uppercase font-semibold border transition ${platform === "unix" ? "bg-primary text-primary-foreground border-primary" : "border-border text-foreground hover:border-primary/60 hover:text-primary"}`}
+          >
+            macOS / Linux
+          </button>
+          <button
+            onClick={() => setPlatform("windows")}
+            className={`px-3 py-2 text-[10px] tracking-[0.28em] uppercase font-semibold border transition ${platform === "windows" ? "bg-primary text-primary-foreground border-primary" : "border-border text-foreground hover:border-primary/60 hover:text-primary"}`}
+          >
+            Windows
+          </button>
+        </div>
+
         <div>
           <span className="eyebrow text-primary">step 01</span>
           <h2 className="font-display text-2xl mt-2 text-foreground">Install Docker Desktop</h2>
@@ -148,12 +166,29 @@ function ProofServer() {
   midnightntwrk/proof-server:latest \\
   midnight-proof-server -v`}</Code>
           </div>
+          {platform === "windows" && (
+            <p className="mt-3 text-xs text-muted-foreground font-light">
+              On Windows, Docker Desktop must be running with the <span className="text-foreground">WSL 2 backend</span> enabled.
+              Launch it from the Start menu and wait for the whale icon in the system tray before continuing.
+            </p>
+          )}
           <p className="mt-3 text-xs text-muted-foreground font-light">
-            Check it's up: <span className="text-foreground font-mono">curl http://localhost:6300/health</span> →
-            should return <span className="font-mono text-foreground">{`{"status":"ok","timestamp":"..."}`}</span>.
+            Check it's up:{" "}
+            <span className="text-foreground font-mono">
+              {platform === "windows" ? "curl.exe http://localhost:6300/health" : "curl http://localhost:6300/health"}
+            </span>{" "}
+            → should return <span className="font-mono text-foreground">{`{"status":"ok","timestamp":"..."}`}</span>.
             First proof after boot is slow (~30–120s) while the container warms; subsequent proofs
             are fast.
           </p>
+          {platform === "windows" && (
+            <p className="mt-3 text-xs text-muted-foreground font-light">
+              <span className="text-foreground font-semibold">Troubleshooting:</span> if you see{" "}
+              <span className="font-mono text-foreground">"The system cannot find the file specified"</span>,
+              Docker Desktop isn't running or WSL 2 isn't installed. Re-open Docker Desktop and wait for
+              the engine to start, then retry.
+            </p>
+          )}
 
           <div className="mt-4 border border-primary/30 bg-primary/5 p-4">
             <span className="eyebrow text-primary">verified · openclaw</span>
@@ -212,19 +247,29 @@ function ProofServer() {
           <h2 className="font-display text-2xl mt-2 text-foreground">Deploy TimestampLog.compact</h2>
           <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">
             Clone this repo, paste your funded 24-word mnemonic into{" "}
-            <span className="font-mono text-foreground">.midnight-wallet.local</span> (mode 0600, gitignored),
+            <span className="font-mono text-foreground">.midnight-wallet.local</span>{" "}
+            ({platform === "windows" ? "restricted permissions via icacls, gitignored" : "mode 0600, gitignored"}),
             then run the deploy script. It syncs the wallet, loads the compiled ZK keys from{" "}
             <span className="font-mono text-foreground">contracts/managed/timestamp-log/</span>, and
             calls <span className="font-mono text-foreground">deployContract</span> — proving happens
             against your local proof server.
           </p>
           <div className="mt-3">
-            <Code>{`# in the repo root
+            {platform === "windows" ? (
+              <Code>{`# in PowerShell (repo root)
+bun install
+"your twenty four word mnemonic here" | Out-File -Encoding UTF8 .midnight-wallet.local -NoNewline
+icacls .midnight-wallet.local /inheritance:r /grant:r "$env:USERNAME:(R,W)"
+
+bun scripts/deploy-midnight.mjs`}</Code>
+            ) : (
+              <Code>{`# in the repo root
 bun install
 echo "your twenty four word mnemonic here" > .midnight-wallet.local
 chmod 600 .midnight-wallet.local
 
 bun scripts/deploy-midnight.mjs`}</Code>
+            )}
           </div>
           <p className="mt-3 text-xs text-muted-foreground font-light">
             On success the script writes <span className="font-mono text-foreground">src/data/midnight-contract.json</span>{" "}

@@ -1,57 +1,35 @@
-## Plan: Add `README.md` at repo root for hackathon participants
+## Plan: Add Windows Docker instructions to the Proof Server page
 
-Currently the repo has `.lovable/plan.md` (my working notes for you) and `scripts/deploy-midnight.README.md` (deep reference), but no top-level `README.md`. Anyone cloning from GitHub lands on a blank repo page. Fix that with a single `README.md` at the repo root focused on: what this project is, how to run it locally, and — the reason you're asking — how to stand up the Midnight proof server in Docker on macOS/Linux/Windows.
+The Proof Server page (`/proof-server`) currently shows Docker and deploy steps that assume macOS/Linux (`chmod 600`, `curl`, etc.). Add Windows equivalents inline so hackathon participants on Windows can follow the same step cards without leaving the site.
 
-### New file: `README.md` (repo root)
+### What to change
 
-Sections, in order:
+Edit `src/routes/proof-server.tsx` only.
 
-1. **What this is** — one paragraph. MidnightPrompts: a TanStack Start site showcasing a deployed Compact contract (`TimestampLog`) on Midnight Preview. Links to the live site (`https://midnightprompts.lovable.app`) and to Midnight docs.
+1. **Introduce a minimal platform toggle**  
+   Add a small segmented control (macOS / Linux / Windows) near the top of the steps section, using a local `useState`. Keep it lightweight — two buttons styled with existing `border`, `text-[10px]`, `tracking-[0.28em]` uppercase conventions, active state uses `bg-primary text-primary-foreground`.
 
-2. **Tech stack (one-liner)** — TanStack Start v1 + Vite 7 + Tailwind v4 + Bun; Midnight SDK 4.x; Compact 0.23.
+2. **Branch Step 02 — Boot the proof server**  
+   - Keep the same `docker run` command (cross-platform).  
+   - Add a conditional note under the code block:  
+     - **macOS/Linux**: health check with `curl http://localhost:6300/health`  
+     - **Windows**: mention Docker Desktop + WSL 2 backend, health check with `curl.exe http://localhost:6300/health`  
+   - Keep the verified box and lifecycle commands as-is; they are already cross-platform.
 
-3. **Prerequisites**
-   - Bun ≥ 1.1 (macOS/Linux: `curl -fsSL https://bun.sh/install | bash`; Windows PowerShell: `powershell -c "irm bun.sh/install.ps1 | iex"`)
-   - Docker Desktop (for the proof server)
-   - Lace wallet browser extension, switched to **Midnight Preview**
+3. **Branch Step 04 — Deploy TimestampLog.compact**  
+   - **macOS/Linux**: keep existing `chmod 600 .midnight-wallet.local`  
+   - **Windows**: show PowerShell `icacls .midnight-wallet.local /inheritance:r /grant:r "$env:USERNAME:(R,W)"` as the equivalent permission lock  
+   - The rest of the deploy script (`bun install`, `bun scripts/deploy-midnight.mjs`) is identical.
 
-4. **Run the site locally**
-   ```
-   bun install
-   bun run dev
-   ```
-   Opens `http://localhost:8080`.
+4. **Windows-specific failure tip**  
+   Add a single compact troubleshooting line in Step 02: if Docker Desktop on Windows errors with `"The system cannot find the file specified"`, ensure Docker Desktop is running and WSL 2 backend is enabled. Style it as an existing `text-xs text-muted-foreground` note.
 
-5. **Deploy the contract yourself (optional)** — brief pointer that this is only needed if you want your own on-chain deployment; the site already reads from `src/data/midnight-contract.json`. Full walkthrough lives in [`scripts/deploy-midnight.README.md`](scripts/deploy-midnight.README.md). Then inline the **condensed 5-step flow from `.lovable/plan.md`** so hackathon folks don't need to open a second doc:
-   - Step 1: seed file permissions (macOS/Linux `chmod 600` **and** Windows `icacls` variant)
-   - Step 2: confirm tDUST in Lace (tNIGHT → Generate tDUST)
-   - Step 3: start Docker Desktop (macOS/Linux notes **and** Windows/WSL 2 notes)
-   - Step 4: start the proof server — both shells side by side:
-     - macOS/Linux (`docker start … || docker run …` + `curl`)
-     - Windows PowerShell (`docker start` + `$LASTEXITCODE` fallback + `curl.exe`)
-   - Step 5: `bun scripts/deploy-midnight.mjs`
+### What stays the same
 
-6. **Proof server lifecycle cheatsheet** — small table:
-   | Task | Command |
-   |---|---|
-   | Check it's running | `docker ps` |
-   | Health check | `curl http://localhost:6300/health` (Windows: `curl.exe`) |
-   | Tail logs | `docker logs -f midnight-proof-server` |
-   | Stop | `docker stop midnight-proof-server` |
-   | Resume | `docker start midnight-proof-server` |
+- Steps 01, 03, and 05 have no OS-specific commands; no changes needed.
+- Deploy status panel, "Why not in the browser?" grid, and footer CTA buttons remain untouched.
+- No new dependencies, no new components, no route changes.
 
-7. **Troubleshooting** — same failure table already in `.lovable/plan.md`, including the Windows-specific `error during connect: ... docker_engine: The system cannot find the file specified` row.
+### After the change
 
-8. **Repo layout** — 6-line tree pointing to `contracts/`, `scripts/deploy-midnight.mjs`, `src/routes/`, `src/data/midnight-contract.json`.
-
-9. **License / credits** — one line noting it's a Lovable-generated project for a Midnight hackathon; links to Midnight docs and Lace.
-
-### What I will NOT do
-
-- Not editing `.lovable/plan.md` or `scripts/deploy-midnight.README.md` — they stay as-is; the new README cross-links to the script README for the deep dive.
-- No changes to code, contracts, or config.
-- No GitHub API calls or repo settings changes — the README is a plain file in the repo; GitHub renders it automatically once you push (or once Lovable's Git sync propagates the commit).
-
-### After I write the file
-
-You'll see `README.md` at the repo root. On the next Git sync it appears on the GitHub repo page automatically as the landing README.
+The `/proof-server` page will present the same five step cards, but Steps 02 and 04 will dynamically show the correct shell commands and notes for whichever platform the user selects. Default selection can be macOS/Linux (the current audience majority) or no default (user must pick).
