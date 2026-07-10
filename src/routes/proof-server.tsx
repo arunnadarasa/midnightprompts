@@ -8,6 +8,9 @@ import {
 } from "@/data/midnight-contract";
 import { NetworkToggle } from "@/components/NetworkToggle";
 import { DualDeployStatus } from "@/components/DeployStatusPanel";
+import laceEmpty from "@/assets/lace-tdust-empty.png.asset.json";
+import laceGenerate from "@/assets/lace-tdust-generate.png.asset.json";
+import laceRefilling from "@/assets/lace-tdust-refilling.png.asset.json";
 
 export const Route = createFileRoute("/proof-server")({
   head: () => ({
