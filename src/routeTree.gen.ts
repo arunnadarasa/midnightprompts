@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WalletRouteImport } from './routes/wallet'
 import { Route as ThemesRouteImport } from './routes/themes'
 import { Route as StrategyRouteImport } from './routes/strategy'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
@@ -21,6 +22,11 @@ import { Route as ThemesThemeRouteImport } from './routes/themes.$theme'
 import { Route as ShowcaseMidnightLedgerRouteImport } from './routes/showcase.midnight-ledger'
 import { Route as IdeasIdRouteImport } from './routes/ideas.$id'
 
+const WalletRoute = WalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ThemesRoute = ThemesRouteImport.update({
   id: '/themes',
   path: '/themes',
@@ -84,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/showcase': typeof ShowcaseRouteWithChildren
   '/strategy': typeof StrategyRoute
   '/themes': typeof ThemesRouteWithChildren
+  '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
   '/themes/$theme': typeof ThemesThemeRoute
@@ -95,6 +102,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/quantum-primer': typeof QuantumPrimerRoute
   '/strategy': typeof StrategyRoute
+  '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
   '/themes/$theme': typeof ThemesThemeRoute
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   '/showcase': typeof ShowcaseRouteWithChildren
   '/strategy': typeof StrategyRoute
   '/themes': typeof ThemesRouteWithChildren
+  '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
   '/themes/$theme': typeof ThemesThemeRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
     | '/showcase'
     | '/strategy'
     | '/themes'
+    | '/wallet'
     | '/ideas/$id'
     | '/showcase/midnight-ledger'
     | '/themes/$theme'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/quantum-primer'
     | '/strategy'
+    | '/wallet'
     | '/ideas/$id'
     | '/showcase/midnight-ledger'
     | '/themes/$theme'
@@ -148,6 +159,7 @@ export interface FileRouteTypes {
     | '/showcase'
     | '/strategy'
     | '/themes'
+    | '/wallet'
     | '/ideas/$id'
     | '/showcase/midnight-ledger'
     | '/themes/$theme'
@@ -162,11 +174,19 @@ export interface RootRouteChildren {
   ShowcaseRoute: typeof ShowcaseRouteWithChildren
   StrategyRoute: typeof StrategyRoute
   ThemesRoute: typeof ThemesRouteWithChildren
+  WalletRoute: typeof WalletRoute
   IdeasIdRoute: typeof IdeasIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wallet': {
+      id: '/wallet'
+      path: '/wallet'
+      fullPath: '/wallet'
+      preLoaderRoute: typeof WalletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/themes': {
       id: '/themes'
       path: '/themes'
@@ -281,6 +301,7 @@ const rootRouteChildren: RootRouteChildren = {
   ShowcaseRoute: ShowcaseRouteWithChildren,
   StrategyRoute: StrategyRoute,
   ThemesRoute: ThemesRouteWithChildren,
+  WalletRoute: WalletRoute,
   IdeasIdRoute: IdeasIdRoute,
 }
 export const routeTree = rootRouteImport

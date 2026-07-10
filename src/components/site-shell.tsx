@@ -28,6 +28,7 @@ function SiteHeader() {
         <nav className="hidden md:flex items-center gap-1 text-sm">
           <NavLink to="/themes">Themes</NavLink>
           <NavLink to="/showcase">Showcase</NavLink>
+          <NavLink to="/wallet">Wallet</NavLink>
           <NavLink to="/strategy">Strategy</NavLink>
           <NavLink to="/quantum-primer">Primer</NavLink>
           <NavLink to="/about">About</NavLink>
@@ -71,6 +72,7 @@ function SiteHeader() {
             <nav className="flex flex-col p-4 gap-1 text-base">
               <MobileLink to="/themes" onClick={close}>Themes</MobileLink>
               <MobileLink to="/showcase" onClick={close}>Showcase</MobileLink>
+              <MobileLink to="/wallet" onClick={close}>Wallet</MobileLink>
               <MobileLink to="/strategy" onClick={close}>Strategy</MobileLink>
               <MobileLink to="/quantum-primer" onClick={close}>Primer</MobileLink>
               <MobileLink to="/about" onClick={close}>About</MobileLink>
