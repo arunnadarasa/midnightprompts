@@ -1,9 +1,9 @@
 {
   "network": "preprod",
-  "shieldedAddress": "mn_shield-addr_test1mw3knwt3zv7enpau0rpejtr6l7advkaqxdqpvk05hmcwh56lnchqxqrwhee8k7vmpk7r896mpgc6pevugxa4k3ma85jn35t05grphmsraw5zgxs0c28dtjfrn7xz2yucwhh7zna9ftqse9y978n8jf",
-  "unshieldedAddress": null,
+  "shieldedAddress": "mn_shield-addr_preprod1tew6c2svuqmac32jxx50g4jv68jdwnn8snydlrdn9lhq4vepr6qshktplcu902f4tkvcn2efpavdm5mtckvudlgmjkxcwld840xy88syttd8c",
+  "unshieldedAddress": "mn_addr_preprod1kvr0hws7v7uwv5mg7mh3hud336mmd5vmwgw4v7mca422qpp6zrkqa2e795",
   "createdAt": "2026-07-09T10:51:18.440Z",
   "faucet": "https://midnight-tmnight-preprod.nethermind.dev/",
   "docs": "https://docs.midnight.network/guides/acquire-tokens",
-  "faucetNote": "The preprod faucet dispenses tNIGHT and only accepts the UNSHIELDED address (mn_addr_test1…). The shielded address above is rejected as 'Provided address is invalid'. The @midnight-ntwrk/wallet SDK only derives the shielded side; the unshielded address is exposed by Lace. Import the 24-word seed (stored as the MIDNIGHT_WALLET_SEED secret) into Lace on Midnight preprod to reveal the unshielded address, then paste that into the faucet. After tNIGHT arrives, click 'Generate tDUST' in Lace to delegate — deploys spend tDUST."
+  "faucetNote": "Paste the unshieldedAddress into the preprod faucet to receive tNIGHT. Then delegate tNIGHT → tDUST in Lace before deploying."
 }
