@@ -108,6 +108,7 @@ function ProofServer() {
 
       <section className="max-w-3xl mx-auto px-5 pb-14 space-y-8">
         <div>
+          <span className="eyebrow text-primary">step 01</span>
           <h2 className="font-display text-2xl mt-2 text-foreground">Install Docker Desktop</h2>
           <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">
             The proof server ships only as a Docker image (<span className="text-foreground">midnightntwrk/proof-server</span>).
