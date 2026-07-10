@@ -6,7 +6,7 @@ const PLACEHOLDER_ADDRESS = "000000000000000000000000000000000000000000000000000
 
 function DeployStatus() {
   const isDeployed = contractInfo.address && contractInfo.address !== PLACEHOLDER_ADDRESS;
-  const explorerBase = contractInfo.explorer?.replace(/\/$/, "") ?? "https://preprod.midnightexplorer.com";
+  const explorerBase = contractInfo.explorer?.replace(/\/$/, "") ?? "https://preview.midnightexplorer.com";
   const addressUrl = isDeployed ? `${explorerBase}/contract/${contractInfo.address}` : null;
   const txUrl = contractInfo.deployTx ? `${explorerBase}/tx/${contractInfo.deployTx}` : null;
 
@@ -15,7 +15,7 @@ function DeployStatus() {
       <div className="flex items-center justify-between gap-4">
         <span className="eyebrow text-primary">deploy status</span>
         <span className={`text-[10px] tracking-[0.28em] uppercase font-semibold ${isDeployed ? "text-primary" : "text-muted-foreground"}`}>
-          {isDeployed ? "● live on preprod" : "○ awaiting deploy"}
+          {isDeployed ? "● live on preview" : "○ awaiting deploy"}
         </span>
       </div>
       {isDeployed ? (
@@ -58,9 +58,9 @@ export const Route = createFileRoute("/proof-server")({
   head: () => ({
     meta: [
       { title: "Proof Server · Creative Midnight" },
-      { name: "description", content: "Run the Midnight proof server locally with Docker to generate zero-knowledge proofs and deploy Compact contracts to preprod." },
+      { name: "description", content: "Run the Midnight proof server locally with Docker to generate zero-knowledge proofs and deploy Compact contracts to preview." },
       { property: "og:title", content: "Proof Server · Creative Midnight" },
-      { property: "og:description", content: "Run the Midnight proof server locally with Docker to generate zero-knowledge proofs and deploy Compact contracts to preprod." },
+      { property: "og:description", content: "Run the Midnight proof server locally with Docker to generate zero-knowledge proofs and deploy Compact contracts to preview." },
     ],
   }),
   component: ProofServer,
@@ -182,19 +182,19 @@ function ProofServer() {
           <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">
             The faucet dispenses <span className="text-foreground">tNIGHT</span>, not tDUST. Paste your{" "}
             <span className="text-foreground">unshielded</span> Lace address (starts with{" "}
-            <span className="font-mono">mn_addr_preprod1…</span>) into the preprod faucet, then in Lace
+            <span className="font-mono">mn_addr_preview1…</span>) into the preview faucet, then in Lace
             click <span className="text-foreground">Generate tDUST</span> to delegate. Deploy spends tDUST.
           </p>
           <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <a
-              href="https://midnight-tmnight-preprod.nethermind.dev/"
+              href="https://midnight-tmnight-preview.nethermind.dev/"
               target="_blank"
               rel="noreferrer"
               className="border border-border hover:border-primary/50 p-4 flex flex-col gap-1 transition"
             >
-              <span className="eyebrow text-primary">preprod</span>
+              <span className="eyebrow text-primary">preview</span>
               <span className="text-foreground text-sm">Faucet ↗</span>
-              <span className="text-[10px] text-muted-foreground font-mono break-all">midnight-tmnight-preprod.nethermind.dev</span>
+              <span className="text-[10px] text-muted-foreground font-mono break-all">midnight-tmnight-preview.nethermind.dev</span>
             </a>
             <Link
               to="/wallet"
@@ -229,7 +229,7 @@ bun scripts/deploy-midnight.mjs`}</Code>
           <p className="mt-3 text-xs text-muted-foreground font-light">
             On success the script writes <span className="font-mono text-foreground">src/data/midnight-contract.json</span>{" "}
             with <span className="font-mono">address</span>, <span className="font-mono">deployTx</span>, and{" "}
-            <span className="font-mono">verified: true</span>, then prints the MidnightScan preprod URL.
+            <span className="font-mono">verified: true</span>, then prints the MidnightScan preview URL.
           </p>
         </div>
 

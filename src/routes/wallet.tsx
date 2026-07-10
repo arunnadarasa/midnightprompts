@@ -105,7 +105,7 @@ function Wallet() {
           </p>
           <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <a
-              href="https://midnight-tmnight-preprod.nethermind.dev/"
+              href="https://midnight-tmnight-preview.nethermind.dev/"
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-between p-4 border border-border hover:border-primary/50 transition-colors duration-500 group"
@@ -131,14 +131,14 @@ function Wallet() {
           </div>
           <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <a
-              href="https://preprod.midnightexplorer.com/"
+              href="https://preview.midnightexplorer.com/"
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-between p-4 border border-border hover:border-primary/50 transition-colors duration-500 group"
             >
               <div>
                 <div className="font-display text-foreground">Preprod Explorer</div>
-                <div className="text-xs text-muted-foreground font-light mt-1">preprod.midnightexplorer.com</div>
+                <div className="text-xs text-muted-foreground font-light mt-1">preview.midnightexplorer.com</div>
               </div>
               <span className="text-primary text-lg group-hover:translate-x-1 transition-transform duration-300">→</span>
             </a>

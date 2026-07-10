@@ -2,7 +2,7 @@
 /**
  * scripts/deploy-midnight.mjs
  *
- * Two-phase LOCAL deploy for contracts/TimestampLog.compact against Midnight Preprod.
+ * Two-phase LOCAL deploy for contracts/TimestampLog.compact against Midnight Preview.
  *
  * WHERE TO RUN THIS: on your own machine. NOT in the Lovable sandbox — the sandbox
  * has no Docker daemon, and Midnight's proof server is only distributed as a
@@ -39,17 +39,17 @@ const SEED_FILE = path.join(ROOT, ".midnight-wallet.local");
 const CONTRACT_JSON = path.join(ROOT, "src/data/midnight-contract.json");
 const MANAGED = path.join(ROOT, "contracts/managed/timestamp-log");
 
-const NETWORK_ID = process.env.VITE_NETWORK_ID ?? "preprod";
+const NETWORK_ID = process.env.VITE_NETWORK_ID ?? "preview";
 const INDEXER_HTTP =
   process.env.VITE_INDEXER_URL ??
-  "https://indexer.preprod.midnight.network/api/v4/graphql";
+  "https://indexer.preview.midnight.network/api/v4/graphql";
 const INDEXER_WS =
   process.env.VITE_INDEXER_WS_URL ??
-  "wss://indexer.preprod.midnight.network/api/v4/graphql/ws";
-const NODE_RPC = process.env.VITE_NODE_RPC ?? "https://rpc.preprod.midnight.network";
+  "wss://indexer.preview.midnight.network/api/v4/graphql/ws";
+const NODE_RPC = process.env.VITE_NODE_RPC ?? "https://rpc.preview.midnight.network";
 const PROOF_SERVER = process.env.VITE_PROOF_SERVER_URL ?? "http://localhost:6300";
-const FAUCET = "https://midnight-tmnight-preprod.nethermind.dev/";
-const EXPLORER = "https://preprod.midnightexplorer.com";
+const FAUCET = "https://midnight-tmnight-preview.nethermind.dev/";
+const EXPLORER = "https://preview.midnightexplorer.com";
 
 function log(...a) {
   console.log("[midnight-deploy]", ...a);
@@ -177,7 +177,7 @@ async function main() {
   console.log("  Shielded address (SDK-side, used for contract state):");
   console.log("  " + address);
   console.log("");
-  console.log("  ⚠ The preprod faucet does NOT accept this shielded address.");
+  console.log("  ⚠ The preview faucet does NOT accept this shielded address.");
   console.log("    It only accepts an UNSHIELDED address (mn_addr_test1…),");
   console.log("    which is exposed by Lace — not by the wallet SDK.");
   console.log("    See: https://docs.midnight.network/guides/acquire-tokens");
@@ -189,7 +189,7 @@ async function main() {
 
   if (fresh || tdust < 1) {
     log("Not enough tDUST to deploy. Do this in Lace, not this script:");
-    log(`  1. Install Lace, switch to Midnight preprod, import this 24-word seed`);
+    log(`  1. Install Lace, switch to Midnight preview, import this 24-word seed`);
     log(`     (from .midnight-wallet.local) so it shares the same wallet.`);
     log(`  2. Copy Lace's Unshielded address (mn_addr_test1…).`);
     log(`  3. Paste into ${FAUCET} and click Request tokens (~2 min for 1000 tNIGHT).`);

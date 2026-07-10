@@ -44,7 +44,7 @@ function Index() {
               Browse the Index
             </Link>
             <a
-              href="https://midnight-tmnight-preprod.nethermind.dev/"
+              href="https://midnight-tmnight-preview.nethermind.dev/"
               target="_blank"
               rel="noreferrer"
               className="px-6 py-3 bg-primary text-primary-foreground hover:bg-foreground transition-colors duration-500"
