@@ -34,27 +34,42 @@ source ~/.bashrc && compact update
 compact compile contracts/TimestampLog.compact contracts/managed/timestamp-log
 ```
 
-## Phase 1 — get your funding address
+## Phase 1 — fund the wallet with tNIGHT, then delegate to tDUST
+
+The deploy spends **tDUST**. The preprod faucet only dispenses **tNIGHT**, and
+per <https://docs.midnight.network/guides/acquire-tokens> it only accepts the
+**unshielded** address (`mn_addr_test1…`). Two important quirks:
+
+1. The `@midnight-ntwrk/wallet` SDK we use here derives only the *shielded*
+   address (`mn_shield-addr_test1…`). Pasting that into the faucet produces
+   "Provided address is invalid".
+2. Turning tNIGHT into tDUST (delegation) is a Lace-only UI action — there
+   is no public SDK method for it in the current release train.
+
+So Phase 1 is done in **Lace**, not this script:
+
+1. Install the Lace browser extension and switch it to **Midnight preprod**.
+2. Either create a fresh wallet in Lace, or import the 24-word mnemonic
+   from `.midnight-wallet.local` (or the `MIDNIGHT_WALLET_SEED` secret)
+   so it shares the same seed as this script.
+3. Copy Lace's **Unshielded** address (starts with `mn_addr_test1…`).
+4. Paste it into <https://midnight-tmnight-preprod.nethermind.dev/> and
+   click **Request tokens** — 1000 tNIGHT arrives in ~2 minutes.
+5. In Lace, click **Generate tDUST** to delegate tNIGHT → tDUST. Wait
+   until the tDUST tank shows a non-zero balance.
+
+Then run the script to sanity-check that the same seed sees the tDUST
+balance from the SDK side:
 
 ```bash
 bun scripts/deploy-midnight.mjs
 ```
 
-Output looks like:
+If it prints `current tDUST balance: 0`, wait another minute for the
+delegation to settle and re-run. The mnemonic is stored in
+`.midnight-wallet.local` (mode 0600, gitignored) so re-runs reuse the same
+wallet.
 
-```
-[midnight-deploy] generated new 24-word mnemonic → .midnight-wallet.local
-  Shielded address (fund this one):
-  mn_shield-…preprod1…
-  Faucet: https://cloud.google.com/application/web3/faucet/midnight/testnet
-```
-
-- Copy the shielded address.
-- Paste it into <https://cloud.google.com/application/web3/faucet/midnight/testnet> and request a drip
-  (arrives in ~30s).
-- The mnemonic is saved to `.midnight-wallet.local` (mode 0600, gitignored) so
-  re-runs reuse the same address. Back it up if you want to fund the same
-  wallet from another machine.
 
 ## Phase 2 — start the proof server and deploy
 
