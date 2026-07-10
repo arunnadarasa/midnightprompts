@@ -53,28 +53,34 @@ const shieldedAddrObj = new ShieldedAddress(
 );
 const shieldedAddress = ShieldedAddress.codec.encode(NETWORK_SUFFIX, shieldedAddrObj).asString();
 
+console.error(`[derive] network:            ${NETWORK_LABEL} (suffix="${NETWORK_SUFFIX}")`);
 console.error("[derive] unshielded address:", unshieldedAddress);
 console.error("[derive] shielded address:  ", shieldedAddress);
-if (!unshieldedAddress.startsWith("mn_addr_preprod1")) {
+const expectedPrefix = `mn_addr_${NETWORK_SUFFIX}1`;
+if (!unshieldedAddress.startsWith(expectedPrefix)) {
   console.error("[derive] WARNING: unexpected unshielded prefix:", unshieldedAddress.slice(0, 24));
 }
 
-
+const OUT = args.out ? path.resolve(ROOT, args.out) : DEFAULT_OUT;
 const existing = fs.existsSync(OUT)
   ? JSON.parse(fs.readFileSync(OUT, "utf8"))
   : {};
 
+const faucetByNetwork = {
+  preprod: "https://midnight-tmnight-preprod.nethermind.dev/",
+  test: "https://midnight-faucet-testnet.midnight.network/",
+};
 
 const payload = {
-  network: "preprod",
+  network: NETWORK_LABEL,
   shieldedAddress,
   unshieldedAddress,
   createdAt: existing.createdAt ?? new Date().toISOString(),
   faucet:
-    existing.faucet ?? "https://midnight-tmnight-preprod.nethermind.dev/",
+    existing.faucet ?? faucetByNetwork[NETWORK_SUFFIX] ?? faucetByNetwork.preprod,
   docs: "https://docs.midnight.network/guides/acquire-tokens",
   faucetNote:
-    "Paste the unshieldedAddress into the preprod faucet to receive tNIGHT. Then delegate tNIGHT → tDUST in Lace before deploying.",
+    `Paste the unshieldedAddress into the ${NETWORK_LABEL} faucet to receive tNIGHT. Then delegate tNIGHT → tDUST in Lace before deploying.`,
 };
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
