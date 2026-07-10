@@ -28,10 +28,17 @@ if (!mnemonic || mnemonic.trim().split(/\s+/).length !== 24) {
   process.exit(1);
 }
 
-// Midnight preprod uses the bech32m network suffix "preprod".
-// (Per https://docs.midnight.network/sdks/official/wallet-developer-guide,
-// preprod → `_preprod`, mainnet → no suffix, etc.)
-const NETWORK_SUFFIX = "preprod";
+// Midnight bech32m network suffix. preprod → "preprod", Preview (TestNet) → "test",
+// DevNet → "dev", Undeployed → "undeployed", MainNet → "" (no suffix).
+// Override with --network=<suffix> or MIDNIGHT_NETWORK env var.
+const args = Object.fromEntries(
+  process.argv.slice(2).filter((a) => a.startsWith("--")).map((a) => {
+    const [k, v = "true"] = a.slice(2).split("=");
+    return [k, v];
+  }),
+);
+const NETWORK_SUFFIX = args.network ?? process.env.MIDNIGHT_NETWORK ?? "preprod";
+const NETWORK_LABEL = NETWORK_SUFFIX === "test" ? "preview" : NETWORK_SUFFIX || "mainnet";
 
 const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
 const keystore = createKeystore(seeds.unshielded, NETWORK_SUFFIX);
