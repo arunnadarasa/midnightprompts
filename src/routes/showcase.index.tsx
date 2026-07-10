@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import midnightCfg from "@/data/midnight-contract.json";
+import { CONTRACTS, NETWORK_IDS } from "@/data/midnight-contract";
+import { DualDeployStatus } from "@/components/DeployStatusPanel";
 
 export const Route = createFileRoute("/showcase/")({
   component: ShowcaseIndex,
@@ -14,8 +15,14 @@ function ShowcaseIndex() {
       </h1>
       <p className="mt-6 text-muted-foreground max-w-2xl leading-relaxed">
         Reference builds from the prompt library. Each demo is a real Compact contract on the
-        Midnight preview testnet. State is read from the public Indexer — no wallet needed to browse.
+        Midnight preview and preprod testnets. State is read from the public Indexer — no wallet
+        needed to browse.
       </p>
+
+      <DualDeployStatus
+        cfgs={NETWORK_IDS.map((n) => CONTRACTS[n])}
+        className="mt-10"
+      />
 
       <div className="mt-12 grid gap-6">
         <Link
@@ -34,11 +41,6 @@ function ShowcaseIndex() {
             the message to the public ledger while the author's identity stays hidden behind a ZK-proved
             witness. Public ledger view runs read-only over the Midnight Indexer.
           </p>
-          <div className="mt-4 font-mono text-[11px] text-muted-foreground/70 break-all">
-            {midnightCfg.address === "0000000000000000000000000000000000000000000000000000000000000000"
-              ? "Awaiting first deploy · public read-only preview"
-              : midnightCfg.address}
-          </div>
         </Link>
       </div>
     </div>
