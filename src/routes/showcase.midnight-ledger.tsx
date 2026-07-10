@@ -115,18 +115,37 @@ function MidnightLedgerDemo() {
         </p>
 
         {!DEPLOYED && (
-          <div className="mt-6 p-5 border border-primary/30 bg-background text-sm text-foreground/80 leading-relaxed">
-            <strong className="text-primary">Awaiting first deploy.</strong> Run{" "}
-            <code>bun scripts/deploy-midnight.mjs</code> on your own machine (Docker + Midnight
-            proof server required — the Lovable sandbox can't run the ZK prover). The script
-            prints a shielded address to fund at{" "}
-            <a href={midnightCfg.faucet} target="_blank" rel="noreferrer" className="text-primary underline">
-              the preprod faucet
-            </a>
-            , then re-run to deploy. It writes the hex address into{" "}
-            <code>src/data/midnight-contract.json</code> automatically.
+          <div className="mt-6 p-5 border border-primary/30 bg-background text-sm text-foreground/80 leading-relaxed space-y-3">
+            <div>
+              <strong className="text-primary">Awaiting first deploy.</strong> The preprod
+              deploy has to run on your own machine — Docker + Midnight's proof server are
+              required, and the Lovable sandbox has neither.
+            </div>
+            <div>
+              <strong className="text-primary">Funding gotcha:</strong> the{" "}
+              <a href={midnightCfg.faucet} target="_blank" rel="noreferrer" className="text-primary underline">
+                preprod faucet
+              </a>{" "}
+              only accepts an <em>unshielded</em> address (<code>mn_addr_test1…</code>). The
+              wallet SDK used here derives only the <em>shielded</em> address — pasting it
+              returns <em>"Provided address is invalid"</em>. Import the seed into{" "}
+              <a href="https://www.lace.io/" target="_blank" rel="noreferrer" className="text-primary underline">
+                Lace
+              </a>{" "}
+              on Midnight preprod, copy its unshielded address, request tNIGHT, then click{" "}
+              <em>Generate tDUST</em> in Lace to delegate. See{" "}
+              <a href="https://docs.midnight.network/guides/acquire-tokens" target="_blank" rel="noreferrer" className="text-primary underline">
+                acquire-tokens docs ↗
+              </a>.
+            </div>
+            <div>
+              Once tDUST lands, run <code>bun scripts/deploy-midnight.mjs</code>; it writes the
+              deployed address into <code>src/data/midnight-contract.json</code> and this page
+              hydrates from the Indexer.
+            </div>
           </div>
         )}
+
 
 
         {DEPLOYED && status === "loading" && (
