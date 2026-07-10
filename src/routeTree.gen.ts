@@ -14,6 +14,7 @@ import { Route as ThemesRouteImport } from './routes/themes'
 import { Route as StrategyRouteImport } from './routes/strategy'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
 import { Route as QuantumPrimerRouteImport } from './routes/quantum-primer'
+import { Route as ProofServerRouteImport } from './routes/proof-server'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ThemesIndexRouteImport } from './routes/themes.index'
@@ -45,6 +46,11 @@ const ShowcaseRoute = ShowcaseRouteImport.update({
 const QuantumPrimerRoute = QuantumPrimerRouteImport.update({
   id: '/quantum-primer',
   path: '/quantum-primer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProofServerRoute = ProofServerRouteImport.update({
+  id: '/proof-server',
+  path: '/proof-server',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -86,6 +92,7 @@ const IdeasIdRoute = IdeasIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/proof-server': typeof ProofServerRoute
   '/quantum-primer': typeof QuantumPrimerRoute
   '/showcase': typeof ShowcaseRouteWithChildren
   '/strategy': typeof StrategyRoute
@@ -100,6 +107,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/proof-server': typeof ProofServerRoute
   '/quantum-primer': typeof QuantumPrimerRoute
   '/strategy': typeof StrategyRoute
   '/wallet': typeof WalletRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/proof-server': typeof ProofServerRoute
   '/quantum-primer': typeof QuantumPrimerRoute
   '/showcase': typeof ShowcaseRouteWithChildren
   '/strategy': typeof StrategyRoute
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/proof-server'
     | '/quantum-primer'
     | '/showcase'
     | '/strategy'
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/proof-server'
     | '/quantum-primer'
     | '/strategy'
     | '/wallet'
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/proof-server'
     | '/quantum-primer'
     | '/showcase'
     | '/strategy'
@@ -170,6 +182,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ProofServerRoute: typeof ProofServerRoute
   QuantumPrimerRoute: typeof QuantumPrimerRoute
   ShowcaseRoute: typeof ShowcaseRouteWithChildren
   StrategyRoute: typeof StrategyRoute
@@ -213,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/quantum-primer'
       fullPath: '/quantum-primer'
       preLoaderRoute: typeof QuantumPrimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proof-server': {
+      id: '/proof-server'
+      path: '/proof-server'
+      fullPath: '/proof-server'
+      preLoaderRoute: typeof ProofServerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -297,6 +317,7 @@ const ThemesRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ProofServerRoute: ProofServerRoute,
   QuantumPrimerRoute: QuantumPrimerRoute,
   ShowcaseRoute: ShowcaseRouteWithChildren,
   StrategyRoute: StrategyRoute,
