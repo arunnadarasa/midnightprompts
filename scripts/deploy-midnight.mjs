@@ -48,7 +48,7 @@ const INDEXER_WS =
   "wss://indexer.preprod.midnight.network/api/v4/graphql/ws";
 const NODE_RPC = process.env.VITE_NODE_RPC ?? "https://rpc.preprod.midnight.network";
 const PROOF_SERVER = process.env.VITE_PROOF_SERVER_URL ?? "http://localhost:6300";
-const FAUCET = "https://cloud.google.com/application/web3/faucet/midnight/testnet";
+const FAUCET = "https://midnight-tmnight-preprod.nethermind.dev/";
 const EXPLORER = "https://preprod.midnightexplorer.com";
 
 function log(...a) {
@@ -153,25 +153,33 @@ async function main() {
   const address = info.address;
 
   console.log("");
-  console.log("  Shielded address (fund this one):");
+  console.log("  Shielded address (SDK-side, used for contract state):");
   console.log("  " + address);
   console.log("");
-  console.log("  Faucet: " + FAUCET);
+  console.log("  ⚠ The preprod faucet does NOT accept this shielded address.");
+  console.log("    It only accepts an UNSHIELDED address (mn_addr_test1…),");
+  console.log("    which is exposed by Lace — not by the wallet SDK.");
+  console.log("    See: https://docs.midnight.network/guides/acquire-tokens");
+  console.log("    Faucet: " + FAUCET);
   console.log("");
 
   const tdust = Number(info.balances?.tdust ?? info.balances?.[Object.keys(info.balances)[0]] ?? 0);
   log(`current tDUST balance: ${tdust}`);
 
   if (fresh || tdust < 1) {
-    log("Not enough tDUST to deploy. Steps:");
-    log(`  1. Copy the address above.`);
-    log(`  2. Paste it into ${FAUCET} and request a drip (~30s).`);
-    log(`  3. Start the proof server:`);
+    log("Not enough tDUST to deploy. Do this in Lace, not this script:");
+    log(`  1. Install Lace, switch to Midnight preprod, import this 24-word seed`);
+    log(`     (from .midnight-wallet.local) so it shares the same wallet.`);
+    log(`  2. Copy Lace's Unshielded address (mn_addr_test1…).`);
+    log(`  3. Paste into ${FAUCET} and click Request tokens (~2 min for 1000 tNIGHT).`);
+    log(`  4. In Lace, click "Generate tDUST" to delegate tNIGHT → tDUST.`);
+    log(`  5. Start the proof server:`);
     log(`     docker run -d -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`);
-    log(`  4. Re-run: bun scripts/deploy-midnight.mjs`);
+    log(`  6. Re-run: bun scripts/deploy-midnight.mjs`);
     await wallet.close?.();
     process.exit(0);
   }
+
 
   log("=== phase 2: deploy ===");
   if (!(await proofServerReachable())) {
