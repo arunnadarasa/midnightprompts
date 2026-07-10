@@ -255,12 +255,21 @@ function ProofServer() {
             against your local proof server.
           </p>
           <div className="mt-3">
-            <Code>{`# in the repo root
+            {platform === "windows" ? (
+              <Code>{`# in PowerShell (repo root)
+bun install
+"your twenty four word mnemonic here" | Out-File -Encoding UTF8 .midnight-wallet.local -NoNewline
+icacls .midnight-wallet.local /inheritance:r /grant:r "$env:USERNAME:(R,W)"
+
+bun scripts/deploy-midnight.mjs`}</Code>
+            ) : (
+              <Code>{`# in the repo root
 bun install
 echo "your twenty four word mnemonic here" > .midnight-wallet.local
 chmod 600 .midnight-wallet.local
 
 bun scripts/deploy-midnight.mjs`}</Code>
+            )}
           </div>
           <p className="mt-3 text-xs text-muted-foreground font-light">
             On success the script writes <span className="font-mono text-foreground">src/data/midnight-contract.json</span>{" "}
