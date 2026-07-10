@@ -36,20 +36,37 @@ import { generateMnemonic, mnemonicToSeedSync } from "bip39";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const SEED_FILE = path.join(ROOT, ".midnight-wallet.local");
-const CONTRACT_JSON = path.join(ROOT, "src/data/midnight-contract.json");
 const MANAGED = path.join(ROOT, "contracts/managed/timestamp-log");
 
 const NETWORK_ID = process.env.VITE_NETWORK_ID ?? "preview";
-const INDEXER_HTTP =
-  process.env.VITE_INDEXER_URL ??
-  "https://indexer.preview.midnight.network/api/v4/graphql";
-const INDEXER_WS =
-  process.env.VITE_INDEXER_WS_URL ??
-  "wss://indexer.preview.midnight.network/api/v4/graphql/ws";
-const NODE_RPC = process.env.VITE_NODE_RPC ?? "https://rpc.preview.midnight.network";
+const CONTRACT_JSON = path.join(ROOT, `src/data/midnight-contract.${NETWORK_ID}.json`);
+
+// Per-network defaults (overridable via env). Preview + preprod are the two
+// hackathon-facing testnets; both are proved by the same local Docker proof server.
+const NETWORK_DEFAULTS = {
+  preview: {
+    indexerHttp: "https://indexer.preview.midnight.network/api/v4/graphql",
+    indexerWs: "wss://indexer.preview.midnight.network/api/v4/graphql/ws",
+    nodeRpc: "https://rpc.preview.midnight.network",
+    faucet: "https://midnight-tmnight-preview.nethermind.dev/",
+    explorer: "https://preview.midnightexplorer.com",
+  },
+  preprod: {
+    indexerHttp: "https://indexer.preprod.midnight.network/api/v4/graphql",
+    indexerWs: "wss://indexer.preprod.midnight.network/api/v4/graphql/ws",
+    nodeRpc: "https://rpc.preprod.midnight.network",
+    faucet: "https://midnight-tmnight-preprod.nethermind.dev/",
+    explorer: "https://preprod.midnightexplorer.com",
+  },
+};
+const defaults = NETWORK_DEFAULTS[NETWORK_ID] ?? NETWORK_DEFAULTS.preview;
+
+const INDEXER_HTTP = process.env.VITE_INDEXER_URL ?? defaults.indexerHttp;
+const INDEXER_WS = process.env.VITE_INDEXER_WS_URL ?? defaults.indexerWs;
+const NODE_RPC = process.env.VITE_NODE_RPC ?? defaults.nodeRpc;
 const PROOF_SERVER = process.env.VITE_PROOF_SERVER_URL ?? "http://localhost:6300";
-const FAUCET = "https://midnight-tmnight-preview.nethermind.dev/";
-const EXPLORER = "https://preview.midnightexplorer.com";
+const FAUCET = defaults.faucet;
+const EXPLORER = defaults.explorer;
 
 function log(...a) {
   console.log("[midnight-deploy]", ...a);
