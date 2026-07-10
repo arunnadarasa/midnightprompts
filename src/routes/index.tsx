@@ -44,12 +44,20 @@ function Index() {
               Browse the Index
             </Link>
             <a
-              href="https://cloud.google.com/application/web3/faucet/midnight/testnet"
+              href="https://midnight-tmnight-preprod.nethermind.dev/"
               target="_blank"
               rel="noreferrer"
               className="px-6 py-3 bg-primary text-primary-foreground hover:bg-foreground transition-colors duration-500"
             >
-              tDUST Faucet ↗
+              Preprod Faucet ↗
+            </a>
+            <a
+              href="https://midnight-tmnight-preview.nethermind.dev/"
+              target="_blank"
+              rel="noreferrer"
+              className="px-6 py-3 border border-primary/40 text-foreground hover:bg-primary hover:text-primary-foreground transition-colors duration-500"
+            >
+              Preview Faucet ↗
             </a>
           </div>
         </header>
