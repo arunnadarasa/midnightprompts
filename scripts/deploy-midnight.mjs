@@ -79,20 +79,38 @@ async function buildWallet(mnemonic) {
   // Phase 1 (which doesn't need them) runs fast on a fresh checkout.
   const { WalletBuilder } = await import("@midnight-ntwrk/wallet");
   const { setNetworkId } = await import("@midnight-ntwrk/midnight-js-network-id");
+  const { NetworkId } = await import("@midnight-ntwrk/zswap");
   setNetworkId(NETWORK_ID);
 
-  log(`building wallet for network=${NETWORK_ID}`);
+  // The Scala.js wallet SDK requires the NetworkId enum, not a string.
+  // Both "preprod" and "preview" run on the TestNet enum member.
+  let networkEnum;
+  switch (NETWORK_ID) {
+    case "preprod":
+    case "preview":
+    case "testnet":
+      networkEnum = NetworkId.TestNet;
+      break;
+    case "mainnet":
+      networkEnum = NetworkId.MainNet;
+      break;
+    default:
+      die(`Unknown VITE_NETWORK_ID="${NETWORK_ID}" (expected preprod|preview|mainnet).`);
+  }
+
+  log(`building wallet for network=${NETWORK_ID} (enum=${networkEnum})`);
   const wallet = await WalletBuilder.buildFromSeed(
     INDEXER_HTTP,
     INDEXER_WS,
     PROOF_SERVER,
     NODE_RPC,
     mnemonicToSeedSync(mnemonic).toString("hex"),
-    NETWORK_ID,
+    networkEnum,
   );
   wallet.start();
   return wallet;
 }
+
 
 async function currentAddressAndBalance(wallet) {
   return new Promise((resolve) => {
