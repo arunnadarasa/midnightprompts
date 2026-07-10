@@ -1,37 +1,29 @@
-## Where you are
+## What you're looking at
 
-Phase 1 succeeded: your wallet exists, seed is saved in `.midnight-wallet.local`, and the SDK confirmed a shielded address on preprod with 0 tDUST. Nothing to code — the script is waiting on funds.
+The Lace screen in the screenshot is **Settings → Your Keys**. `Encryption key` and `Coin key` are private key material — not addresses. Nothing to paste into the faucet from there. Also: **do not share those hex strings** with anyone (including me). Whoever holds them controls the wallet.
 
-## Do this now (all in Lace, not the script)
+## Where the unshielded address actually lives in Lace
 
-1. **Install Lace** (Midnight-enabled build): https://www.lace.io/ → install the browser extension → open it → switch network to **Midnight Preprod**.
-2. **Import the same wallet Lace-side**: choose "Restore wallet" → paste the 24 words from `.midnight-wallet.local` (open the file with `cat .midnight-wallet.local`). Lace will now show the same wallet the script uses.
-3. **Copy the Unshielded address** from Lace — it starts with `mn_addr_preprod1…` (or `mn_addr_test1…`). This is NOT the `mn_shield-addr_…` the script printed; the faucet rejects shielded addresses.
-4. **Get tNIGHT from the faucet**: https://midnight-tmnight-preprod.nethermind.dev/ → paste the unshielded address → Request tokens. ~2 min later Lace shows ~1000 tNIGHT.
-5. **Convert tNIGHT → tDUST**: in Lace click **Generate tDUST**. Wait until Lace shows a non-zero tDUST balance (a minute or two).
-6. **Start the proof server** (Docker Desktop must be running first — whale icon in the menubar):
-   ```
-   docker run -d --name midnight-proof-server -p 6300:6300 \
-     midnightntwrk/proof-server:latest midnight-proof-server -v
-   curl http://localhost:6300/health
-   ```
-   Expect `{"status":"ok",...}`. If it's already running from before, `docker start midnight-proof-server` is enough.
-7. **Re-run**:
-   ```
-   bun scripts/deploy-midnight.mjs
-   ```
-   This time the script skips the funding branch, submits `deployContract`, and (after 30–120s for the first proof) prints:
-   - `contract address: <64 hex chars>`
-   - `deploy tx:        <64 hex chars>`
-   - writes both into `src/data/midnight-contract.json`.
+1. Click **Done** to close the "Your Keys" sheet.
+2. In the left/bottom nav of Lace, click **Receive** (icon looks like a down-arrow into a tray). On some Lace builds it's under the wallet name → **Receive funds**.
+3. Lace shows two tabs / two addresses for Midnight:
+   - **Shielded** — starts with `mn_shield-addr_test1…` (long, ~130 chars). This is what the script printed. Faucet REJECTS this.
+   - **Unshielded** — starts with `mn_addr_test1…` or `mn_addr_preprod1…` (much shorter). **This is the one you copy.**
+4. Click the copy icon next to the Unshielded address.
+5. Paste it into the preprod faucet: https://midnight-tmnight-preprod.nethermind.dev/ → Request tokens.
+6. Wait ~1–2 min for tNIGHT to arrive → in Lace click **Generate tDUST** → wait for tDUST balance to appear.
+7. Then re-run `bun scripts/deploy-midnight.mjs` (with the proof server already running on `localhost:6300`).
 
-## Then ping me
+## If Lace only shows one address
 
-Paste either the two lines above or the updated `src/data/midnight-contract.json`, and I'll verify the Deploy Status panel on `/proof-server` and the `/showcase/midnight-ledger` link light up correctly.
+Some Lace builds default to hiding the unshielded address. Toggle:
+- Lace **Settings → Preferences → Show unshielded (Midnight)**, or
+- On the Receive screen, look for a **Shielded / Unshielded** switch at the top.
 
-## If something fails
+## Sanity check
 
-- Faucet says success but script still shows 0 tDUST → step 5 skipped (you have tNIGHT, not tDUST).
-- `Cannot connect to the Docker daemon` → Docker Desktop app itself isn't open. Launch it from Spotlight and wait for the whale icon.
-- `ECONNREFUSED 127.0.0.1:6300` on re-run → container stopped: `docker start midnight-proof-server`.
-- Deploy proof hangs >3 min on first run → normal for cold container; check `docker logs -f midnight-proof-server` for progress.
+Confirm you're on **Midnight Preprod** in Lace (network switcher at the top of the wallet). If Lace is on "Midnight Preview" or Cardano, the address it shows won't match the network the script and faucet target.
+
+## Next reply
+
+Once you have the `mn_addr_…` unshielded string, you don't need to paste it here — just use it at the faucet. Ping me after the deploy script finishes and prints `contract address` + `deploy tx`.
