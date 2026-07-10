@@ -1,93 +1,28 @@
-# Yes — use `@midnight-ntwrk/testkit-js` to derive the unshielded address in the sandbox
+## Goal
 
-Great find. Testkit-js exposes exactly what we need, deterministically from
-a seed, with no Docker / proof server / Lace involvement.
+Derive the **Midnight Preview testnet** shielded + unshielded addresses from the existing `MIDNIGHT_WALLET_SEED` (same 24-word mnemonic already used for preprod), and surface them alongside the preprod pair.
 
-## Why this works
+The Preview network is a separate Midnight testnet from preprod. Its bech32m network suffix is `test` (per Midnight's `NetworkId` mapping: `Undeployed`→`undeployed`, `DevNet`→`dev`, `TestNet`→`test`, `MainNet`→ none). So Preview addresses look like `mn_addr_test1…` and `mn_shield-addr_test1…`.
 
-From <https://docs.midnight.network/api-reference/testkit-js/classes/MidnightWalletProvider>
-and the recent testkit fix commit (`f1b980b`):
+## Changes
 
-- `MidnightWalletProvider.build(logger, env, seed)` constructs the full
-  wallet stack from a seed.
-- Its `unshieldedKeystore` field is a `UnshieldedKeystore`.
-- `unshieldedKeystore.getBech32Address().asString()` returns the
-  `mn_addr_test1…` Bech32m address — the exact format the Nethermind
-  preprod faucet accepts.
+1. **`scripts/derive-unshielded-address.mjs`** — make the network suffix a CLI flag / env var instead of a hardcoded `"preprod"`. Default stays `preprod` for back-compat. Also accept an `--out` path so we can write to a different JSON file per network.
 
-Same seed → same address as Lace would produce, because both go through
-the wallet-sdk unshielded key path (`ledger.addressFromKey(signatureVerifyingKey(sk))`).
+   ```
+   bun scripts/derive-unshielded-address.mjs --network=test --out=src/data/midnight-wallet-preview.json
+   ```
 
-## Plan
+2. **New file `src/data/midnight-wallet-preview.json`** — same shape as `midnight-wallet.json`, populated by running the script with `--network=test`. `network` field = `"preview"`, `faucet` points at the Preview faucet URL (same Nethermind faucet — it exposes a network selector; keep the docs link).
 
-1. **Install** `@midnight-ntwrk/testkit-js@^4.0.4` (dev dep).
-2. **New script** `scripts/derive-unshielded-address.mjs`:
-   - Load the 24-word mnemonic from the `MIDNIGHT_WALLET_SEED` secret
-     (already stored in the sandbox — never printed).
-   - Convert to seed bytes with `bip39.mnemonicToSeedSync`, take the first
-     32 bytes as the hex seed testkit-js expects.
-   - Build a preprod `EnvironmentConfiguration` pointing at the same
-     Indexer / RPC we already use (`indexer.preprod.midnight.network`,
-     `rpc.preprod.midnight.network`). No proof server URL needed for
-     address derivation; we'll pass a dummy value and never call
-     `balanceTx`.
-   - Call `MidnightWalletProvider.build(logger, env, seedHex)`.
-   - Read `provider.unshieldedKeystore.getBech32Address().asString()` →
-     `mn_addr_test1…`.
-   - Also cross-check that the shielded address it derives matches the one
-     already in `src/data/midnight-wallet.json`. If they don't match, abort
-     and log the mismatch (would mean testkit derives a different account
-     path than `WalletBuilder` did — need to know before we tell you to
-     fund it).
-   - Write both addresses back into `src/data/midnight-wallet.json`:
+3. **`src/routes/showcase.midnight-ledger.tsx`** — import the new Preview JSON and render a second card ("Preview network") next to the existing preprod card, each showing its shielded + unshielded address with copy buttons. No other UI/business-logic changes.
 
-     ```json
-     {
-       "network": "preprod",
-       "shieldedAddress": "mn_shield-addr_test1…",
-       "unshieldedAddress": "mn_addr_test1…",
-       "createdAt": "…",
-       "faucet": "https://midnight-tmnight-preprod.nethermind.dev/",
-       "docs": "https://docs.midnight.network/guides/acquire-tokens"
-     }
-     ```
-   - Print the unshielded address to chat (public — safe to share).
-3. **Run it once** in the sandbox and paste the resulting `mn_addr_test1…`
-   in the reply.
-4. **Update the showcase page** (`/showcase/midnight-ledger`) to display
-   the unshielded address in the "fund this" panel with a copy button,
-   linking directly to the faucet.
+4. **`scripts/deploy-midnight.README.md`** — add a one-liner showing the `--network=test` invocation for Preview.
 
-## Fallback if testkit-js won't install cleanly
+## Out of scope
 
-If `bun add @midnight-ntwrk/testkit-js` conflicts with our pinned
-`@midnight-ntwrk/wallet@4.0.0` (testkit may pull a newer wallet), the
-alternative from the same docs (`sdks/official/wallet-developer-guide`)
-is a two-package direct derivation:
+- Any change to preprod addresses, the deploy script, or the contract/wallet business logic.
+- Generating a *separate* seed for Preview. Same seed → different network suffix → different-looking address, which is the standard Midnight pattern.
 
-```ts
-import { UnshieldedAddress, MidnightBech32m } from
-  '@midnight-ntwrk/wallet-sdk-address-format';
-import * as ledger from '@midnight-ntwrk/ledger-v8';
+## Verification
 
-const vk = ledger.signatureVerifyingKey(unshieldedSk.toString('hex'));
-const addr = new UnshieldedAddress(Buffer.from(ledger.addressFromKey(vk), 'hex'));
-const bech32 = MidnightBech32m.encode('preprod', addr).toString();
-```
-
-Requires installing `@midnight-ntwrk/ledger-v8` and bumping
-`@midnight-ntwrk/wallet-sdk-address-format` to a version that exports
-`UnshieldedAddress` (our current copy doesn't). I'll only fall back to
-this if testkit-js install fails.
-
-## Files I'll create / edit
-
-- `package.json` / `bun.lock` — add `@midnight-ntwrk/testkit-js` dev dep.
-- `scripts/derive-unshielded-address.mjs` — new derivation script.
-- `src/data/midnight-wallet.json` — add real `unshieldedAddress`.
-- `src/routes/showcase.midnight-ledger.tsx` — show both addresses; the
-  unshielded one is the "paste into the faucet" address.
-- `scripts/deploy-midnight.README.md` — replace "import into Lace" step
-  with "run `bun scripts/derive-unshielded-address.mjs`".
-
-Approve and I'll ship it.
+After switching to build mode I'll run the script with `--network=test`, confirm the output starts with `mn_addr_test1` / `mn_shield-addr_test1`, and check the showcase route renders both cards.
