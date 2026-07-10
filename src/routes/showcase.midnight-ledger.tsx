@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import midnightCfg from "@/data/midnight-contract.json";
-import walletCfg from "@/data/midnight-wallet.json";
 import walletPreviewCfg from "@/data/midnight-wallet-preview.json";
 
 export const Route = createFileRoute("/showcase/midnight-ledger")({
