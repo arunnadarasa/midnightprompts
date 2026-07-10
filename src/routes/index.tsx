@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { THEMES, ALL_IDEAS, HOOKS } from "@/data/ideas";
+import { CONTRACTS, isDeployed, NETWORK_IDS } from "@/data/midnight-contract";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -140,7 +141,7 @@ function Index() {
               <span className="eyebrow">Appendix · Build Strategy</span>
               <h3 className="font-display text-2xl sm:text-3xl mt-3 text-foreground">The Five-Secret Protocol</h3>
               <p className="text-sm text-muted-foreground mt-2 font-light leading-relaxed">
-                Five secrets, one Lovable build, every contract provable on Midnight preview.
+                Five secrets, one Lovable build, every contract provable on Midnight preview + preprod.
               </p>
             </div>
             <span className="w-12 h-12 shrink-0 rounded-full border border-primary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500">
@@ -149,9 +150,27 @@ function Index() {
           </Link>
 
           <div className="bg-card border border-border p-7">
-            <div className="h-full border-l border-primary/30 pl-5 flex flex-col justify-center">
-              <span className="eyebrow mb-2">Status</span>
-              <p className="font-display text-2xl italic text-foreground leading-tight">Live on Midnight preview.</p>
+            <div className="h-full border-l border-primary/30 pl-5 flex flex-col justify-center gap-3">
+              <span className="eyebrow">Status</span>
+              <p className="font-display text-xl italic text-foreground leading-tight">
+                Live on Midnight preview + preprod.
+              </p>
+              <div className="flex flex-col gap-1.5 text-[10px] tracking-[0.24em] uppercase">
+                {NETWORK_IDS.map((n) => {
+                  const cfg = CONTRACTS[n];
+                  const live = isDeployed(cfg);
+                  return (
+                    <Link
+                      key={n}
+                      to="/proof-server"
+                      className={`flex items-center justify-between gap-2 hover:text-primary transition-colors ${live ? "text-primary" : "text-muted-foreground"}`}
+                    >
+                      <span>{live ? "●" : "○"} {n}</span>
+                      <span className="text-muted-foreground/70">{live ? "deployed" : "awaiting"}</span>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -217,7 +236,7 @@ function Index() {
         <ol className="mt-10 grid md:grid-cols-3 gap-px bg-border">
           <Step n={1} title="Choose a house" body="Skim ten disciplines. Open the one that suits your team." />
           <Step n={2} title="Read an entry" body="Pitch, ZK primitive, plain-language proposition, market sizing." />
-          <Step n={3} title="Copy the mega-prompt" body="Add five secrets, paste into Lovable, deploy to Midnight preview. Ship." />
+          <Step n={3} title="Copy the mega-prompt" body="Add five secrets, paste into Lovable, deploy to Midnight preview or preprod. Ship." />
         </ol>
         <p className="mt-10 eyebrow text-muted-foreground">
           {ALL_IDEAS.length.toLocaleString()} entries indexed · zero backend · ready to prove on Midnight
