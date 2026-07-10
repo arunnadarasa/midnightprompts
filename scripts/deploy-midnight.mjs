@@ -2,7 +2,7 @@
 /**
  * scripts/deploy-midnight.mjs
  *
- * Two-phase LOCAL deploy for contracts/TimestampLog.compact against Midnight Preprod.
+ * Two-phase LOCAL deploy for contracts/TimestampLog.compact against Midnight Preview.
  *
  * WHERE TO RUN THIS: on your own machine. NOT in the Lovable sandbox — the sandbox
  * has no Docker daemon, and Midnight's proof server is only distributed as a
@@ -177,7 +177,7 @@ async function main() {
   console.log("  Shielded address (SDK-side, used for contract state):");
   console.log("  " + address);
   console.log("");
-  console.log("  ⚠ The preprod faucet does NOT accept this shielded address.");
+  console.log("  ⚠ The preview faucet does NOT accept this shielded address.");
   console.log("    It only accepts an UNSHIELDED address (mn_addr_test1…),");
   console.log("    which is exposed by Lace — not by the wallet SDK.");
   console.log("    See: https://docs.midnight.network/guides/acquire-tokens");
@@ -189,7 +189,7 @@ async function main() {
 
   if (fresh || tdust < 1) {
     log("Not enough tDUST to deploy. Do this in Lace, not this script:");
-    log(`  1. Install Lace, switch to Midnight preprod, import this 24-word seed`);
+    log(`  1. Install Lace, switch to Midnight preview, import this 24-word seed`);
     log(`     (from .midnight-wallet.local) so it shares the same wallet.`);
     log(`  2. Copy Lace's Unshielded address (mn_addr_test1…).`);
     log(`  3. Paste into ${FAUCET} and click Request tokens (~2 min for 1000 tNIGHT).`);
