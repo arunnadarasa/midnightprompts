@@ -58,6 +58,16 @@ So Phase 1 is done in **Lace**, not this script:
 5. In Lace, click **Generate tDUST** to delegate tNIGHT → tDUST. Wait
    until the tDUST tank shows a non-zero balance.
 
+Or derive both addresses offline from `MIDNIGHT_WALLET_SEED` without
+touching Lace:
+
+```bash
+# preprod (default)
+bun scripts/derive-unshielded-address.mjs
+# preview testnet
+bun scripts/derive-unshielded-address.mjs --network=test --out=src/data/midnight-wallet-preview.json
+```
+
 Then run the script to sanity-check that the same seed sees the tDUST
 balance from the SDK side:
 

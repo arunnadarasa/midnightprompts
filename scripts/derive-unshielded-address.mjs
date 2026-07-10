@@ -20,7 +20,7 @@ import * as ledger from "@midnight-ntwrk/ledger-v8";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
-const OUT = path.join(ROOT, "src/data/midnight-wallet.json");
+const DEFAULT_OUT = path.join(ROOT, "src/data/midnight-wallet.json");
 
 const mnemonic = process.env.MIDNIGHT_WALLET_SEED;
 if (!mnemonic || mnemonic.trim().split(/\s+/).length !== 24) {
@@ -28,10 +28,17 @@ if (!mnemonic || mnemonic.trim().split(/\s+/).length !== 24) {
   process.exit(1);
 }
 
-// Midnight preprod uses the bech32m network suffix "preprod".
-// (Per https://docs.midnight.network/sdks/official/wallet-developer-guide,
-// preprod → `_preprod`, mainnet → no suffix, etc.)
-const NETWORK_SUFFIX = "preprod";
+// Midnight bech32m network suffix. preprod → "preprod", Preview (TestNet) → "test",
+// DevNet → "dev", Undeployed → "undeployed", MainNet → "" (no suffix).
+// Override with --network=<suffix> or MIDNIGHT_NETWORK env var.
+const args = Object.fromEntries(
+  process.argv.slice(2).filter((a) => a.startsWith("--")).map((a) => {
+    const [k, v = "true"] = a.slice(2).split("=");
+    return [k, v];
+  }),
+);
+const NETWORK_SUFFIX = args.network ?? process.env.MIDNIGHT_NETWORK ?? "preprod";
+const NETWORK_LABEL = NETWORK_SUFFIX === "test" ? "preview" : NETWORK_SUFFIX || "mainnet";
 
 const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
 const keystore = createKeystore(seeds.unshielded, NETWORK_SUFFIX);
@@ -46,28 +53,34 @@ const shieldedAddrObj = new ShieldedAddress(
 );
 const shieldedAddress = ShieldedAddress.codec.encode(NETWORK_SUFFIX, shieldedAddrObj).asString();
 
+console.error(`[derive] network:            ${NETWORK_LABEL} (suffix="${NETWORK_SUFFIX}")`);
 console.error("[derive] unshielded address:", unshieldedAddress);
 console.error("[derive] shielded address:  ", shieldedAddress);
-if (!unshieldedAddress.startsWith("mn_addr_preprod1")) {
+const expectedPrefix = `mn_addr_${NETWORK_SUFFIX}1`;
+if (!unshieldedAddress.startsWith(expectedPrefix)) {
   console.error("[derive] WARNING: unexpected unshielded prefix:", unshieldedAddress.slice(0, 24));
 }
 
-
+const OUT = args.out ? path.resolve(ROOT, args.out) : DEFAULT_OUT;
 const existing = fs.existsSync(OUT)
   ? JSON.parse(fs.readFileSync(OUT, "utf8"))
   : {};
 
+const faucetByNetwork = {
+  preprod: "https://midnight-tmnight-preprod.nethermind.dev/",
+  test: "https://midnight-faucet-testnet.midnight.network/",
+};
 
 const payload = {
-  network: "preprod",
+  network: NETWORK_LABEL,
   shieldedAddress,
   unshieldedAddress,
   createdAt: existing.createdAt ?? new Date().toISOString(),
   faucet:
-    existing.faucet ?? "https://midnight-tmnight-preprod.nethermind.dev/",
+    existing.faucet ?? faucetByNetwork[NETWORK_SUFFIX] ?? faucetByNetwork.preprod,
   docs: "https://docs.midnight.network/guides/acquire-tokens",
   faucetNote:
-    "Paste the unshieldedAddress into the preprod faucet to receive tNIGHT. Then delegate tNIGHT → tDUST in Lace before deploying.",
+    `Paste the unshieldedAddress into the ${NETWORK_LABEL} faucet to receive tNIGHT. Then delegate tNIGHT → tDUST in Lace before deploying.`,
 };
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });

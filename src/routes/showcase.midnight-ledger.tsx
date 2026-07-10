@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import midnightCfg from "@/data/midnight-contract.json";
 import walletCfg from "@/data/midnight-wallet.json";
+import walletPreviewCfg from "@/data/midnight-wallet-preview.json";
 
 export const Route = createFileRoute("/showcase/midnight-ledger")({
   head: () => ({
@@ -108,23 +109,28 @@ function MidnightLedgerDemo() {
         </div>
       </div>
 
-      <div className="mt-6 p-5 border border-primary/40 bg-card text-[11px]">
-        <div className="eyebrow text-primary">fund this address (preprod tNIGHT faucet)</div>
-        <div className="font-mono mt-2 break-all text-foreground">
-          {walletCfg.unshieldedAddress}
-        </div>
-        <p className="mt-3 text-muted-foreground text-xs leading-relaxed">
-          The <a href={walletCfg.faucet} target="_blank" rel="noreferrer" className="text-primary underline">preprod faucet</a>{" "}
-          only accepts an <em>unshielded</em> address (<code>mn_addr_preprod…</code>). Paste the
-          address above, request 1000 tNIGHT, then delegate to tDUST in Lace to enable deploys.
-          See <a href={walletCfg.docs} target="_blank" rel="noreferrer" className="text-primary underline">acquire-tokens docs ↗</a>.
-        </p>
-        <div className="mt-3">
-          <div className="eyebrow text-muted-foreground">shielded address (contract state)</div>
-          <div className="font-mono mt-1 break-all text-muted-foreground">
-            {walletCfg.shieldedAddress}
+      <div className="mt-6 grid sm:grid-cols-2 gap-3">
+        {[
+          { label: "preprod", cfg: walletCfg, prefix: "mn_addr_preprod…" },
+          { label: "preview", cfg: walletPreviewCfg, prefix: "mn_addr_test…" },
+        ].map(({ label, cfg, prefix }) => (
+          <div key={label} className="p-5 border border-primary/40 bg-card text-[11px]">
+            <div className="eyebrow text-primary">{label} · fund this address</div>
+            <div className="font-mono mt-2 break-all text-foreground">
+              {cfg.unshieldedAddress}
+            </div>
+            <p className="mt-3 text-muted-foreground text-xs leading-relaxed">
+              The <a href={cfg.faucet} target="_blank" rel="noreferrer" className="text-primary underline">{label} faucet</a>{" "}
+              only accepts an <em>unshielded</em> address (<code>{prefix}</code>).
+            </p>
+            <div className="mt-3">
+              <div className="eyebrow text-muted-foreground">shielded address (contract state)</div>
+              <div className="font-mono mt-1 break-all text-muted-foreground">
+                {cfg.shieldedAddress}
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
 
 
