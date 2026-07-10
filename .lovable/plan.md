@@ -1,44 +1,62 @@
-## Goal
+## The blocker
 
-Add a clear, at-a-glance comparison of Midnight's three networks — **Preproduction**, **Preview**, and **Mainnet** — to the `/quantum-primer` page so hackathon participants know which one to target and why.
+Confirmed against Midnight's April 2026 docs (`llms-full.txt` + Compatibility Matrix v8):
 
-## Where
+- The proof server is **Docker-only** (`midnightntwrk/proof-server:8.0.3`). No native binary, no npm package, no WASM.
+- There is **no hosted / public proof server** — by design, because it needs your private witness data.
+- `@midnight-ntwrk/midnight-js-http-client-proof-provider` still requires an HTTP proof server you run yourself (typically `http://localhost:6300`).
 
-`src/routes/quantum-primer.tsx` — append a new section near the end of the article (after the existing primer content, before any final CTAs if present). Section heading: "Preprod vs Preview vs Mainnet".
+Neither the Lovable Linux sandbox nor sub-agents can help — sub-agents share the same sandbox, are read-only, and there's no Docker daemon in either. Deploying `TimestampLog.compact` to Midnight preprod strictly requires a machine you control with Docker.
 
-## Content
+## Options
 
-Short intro sentence: Midnight ships three networks; addresses, faucets, and tooling differ by suffix.
+### Option A — You run the existing script locally (recommended, ~5 min)
 
-Then a comparison table (rendered as a responsive grid of three cards on mobile, a real `<table>` on `sm+`) with these rows:
+Everything is already in the repo. On your own machine (Mac/Linux/WSL with Docker Desktop):
 
-| | Preproduction (`preprod`) | Preview (`test`) | Mainnet (`main`) |
-| --- | --- | --- | --- |
-| Purpose | Stable testnet mirroring mainnet release train | Bleeding-edge testnet for upcoming SDK / protocol changes | Real network, real value |
-| Address prefix | `mn_addr_preprod1…` / `mn_shield-addr_preprod1…` | `mn_addr_test1…` / `mn_shield-addr_test1…` | `mn_addr1…` / `mn_shield-addr1…` (no suffix) |
-| Token | tNIGHT → tDUST (test tokens, free) | tNIGHT → tDUST (test tokens, free) | NIGHT → DUST (real, purchased) |
-| Faucet | Nethermind preprod faucet | Midnight preview faucet | none |
-| SDK version | Stable release matching current mainnet | Next release candidate — may break between drops | Stable release, audited |
-| Use for | Demos, hackathon submissions, integration tests against release-candidate mainnet parity | Trying new SDK features before they hit preprod | Production dApps only |
-| Reset policy | Occasional resets around major upgrades | Reset frequently without notice | Never |
+```bash
+# 1. proof server
+docker run -d -p 6300:6300 midnightntwrk/proof-server:latest \
+  midnight-proof-server -v
 
-Then a short "which one for the hackathon?" callout: **Preprod** is the default for demos in this repo — it matches mainnet behaviour, faucet is reliable, and the deploy script + wallet JSON default there. Preview is only useful if you need a not-yet-released SDK feature.
+# 2. copy your funded seed to .midnight-wallet.local (mode 0600)
+#    (same 24-word mnemonic Lace is using so the tDUST is visible)
 
-Links row (small, at the bottom of the section):
-- `https://docs.midnight.network/relnotes/network` — network endpoints reference
-- `https://docs.midnight.network/relnotes/overview` — release notes / current SDK versions
-- `https://docs.midnight.network/guides/acquire-tokens` — faucet + tDUST delegation guide
+# 3. deploy
+bun install
+bun scripts/deploy-midnight.mjs
+```
 
-## Styling
+Paste the resulting `address` + `deployTx` back here. I'll:
 
-Reuse existing tokens on the page — `border border-primary/30 bg-card`, `eyebrow text-primary` labels, `font-display` for the heading, `text-muted-foreground` body, `font-mono text-xs` for the address-prefix cells. Table uses `border-border` dividers, small text (`text-xs sm:text-sm`), and `overflow-x-auto` on the wrapper so it scrolls cleanly on narrow screens. No new dependencies.
+- commit `src/data/midnight-contract.json` with the values
+- add a "Deployed contract" card to `/wallet` (or `/showcase`) linking to `https://preprod.midnightexplorer.com/transactions/<hash>` and `.../contracts/<address>`
+- flip the `verified: true` badge on
 
-## Out of scope
+### Option B — You already deployed via Lace or another machine
 
-- No nav changes, no new route.
-- No edits to other pages, JSON, scripts, or contract code.
-- No copy changes to the existing primer content — this is purely additive.
+Just paste the contract address + deploy tx. Same UI wiring as A, no script run needed.
 
-## Verification
+### Option C — Harden the deploy script first, then you run it
 
-Open `/quantum-primer` in the preview, confirm the new section renders after the existing content, the table is readable on mobile (scroll or stacked), and all three doc links open in a new tab.
+Before you run Option A locally, I do a dry-run pass over `scripts/deploy-midnight.mjs`:
+
+- verify SDK versions still resolve (Ledger v8 compatibility)
+- add clearer preflight checks (proof server reachable, tDUST balance ≥ 1, mnemonic loaded)
+- make idempotent: if `src/data/midnight-contract.json` already has a live address, skip and just re-verify indexer state
+- print the exact MidnightScan URL on success
+
+This costs one extra round-trip but reduces the chance your local run fails halfway.
+
+## What I will NOT do
+
+- Won't pretend the sandbox can deploy — it can't, and faking it (e.g. writing a placeholder address into `midnight-contract.json`) would break the showcase page.
+- Won't add a hosted-proof-server dependency — none exists, and sending your witness key to a third party would defeat Midnight's privacy model.
+
+## Recommendation
+
+Pick **A** if you have Docker installed, **B** if you'll deploy via Lace, or **C** if you want the script polished first. Which one?
+
+Let's do A and add a dedicated new page called Proof Server 
+
+https://docs.midnight.network/guides/run-proof-server
