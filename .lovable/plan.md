@@ -1,63 +1,40 @@
-## You're at: fresh folder, `bun install` done, `.midnight-wallet.local` present
+## Plan: Add Windows guide to `.lovable/plan.md`
 
-No `.env` needed — the deploy script now defaults to preview everywhere (network id + indexer + rpc). Move straight to Docker + deploy.
+Hold off on the Preview → Preprod switch until tonight's Windows Lace test.
 
-## Run these, in order, from the `midnightprompts-main` folder
+### Update `.lovable/plan.md`
 
-1. **Lock down the seed file** (SDK ignores world-readable seeds):
-   ```
-   chmod 600 .midnight-wallet.local
-   ```
+Keep the current macOS-oriented steps but reorganize so both platforms are covered:
 
-2. **Confirm Lace shows tDUST**, not just tNIGHT.
-   - Open Lace → make sure network is **Midnight Preview** (top).
-   - If the balance line reads only tNIGHT, click **Generate tDUST**, wait ~1 min for the tDUST balance to appear.
-   - You cannot deploy without tDUST — the faucet only gives tNIGHT.
+1. **Step 1 (seed file permissions)** — split into:
+   - **macOS/Linux:** `chmod 600 .midnight-wallet.local`
+   - **Windows (PowerShell):**
+     ```powershell
+     icacls .midnight-wallet.local /inheritance:r /grant:r "$($env:USERNAME):(R,W)"
+     ```
+     (removes inherited perms, grants only current user read/write — SDK's equivalent of 0600)
 
-3. **Start Docker Desktop** if the whale icon isn't in your menu bar. Wait until it says "Docker Desktop is running".
+2. **Step 3 (Docker Desktop)** — add Windows notes:
+   - Install Docker Desktop for Windows (WSL 2 backend recommended; enable WSL 2 in Windows Features if prompted).
+   - Launch Docker Desktop from Start menu; wait for the whale tray icon to say "Docker Desktop is running".
+   - First launch may prompt to install/update the WSL 2 kernel — accept.
 
-4. **Start the proof server** (once per machine — the container persists across restarts):
-   ```
-   docker start midnight-proof-server 2>/dev/null || \
-     docker run -d --name midnight-proof-server -p 6300:6300 \
-       midnightntwrk/proof-server:latest midnight-proof-server -v
-   curl http://localhost:6300/health
-   ```
-   Expect `{"status":"ok",...}`.
+3. **Step 4 (proof server)** — commands are identical on Windows, but:
+   - Run in **PowerShell** or **Windows Terminal**, not cmd.exe (the `||` fallback pattern needs PowerShell 7+ or use two separate commands in older shells).
+   - Windows-safe alternative:
+     ```powershell
+     docker start midnight-proof-server
+     if ($LASTEXITCODE -ne 0) {
+       docker run -d --name midnight-proof-server -p 6300:6300 `
+         midnightntwrk/proof-server:latest midnight-proof-server -v
+     }
+     curl.exe http://localhost:6300/health
+     ```
+   - Use `curl.exe` explicitly on Windows — the built-in `curl` alias points to `Invoke-WebRequest` and returns a different shape.
 
-5. **Deploy:**
-   ```
-   bun scripts/deploy-midnight.mjs
-   ```
+4. **Step 5 (deploy)** — same `bun scripts/deploy-midnight.mjs` on both. Note: install bun on Windows via `powershell -c "irm bun.sh/install.ps1 | iex"`.
 
-## What success looks like
+5. **Failure table** — add one Windows-specific row:
+   | `error during connect: ... docker_engine: The system cannot find the file specified` | Docker Desktop not started or WSL 2 backend not ready | Open Docker Desktop, wait for green status, retry |
 
-```
-[midnight-deploy] === phase 1: wallet ===
-[midnight-deploy] using existing wallet seed from .midnight-wallet.local
-[midnight-deploy] building wallet for network=preview (enum=2)
-  Shielded address (SDK-side...):
-  mn_shield-addr_test1...
-[midnight-deploy] current tDUST balance: <N ≥ 1>
-[midnight-deploy] === phase 2: deploy ===
-[midnight-deploy] submitting deployContract — proving may take 30–120s…
-[midnight-deploy] deployed in 45.2s
-[midnight-deploy] contract address: <64 hex>
-[midnight-deploy] deploy tx:        <64 hex>
-[midnight-deploy] verified: Indexer returned state
-[midnight-deploy] updated src/data/midnight-contract.json
-```
-
-## Paste back to me
-
-Just the last block — `contract address`, `deploy tx`, and `verified: …`. I'll wire it into the site.
-
-## If it fails
-
-| Error | Cause | Fix |
-|---|---|---|
-| `tDUST balance: 0` | Skipped Generate tDUST | Step 2 |
-| `ECONNREFUSED 127.0.0.1:6300` | Proof server not running | Step 4 |
-| `Cannot connect to the Docker daemon` | Docker Desktop app closed | Launch Docker Desktop, then step 4 |
-| `insufficient funds` mid-deploy | Lace hasn't finished converting | Wait 60s, retry |
-| Proving hangs > 3 min | First cold proof | Watch `docker logs -f midnight-proof-server` — normal for first run |
+No other files change. Preview → Preprod switch stays parked pending tonight's Windows Lace test.
