@@ -166,12 +166,29 @@ function ProofServer() {
   midnightntwrk/proof-server:latest \\
   midnight-proof-server -v`}</Code>
           </div>
+          {platform === "windows" && (
+            <p className="mt-3 text-xs text-muted-foreground font-light">
+              On Windows, Docker Desktop must be running with the <span className="text-foreground">WSL 2 backend</span> enabled.
+              Launch it from the Start menu and wait for the whale icon in the system tray before continuing.
+            </p>
+          )}
           <p className="mt-3 text-xs text-muted-foreground font-light">
-            Check it's up: <span className="text-foreground font-mono">curl http://localhost:6300/health</span> →
-            should return <span className="font-mono text-foreground">{`{"status":"ok","timestamp":"..."}`}</span>.
+            Check it's up:{" "}
+            <span className="text-foreground font-mono">
+              {platform === "windows" ? "curl.exe http://localhost:6300/health" : "curl http://localhost:6300/health"}
+            </span>{" "}
+            → should return <span className="font-mono text-foreground">{`{"status":"ok","timestamp":"..."}`}</span>.
             First proof after boot is slow (~30–120s) while the container warms; subsequent proofs
             are fast.
           </p>
+          {platform === "windows" && (
+            <p className="mt-3 text-xs text-muted-foreground font-light">
+              <span className="text-foreground font-semibold">Troubleshooting:</span> if you see{" "}
+              <span className="font-mono text-foreground">"The system cannot find the file specified"</span>,
+              Docker Desktop isn't running or WSL 2 isn't installed. Re-open Docker Desktop and wait for
+              the engine to start, then retry.
+            </p>
+          )}
 
           <div className="mt-4 border border-primary/30 bg-primary/5 p-4">
             <span className="eyebrow text-primary">verified · openclaw</span>
