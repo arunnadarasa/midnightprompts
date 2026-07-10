@@ -1,64 +1,93 @@
-# Debug: "Provided address is invalid" at the Midnight preprod faucet
+# Yes — use `@midnight-ntwrk/testkit-js` to derive the unshielded address in the sandbox
 
-## Root cause
+Great find. Testkit-js exposes exactly what we need, deterministically from
+a seed, with no Docker / proof server / Lace involvement.
 
-Per Midnight's own docs (`/guides/acquire-tokens` → Troubleshooting):
+## Why this works
 
-> The address should be the **Unshielded** wallet address on the Lace Midnight wallet.
+From <https://docs.midnight.network/api-reference/testkit-js/classes/MidnightWalletProvider>
+and the recent testkit fix commit (`f1b980b`):
 
-The faucet dispenses **tNIGHT**, which lives on the *unshielded* (public) side of Midnight. tNIGHT is then delegated in Lace to generate **tDUST** on the shielded side.
+- `MidnightWalletProvider.build(logger, env, seed)` constructs the full
+  wallet stack from a seed.
+- Its `unshieldedKeystore` field is a `UnshieldedKeystore`.
+- `unshieldedKeystore.getBech32Address().asString()` returns the
+  `mn_addr_test1…` Bech32m address — the exact format the Nethermind
+  preprod faucet accepts.
 
-The address we generated and saved is a **shielded** address:
+Same seed → same address as Lace would produce, because both go through
+the wallet-sdk unshielded key path (`ledger.addressFromKey(signatureVerifyingKey(sk))`).
 
+## Plan
+
+1. **Install** `@midnight-ntwrk/testkit-js@^4.0.4` (dev dep).
+2. **New script** `scripts/derive-unshielded-address.mjs`:
+   - Load the 24-word mnemonic from the `MIDNIGHT_WALLET_SEED` secret
+     (already stored in the sandbox — never printed).
+   - Convert to seed bytes with `bip39.mnemonicToSeedSync`, take the first
+     32 bytes as the hex seed testkit-js expects.
+   - Build a preprod `EnvironmentConfiguration` pointing at the same
+     Indexer / RPC we already use (`indexer.preprod.midnight.network`,
+     `rpc.preprod.midnight.network`). No proof server URL needed for
+     address derivation; we'll pass a dummy value and never call
+     `balanceTx`.
+   - Call `MidnightWalletProvider.build(logger, env, seedHex)`.
+   - Read `provider.unshieldedKeystore.getBech32Address().asString()` →
+     `mn_addr_test1…`.
+   - Also cross-check that the shielded address it derives matches the one
+     already in `src/data/midnight-wallet.json`. If they don't match, abort
+     and log the mismatch (would mean testkit derives a different account
+     path than `WalletBuilder` did — need to know before we tell you to
+     fund it).
+   - Write both addresses back into `src/data/midnight-wallet.json`:
+
+     ```json
+     {
+       "network": "preprod",
+       "shieldedAddress": "mn_shield-addr_test1…",
+       "unshieldedAddress": "mn_addr_test1…",
+       "createdAt": "…",
+       "faucet": "https://midnight-tmnight-preprod.nethermind.dev/",
+       "docs": "https://docs.midnight.network/guides/acquire-tokens"
+     }
+     ```
+   - Print the unshielded address to chat (public — safe to share).
+3. **Run it once** in the sandbox and paste the resulting `mn_addr_test1…`
+   in the reply.
+4. **Update the showcase page** (`/showcase/midnight-ledger`) to display
+   the unshielded address in the "fund this" panel with a copy button,
+   linking directly to the faucet.
+
+## Fallback if testkit-js won't install cleanly
+
+If `bun add @midnight-ntwrk/testkit-js` conflicts with our pinned
+`@midnight-ntwrk/wallet@4.0.0` (testkit may pull a newer wallet), the
+alternative from the same docs (`sdks/official/wallet-developer-guide`)
+is a two-package direct derivation:
+
+```ts
+import { UnshieldedAddress, MidnightBech32m } from
+  '@midnight-ntwrk/wallet-sdk-address-format';
+import * as ledger from '@midnight-ntwrk/ledger-v8';
+
+const vk = ledger.signatureVerifyingKey(unshieldedSk.toString('hex'));
+const addr = new UnshieldedAddress(Buffer.from(ledger.addressFromKey(vk), 'hex'));
+const bech32 = MidnightBech32m.encode('preprod', addr).toString();
 ```
-mn_shield-addr_test1mw3knwt3zv7enpau0rpejtr6l7advkaqxdqpvk05hmcwh56ln…
-```
 
-That's why the faucet rejects it as "Provided address is invalid" — it only accepts unshielded addresses (`mn_addr_test1…` in Bech32m, or the legacy hex form).
+Requires installing `@midnight-ntwrk/ledger-v8` and bumping
+`@midnight-ntwrk/wallet-sdk-address-format` to a version that exports
+`UnshieldedAddress` (our current copy doesn't). I'll only fall back to
+this if testkit-js install fails.
 
-Our current script (`scripts/generate-midnight-wallet.mjs`) reads `wallet.state().address`, which the SDK returns as the shielded address. We never derived or surfaced the unshielded counterpart.
+## Files I'll create / edit
 
-## Fix (two parts)
+- `package.json` / `bun.lock` — add `@midnight-ntwrk/testkit-js` dev dep.
+- `scripts/derive-unshielded-address.mjs` — new derivation script.
+- `src/data/midnight-wallet.json` — add real `unshieldedAddress`.
+- `src/routes/showcase.midnight-ledger.tsx` — show both addresses; the
+  unshielded one is the "paste into the faucet" address.
+- `scripts/deploy-midnight.README.md` — replace "import into Lace" step
+  with "run `bun scripts/derive-unshielded-address.mjs`".
 
-### 1. Derive and save the unshielded address
-
-Update `scripts/generate-midnight-wallet.mjs` to also expose the unshielded (public) address from the same seed, using `@midnight-ntwrk/wallet` state (fields like `encryptionPublicKey` / `coinPublicKey` combine into the unshielded Bech32m address via `@midnight-ntwrk/zswap` / `wallet-sdk-hd` helpers). Persist both in `src/data/midnight-wallet.json`:
-
-```json
-{
-  "network": "preprod",
-  "shieldedAddress": "mn_shield-addr_test1…",   // for contract state / receiving shielded funds
-  "unshieldedAddress": "mn_addr_test1…",        // ← paste THIS into the faucet
-  "createdAt": "…",
-  "faucet": "https://midnight-tmnight-preprod.nethermind.dev/",
-  "docs": "https://docs.midnight.network/guides/acquire-tokens"
-}
-```
-
-No new mnemonic — we reuse the seed already in the `MIDNIGHT_WALLET_SEED` secret.
-
-### 2. Correct the flow the app + README describe
-
-Right now `scripts/deploy-midnight.README.md` and `src/routes/showcase.midnight-ledger.tsx` point users at Google's old testnet faucet and call the wallet's shielded address "the one to fund". Update both to reflect the real 3-step flow from Midnight docs:
-
-1. Paste the **unshielded** address into the Nethermind preprod faucet → receive **1000 tNIGHT**.
-2. In Lace, click **Generate tDUST** to delegate tNIGHT → tDUST (this is a Lace-only UI action; can't be scripted from a headless wallet, so we call it out as a manual step).
-3. Once tDUST balance ≥ 1, re-run `bun scripts/deploy-midnight.mjs` to deploy.
-
-The showcase page's "fund this address" panel should show the unshielded address with a note: "This is the tNIGHT faucet address. tDUST for deploys is generated by delegating tNIGHT inside Lace."
-
-## Files touched
-
-- `scripts/generate-midnight-wallet.mjs` — derive + print unshielded address; write both to JSON.
-- `src/data/midnight-wallet.json` — add `unshieldedAddress`, rename `address` → `shieldedAddress`, swap faucet URL to `midnight-tmnight-preprod.nethermind.dev`, add `docs` link.
-- `scripts/deploy-midnight.README.md` — rewrite Phase 1 instructions around unshielded address + Lace delegation.
-- `src/routes/showcase.midnight-ledger.tsx` — show both addresses, label which one is for the faucet, link to the docs troubleshooting section.
-
-## Open question
-
-The tNIGHT → tDUST delegation step **requires the Lace browser extension** — there's no public SDK method for it in the current release. Two options:
-
-- **A. Manual Lace step** (what the docs assume): user installs Lace, imports the 24-word seed we generated, clicks "Generate tDUST". Simple; matches official flow.
-- **B. Script-only, skip delegation**: some Compact contracts can be exercised with tNIGHT-funded coin outputs alone on preprod. Riskier — not documented, likely to fail at `balanceTransaction` time.
-
-Recommend **A**. Confirm before I implement?
+Approve and I'll ship it.
