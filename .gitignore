@@ -34,3 +34,4 @@ dist-ssr
 # Midnight local wallet artefacts (never commit)
 .midnight-wallet.local
 .midnight-witness.local
+.env
