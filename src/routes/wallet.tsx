@@ -22,6 +22,19 @@ import net05 from "@/assets/lace-net-05-topbar.png.asset.json";
 import expanded01 from "@/assets/lace-expanded-01-wallet.png.asset.json";
 import expanded02 from "@/assets/lace-expanded-02-settings.png.asset.json";
 import expanded03 from "@/assets/lace-expanded-03-view-mode.png.asset.json";
+import tdust01 from "@/assets/lace-tdust-01-empty.png.asset.json";
+import tdust02 from "@/assets/lace-tdust-02-generate.png.asset.json";
+import tdust03 from "@/assets/lace-tdust-03-review.png.asset.json";
+import tdust04 from "@/assets/lace-tdust-04-password.png.asset.json";
+import tdust05 from "@/assets/lace-tdust-05-processing.png.asset.json";
+
+const TDUST_STEPS = [
+  { img: tdust01, tag: "01 · tank empty", title: "Tap the D icon next to Receive", caption: "With tNIGHT in the wallet but 0 / 0 tDUST, click the small D icon to the right of Receive to open Generate tDUST." },
+  { img: tdust02, tag: "02 · generate tdust", title: "Send #1 — designate wallet", caption: "The Generate tDUST sheet shows your Dust Address and full tNIGHT balance. Click Send to designate it for tDUST generation." },
+  { img: tdust03, tag: "03 · review", title: "Send #2 — review & confirm", caption: "Review Transaction confirms you're designating 1,000 tNIGHT. Click Send again to submit." },
+  { img: tdust04, tag: "04 · password", title: "Enter your admin password", caption: "Confirm the transaction with your Lace admin password, then Confirm." },
+  { img: tdust05, tag: "05 · processing", title: "Generating the ZK proof", caption: "Processing transaction, generating zero-knowledge proof. Give it a minute — tDUST starts flowing once designation completes." },
+];
 
 const EXPANDED_STEPS = [
   { img: expanded02, tag: "01 · settings", title: "Cogwheel → Default View Mode", caption: "Open Settings from the cogwheel and scroll to Default View Mode at the bottom of the list." },
@@ -319,7 +332,37 @@ function Wallet() {
         </ol>
       </section>
 
+      <section className="max-w-3xl mx-auto px-5 pb-10">
+        <span className="eyebrow">generate tdust · tnight → tdust</span>
+        <h2 className="font-display text-3xl sm:text-4xl font-bold mt-2 text-foreground">
+          Turn tNIGHT into <span className="italic text-primary">tDUST.</span>
+        </h2>
+        <p className="mt-3 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
+          The faucet only drips tNIGHT. Deploys and shielded txs spend tDUST — so you have to
+          designate your tNIGHT once. In your wallet, click the D icon next to Receive, click Send
+          twice, and enter your admin password.
+        </p>
 
+        <ol className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {TDUST_STEPS.map((s) => (
+            <li key={s.tag} className="border border-border bg-card flex flex-col">
+              <img
+                src={s.img.url}
+                alt={s.title}
+                loading="lazy"
+                className="w-full h-auto block border-b border-border bg-background"
+              />
+              <div className="p-4 flex flex-col gap-1">
+                <span className="eyebrow text-primary">{s.tag}</span>
+                <span className="font-display text-foreground text-base">{s.title}</span>
+                <span className="text-[12px] text-muted-foreground font-light leading-relaxed mt-1">
+                  {s.caption}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
 
       <section className="max-w-3xl mx-auto px-5 pb-20">
 
