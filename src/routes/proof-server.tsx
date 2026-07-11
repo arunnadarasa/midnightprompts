@@ -264,7 +264,33 @@ ${deployCmd}`}</Code>
             <span className="font-mono">verified: true</span>, then prints the MidnightScan{" "}
             {network} URL.
           </p>
+
+          <div className="mt-4 border-l-2 border-primary/50 pl-4 py-2 text-[12px] text-muted-foreground font-light leading-relaxed">
+            <span className="text-primary uppercase tracking-[0.24em] text-[10px] font-semibold">
+              tank cap ≠ required balance
+            </span>
+            <p className="mt-2">
+              You can deploy as soon as Lace shows <span className="text-foreground">any</span>{" "}
+              tDUST balance. The <span className="font-mono text-foreground">5,000</span> figure
+              is a tank ceiling, not a threshold — a deploy costs a fraction of one tDUST.
+            </p>
+          </div>
+
+          <div className="mt-3 border-l-2 border-primary/50 pl-4 py-2 text-[12px] text-muted-foreground font-light leading-relaxed">
+            <span className="text-primary uppercase tracking-[0.24em] text-[10px] font-semibold">
+              troubleshooting · sync stall
+            </span>
+            <p className="mt-2">
+              If the deploy script logs{" "}
+              <span className="font-mono text-foreground">coins=0 tDUST=0</span> while Lace shows
+              a real balance, just <span className="text-foreground">re-run</span>. The Preview
+              relay sometimes drops the initial WS sync; a fresh run usually catches it. Escalate
+              only if two consecutive runs both stall at{" "}
+              <span className="font-mono text-foreground">coins=0</span>.
+            </p>
+          </div>
         </div>
+
 
         <div>
           <span className="eyebrow text-primary">step 05</span>
