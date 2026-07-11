@@ -1,49 +1,58 @@
-## What the diagnostic tells us
+## What we know from the last run
 
-Good news — everything is wired correctly:
+- DUST public key on the wallet **matches** the seed-derived key. ✓
+- 1 NIGHT UTXO is visible and `registeredForDustGeneration=true`. ✓
+- `shielded` and `unshielded` sync went strictly complete. ✓
+- `dust.isStrictlyComplete` **never flipped true** in 10 min, and balance stays `0`.
+- Meanwhile Lace (same seed) shows ~471 tDUST.
 
-- **DUST key matches** the seed-derived key (no HD path bug).
-- **NIGHT UTXO is registered** for DUST generation (`registeredForDustGeneration=true`).
-- **Unshielded sync is complete**, so the script *can* see your funded NIGHT.
+That combination means the wiring is correct; the SDK's DUST indexer stream on Preview is just not converging for our wallet instance. Gating on `isStrictlyComplete` was the wrong stop condition — Lace clearly doesn't wait for it either.
 
-The only red flag:
+## Answer to the question
+
+**No, don't add programmatic DUST generation.** The docs page "generating DUST programmatically" is about registering NIGHT for DUST generation — we already did that (`registeredForDustGeneration=true`). It won't produce more DUST or make the SDK see the existing DUST any faster. The problem is DUST *sync visibility*, not DUST *supply*.
+
+## Plan
+
+Two small, low-risk changes to `scripts/deploy-midnight.mjs`, then re-run.
+
+### 1. Stop gating on `dust.isStrictlyComplete`
+
+Preview's DUST stream doesn't reliably converge, but the balance is queryable well before that. Change the wait loop to finish as soon as **either**:
+
+- `state.dust.balance(new Date()) > 0`, **or**
+- `shielded.isStrictlyComplete && unshielded.isStrictlyComplete` and we've polled for ≥ 3 min (give DUST a chance, then move on).
+
+Keep the 10-min hard cap and the per-10s log.
+
+### 2. If balance is still 0 after the loop, try to proceed anyway
+
+Right now we hard-fail with "balance 0". Since NIGHT is registered and the key matches, add an env override:
 
 ```
-dust sync isStrictlyComplete: false
-shielded sync isStrictlyComplete: false
+MIDNIGHT_ALLOW_ZERO_DUST=1 VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs
 ```
 
-The wallet hasn't finished replaying the Preview ledger's DUST stream yet. The script currently gives up after ~80s, but on Preview the initial DUST sync from a fresh wallet instance regularly takes **several minutes** — the DUST balance is computed from a time-series of generation events, not a single UTXO lookup. Until `dust.isStrictlyComplete` flips to `true`, `state.dust.balance(new Date())` is expected to read `0`.
+When set, log a loud warning and continue into `deployContract`. One of two things happens:
 
-## What to do next
-
-### Step 1 — Extend the sync window and gate on `isStrictlyComplete`
-
-Patch `scripts/deploy-midnight.mjs` so the wallet-sync loop:
-
-1. Waits until `state.dust.state.progress.isStrictlyComplete()` **and** `state.shielded.progress.isStrictlyComplete()` are both true (or a 10-minute hard cap), instead of just polling the balance for 80s.
-2. Logs `dust isStrictlyComplete` / `shielded isStrictlyComplete` every 10s so progress is visible.
-3. Only after strict-complete, reads `state.dust.balance(new Date())` and decides pass/fail.
-
-No changes to Docker, Lace, seed, or DUST registration — this is purely a "wait long enough" fix.
-
-### Step 2 — Re-run
-
-```
-VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs
-```
-
-Expected: within 2–5 minutes both `isStrictlyComplete` flags flip to `true`, tDUST balance becomes non-zero, and the deploy proceeds to proving.
-
-### Step 3 — If DUST balance is still 0 after strict-complete
-
-Then (and only then) the 471 tDUST Lace shows really is under a different DUST public key than ours, even though the seeds match — likely because Lace's "Generate tDUST" registered a *different* NIGHT UTXO. In that case the fix is to send tNIGHT from Lace to the script's unshielded address (`mn_addr_preview15sz5jgljxtnh5cfxxe3ekf8egx6rh2lk28zswtdxprsj2hv4yrwql85qg8`) and let this wallet register + generate its own tDUST. We'll only go down that path if Step 2 confirms it's needed.
-
-### Files touched
-
-- `scripts/deploy-midnight.mjs` — replace the balance-only wait loop with a strict-complete wait loop; keep the diagnostic block as-is.
+- **Deploy succeeds** → the SDK's cached balance was stale; we're done and we know for future runs to skip the gate.
+- **Deploy fails with "insufficient DUST"** → confirms Lace's tDUST really is under a different DUST key than the SDK derives (despite the pubkey printout matching), and the fix is to send tNIGHT from Lace → our unshielded address so this wallet generates its own DUST from scratch. We'll handle that in a follow-up only if it happens.
 
 ### Not doing
 
-- No changes to seed, Lace, faucet, Docker, proof server, or DUST derivation.
-- No `--register-dust` call — the UTXO is already registered.
+- No programmatic DUST generation call (already registered).
+- No seed changes, no Lace changes, no Docker changes.
+- No re-derivation — key match is confirmed.
+
+### Files touched
+
+- `scripts/deploy-midnight.mjs` — relax the sync gate; add `MIDNIGHT_ALLOW_ZERO_DUST` bypass.
+- `.lovable/plan.md` — replace with this plan.
+
+### Next command for you
+
+After I apply the change:
+
+```
+VITE_NETWORK_ID=preview MIDNIGHT_ALLOW_ZERO_DUST=1 bun scripts/deploy-midnight.mjs
+```
