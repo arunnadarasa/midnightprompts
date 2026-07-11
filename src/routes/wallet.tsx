@@ -292,7 +292,7 @@ function Wallet() {
           </p>
           <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <a
-              href="https://midnight-tmnight-preview.nethermind.dev/"
+              href="https://midnight-tmnight-preprod.nethermind.dev/"
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-between p-4 border border-border hover:border-primary/50 transition-colors duration-500 group"
