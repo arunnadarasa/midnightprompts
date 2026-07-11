@@ -126,7 +126,14 @@ export function useMidnightWallet(): MidnightWalletState {
       setStatus("connecting");
       const c = pickConnector();
       if (!c) throw new Error("No Midnight wallet detected.");
-      const api = await c.enable();
+      if (typeof c.connect !== "function") {
+        throw new Error(
+          "This Lace build doesn't expose the 4.x DApp Connector API (missing connect()). Update Lace to the latest Midnight build.",
+        );
+      }
+      const envNet = (import.meta.env.VITE_NETWORK_ID as string | undefined) ?? "preprod";
+      const networkId = envNet === "preview" || envNet === "preprod" || envNet === "mainnet" ? envNet : "preprod";
+      const api = await c.connect(networkId);
       const state = await api.state();
       setAddress(state.address);
       setCoinPublicKey(state.coinPublicKey ?? null);
