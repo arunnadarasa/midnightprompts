@@ -8,9 +8,21 @@ import {
 } from "@/data/midnight-contract";
 import { NetworkToggle } from "@/components/NetworkToggle";
 import { DualDeployStatus } from "@/components/DeployStatusPanel";
-import laceEmpty from "@/assets/lace-tdust-empty.png.asset.json";
-import laceGenerate from "@/assets/lace-tdust-generate.png.asset.json";
-import laceRefilling from "@/assets/lace-tdust-refilling.png.asset.json";
+import tdust01 from "@/assets/lace-tdust-01-empty.png.asset.json";
+import tdust02 from "@/assets/lace-tdust-02-generate.png.asset.json";
+import tdust03 from "@/assets/lace-tdust-03-review.png.asset.json";
+import tdust04 from "@/assets/lace-tdust-04-password.png.asset.json";
+import tdust05 from "@/assets/lace-tdust-05-processing.png.asset.json";
+import tdust06 from "@/assets/lace-tdust-06-refilling.png.asset.json";
+
+const TDUST_WALKTHROUGH = [
+  { img: tdust01, tag: "01 · empty tank", caption: "0 / 0 tDUST after the faucet drops tNIGHT — tap the D icon next to Receive." },
+  { img: tdust02, tag: "02 · generate tdust", caption: "Send #1 — designate your full tNIGHT balance to your own Dust address." },
+  { img: tdust03, tag: "03 · review", caption: "Send #2 — Review Transaction confirms the 1,000 tNIGHT designation." },
+  { img: tdust04, tag: "04 · password", caption: "Confirm with your Lace admin password." },
+  { img: tdust05, tag: "05 · processing", caption: "Generating the zero-knowledge proof — ~30–120s on first run." },
+  { img: tdust06, tag: "06 · refilling", caption: "Tank flips to Refilling and tDUST balance climbs — ready to deploy." },
+];
 
 export const Route = createFileRoute("/proof-server")({
   head: () => ({
