@@ -209,17 +209,20 @@ async function buildWallet(mnemonic) {
     .forEnvironment(env)
     .withMnemonic(mnemonic.trim())
     .buildWithoutStarting();
+  const ledger = await import("@midnight-ntwrk/ledger-v8");
+  const zswapSecretKeys = ledger.ZswapSecretKeys.fromSeed(seeds.shielded);
+  const dustSecretKey = ledger.DustSecretKey.fromSeed(seeds.dust);
   const provider = await MidnightWalletProvider.withWallet(
     quietLogger,
     env,
     wallet,
-    (await import("@midnight-ntwrk/ledger-v8")).ZswapSecretKeys.fromSeed(seeds.shielded),
-    (await import("@midnight-ntwrk/ledger-v8")).DustSecretKey.fromSeed(seeds.dust),
+    zswapSecretKeys,
+    dustSecretKey,
     keystore,
   );
   await provider.start(false);
   const state = await latestWalletSnapshot(provider.wallet, 30_000);
-  return { provider, state };
+  return { provider, state, seeds, dustSecretKey, ledger };
 }
 
 function readDustBalance(state) {
