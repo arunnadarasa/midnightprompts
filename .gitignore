@@ -35,3 +35,6 @@ dist-ssr
 .midnight-wallet.local
 .midnight-witness.local
 .env
+
+# Midnight preprod DUST demo (standalone wallet — separate from deploy flow)
+.midnight-wallet-preprod-demo.local
