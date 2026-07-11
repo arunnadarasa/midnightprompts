@@ -233,6 +233,83 @@ function readDustBalance(state) {
   }
 }
 
+function toHex(value) {
+  if (!value) return null;
+  if (typeof value === "string") return value;
+  if (value instanceof Uint8Array) return Buffer.from(value).toString("hex");
+  if (Array.isArray(value)) return Buffer.from(value).toString("hex");
+  if (typeof value.toString === "function") {
+    const s = value.toString();
+    if (s && s !== "[object Object]") return s;
+  }
+  try {
+    return JSON.stringify(value);
+  } catch {
+    return String(value);
+  }
+}
+
+function diagnoseDust(state, dustSecretKey) {
+  console.log("");
+  log("── DUST diagnostic ──");
+
+  // 1. DUST public key from wallet state
+  const walletDustPk = toHex(state?.dust?.publicKey);
+  log(`state.dust.publicKey:      ${walletDustPk ?? "<undefined>"}`);
+
+  // 2. DUST public key from DustSecretKey.fromSeed(seeds.dust)
+  let seedDustPk = null;
+  try {
+    seedDustPk = toHex(dustSecretKey?.publicKey);
+  } catch (e) {
+    log(`could not read DustSecretKey.publicKey: ${e?.message ?? e}`);
+  }
+  log(`DustSecretKey.publicKey:   ${seedDustPk ?? "<undefined>"}`);
+  if (walletDustPk && seedDustPk && walletDustPk !== seedDustPk) {
+    log("⚠ wallet DUST key ≠ seed-derived DUST key — wallet was wired with the wrong key");
+  } else if (walletDustPk && seedDustPk) {
+    log("✓ wallet DUST key matches seed-derived DUST key");
+  }
+
+  // 3. DUST coins visible to this wallet
+  const dustCoins = state?.dust?.availableCoins ?? [];
+  log(`state.dust.availableCoins: ${dustCoins.length} coin(s)`);
+
+  // 4. Sync progress
+  const dustProgress = state?.dust?.state?.progress;
+  const shieldedProgress = state?.shielded?.state?.progress;
+  const unshieldedProgress = state?.unshielded?.progress;
+  try {
+    log(`dust sync isStrictlyComplete: ${dustProgress?.isStrictlyComplete?.() ?? "n/a"}`);
+    log(`shielded sync isStrictlyComplete: ${shieldedProgress?.isStrictlyComplete?.() ?? "n/a"}`);
+    log(`unshielded sync isStrictlyComplete: ${unshieldedProgress?.isStrictlyComplete?.() ?? "n/a"}`);
+  } catch {}
+
+  // 5. NIGHT UTXOs and registration flag
+  const nightCoins = state?.unshielded?.availableCoins ?? [];
+  log(`state.unshielded.availableCoins: ${nightCoins.length} NIGHT UTXO(s)`);
+  let registeredCount = 0;
+  nightCoins.forEach((c, i) => {
+    const value = c?.value ?? c?.amount ?? "?";
+    const reg = c?.meta?.registeredForDustGeneration ?? c?.registeredForDustGeneration ?? null;
+    if (reg === true) registeredCount += 1;
+    log(`  [${i}] value=${value} registeredForDustGeneration=${reg}`);
+  });
+
+  log("── end DUST diagnostic ──");
+  console.log("");
+
+  return {
+    walletDustPk,
+    seedDustPk,
+    keyMatches: walletDustPk && seedDustPk ? walletDustPk === seedDustPk : null,
+    dustCoinCount: dustCoins.length,
+    nightCoinCount: nightCoins.length,
+    registeredCount,
+  };
+}
+
+
 async function waitForDustBalance(wallet, initialState, timeoutMs = 90_000) {
   log("syncing wallet Dust balance from Indexer…");
   return new Promise((resolve, reject) => {
