@@ -1,30 +1,22 @@
 ## Goal
 
-Update `/proof-server` step 03 to use the newer, higher-quality Lace tDUST screenshots that already power `/wallet`, replacing the older 3-image set.
+Remove the tDUST screenshot walkthrough from `/proof-server` step 03 entirely and instead direct users to `/wallet`, which already has the full 6-step Lace walkthrough.
 
 ## Changes
 
 **`src/routes/proof-server.tsx`**
 
-1. Replace the three old imports:
-   - `lace-tdust-empty.png.asset.json`
-   - `lace-tdust-generate.png.asset.json`
-   - `lace-tdust-refilling.png.asset.json`
+1. Remove all six `tdust01`–`tdust06` imports (currently unused after step 03 is trimmed).
+2. Remove the `TDUST_WALKTHROUGH` array.
+3. In step 03, delete the "visual walkthrough · lace" block (the 3-image grid and its "Screenshots: Midnight Docs" footnote).
+4. Keep the existing side-by-side link cards (Faucet ↗ / Install Lace →) and tighten the "Install Lace" card copy to make it clear the full Lace + tDUST walkthrough lives there — e.g. change the sub-label from "Browser extension + tDUST guide" to "Full setup + tDUST walkthrough →".
+5. Add a short inline note under those cards: "Step-by-step Lace screenshots for funding tDUST live on the Wallet page." with a `<Link to="/wallet">` to it.
 
-   with the six-step series used on the wallet page:
-   - `lace-tdust-01-empty` — 01 · tank empty
-   - `lace-tdust-02-generate` — 02 · generate tDUST
-   - `lace-tdust-03-review` — 03 · review & confirm
-   - `lace-tdust-04-password` — 04 · password
-   - `lace-tdust-05-processing` — 05 · processing (ZK proof)
-   - `lace-tdust-06-refilling` — 06 · tank refilling
+## Cleanup
 
-2. Rework the "visual walkthrough · lace" grid inside step 03 from a fixed 3-column layout to a responsive `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3` grid so six frames flow cleanly, with short captions consistent in tone with the existing page (mirroring the wallet page's language but tightened for this context).
-
-3. Keep the existing "Screenshots: Midnight Docs — Acquire tokens ↗" footnote and the surrounding faucet / wallet link cards untouched.
+- The old `lace-tdust-empty` / `lace-tdust-generate` / `lace-tdust-refilling` asset pointers are no longer referenced anywhere in the project after this change. Leave the `.asset.json` pointer files in place (they're safe unused pointers); do not run `lovable-assets delete` unless the user asks — deletion is irreversible and would also break any previous deployments referencing those URLs.
 
 ## Non-goals
 
-- No changes to the deploy status panels, other steps, or the wallet page.
-- No new assets — reusing the already-committed `lace-tdust-0{1..6}-*.png.asset.json` files.
-- No copy changes outside step 03's walkthrough captions.
+- No changes to the wallet page.
+- No changes to other proof-server steps.
