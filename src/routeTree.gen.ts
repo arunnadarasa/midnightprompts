@@ -20,6 +20,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ThemesIndexRouteImport } from './routes/themes.index'
 import { Route as ShowcaseIndexRouteImport } from './routes/showcase.index'
 import { Route as ThemesThemeRouteImport } from './routes/themes.$theme'
+import { Route as ShowcaseProgrammaticDustRouteImport } from './routes/showcase.programmatic-dust'
 import { Route as ShowcaseMidnightLedgerRouteImport } from './routes/showcase.midnight-ledger'
 import { Route as IdeasIdRouteImport } from './routes/ideas.$id'
 
@@ -78,6 +79,12 @@ const ThemesThemeRoute = ThemesThemeRouteImport.update({
   path: '/$theme',
   getParentRoute: () => ThemesRoute,
 } as any)
+const ShowcaseProgrammaticDustRoute =
+  ShowcaseProgrammaticDustRouteImport.update({
+    id: '/programmatic-dust',
+    path: '/programmatic-dust',
+    getParentRoute: () => ShowcaseRoute,
+  } as any)
 const ShowcaseMidnightLedgerRoute = ShowcaseMidnightLedgerRouteImport.update({
   id: '/midnight-ledger',
   path: '/midnight-ledger',
@@ -100,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
+  '/showcase/programmatic-dust': typeof ShowcaseProgrammaticDustRoute
   '/themes/$theme': typeof ThemesThemeRoute
   '/showcase/': typeof ShowcaseIndexRoute
   '/themes/': typeof ThemesIndexRoute
@@ -113,6 +121,7 @@ export interface FileRoutesByTo {
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
+  '/showcase/programmatic-dust': typeof ShowcaseProgrammaticDustRoute
   '/themes/$theme': typeof ThemesThemeRoute
   '/showcase': typeof ShowcaseIndexRoute
   '/themes': typeof ThemesIndexRoute
@@ -129,6 +138,7 @@ export interface FileRoutesById {
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
+  '/showcase/programmatic-dust': typeof ShowcaseProgrammaticDustRoute
   '/themes/$theme': typeof ThemesThemeRoute
   '/showcase/': typeof ShowcaseIndexRoute
   '/themes/': typeof ThemesIndexRoute
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/wallet'
     | '/ideas/$id'
     | '/showcase/midnight-ledger'
+    | '/showcase/programmatic-dust'
     | '/themes/$theme'
     | '/showcase/'
     | '/themes/'
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '/wallet'
     | '/ideas/$id'
     | '/showcase/midnight-ledger'
+    | '/showcase/programmatic-dust'
     | '/themes/$theme'
     | '/showcase'
     | '/themes'
@@ -174,6 +186,7 @@ export interface FileRouteTypes {
     | '/wallet'
     | '/ideas/$id'
     | '/showcase/midnight-ledger'
+    | '/showcase/programmatic-dust'
     | '/themes/$theme'
     | '/showcase/'
     | '/themes/'
@@ -270,6 +283,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ThemesThemeRouteImport
       parentRoute: typeof ThemesRoute
     }
+    '/showcase/programmatic-dust': {
+      id: '/showcase/programmatic-dust'
+      path: '/programmatic-dust'
+      fullPath: '/showcase/programmatic-dust'
+      preLoaderRoute: typeof ShowcaseProgrammaticDustRouteImport
+      parentRoute: typeof ShowcaseRoute
+    }
     '/showcase/midnight-ledger': {
       id: '/showcase/midnight-ledger'
       path: '/midnight-ledger'
@@ -289,11 +309,13 @@ declare module '@tanstack/react-router' {
 
 interface ShowcaseRouteChildren {
   ShowcaseMidnightLedgerRoute: typeof ShowcaseMidnightLedgerRoute
+  ShowcaseProgrammaticDustRoute: typeof ShowcaseProgrammaticDustRoute
   ShowcaseIndexRoute: typeof ShowcaseIndexRoute
 }
 
 const ShowcaseRouteChildren: ShowcaseRouteChildren = {
   ShowcaseMidnightLedgerRoute: ShowcaseMidnightLedgerRoute,
+  ShowcaseProgrammaticDustRoute: ShowcaseProgrammaticDustRoute,
   ShowcaseIndexRoute: ShowcaseIndexRoute,
 }
 

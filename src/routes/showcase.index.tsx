@@ -42,6 +42,24 @@ function ShowcaseIndex() {
             witness. Public ledger view runs read-only over the Midnight Indexer.
           </p>
         </Link>
+
+        <Link
+          to="/showcase/programmatic-dust"
+          className="group block p-6 sm:p-8 border border-border hover:border-primary/60 transition-colors duration-500"
+        >
+          <div className="flex items-center justify-between gap-4">
+            <span className="eyebrow text-primary">Preprod only · Wallet SDK</span>
+            <span className="text-[10px] tracking-[0.28em] uppercase text-muted-foreground">Docs ↗</span>
+          </div>
+          <h2 className="font-display text-2xl sm:text-3xl mt-3 group-hover:text-primary transition-colors">
+            Programmatic DUST
+          </h2>
+          <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-2xl">
+            Create a wallet, print all three addresses, fund the unshielded address with tNIGHT, then
+            explicitly register NIGHT UTXOs for DUST generation. The docs' end-to-end flow, mirrored
+            locally with <code>bun scripts/dust-demo-preprod.mjs</code>.
+          </p>
+        </Link>
       </div>
     </div>
   );
