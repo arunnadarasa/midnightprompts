@@ -72,24 +72,24 @@ The printed shielded + unshielded addresses must match Lace exactly.
 
 ## Phase 1 — fund the wallet with tNIGHT, then delegate to tDUST
 
-The deploy spends **tDUST**. The preprod faucet only dispenses **tNIGHT**, and
+The deploy spends **tDUST**. The preview/preprod faucets only dispense **tNIGHT**, and
 per <https://docs.midnight.network/guides/acquire-tokens> it only accepts the
-**unshielded** address (`mn_addr_test1…`). Two important quirks:
+**unshielded** address (`mn_addr_preview1…` / `mn_addr_preprod1…`). Two important quirks:
 
 1. The `@midnight-ntwrk/wallet` SDK we use here derives only the *shielded*
-   address (`mn_shield-addr_test1…`). Pasting that into the faucet produces
+   address (`mn_shield-addr_preview1…` / `mn_shield-addr_preprod1…`). Pasting that into the faucet produces
    "Provided address is invalid".
 2. Turning tNIGHT into tDUST (delegation) is a Lace-only UI action — there
    is no public SDK method for it in the current release train.
 
 So Phase 1 is done in **Lace**, not this script:
 
-1. Install the Lace browser extension and switch it to **Midnight preprod**.
+1. Install the Lace browser extension and switch it to **Midnight Preview** or **Midnight Preprod**.
 2. Either create a fresh wallet in Lace, or import the 24-word mnemonic
    from `.midnight-wallet.local` (or the `MIDNIGHT_WALLET_SEED` secret)
    so it shares the same seed as this script.
-3. Copy Lace's **Unshielded** address (starts with `mn_addr_test1…`).
-4. Paste it into <https://midnight-tmnight-preprod.nethermind.dev/> and
+3. Copy Lace's **Unshielded** address (starts with `mn_addr_preview1…` or `mn_addr_preprod1…`).
+4. Paste it into the matching faucet and
    click **Request tokens** — 1000 tNIGHT arrives in ~2 minutes.
 5. In Lace, click **Generate tDUST** to delegate tNIGHT → tDUST. Wait
    until the tDUST tank shows a non-zero balance.
@@ -101,7 +101,7 @@ touching Lace:
 # preprod (default)
 bun scripts/derive-unshielded-address.mjs
 # preview testnet
-bun scripts/derive-unshielded-address.mjs --network=test --out=src/data/midnight-wallet-preview.json
+bun scripts/derive-unshielded-address.mjs --network=preview --out=src/data/midnight-wallet-preview.json
 ```
 
 Then run the script to sanity-check that the same seed sees the tDUST
