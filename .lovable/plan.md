@@ -1,71 +1,70 @@
-## Why the mismatch
+## Goal
 
-The script and Lace derive **different keys from the same 24 words** because they use different derivation paths:
+Get a working local deploy on **Preview** first (before touching Preprod), using the Lace Mac Local seed that already holds tDUST on preview.
 
-- **Lace** uses the official Midnight HD derivation (`@midnight-ntwrk/wallet-sdk-hd` via `WalletSeeds.fromMnemonic`), which splits the mnemonic into distinct **shielded** and **unshielded** seed material. This produces addresses like `mn_shield-addr_preprod1cah9s…` and `mn_addr_preprod1jgkgn…`.
-- **`scripts/deploy-midnight.mjs`** takes a shortcut: `mnemonicToSeedSync(mnemonic).slice(0, 64)` — the first 32 bytes of the raw BIP-39 seed — and feeds that straight into `WalletBuilder.buildFromSeed`. That is a *different* private key, so it derives a different shielded address (`mn_shield-addr_test1vzn…`) and, because tDUST is held by the Lace-derived key, the script sees 0 balance.
+## Why preview first
 
-There is also a **network-suffix bug**: the script hardcodes `NetworkId.TestNet` for both `preview` and `preprod`, which is why its derived address shows the `…test1…` prefix instead of `…preprod1…` even when `VITE_NETWORK_ID=preprod`.
+- Your Lace Mac Local wallet has tDUST on **both** networks (you pasted both `mn_shield-addr_preview1m6wf…` and `mn_shield-addr_preprod1cah9s…`).
+- Preview is the faster iteration loop and matches what the current `.midnight-wallet.local` / script defaults already target (`VITE_NETWORK_ID=preview`).
+- Once preview deploy succeeds end-to-end, repeating for preprod is just `VITE_NETWORK_ID=preprod bun scripts/deploy-midnight.mjs` with no code changes.
 
-Your existing `scripts/derive-unshielded-address.mjs` already does it correctly (uses `WalletSeeds.fromMnemonic` + per-network bech32 suffix) — that's why the addresses it prints match Lace. The deploy script just needs to follow the same path.
+## Fix that unblocks preview
 
-## Fix
-
-### 1. `scripts/deploy-midnight.mjs` — derive keys the way Lace does
-
-Replace the naive seed derivation with the HD path used by `derive-unshielded-address.mjs`:
+The last edit changed the seed derivation to match Lace, but the **network enum mapping is still wrong for preview**:
 
 ```js
-import { WalletSeeds } from "@midnight-ntwrk/testkit-js";
-// …
-const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
-// Shielded seed drives the Zswap wallet used for balance + tx signing.
-const seedHex = Buffer.from(seeds.shielded).toString("hex");
-const wallet = await WalletBuilder.buildFromSeed(
-  INDEXER_HTTP, INDEXER_WS, PROOF_SERVER, NODE_RPC,
-  seedHex, networkEnum,
-);
+case "preprod":
+case "preview":
+case "testnet":
+  networkEnum = NetworkId.TestNet;   // ← wrong for preview
 ```
 
-Fix the network mapping so preview and preprod pick the correct `NetworkId`:
+Preview addresses use the `…preview1…` bech32 suffix, which corresponds to `NetworkId.Undeployed` in `@midnight-ntwrk/zswap` (that's why `derive-unshielded-address.mjs` prints the right preview address today — it maps the suffix, not `TestNet`). Using `TestNet` for preview is why the script previously printed `mn_shield-addr_test1vzn…` instead of `mn_shield-addr_preview1m6wf…`.
+
+### Change in `scripts/deploy-midnight.mjs`
+
+Split the switch so each network maps to its actual enum:
 
 ```js
 switch (NETWORK_ID) {
-  case "preprod": networkEnum = NetworkId.TestNet; break;   // preprod == TestNet enum
-  case "preview": networkEnum = NetworkId.Undeployed; break; // preview uses Undeployed
-  case "mainnet": networkEnum = NetworkId.MainNet; break;
-  default: die(...);
+  case "preview":  networkEnum = NetworkId.Undeployed; break;
+  case "preprod":  networkEnum = NetworkId.TestNet;    break;
+  case "mainnet":  networkEnum = NetworkId.MainNet;    break;
+  default: die(`Unknown VITE_NETWORK_ID="${NETWORK_ID}"`);
 }
 ```
 
-(Confirm the exact enum name for preview against `@midnight-ntwrk/zswap`; if the SDK groups both under `TestNet`, then the mismatch is purely in the bech32 suffix — the shielded key itself is correct once we switch to `WalletSeeds`.)
+Also update the pre-derive sanity log to map `preview → "preview"` (not `"test"`) as the bech32 suffix passed to `createKeystore`, so the printed address matches what Lace shows.
 
-### 2. Sanity check after the change
+### Verification (no code, just runtime)
 
-Add a startup log that prints the derived shielded + unshielded addresses side-by-side and asserts the prefix matches the target network:
+Before deploying, the script should print:
 
 ```
-[deploy] network=preprod
-[deploy] shielded:   mn_shield-addr_preprod1cah9s…   ← should match Lace
-[deploy] unshielded: mn_addr_preprod1jgkgn…         ← should match Lace
+[deploy] network=preview
+[deploy] shielded:   mn_shield-addr_preview1m6wf639g7tswe9xryuu2…   ← matches Lace
+[deploy] unshielded: mn_addr_preview15sz5jgljxtnh5cfxxe3ekf8egx6…   ← matches Lace
 ```
 
-If the printed shielded address doesn't match the one you pasted from Lace, the run aborts before spending anything.
+If either address doesn't match the Lace values you pasted, abort before phase 2.
 
-### 3. `src/routes/wallet.tsx` — update the "Script wallet ≠ Lace wallet" callout
+## Runbook for you (after the fix lands)
 
-The current callout says Option B (paste Lace's seed) will make the script match Lace. That was wrong before this fix. Update it to note:
-- The script now uses the same HD derivation as Lace, so Option B genuinely produces the same addresses.
-- Include a one-liner: "Verify by running `bun scripts/derive-unshielded-address.mjs` — the printed addresses must match Lace before deploying."
+1. Confirm `.midnight-wallet.local` holds your Lace Mac Local 24 words.
+2. Start Docker Desktop, then:
+   ```bash
+   docker run -d --name midnight-proof-server -p 6300:6300 \
+     midnightntwrk/proof-server:latest midnight-proof-server -v
+   curl http://localhost:6300/health
+   ```
+3. Run:
+   ```bash
+   VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs
+   ```
+4. Expect: matching preview addresses → tDUST balance detected → `deployContract` → hex address written to `src/data/midnight-contract.preview.json` → MidnightScan link.
 
-### 4. `scripts/deploy-midnight.README.md`
+## Out of scope for this plan
 
-Mirror the same explanation: "Prior versions derived a different key from the same mnemonic. If you deployed with an older script, your funds are on the Lace-derived address and the script's own address is empty — paste your Lace seed into `.midnight-wallet.local` and re-run."
-
-## Not changing
-
-Compact contract, provider wiring, proof-server flow, faucet/tDUST UI walkthrough, `derive-unshielded-address.mjs` (already correct).
-
-## Expected result
-
-After the fix, with your Lace Mac Local 24 words in `.midnight-wallet.local` and `VITE_NETWORK_ID=preprod`, the script prints `mn_shield-addr_preprod1cah9s…` (matching your Lace preprod address), sees the tDUST you already have, and proceeds to phase 2.
+- Preprod deploy (same script, run after preview works).
+- Any UI, contract, or provider changes.
+- Wallet page copy — the Option B callout already reflects the HD-derivation fix.
