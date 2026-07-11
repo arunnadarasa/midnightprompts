@@ -7,6 +7,7 @@ import {
 } from "@/data/midnight-contract";
 import { NetworkToggle } from "@/components/NetworkToggle";
 import { DualDeployStatus } from "@/components/DeployStatusPanel";
+import { WalletConnectPanel } from "@/components/WalletConnectPanel";
 
 export const Route = createFileRoute("/showcase/midnight-ledger")({
   head: () => ({
@@ -91,6 +92,10 @@ function MidnightLedgerDemo() {
         stays behind a private-witness ZK proof. Reading is public — writing needs the Lace wallet,
         the local proof server, and a small amount of tDUST from the faucet.
       </p>
+
+      <div className="mt-8">
+        <WalletConnectPanel expectedNetwork={network} />
+      </div>
 
       <div className="mt-8">
         <span className="eyebrow block mb-2">Deploy status · both networks</span>
