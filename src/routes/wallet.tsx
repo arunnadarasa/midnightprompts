@@ -262,9 +262,41 @@ function Wallet() {
         <div className="mt-4 p-4 border border-primary/40 bg-card text-[12px] text-foreground/90 leading-relaxed">
           <strong className="text-primary">Heads up — Lace UI bug:</strong> on small laptop
           screens the Network modal can truncate and hide the Midnight options. If you only see
-          Cardano and Bitcoin, resize the window to make the modal tall enough to reveal the three
-          Midnight choices (Undeployed, Preview, Preprod).
+          Cardano and Bitcoin, resize the window — or, better, switch Lace to{" "}
+          <strong className="text-foreground">Expanded</strong> view mode so it opens in a full
+          browser tab with room for the whole modal.
         </div>
+
+        <div className="mt-6">
+          <span className="eyebrow">fix · expanded view mode</span>
+          <h3 className="font-display text-xl sm:text-2xl mt-2 text-foreground">
+            The permanent fix: <span className="italic text-primary">run Lace expanded.</span>
+          </h3>
+          <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
+            Cogwheel → <em>Default View Mode</em> → <em>Expanded</em> → Confirm. Lace opens in a
+            full browser tab from now on, and no modal gets clipped.
+          </p>
+          <ol className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {EXPANDED_STEPS.map((s) => (
+              <li key={s.tag} className="border border-border bg-card flex flex-col">
+                <img
+                  src={s.img.url}
+                  alt={s.title}
+                  loading="lazy"
+                  className="w-full h-auto block border-b border-border bg-background"
+                />
+                <div className="p-4 flex flex-col gap-1">
+                  <span className="eyebrow text-primary">{s.tag}</span>
+                  <span className="font-display text-foreground text-base">{s.title}</span>
+                  <span className="text-[12px] text-muted-foreground font-light leading-relaxed mt-1">
+                    {s.caption}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
 
         <ol className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {NETWORK_STEPS.map((s) => (
