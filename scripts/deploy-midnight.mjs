@@ -310,13 +310,14 @@ function diagnoseDust(state, dustSecretKey) {
 }
 
 
-async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
+async function waitForDustBalance(wallet, initialState, timeoutMs = 1_200_000) {
   log("syncing wallet Dust balance from Indexer…");
-  log("(finish when DUST balance > 0, OR shielded+unshielded complete after ≥ 3 min)");
+  log("(finish when SDK sees a spendable tDUST coin — Preview sync often needs 10–20 min)");
   const SOFT_MIN_MS = 180_000; // give DUST a chance to converge for 3 min
   return new Promise((resolve, reject) => {
     let latest = initialState;
     let bestBalance = readDustBalance(initialState);
+    let bestCoins = initialState?.dust?.availableCoins?.length ?? 0;
     let settled = false;
     let sub = { unsubscribe: () => {} };
     const startedAt = Date.now();
@@ -326,7 +327,7 @@ async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
       clearTimeout(timer);
       clearInterval(progress);
       sub.unsubscribe();
-      resolve({ state: latest, tdust: bestBalance });
+      resolve({ state: latest, tdust: bestBalance, coins: bestCoins });
     };
     const flags = (state) => {
       const d = !!state?.dust?.state?.progress?.isStrictlyComplete?.();
@@ -337,13 +338,13 @@ async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
     const report = () => {
       const f = flags(latest);
       log(
-        `wallet sync check: tDUST=${bestBalance.toString()} ` +
+        `wallet sync check: coins=${bestCoins} tDUST=${bestBalance.toString()} ` +
         `dust.complete=${f.d} shielded.complete=${f.s} unshielded.complete=${f.u} ` +
         `(${Math.round((Date.now() - startedAt) / 1000)}s)`,
       );
     };
     const timer = setTimeout(() => {
-      log("sync timeout reached (10 min) — proceeding with best-known balance");
+      log("sync timeout reached (20 min) — proceeding with best-known state");
       finish();
     }, timeoutMs);
     const progress = setInterval(report, 10_000);
@@ -351,15 +352,17 @@ async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
     const update = (state) => {
       latest = state ?? latest;
       const balance = readDustBalance(latest);
+      const coins = latest?.dust?.availableCoins?.length ?? 0;
       if (balance > bestBalance) bestBalance = balance;
+      if (coins > bestCoins) bestCoins = coins;
       const f = flags(latest);
       const elapsed = Date.now() - startedAt;
-      // 1. Positive balance is always enough — stop immediately.
-      if (bestBalance > 0n) return finish();
-      // 2. All three streams strictly complete — nothing more to wait for.
+      // 1. Spendable DUST coin seen — ready to deploy.
+      if (bestCoins >= 1) return finish();
+      // 2. All three streams strictly complete AND still 0 coins — nothing more to wait for.
       if (f.d && f.s && f.u) return finish();
       // 3. Preview's dust stream often never flips complete. After 3 min, if
-      //    shielded + unshielded are done, stop waiting on dust.
+      //    shielded + unshielded are done and dust is still empty, stop waiting.
       if (elapsed >= SOFT_MIN_MS && f.s && f.u) return finish();
     };
 
@@ -374,6 +377,7 @@ async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
     });
   });
 }
+
 
 
 async function latestWalletSnapshot(wallet, timeoutMs = 30_000) {
