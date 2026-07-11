@@ -1,20 +1,16 @@
 ## Bug
-The Midnight Ledger "Connect Lace" panel shows `e.enable is not a function`.
-
-`src/lib/use-midnight-wallet.ts` calls `connector.enable()`, but the Midnight DApp Connector 4.x API (which is what Lace's Midnight build exposes on `window.midnight[*]`) uses `connector.connect(networkId)`, not `.enable()`. The `lovable-midnight` skill's canonical bootstrap uses `await lace.connect(net)` for exactly this reason.
+Lace is on **Preview**, but the app forces `connect("preprod")` (from `VITE_NETWORK_ID`), so the connector throws `Network ID mismatch`.
 
 ## Fix
+Make the connect flow network-agnostic in `src/lib/use-midnight-wallet.ts`:
 
-Edit only `src/lib/use-midnight-wallet.ts`:
-
-1. Update the `Connector` type: replace `enable: () => Promise<ConnectedApi>` with `connect: (networkId: string) => Promise<ConnectedApi>`. Keep the optional `isEnabled`.
-2. In `connect()`, replace `await c.enable()` with `await c.connect(networkId)`, where `networkId` is derived from `import.meta.env.VITE_NETWORK_ID` and falls back to `"preprod"` (matching the rest of the project). Guard for unknown values.
-3. Extend `ConnectedApi` with an optional `getConfiguration?: () => Promise<{ indexerUri?: string; proverServerUri?: string; indexerWsUri?: string }>` so we don't break future callers — no behavior change now.
-4. Improve the error surface: if `.connect` is missing, throw a clear `"This Lace build doesn't expose the 4.x DApp Connector API (missing connect()). Update Lace to the latest Midnight build."` instead of the raw TypeError.
-5. After a successful connect, keep the existing `api.state()` → address/coinPublicKey path unchanged.
-
-No other files, dependencies, or UI changes. The connect panel will then either succeed (address + network chip appear) or surface a precise error.
+1. Build an ordered list of candidate networks: the env-preferred one first (`VITE_NETWORK_ID`, default `preprod`), then the others (`preview`, `preprod`, `mainnet`), deduped.
+2. Loop over candidates: `await c.connect(candidate)`. On success, break and use that candidate as the `network` label. On thrown error whose message matches `/network|mismatch/i`, continue to the next candidate. Any other error rethrows immediately.
+3. If every candidate errors with a network mismatch, surface: `"Lace is on a different network than this app supports. Switch Lace to Preview or Preprod and retry."`.
+4. Keep the existing `api.state()` + `inferNetworkFromAddress` path, but prefer the candidate that actually succeeded for the `network` state (falls back to bech32 inference if unclear).
+5. No other files touched. No dependency changes.
 
 ## Verification
-- Reload `/showcase/midnight-ledger`, click **Connect Lace** with Lace installed on Preview or Preprod → panel transitions to `connected` and shows the shielded address + inferred network.
-- Without Lace installed → same "Install Lace" message as before (detection path unchanged).
+- With Lace on Preview → panel connects, shows shielded address + `preview` chip.
+- With Lace on Preprod → panel connects, shows `preprod` chip.
+- With Lace on an unsupported network → clear "switch Lace" error, retry button still works.
