@@ -187,6 +187,99 @@ function Wallet() {
         </p>
       </section>
 
+      <section className="max-w-3xl mx-auto px-5 pb-10">
+        <span className="eyebrow">faucet · request tnight</span>
+        <h2 className="font-display text-3xl sm:text-4xl font-bold mt-2 text-foreground">
+          Fund the wallet <span className="italic text-primary">from the faucet.</span>
+        </h2>
+        <p className="mt-3 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
+          Two faucets, one per network. Paste the unshielded address you just copied, solve the
+          Cloudflare check, and click <em>Request tokens</em>. You can pick the network from the
+          switcher at the top-right of the faucet page too.
+        </p>
+
+        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+          <a
+            href="https://midnight-tmnight-preview.nethermind.dev/"
+            target="_blank"
+            rel="noreferrer"
+            className="p-4 border border-border hover:border-primary/50 transition-colors duration-500 group flex flex-col gap-1"
+          >
+            <span className="eyebrow text-primary">preview faucet ↗</span>
+            <span className="font-mono text-muted-foreground break-all">midnight-tmnight-preview.nethermind.dev</span>
+          </a>
+          <a
+            href="https://midnight-tmnight-preprod.nethermind.dev/"
+            target="_blank"
+            rel="noreferrer"
+            className="p-4 border border-border hover:border-primary/50 transition-colors duration-500 group flex flex-col gap-1"
+          >
+            <span className="eyebrow text-primary">preprod faucet ↗</span>
+            <span className="font-mono text-muted-foreground break-all">midnight-tmnight-preprod.nethermind.dev</span>
+          </a>
+        </div>
+
+        <ol className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {FAUCET_STEPS.map((s) => (
+            <li key={s.tag} className="border border-border bg-card flex flex-col">
+              <img
+                src={s.img.url}
+                alt={s.title}
+                loading="lazy"
+                className="w-full h-auto block border-b border-border bg-background"
+              />
+              <div className="p-4 flex flex-col gap-1">
+                <span className="eyebrow text-primary">{s.tag}</span>
+                <span className="font-display text-foreground text-base">{s.title}</span>
+                <span className="text-[12px] text-muted-foreground font-light leading-relaxed mt-1">
+                  {s.caption}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="max-w-3xl mx-auto px-5 pb-10">
+        <span className="eyebrow">lace · switch network</span>
+        <h2 className="font-display text-3xl sm:text-4xl font-bold mt-2 text-foreground">
+          Point Lace at <span className="italic text-primary">Preview or Preprod.</span>
+        </h2>
+        <p className="mt-3 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
+          Make sure Lace is on the same Midnight network as the faucet you used. Open Settings from
+          the cogwheel on the bottom bar, choose Network, and confirm.
+        </p>
+
+        <div className="mt-4 p-4 border border-primary/40 bg-card text-[12px] text-foreground/90 leading-relaxed">
+          <strong className="text-primary">Heads up — Lace UI bug:</strong> on small laptop
+          screens the Network modal can truncate and hide the Midnight options. If you only see
+          Cardano and Bitcoin, resize the window to make the modal tall enough to reveal the three
+          Midnight choices (Undeployed, Preview, Preprod).
+        </div>
+
+        <ol className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {NETWORK_STEPS.map((s) => (
+            <li key={s.tag} className="border border-border bg-card flex flex-col">
+              <img
+                src={s.img.url}
+                alt={s.title}
+                loading="lazy"
+                className="w-full h-auto block border-b border-border bg-background"
+              />
+              <div className="p-4 flex flex-col gap-1">
+                <span className="eyebrow text-primary">{s.tag}</span>
+                <span className="font-display text-foreground text-base">{s.title}</span>
+                <span className="text-[12px] text-muted-foreground font-light leading-relaxed mt-1">
+                  {s.caption}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+
+
       <section className="max-w-3xl mx-auto px-5 pb-20">
 
         <div className="p-6 border border-border bg-card">
