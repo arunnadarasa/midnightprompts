@@ -285,11 +285,11 @@ function Wallet() {
         <div className="mt-6">
           <span className="eyebrow">fix · expanded view mode</span>
           <h3 className="font-display text-xl sm:text-2xl mt-2 text-foreground">
-            The permanent fix: <span className="italic text-primary">run Lace expanded.</span>
+            Partial fix: <span className="italic text-primary">run Lace expanded.</span>
           </h3>
           <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
             Cogwheel → <em>Default View Mode</em> → <em>Expanded</em> → Confirm. Lace opens in a
-            full browser tab from now on, and no modal gets clipped.
+            full browser tab from now on, which fixes most clipped panels.
           </p>
           <ol className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
             {EXPANDED_STEPS.map((s) => (
@@ -310,7 +310,18 @@ function Wallet() {
               </li>
             ))}
           </ol>
+
+          <div className="mt-4 p-4 border border-primary/40 bg-card text-[12px] text-foreground/90 leading-relaxed">
+            <strong className="text-primary">Still truncated in Expanded?</strong> The Network
+            modal's scroll region can still hide the Midnight options (Undeployed / Preview /
+            Preprod) below the fold, even in a full browser tab. Workaround: click into the modal,
+            then press <kbd className="px-1.5 py-0.5 border border-border bg-background font-mono text-[10px]">Tab</kbd>{" "}
+            repeatedly to walk the focus through the hidden radio options — press{" "}
+            <kbd className="px-1.5 py-0.5 border border-border bg-background font-mono text-[10px]">Space</kbd>{" "}
+            to select, then click <em>Confirm</em>.
+          </div>
         </div>
+
 
 
         <ol className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
