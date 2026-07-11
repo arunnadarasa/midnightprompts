@@ -1,49 +1,37 @@
+## Diagnosis
+
+Your screenshots confirm the script and Lace are using the **same wallet**:
+
+- Script unshielded: `mn_addr_preview15sz5j...wql85qg8`
+- Lace unshielded: `mn_addr_preview15sz5j...wql85qg8`
+- Script shielded: `mn_shield-addr_preview1m6wf...dyqy03tws`
+- Lace shielded: `mn_shield-addr_preview1m6wf...dyqy03tws`
+
+So the confusing part is not address mismatch anymore. The issue is likely that the deploy script is reading the wallet state too early and getting a stale/initial Dust state of `0`, even though Lace shows `471 / 5,000 tDUST`.
+
 ## Plan
 
-1. **Do not accept or use your recovery phrase in chat**
-   - Treat the 12/24 words as a private key.
-   - Keep it only on your local computer or inside a local `.env`/terminal variable that is never committed.
+1. Update `scripts/deploy-midnight.mjs` so it waits specifically for the Dust wallet balance to sync before deciding balance is zero.
+2. Add a short polling window after wallet startup, for example 60–90 seconds, that logs progress like:
+   - syncing wallet balance...
+   - current tDUST balance: ...
+3. Only stop with “Not enough tDUST” after the Dust wallet has had time to report a real balance.
+4. Keep the address checks exactly as-is, since they are now proven correct.
+5. Improve the “0 tDUST” message so if it still happens after sync, it points to an indexer/sync issue rather than telling you the wallet seed is wrong.
 
-2. **Add a local-only wallet check script**
-   - Create a script that derives:
-     - Preview unshielded address
-     - Preview shielded address using the same seed path as the deploy script
-     - Preprod unshielded/shielded addresses for comparison
-   - It will print public addresses only, never print the recovery phrase.
-   - You can run it locally like:
-     ```bash
-     MIDNIGHT_WALLET_SEED="your words stay local" bun scripts/check-midnight-wallet.mjs --network=preview
-     ```
+## Expected result
 
-3. **Fix the likely root cause in the deploy script**
-   - The terminal screenshot shows the script is still deriving `mn_addr_preview...` but the shielded address is still `mn_shield-addr_test1...`.
-   - That means the unshielded and shielded encoders are not using the same Preview address suffix.
-   - Update the deploy script so Preview shielded derivation uses the Preview bech32 suffix consistently instead of the older test suffix path.
-
-4. **Add a built-in mismatch warning**
-   - The deploy script will print expected address prefixes for the selected network.
-   - If Preview produces `mn_shield-addr_test1...` or `mn_addr_test1...`, it will stop and explain that the SDK is still on the wrong network suffix before asking you to fund anything.
-
-5. **Update the README instructions**
-   - Add the exact safe command sequence for checking addresses locally first.
-   - Include a warning to never paste recovery words into chat, screenshots, or browser forms.
-
-## What you’ll do after this is implemented
-
-Run the local check first:
-
-```bash
-MIDNIGHT_WALLET_SEED="your 12 or 24 words here, only in your terminal" bun scripts/check-midnight-wallet.mjs --network=preview
-```
-
-Then compare the printed public addresses against Lace. If they match, you can run:
+After the patch, running:
 
 ```bash
 VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs
 ```
 
-## Technical notes
+should wait for the wallet to sync, see the existing `471 tDUST`, and continue into Phase 2 deploy without asking you to fund the wallet again.
 
-- I cannot safely verify your real wallet inside the Lovable sandbox because that would require your recovery phrase to leave your machine.
-- I can add deterministic local tooling so you can verify the same SDK code path before doing the deploy.
-- The visible mismatch strongly suggests Preview shielded address encoding is still falling back to the legacy `test` suffix while the unshielded address now uses `preview`.
+## What you do not need to do
+
+- Do not run Docker again; it is already running.
+- Do not change wallet seed.
+- Do not move funds.
+- Do not paste recovery words anywhere.
