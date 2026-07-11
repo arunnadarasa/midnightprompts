@@ -1,39 +1,31 @@
-## Next step: install script dependencies locally
+## Goal
+Make the local Preview deploy script derive and use the same Preview wallet addresses that Lace shows for the same 24-word recovery phrase.
 
-The error means your fresh checkout hasn't installed npm packages yet. `bip39` (and the Midnight SDK packages the script dynamically imports) live in `package.json` but aren't on disk.
+## What I found
+- The script is currently mixing two concepts:
+  - Lace/SDK address suffix for Preview: `preview`
+  - Zswap `NetworkId` enum: only has `Undeployed`, `DevNet`, `TestNet`, `MainNet`
+- The current script maps `preview` to `NetworkId.Undeployed`, which is for local undeployed networks, not hosted Preview.
+- That can produce a different SDK-side shielded wallet address even when the unshielded Lace address looks correct.
+- The helper script still has older docs/comments that say Preview uses `test`, which conflicts with the newer Lace `mn_addr_preview...` / `mn_shield-addr_preview...` format.
 
-Run once, from the project root:
+## Plan
+1. Update `scripts/deploy-midnight.mjs` so hosted `preview` uses:
+   - `setNetworkId("preview")`
+   - bech32 suffix `preview`
+   - Zswap enum `NetworkId.TestNet`
+2. Keep `preprod` on:
+   - `setNetworkId("preprod")`
+   - bech32 suffix `preprod`
+   - Zswap enum `NetworkId.TestNet`
+3. Reserve `NetworkId.Undeployed` only for an explicit `undeployed`/local network, not hosted Preview.
+4. Update the printed guidance so Preview examples show `mn_addr_preview...`, not `mn_addr_test1...`.
+5. Update `scripts/derive-unshielded-address.mjs` so `--network=preview` is the correct Preview path and old `--network=test` is treated as legacy/alias only if needed.
+6. Update `scripts/deploy-midnight.README.md` to remove contradictory Preview=`test` instructions.
 
-```bash
-bun install
-```
-
-Then re-run:
-
+## After implementation, you will run locally
 ```bash
 VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs
 ```
 
-Expected phase‑1 output (with your Lace Mac Local seed in `.midnight-wallet.local`):
-
-```
-[midnight-deploy] === phase 1: wallet ===
-[midnight-deploy] using existing wallet seed from .midnight-wallet.local
-[midnight-deploy] derived (HD, matches Lace) unshielded: mn_addr_preview15sz5jgljxtnh5cfxxe3ekf8egx6rh2lk28zswtdxprsj2hv4yrwql85qg8
-  Shielded address (SDK-side, used for contract state):
-  mn_shield-addr_preview1m6wf639g7tswe9xryuu2d87n4jcgl7w2dgt25yyzfw8xjjk3zkf0k283g9vz6ygmsplkxwq5vxlnsujr0zfpr3knsxfhj3rgmzpydyqy03tws
-```
-
-If both addresses match what Lace shows for Mac Local on Preview, the script will detect your tDUST and move to phase 2 (which needs the Docker proof server running on `localhost:6300`).
-
-## If it still errors after `bun install`
-
-- `Cannot find package '@midnight-ntwrk/…'` → the SDK packages aren't pinned; tell me the exact package name and I'll add it to `package.json`.
-- Addresses don't match Lace → paste the printed values and I'll diagnose (likely `.midnight-wallet.local` holds a different mnemonic than the Lace Mac Local seed).
-- `Proof server not reachable at http://localhost:6300` → start Docker Desktop, then:
-  ```bash
-  docker run -d --name midnight-proof-server -p 6300:6300 \
-    midnightntwrk/proof-server:latest midnight-proof-server -v
-  ```
-
-No code changes needed for this step.
+Expected result: the printed `derived (HD, matches Lace) unshielded` should match your Lace Preview unshielded address, and the printed `Shielded address` should match your Lace Preview shielded address.

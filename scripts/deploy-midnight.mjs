@@ -100,24 +100,25 @@ async function buildWallet(mnemonic) {
   const { WalletSeeds } = await import("@midnight-ntwrk/testkit-js");
   setNetworkId(NETWORK_ID);
 
-  // The Scala.js wallet SDK requires the NetworkId enum, not a string.
-  // Each Midnight network has its OWN enum member — preview ≠ preprod.
-  // Using TestNet for preview produces addresses with the `…test1…` bech32
-  // suffix, which don't match Lace's `…preview1…` addresses.
+  // The Scala.js wallet SDK requires the Zswap NetworkId enum, not the public
+  // network string. Hosted Preview and Preprod are both persistent testnets at
+  // the Zswap layer, while their Lace/SDK bech32 address suffixes stay distinct
+  // via setNetworkId("preview" | "preprod") and createKeystore(..., suffix).
   let networkEnum;
   switch (NETWORK_ID) {
     case "preview":
-      networkEnum = NetworkId.Undeployed;
-      break;
     case "preprod":
     case "testnet":
       networkEnum = NetworkId.TestNet;
+      break;
+    case "undeployed":
+      networkEnum = NetworkId.Undeployed;
       break;
     case "mainnet":
       networkEnum = NetworkId.MainNet;
       break;
     default:
-      die(`Unknown VITE_NETWORK_ID="${NETWORK_ID}" (expected preprod|preview|mainnet).`);
+      die(`Unknown VITE_NETWORK_ID="${NETWORK_ID}" (expected preview|preprod|undeployed|mainnet).`);
   }
 
 
@@ -203,7 +204,7 @@ async function main() {
   try {
     const { WalletSeeds } = await import("@midnight-ntwrk/testkit-js");
     const { createKeystore } = await import("@midnight-ntwrk/wallet-sdk");
-    const suffix = NETWORK_ID; // "preview" | "preprod" | "mainnet" — matches Lace bech32 HRP
+    const suffix = NETWORK_ID === "testnet" ? "preprod" : NETWORK_ID; // matches Lace bech32 HRP
     const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
     const ks = createKeystore(seeds.unshielded, suffix);
     log(`derived (HD, matches Lace) unshielded: ${ks.getBech32Address().asString()}`);
@@ -237,7 +238,7 @@ async function main() {
     log("  ── Option A: fund THIS script's wallet ──");
     log(`  1. Install Lace, switch to Midnight ${NETWORK_ID}, and import the 24-word seed`);
     log(`     from .midnight-wallet.local as a new wallet so it matches this script.`);
-    log(`  2. Copy Lace's Unshielded address (mn_addr_test1…).`);
+    log(`  2. Copy Lace's Unshielded address (mn_addr_${NETWORK_ID}1…).`);
     log(`  3. Paste into ${FAUCET} and click Request tokens (~2 min for 1000 tNIGHT).`);
     log(`  4. In Lace, click "Generate tDUST" to delegate tNIGHT → tDUST.`);
     log("");
