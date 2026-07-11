@@ -213,41 +213,14 @@ function ProofServer() {
             >
               <span className="eyebrow text-primary">wallet</span>
               <span className="text-foreground text-sm">Install Lace →</span>
-              <span className="text-[10px] text-muted-foreground">Browser extension + tDUST guide</span>
+              <span className="text-[10px] text-muted-foreground">Full setup + tDUST walkthrough →</span>
             </Link>
           </div>
 
-          <div className="mt-6">
-            <span className="eyebrow text-primary">visual walkthrough · lace</span>
-            <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {[
-                { src: laceEmpty.url, tag: "01 · empty tank", caption: "0/0 tDUST after the faucet drops tNIGHT." },
-                { src: laceGenerate.url, tag: "02 · generate tDUST", caption: "Delegate tNIGHT to your own Dust address." },
-                { src: laceRefilling.url, tag: "03 · refilling", caption: "1,000 tNIGHT designated — tDUST tank fills." },
-              ].map((f) => (
-                <figure key={f.tag} className="border border-border bg-card flex flex-col">
-                  <img src={f.src} alt={f.caption} loading="lazy" className="w-full h-auto block border-b border-border" />
-                  <figcaption className="p-3">
-                    <span className="eyebrow text-primary block">{f.tag}</span>
-                    <span className="mt-1 block text-[11px] text-muted-foreground font-light leading-relaxed">
-                      {f.caption}
-                    </span>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-            <p className="mt-3 text-[11px] text-muted-foreground font-light">
-              Screenshots:{" "}
-              <a
-                href="https://docs.midnight.network/guides/acquire-tokens"
-                target="_blank"
-                rel="noreferrer"
-                className="text-primary hover:underline"
-              >
-                Midnight Docs — Acquire tokens ↗
-              </a>
-            </p>
-          </div>
+          <p className="mt-4 text-[11px] text-muted-foreground font-light">
+            Step-by-step Lace screenshots for funding tDUST live on the{" "}
+            <Link to="/wallet" className="text-primary hover:underline">Wallet page</Link>.
+          </p>
         </div>
 
 
