@@ -312,7 +312,8 @@ function diagnoseDust(state, dustSecretKey) {
 
 async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
   log("syncing wallet Dust balance from Indexer…");
-  log("(waiting for dust + shielded sync isStrictlyComplete — this can take 2–5 min on Preview)");
+  log("(finish when DUST balance > 0, OR shielded+unshielded complete after ≥ 3 min)");
+  const SOFT_MIN_MS = 180_000; // give DUST a chance to converge for 3 min
   return new Promise((resolve, reject) => {
     let latest = initialState;
     let bestBalance = readDustBalance(initialState);
@@ -352,10 +353,14 @@ async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
       const balance = readDustBalance(latest);
       if (balance > bestBalance) bestBalance = balance;
       const f = flags(latest);
-      // Finish once dust + shielded sync are strictly complete. Unshielded
-      // usually completes first. If balance is already positive, finish.
-      if (bestBalance > 0n && f.d && f.s) finish();
-      else if (f.d && f.s) finish();
+      const elapsed = Date.now() - startedAt;
+      // 1. Positive balance is always enough — stop immediately.
+      if (bestBalance > 0n) return finish();
+      // 2. All three streams strictly complete — nothing more to wait for.
+      if (f.d && f.s && f.u) return finish();
+      // 3. Preview's dust stream often never flips complete. After 3 min, if
+      //    shielded + unshielded are done, stop waiting on dust.
+      if (elapsed >= SOFT_MIN_MS && f.s && f.u) return finish();
     };
 
     update(initialState);
@@ -369,6 +374,7 @@ async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
     });
   });
 }
+
 
 async function latestWalletSnapshot(wallet, timeoutMs = 30_000) {
   return new Promise((resolve, reject) => {
