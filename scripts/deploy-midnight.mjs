@@ -310,8 +310,9 @@ function diagnoseDust(state, dustSecretKey) {
 }
 
 
-async function waitForDustBalance(wallet, initialState, timeoutMs = 90_000) {
+async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
   log("syncing wallet Dust balance from Indexer…");
+  log("(waiting for dust + shielded sync isStrictlyComplete — this can take 2–5 min on Preview)");
   return new Promise((resolve, reject) => {
     let latest = initialState;
     let bestBalance = readDustBalance(initialState);
@@ -326,17 +327,35 @@ async function waitForDustBalance(wallet, initialState, timeoutMs = 90_000) {
       sub.unsubscribe();
       resolve({ state: latest, tdust: bestBalance });
     };
-    const report = () => {
-      log(`wallet sync check: current tDUST balance ${bestBalance.toString()} (${Math.round((Date.now() - startedAt) / 1000)}s)`);
+    const flags = (state) => {
+      const d = !!state?.dust?.state?.progress?.isStrictlyComplete?.();
+      const s = !!state?.shielded?.state?.progress?.isStrictlyComplete?.();
+      const u = !!state?.unshielded?.progress?.isStrictlyComplete?.();
+      return { d, s, u };
     };
-    const timer = setTimeout(finish, timeoutMs);
+    const report = () => {
+      const f = flags(latest);
+      log(
+        `wallet sync check: tDUST=${bestBalance.toString()} ` +
+        `dust.complete=${f.d} shielded.complete=${f.s} unshielded.complete=${f.u} ` +
+        `(${Math.round((Date.now() - startedAt) / 1000)}s)`,
+      );
+    };
+    const timer = setTimeout(() => {
+      log("sync timeout reached (10 min) — proceeding with best-known balance");
+      finish();
+    }, timeoutMs);
     const progress = setInterval(report, 10_000);
 
     const update = (state) => {
       latest = state ?? latest;
       const balance = readDustBalance(latest);
       if (balance > bestBalance) bestBalance = balance;
-      if (bestBalance > 0n) finish();
+      const f = flags(latest);
+      // Finish once dust + shielded sync are strictly complete. Unshielded
+      // usually completes first. If balance is already positive, finish.
+      if (bestBalance > 0n && f.d && f.s) finish();
+      else if (f.d && f.s) finish();
     };
 
     update(initialState);
