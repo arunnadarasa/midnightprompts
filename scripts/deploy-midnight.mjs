@@ -590,6 +590,7 @@ async function main() {
   if (!Contract) die("Compiled contract module has no exported Contract class.");
 
   const { deployContract } = await import("@midnight-ntwrk/midnight-js-contracts");
+  const { CompiledContract } = await import("@midnight-ntwrk/compact-js");
   const { NodeZkConfigProvider } = await import("@midnight-ntwrk/midnight-js-node-zk-config-provider");
   const { httpClientProofProvider } = await import("@midnight-ntwrk/midnight-js-http-client-proof-provider");
   const { indexerPublicDataProvider } = await import("@midnight-ntwrk/midnight-js-indexer-public-data-provider");
@@ -631,7 +632,14 @@ async function main() {
       submitTx: async (tx) => provider.submitTx(tx),
     },
   };
-  const compiledContract = new Contract({ localSecretKey: (context) => [context.privateState, sk] });
+  const compiledContract = CompiledContract
+    .make("TimestampLog", Contract)
+    .pipe(
+      CompiledContract.withWitnesses({
+        localSecretKey: (context) => [context.privateState, sk],
+      }),
+      CompiledContract.withCompiledFileAssets(MANAGED),
+    );
   const deployed = await deployContract(providers, { compiledContract });
   const contractAddress = deployed.deployTxData.public.contractAddress;
   const deployTx = deployed.deployTxData.public.txId;
