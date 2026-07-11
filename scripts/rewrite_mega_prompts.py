@@ -44,7 +44,7 @@ SECRETS = """REQUIRED SECRETS (Lovable → Project Settings → Secrets):
 - VITE_DEFAULT_CONTRACT     the hex address printed by your first deploy — paste it here so users skip the deploy step
 
 Faucets: Preview  https://midnight-tmnight-preview.nethermind.dev/  ·  Preprod  https://midnight-tmnight-preprod.nethermind.dev/  (dispense tNIGHT — generate tDUST in Lace)
-Explorer: https://preview.midnightexplorer.com/
+Explorer: Preview  https://preview.midnightexplorer.com/  ·  Preprod  https://preprod.midnightexplorer.com/
 Docs:    https://docs.midnight.network/llms-full.txt"""
 
 BUDGET = """5-CREDIT BUDGET (HARD LIMIT):
