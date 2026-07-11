@@ -101,11 +101,15 @@ async function buildWallet(mnemonic) {
   setNetworkId(NETWORK_ID);
 
   // The Scala.js wallet SDK requires the NetworkId enum, not a string.
-  // Both "preprod" and "preview" run on the TestNet enum member.
+  // Each Midnight network has its OWN enum member — preview ≠ preprod.
+  // Using TestNet for preview produces addresses with the `…test1…` bech32
+  // suffix, which don't match Lace's `…preview1…` addresses.
   let networkEnum;
   switch (NETWORK_ID) {
-    case "preprod":
     case "preview":
+      networkEnum = NetworkId.Undeployed;
+      break;
+    case "preprod":
     case "testnet":
       networkEnum = NetworkId.TestNet;
       break;
@@ -115,6 +119,7 @@ async function buildWallet(mnemonic) {
     default:
       die(`Unknown VITE_NETWORK_ID="${NETWORK_ID}" (expected preprod|preview|mainnet).`);
   }
+
 
   log(`building wallet for network=${NETWORK_ID} (enum=${networkEnum})`);
   // CRITICAL: match Lace's HD derivation. Lace uses WalletSeeds.fromMnemonic
@@ -198,7 +203,7 @@ async function main() {
   try {
     const { WalletSeeds } = await import("@midnight-ntwrk/testkit-js");
     const { createKeystore } = await import("@midnight-ntwrk/wallet-sdk");
-    const suffix = NETWORK_ID === "preview" ? "test" : NETWORK_ID;
+    const suffix = NETWORK_ID; // "preview" | "preprod" | "mainnet" — matches Lace bech32 HRP
     const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
     const ks = createKeystore(seeds.unshielded, suffix);
     log(`derived (HD, matches Lace) unshielded: ${ks.getBech32Address().asString()}`);
