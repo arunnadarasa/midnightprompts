@@ -28,6 +28,7 @@ import tdust03 from "@/assets/lace-tdust-03-review.png.asset.json";
 import tdust04 from "@/assets/lace-tdust-04-password.png.asset.json";
 import tdust05 from "@/assets/lace-tdust-05-processing.png.asset.json";
 import tdust06 from "@/assets/lace-tdust-06-refilling.png.asset.json";
+import midnightSettings from "@/assets/lace-midnight-settings.png.asset.json";
 
 const TDUST_STEPS = [
   { img: tdust01, tag: "01 · tank empty", title: "Tap the D icon next to Receive", caption: "With tNIGHT in the wallet but 0 / 0 tDUST, click the small D icon to the right of Receive to open Generate tDUST." },
@@ -343,6 +344,63 @@ function Wallet() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="max-w-3xl mx-auto px-5 pb-10">
+        <span className="eyebrow">lace · midnight settings</span>
+        <h2 className="font-display text-3xl sm:text-4xl font-bold mt-2 text-foreground">
+          Point Lace at your <span className="italic text-primary">proof server.</span>
+        </h2>
+        <p className="mt-3 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
+          Settings → <em>Midnight</em> opens the Midnight-specific config. Two things live here:{" "}
+          <strong className="text-foreground">Proof Server</strong> (where ZK proofs are generated)
+          and <strong className="text-foreground">Node address</strong> (the RPC Lace queries).
+        </p>
+
+        <div className="mt-5 grid grid-cols-1 sm:grid-cols-[280px_1fr] gap-6 items-start">
+          <img
+            src={midnightSettings.url}
+            alt="Lace Midnight Settings — Proof Server (Remote/Local) and Node address"
+            loading="lazy"
+            className="w-full h-auto block border border-border bg-background"
+          />
+          <div className="flex flex-col gap-4 text-[12px] leading-relaxed">
+            <div className="p-4 border border-border bg-card">
+              <div className="eyebrow text-primary">proof server · remote</div>
+              <p className="mt-2 text-foreground/90">
+                Default. Uses{" "}
+                <code className="font-mono">https://proof-server.&lt;network&gt;.midnight.network</code>.
+                Fastest for casual signing — a trusted remote generates the proof for you. Fine for
+                most DApp interactions.
+              </p>
+            </div>
+            <div className="p-4 border border-primary/40 bg-card">
+              <div className="eyebrow text-primary">proof server · local</div>
+              <p className="mt-2 text-foreground/90">
+                <code className="font-mono">http://localhost:6300</code> — this is the Docker
+                proof server you run for the deploy script. Most private (proofs never leave your
+                machine) and required if you want Lace signing to hit the same prover the script
+                uses. Start it with:
+              </p>
+              <pre className="mt-2 p-3 border border-border bg-background font-mono text-[11px] text-foreground overflow-x-auto whitespace-pre-wrap break-all">
+{`docker run -d -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`}
+              </pre>
+            </div>
+            <div className="p-4 border border-border bg-card">
+              <div className="eyebrow text-primary">node address</div>
+              <p className="mt-2 text-foreground/90">
+                Leave as{" "}
+                <code className="font-mono">https://rpc.&lt;network&gt;.midnight.network</code>{" "}
+                unless you're running your own Midnight node. This is the RPC Lace uses to read
+                state and submit txs.
+              </p>
+            </div>
+            <p className="text-[11px] text-muted-foreground font-light">
+              Click <strong className="text-foreground">Save configuration</strong> after any
+              change — Lace re-syncs against the new endpoints immediately.
+            </p>
+          </div>
+        </div>
       </section>
 
       <section className="max-w-3xl mx-auto px-5 pb-10">
