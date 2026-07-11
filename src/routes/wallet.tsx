@@ -119,7 +119,52 @@ function Wallet() {
         </div>
       </section>
 
+      <section className="max-w-3xl mx-auto px-5 pb-10">
+        <span className="eyebrow">setup walkthrough · lace v2</span>
+        <h2 className="font-display text-3xl sm:text-4xl font-bold mt-2 text-foreground">
+          Create your Midnight wallet <span className="italic text-primary">in ten taps.</span>
+        </h2>
+        <p className="mt-3 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
+          Screens below are from the current Lace release with Midnight support enabled. Steps 09–10
+          show where to grab the address the faucet needs, and how to switch on tDUST.
+        </p>
+
+        <ol className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {SETUP_STEPS.map((s) => (
+            <li key={s.tag} className="border border-border bg-card flex flex-col">
+              <img
+                src={s.img.url}
+                alt={s.title}
+                loading="lazy"
+                className="w-full h-auto block border-b border-border bg-background"
+              />
+              <div className="p-4 flex flex-col gap-1">
+                <span className="eyebrow text-primary">{s.tag}</span>
+                <span className="font-display text-foreground text-base">{s.title}</span>
+                <span className="text-[12px] text-muted-foreground font-light leading-relaxed mt-1">
+                  {s.caption}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <p className="mt-4 text-[11px] text-muted-foreground font-light">
+          Screenshots captured from the Lace browser extension. Wallet UX and additional context:{" "}
+          <a
+            href="https://docs.midnight.network/guides/acquire-tokens"
+            target="_blank"
+            rel="noreferrer"
+            className="text-primary hover:underline"
+          >
+            Midnight Docs — Acquire tokens ↗
+          </a>
+          .
+        </p>
+      </section>
+
       <section className="max-w-3xl mx-auto px-5 pb-20">
+
         <div className="p-6 border border-border bg-card">
           <div className="eyebrow text-primary">testnet</div>
           <h2 className="font-display text-2xl text-foreground italic mt-1">Faucets &amp; Addresses</h2>
