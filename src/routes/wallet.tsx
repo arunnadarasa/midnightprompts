@@ -285,11 +285,11 @@ function Wallet() {
         <div className="mt-6">
           <span className="eyebrow">fix · expanded view mode</span>
           <h3 className="font-display text-xl sm:text-2xl mt-2 text-foreground">
-            The permanent fix: <span className="italic text-primary">run Lace expanded.</span>
+            Partial fix: <span className="italic text-primary">run Lace expanded.</span>
           </h3>
           <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
             Cogwheel → <em>Default View Mode</em> → <em>Expanded</em> → Confirm. Lace opens in a
-            full browser tab from now on, and no modal gets clipped.
+            full browser tab from now on, which fixes most clipped panels.
           </p>
           <ol className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
             {EXPANDED_STEPS.map((s) => (
@@ -310,7 +310,18 @@ function Wallet() {
               </li>
             ))}
           </ol>
+
+          <div className="mt-4 p-4 border border-primary/40 bg-card text-[12px] text-foreground/90 leading-relaxed">
+            <strong className="text-primary">Still truncated in Expanded?</strong> The Network
+            modal's scroll region can still hide the Midnight options (Undeployed / Preview /
+            Preprod) below the fold, even in a full browser tab. Workaround: click into the modal,
+            then press <kbd className="px-1.5 py-0.5 border border-border bg-background font-mono text-[10px]">Tab</kbd>{" "}
+            repeatedly to walk the focus through the hidden radio options — press{" "}
+            <kbd className="px-1.5 py-0.5 border border-border bg-background font-mono text-[10px]">Space</kbd>{" "}
+            to select, then click <em>Confirm</em>.
+          </div>
         </div>
+
 
 
         <ol className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -366,7 +377,54 @@ function Wallet() {
         </ol>
       </section>
 
+      <section className="max-w-3xl mx-auto px-5 pb-10">
+        <span className="eyebrow">deploy · script wallet ≠ lace wallet</span>
+        <h2 className="font-display text-3xl sm:text-4xl font-bold mt-2 text-foreground">
+          Reuse your Lace seed <span className="italic text-primary">in the deploy script.</span>
+        </h2>
+        <p className="mt-3 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
+          <code className="font-mono text-foreground">scripts/deploy-midnight.mjs</code> generates
+          its own 24-word BIP-39 mnemonic on first run and stores it at{" "}
+          <code className="font-mono text-foreground">.midnight-wallet.local</code>. That wallet is{" "}
+          <em>not</em> your Lace Mac Local wallet — so tDUST you generated in Lace is invisible to
+          the script and the deploy exits with <em>Not enough tDUST</em>.
+        </p>
+
+        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="p-5 border border-border bg-card flex flex-col gap-2">
+            <span className="eyebrow text-primary">option A · fund the script wallet</span>
+            <span className="font-display text-foreground text-base">Import script seed into Lace</span>
+            <p className="text-[12px] text-muted-foreground font-light leading-relaxed">
+              Open <code className="font-mono text-foreground">.midnight-wallet.local</code>, copy
+              the 24 words, and import them as a new wallet in Lace. Faucet tNIGHT to that wallet's
+              unshielded address, generate tDUST, then re-run the script.
+            </p>
+          </div>
+          <div className="p-5 border border-primary/40 bg-card flex flex-col gap-2">
+            <span className="eyebrow text-primary">option B · reuse an existing lace wallet</span>
+            <span className="font-display text-foreground text-base">Paste Lace seed into the script file</span>
+            <p className="text-[12px] text-muted-foreground font-light leading-relaxed">
+              In Lace: Settings → Show Recovery Phrase for <em>Mac Local</em> (enter admin
+              password). Copy the 24 words as one line, then on your machine:
+            </p>
+            <pre className="mt-1 p-3 border border-border bg-background font-mono text-[11px] text-foreground overflow-x-auto">
+{`echo "word1 word2 ... word24" > .midnight-wallet.local
+chmod 600 .midnight-wallet.local
+bun scripts/deploy-midnight.mjs`}
+            </pre>
+          </div>
+        </div>
+
+        <div className="mt-4 p-4 border border-primary/40 bg-card text-[12px] text-foreground/90 leading-relaxed">
+          <strong className="text-primary">Treat the recovery phrase like a password.</strong>{" "}
+          <code className="font-mono">.midnight-wallet.local</code> is already gitignored and
+          created with <code className="font-mono">0600</code> permissions — don't commit it, don't
+          share it, don't paste it into chat.
+        </div>
+      </section>
+
       <section className="max-w-3xl mx-auto px-5 pb-20">
+
 
         <div className="p-6 border border-border bg-card">
           <div className="eyebrow text-primary">testnet</div>

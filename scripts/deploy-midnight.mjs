@@ -205,18 +205,31 @@ async function main() {
   log(`current tDUST balance: ${tdust}`);
 
   if (fresh || tdust < 1) {
-    log("Not enough tDUST to deploy. Do this in Lace, not this script:");
-    log(`  1. Install Lace, switch to Midnight preview, import this 24-word seed`);
-    log(`     (from .midnight-wallet.local) so it shares the same wallet.`);
+    log("Not enough tDUST to deploy. Two options:");
+    log("");
+    log("  ── Option A: fund THIS script's wallet ──");
+    log(`  1. Install Lace, switch to Midnight ${NETWORK_ID}, and import the 24-word seed`);
+    log(`     from .midnight-wallet.local as a new wallet so it matches this script.`);
     log(`  2. Copy Lace's Unshielded address (mn_addr_test1…).`);
     log(`  3. Paste into ${FAUCET} and click Request tokens (~2 min for 1000 tNIGHT).`);
     log(`  4. In Lace, click "Generate tDUST" to delegate tNIGHT → tDUST.`);
-    log(`  5. Start the proof server:`);
-    log(`     docker run -d -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`);
-    log(`  6. Re-run: bun scripts/deploy-midnight.mjs`);
+    log("");
+    log("  ── Option B: reuse an EXISTING Lace wallet that already has tDUST ──");
+    log(`  1. In Lace: Settings → Show Recovery Phrase (enter admin password).`);
+    log(`  2. Copy the 24 words as one whitespace-separated line.`);
+    log(`  3. Overwrite the script's seed with it:`);
+    log(`       echo "word1 word2 ... word24" > .midnight-wallet.local`);
+    log(`       chmod 600 .midnight-wallet.local`);
+    log(`     (Treat the phrase like a password. .midnight-wallet.local is gitignored.)`);
+    log("");
+    log("  Then, for either option:");
+    log(`  • Start the proof server:`);
+    log(`      docker run -d -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`);
+    log(`  • Re-run: bun scripts/deploy-midnight.mjs`);
     await wallet.close?.();
     process.exit(0);
   }
+
 
 
   log("=== phase 2: deploy ===");
