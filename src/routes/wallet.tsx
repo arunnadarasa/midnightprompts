@@ -27,6 +27,7 @@ import tdust02 from "@/assets/lace-tdust-02-generate.png.asset.json";
 import tdust03 from "@/assets/lace-tdust-03-review.png.asset.json";
 import tdust04 from "@/assets/lace-tdust-04-password.png.asset.json";
 import tdust05 from "@/assets/lace-tdust-05-processing.png.asset.json";
+import tdust06 from "@/assets/lace-tdust-06-refilling.png.asset.json";
 
 const TDUST_STEPS = [
   { img: tdust01, tag: "01 · tank empty", title: "Tap the D icon next to Receive", caption: "With tNIGHT in the wallet but 0 / 0 tDUST, click the small D icon to the right of Receive to open Generate tDUST." },
@@ -34,6 +35,7 @@ const TDUST_STEPS = [
   { img: tdust03, tag: "03 · review", title: "Send #2 — review & confirm", caption: "Review Transaction confirms you're designating 1,000 tNIGHT. Click Send again to submit." },
   { img: tdust04, tag: "04 · password", title: "Enter your admin password", caption: "Confirm the transaction with your Lace admin password, then Confirm." },
   { img: tdust05, tag: "05 · processing", title: "Generating the ZK proof", caption: "Processing transaction, generating zero-knowledge proof. Give it a minute — tDUST starts flowing once designation completes." },
+  { img: tdust06, tag: "06 · refilling", title: "tDUST tank refilling", caption: "Back on the wallet home the badge flips to Refilling (154h7min) and your tDUST balance climbs — e.g. 420 / 5,000 tDUST. You're ready to deploy." },
 ];
 
 const EXPANDED_STEPS = [
