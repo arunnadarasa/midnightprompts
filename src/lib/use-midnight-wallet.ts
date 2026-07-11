@@ -132,12 +132,36 @@ export function useMidnightWallet(): MidnightWalletState {
         );
       }
       const envNet = (import.meta.env.VITE_NETWORK_ID as string | undefined) ?? "preprod";
-      const networkId = envNet === "preview" || envNet === "preprod" || envNet === "mainnet" ? envNet : "preprod";
-      const api = await c.connect(networkId);
+      const preferred = envNet === "preview" || envNet === "preprod" || envNet === "mainnet" ? envNet : "preprod";
+      const candidates = Array.from(new Set([preferred, "preview", "preprod", "mainnet"]));
+      let api: ConnectedApi | null = null;
+      let usedNetwork: string | null = null;
+      let lastMismatch: unknown = null;
+      for (const cand of candidates) {
+        try {
+          api = await c.connect(cand);
+          usedNetwork = cand;
+          break;
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : String(err);
+          if (/network|mismatch/i.test(msg)) {
+            lastMismatch = err;
+            continue;
+          }
+          throw err;
+        }
+      }
+      if (!api || !usedNetwork) {
+        throw new Error(
+          lastMismatch
+            ? "Lace is on a different network than this app supports. Switch Lace to Preview or Preprod and retry."
+            : "Failed to connect to Lace.",
+        );
+      }
       const state = await api.state();
       setAddress(state.address);
       setCoinPublicKey(state.coinPublicKey ?? null);
-      setNetwork(inferNetworkFromAddress(state.address));
+      setNetwork(usedNetwork ?? inferNetworkFromAddress(state.address));
       setApiVersion(c.apiVersion);
       setStatus("connected");
     } catch (e) {
