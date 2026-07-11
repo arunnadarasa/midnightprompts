@@ -28,6 +28,7 @@ import tdust03 from "@/assets/lace-tdust-03-review.png.asset.json";
 import tdust04 from "@/assets/lace-tdust-04-password.png.asset.json";
 import tdust05 from "@/assets/lace-tdust-05-processing.png.asset.json";
 import tdust06 from "@/assets/lace-tdust-06-refilling.png.asset.json";
+import midnightSettings from "@/assets/lace-midnight-settings.png.asset.json";
 
 const TDUST_STEPS = [
   { img: tdust01, tag: "01 · tank empty", title: "Tap the D icon next to Receive", caption: "With tNIGHT in the wallet but 0 / 0 tDUST, click the small D icon to the right of Receive to open Generate tDUST." },
