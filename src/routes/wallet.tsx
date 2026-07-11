@@ -19,6 +19,15 @@ import net02 from "@/assets/lace-net-02-network-modal.png.asset.json";
 import net03 from "@/assets/lace-net-03-truncated.png.asset.json";
 import net04 from "@/assets/lace-net-04-full-midnight.png.asset.json";
 import net05 from "@/assets/lace-net-05-topbar.png.asset.json";
+import expanded01 from "@/assets/lace-expanded-01-wallet.png.asset.json";
+import expanded02 from "@/assets/lace-expanded-02-settings.png.asset.json";
+import expanded03 from "@/assets/lace-expanded-03-view-mode.png.asset.json";
+
+const EXPANDED_STEPS = [
+  { img: expanded02, tag: "01 · settings", title: "Cogwheel → Default View Mode", caption: "Open Settings from the cogwheel and scroll to Default View Mode at the bottom of the list." },
+  { img: expanded03, tag: "02 · pick expanded", title: "Choose Expanded → Confirm", caption: "Switch from Side panel (recommended) to Expanded, then Confirm. Lace now opens in a full browser tab." },
+  { img: expanded01, tag: "03 · full canvas", title: "No more truncation", caption: "In Expanded mode the Network modal (and every other panel) has room to render — all three Midnight options stay visible." },
+];
 
 const SETUP_STEPS = [
   { img: step01, tag: "01 · account center", title: "Open Lace → Add wallet", caption: "Launch the Lace extension and click the purple Add wallet button at the top of the Account Center." },
@@ -253,9 +262,41 @@ function Wallet() {
         <div className="mt-4 p-4 border border-primary/40 bg-card text-[12px] text-foreground/90 leading-relaxed">
           <strong className="text-primary">Heads up — Lace UI bug:</strong> on small laptop
           screens the Network modal can truncate and hide the Midnight options. If you only see
-          Cardano and Bitcoin, resize the window to make the modal tall enough to reveal the three
-          Midnight choices (Undeployed, Preview, Preprod).
+          Cardano and Bitcoin, resize the window — or, better, switch Lace to{" "}
+          <strong className="text-foreground">Expanded</strong> view mode so it opens in a full
+          browser tab with room for the whole modal.
         </div>
+
+        <div className="mt-6">
+          <span className="eyebrow">fix · expanded view mode</span>
+          <h3 className="font-display text-xl sm:text-2xl mt-2 text-foreground">
+            The permanent fix: <span className="italic text-primary">run Lace expanded.</span>
+          </h3>
+          <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
+            Cogwheel → <em>Default View Mode</em> → <em>Expanded</em> → Confirm. Lace opens in a
+            full browser tab from now on, and no modal gets clipped.
+          </p>
+          <ol className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {EXPANDED_STEPS.map((s) => (
+              <li key={s.tag} className="border border-border bg-card flex flex-col">
+                <img
+                  src={s.img.url}
+                  alt={s.title}
+                  loading="lazy"
+                  className="w-full h-auto block border-b border-border bg-background"
+                />
+                <div className="p-4 flex flex-col gap-1">
+                  <span className="eyebrow text-primary">{s.tag}</span>
+                  <span className="font-display text-foreground text-base">{s.title}</span>
+                  <span className="text-[12px] text-muted-foreground font-light leading-relaxed mt-1">
+                    {s.caption}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
 
         <ol className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {NETWORK_STEPS.map((s) => (
