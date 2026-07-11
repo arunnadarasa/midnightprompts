@@ -1,38 +1,71 @@
-## Goal
+## Why the mismatch
 
-Add the three uploaded Lace-wallet screenshots (empty tDUST tank → Generate tDUST modal → refilling tank with 1,000 tNIGHT designated) to the site so users can visually follow the tNIGHT → tDUST conversion step. Credit Midnight Docs (https://docs.midnight.network/guides/acquire-tokens) as the source.
+The script and Lace derive **different keys from the same 24 words** because they use different derivation paths:
 
-## Where they go
+- **Lace** uses the official Midnight HD derivation (`@midnight-ntwrk/wallet-sdk-hd` via `WalletSeeds.fromMnemonic`), which splits the mnemonic into distinct **shielded** and **unshielded** seed material. This produces addresses like `mn_shield-addr_preprod1cah9s…` and `mn_addr_preprod1jgkgn…`.
+- **`scripts/deploy-midnight.mjs`** takes a shortcut: `mnemonicToSeedSync(mnemonic).slice(0, 64)` — the first 32 bytes of the raw BIP-39 seed — and feeds that straight into `WalletBuilder.buildFromSeed`. That is a *different* private key, so it derives a different shielded address (`mn_shield-addr_test1vzn…`) and, because tDUST is held by the Lace-derived key, the script sees 0 balance.
 
-Inside **`src/routes/proof-server.tsx`**, at the end of **Step 03 — "Fund your wallet with tDUST"**. That step already explains the tNIGHT-vs-tDUST gotcha, so the visuals belong right there.
+There is also a **network-suffix bug**: the script hardcodes `NetworkId.TestNet` for both `preview` and `preprod`, which is why its derived address shows the `…test1…` prefix instead of `…preprod1…` even when `VITE_NETWORK_ID=preprod`.
 
-Not adding them to `/wallet` or the home page — the funding walkthrough is the single canonical place.
+Your existing `scripts/derive-unshielded-address.mjs` already does it correctly (uses `WalletSeeds.fromMnemonic` + per-network bech32 suffix) — that's why the addresses it prints match Lace. The deploy script just needs to follow the same path.
 
-## Implementation
+## Fix
 
-1. **Register the three uploads as Lovable assets** (kept out of the repo binary tree):
-   - `src/assets/lace-tdust-empty.png.asset.json` ← `user-uploads://delegate-dust-*.png`
-   - `src/assets/lace-tdust-generate.png.asset.json` ← `user-uploads://review-transaction-*.png`
-   - `src/assets/lace-tdust-refilling.png.asset.json` ← `user-uploads://dust-tank-generation-*.png`
+### 1. `scripts/deploy-midnight.mjs` — derive keys the way Lace does
 
-2. **New sub-block inside Step 03** (after the existing faucet + wallet grid): a 3-up responsive figure grid on desktop / stacked on mobile. Each figure:
-   - Bordered card matching existing `border border-border` aesthetic
-   - `<img>` with descriptive alt text
-   - Small caption below in the existing `text-[10px] tracking-[0.28em] uppercase eyebrow` + muted body-text style:
-     - **01 · Empty tank** — "0/0 tDUST after the faucet drops tNIGHT."
-     - **02 · Generate tDUST** — "Delegate tNIGHT to your own Dust address."
-     - **03 · Refilling** — "1,000 tNIGHT designated, tDUST tank starts filling."
+Replace the naive seed derivation with the HD path used by `derive-unshielded-address.mjs`:
 
-3. **Attribution line** below the grid, small muted text:
-   > Screenshots: [Midnight Docs — Acquire tokens ↗](https://docs.midnight.network/guides/acquire-tokens)
+```js
+import { WalletSeeds } from "@midnight-ntwrk/testkit-js";
+// …
+const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
+// Shielded seed drives the Zswap wallet used for balance + tx signing.
+const seedHex = Buffer.from(seeds.shielded).toString("hex");
+const wallet = await WalletBuilder.buildFromSeed(
+  INDEXER_HTTP, INDEXER_WS, PROOF_SERVER, NODE_RPC,
+  seedHex, networkEnum,
+);
+```
 
-## Out of scope
+Fix the network mapping so preview and preprod pick the correct `NetworkId`:
 
-- No changes to `/wallet`, home, showcase, or the deploy script.
-- No new components — inline JSX inside the existing Step 03 block.
-- No changes to copy of the surrounding steps.
+```js
+switch (NETWORK_ID) {
+  case "preprod": networkEnum = NetworkId.TestNet; break;   // preprod == TestNet enum
+  case "preview": networkEnum = NetworkId.Undeployed; break; // preview uses Undeployed
+  case "mainnet": networkEnum = NetworkId.MainNet; break;
+  default: die(...);
+}
+```
 
-## Technical notes
+(Confirm the exact enum name for preview against `@midnight-ntwrk/zswap`; if the SDK groups both under `TestNet`, then the mismatch is purely in the bech32 suffix — the shielded key itself is correct once we switch to `WalletSeeds`.)
 
-- Import pattern: `import emptyImg from "@/assets/lace-tdust-empty.png.asset.json"` then `<img src={emptyImg.url} alt="…" />` — matches the asset-pointer guideline; no binaries added to the repo.
-- Images are Lace-wallet UI screenshots, safe to embed (they're already in the Midnight public docs).
+### 2. Sanity check after the change
+
+Add a startup log that prints the derived shielded + unshielded addresses side-by-side and asserts the prefix matches the target network:
+
+```
+[deploy] network=preprod
+[deploy] shielded:   mn_shield-addr_preprod1cah9s…   ← should match Lace
+[deploy] unshielded: mn_addr_preprod1jgkgn…         ← should match Lace
+```
+
+If the printed shielded address doesn't match the one you pasted from Lace, the run aborts before spending anything.
+
+### 3. `src/routes/wallet.tsx` — update the "Script wallet ≠ Lace wallet" callout
+
+The current callout says Option B (paste Lace's seed) will make the script match Lace. That was wrong before this fix. Update it to note:
+- The script now uses the same HD derivation as Lace, so Option B genuinely produces the same addresses.
+- Include a one-liner: "Verify by running `bun scripts/derive-unshielded-address.mjs` — the printed addresses must match Lace before deploying."
+
+### 4. `scripts/deploy-midnight.README.md`
+
+Mirror the same explanation: "Prior versions derived a different key from the same mnemonic. If you deployed with an older script, your funds are on the Lace-derived address and the script's own address is empty — paste your Lace seed into `.midnight-wallet.local` and re-run."
+
+## Not changing
+
+Compact contract, provider wiring, proof-server flow, faucet/tDUST UI walkthrough, `derive-unshielded-address.mjs` (already correct).
+
+## Expected result
+
+After the fix, with your Lace Mac Local 24 words in `.midnight-wallet.local` and `VITE_NETWORK_ID=preprod`, the script prints `mn_shield-addr_preprod1cah9s…` (matching your Lace preprod address), sees the tDUST you already have, and proceeds to phase 2.

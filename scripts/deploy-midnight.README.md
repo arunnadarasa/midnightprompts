@@ -48,6 +48,28 @@ source ~/.bashrc && compact update
 compact compile contracts/TimestampLog.compact contracts/managed/timestamp-log
 ```
 
+## Seed derivation matches Lace
+
+The script derives keys via `WalletSeeds.fromMnemonic` (from
+`@midnight-ntwrk/testkit-js` + `wallet-sdk-hd`) — the same HD path Lace uses.
+The same 24 words in `.midnight-wallet.local` and in Lace produce the same
+shielded + unshielded addresses.
+
+> **Upgrading from an older script?** Earlier versions fed the raw BIP-39 seed
+> straight into `WalletBuilder`, which produced a *different* private key from
+> the same mnemonic. If you ran the old script, your Lace-funded tDUST was
+> invisible to it. Just re-run — the new script derives the Lace-matching
+> address automatically and will see the balance.
+
+Verify at any time:
+
+```bash
+MIDNIGHT_WALLET_SEED="$(cat .midnight-wallet.local)" \
+  bun scripts/derive-unshielded-address.mjs --network=preprod
+```
+
+The printed shielded + unshielded addresses must match Lace exactly.
+
 ## Phase 1 — fund the wallet with tNIGHT, then delegate to tDUST
 
 The deploy spends **tDUST**. The preprod faucet only dispenses **tNIGHT**, and

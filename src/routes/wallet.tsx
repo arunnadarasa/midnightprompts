@@ -479,6 +479,21 @@ bun scripts/deploy-midnight.mjs`}
           created with <code className="font-mono">0600</code> permissions — don't commit it, don't
           share it, don't paste it into chat.
         </div>
+
+        <div className="mt-4 p-4 border border-border bg-card text-[12px] text-foreground/90 leading-relaxed">
+          <strong className="text-primary">Same seed, same addresses.</strong> The deploy script
+          now uses the same HD derivation as Lace (
+          <code className="font-mono">WalletSeeds.fromMnemonic</code> from{" "}
+          <code className="font-mono">@midnight-ntwrk/testkit-js</code>), so Option B produces the
+          exact addresses Lace shows. Verify before deploying:
+          <pre className="mt-2 p-3 border border-border bg-background font-mono text-[11px] text-foreground overflow-x-auto">
+{`MIDNIGHT_WALLET_SEED="$(cat .midnight-wallet.local)" \\
+  bun scripts/derive-unshielded-address.mjs --network=preprod`}
+          </pre>
+          The printed shielded + unshielded addresses must match the ones in Lace. If they don't,
+          you pasted the wrong seed.
+        </div>
+
       </section>
 
       <section className="max-w-3xl mx-auto px-5 pb-20">

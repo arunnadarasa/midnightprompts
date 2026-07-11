@@ -31,7 +31,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { generateMnemonic, mnemonicToSeedSync } from "bip39";
+import { generateMnemonic } from "bip39";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -97,6 +97,7 @@ async function buildWallet(mnemonic) {
   const { WalletBuilder } = await import("@midnight-ntwrk/wallet");
   const { setNetworkId } = await import("@midnight-ntwrk/midnight-js-network-id");
   const { NetworkId } = await import("@midnight-ntwrk/zswap");
+  const { WalletSeeds } = await import("@midnight-ntwrk/testkit-js");
   setNetworkId(NETWORK_ID);
 
   // The Scala.js wallet SDK requires the NetworkId enum, not a string.
@@ -116,9 +117,15 @@ async function buildWallet(mnemonic) {
   }
 
   log(`building wallet for network=${NETWORK_ID} (enum=${networkEnum})`);
-  // Midnight's zswap WASM wants exactly 32 bytes; BIP-39 gives 64. Take the
-  // first 32 bytes — deterministic across re-runs for the same mnemonic.
-  const seedHex = mnemonicToSeedSync(mnemonic).toString("hex").slice(0, 64);
+  // CRITICAL: match Lace's HD derivation. Lace uses WalletSeeds.fromMnemonic
+  // (from @midnight-ntwrk/testkit-js + wallet-sdk-hd), which splits the mnemonic
+  // into distinct shielded + unshielded seed material. The shielded seed drives
+  // the Zswap wallet used for balances + tx signing. Prior versions of this
+  // script fed the raw BIP-39 seed straight into WalletBuilder, producing a
+  // DIFFERENT private key from the same 24 words — so the script's derived
+  // address never matched Lace and never saw the user's tDUST.
+  const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
+  const seedHex = Buffer.from(seeds.shielded).toString("hex");
   const wallet = await WalletBuilder.buildFromSeed(
     INDEXER_HTTP,
     INDEXER_WS,
@@ -186,6 +193,19 @@ async function main() {
   log("=== phase 1: wallet ===");
   const { mnemonic, fresh } = await loadOrCreateSeed();
 
+  // Derive + print addresses via the same HD path Lace uses, BEFORE building
+  // the wallet, so a mismatch surfaces immediately without hitting the Indexer.
+  try {
+    const { WalletSeeds } = await import("@midnight-ntwrk/testkit-js");
+    const { createKeystore } = await import("@midnight-ntwrk/wallet-sdk");
+    const suffix = NETWORK_ID === "preview" ? "test" : NETWORK_ID;
+    const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
+    const ks = createKeystore(seeds.unshielded, suffix);
+    log(`derived (HD, matches Lace) unshielded: ${ks.getBech32Address().asString()}`);
+  } catch (e) {
+    log(`(could not pre-derive unshielded address: ${e.message})`);
+  }
+
   const wallet = await buildWallet(mnemonic);
   const info = await currentAddressAndBalance(wallet);
   const address = info.address;
@@ -193,13 +213,15 @@ async function main() {
   console.log("");
   console.log("  Shielded address (SDK-side, used for contract state):");
   console.log("  " + address);
+  console.log("  ↑ This must match the shielded address Lace shows for the same seed.");
+  console.log("    If it doesn't, .midnight-wallet.local holds a different mnemonic.");
   console.log("");
-  console.log("  ⚠ The preview faucet does NOT accept this shielded address.");
-  console.log("    It only accepts an UNSHIELDED address (mn_addr_test1…),");
-  console.log("    which is exposed by Lace — not by the wallet SDK.");
+  console.log("  ⚠ Faucets do NOT accept shielded addresses.");
+  console.log("    Use the UNSHIELDED address (mn_addr_…) printed above / shown in Lace.");
   console.log("    See: https://docs.midnight.network/guides/acquire-tokens");
   console.log("    Faucet: " + FAUCET);
   console.log("");
+
 
   const tdust = Number(info.balances?.tdust ?? info.balances?.[Object.keys(info.balances)[0]] ?? 0);
   log(`current tDUST balance: ${tdust}`);
