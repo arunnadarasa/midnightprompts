@@ -528,7 +528,7 @@ bun scripts/deploy-midnight.mjs`}
             >
               <div>
                 <div className="font-display text-foreground">Preview Faucet</div>
-                <div className="text-xs text-muted-foreground font-light mt-1">mn_addr_test1…</div>
+                <div className="text-xs text-muted-foreground font-light mt-1">mn_addr_preview1…</div>
               </div>
               <span className="text-primary text-lg group-hover:translate-x-1 transition-transform duration-300">→</span>
             </a>
@@ -541,7 +541,7 @@ bun scripts/deploy-midnight.mjs`}
               className="flex items-center justify-between p-4 border border-border hover:border-primary/50 transition-colors duration-500 group"
             >
               <div>
-                <div className="font-display text-foreground">Preprod Explorer</div>
+                <div className="font-display text-foreground">Preview Explorer</div>
                 <div className="text-xs text-muted-foreground font-light mt-1">preview.midnightexplorer.com</div>
               </div>
               <span className="text-primary text-lg group-hover:translate-x-1 transition-transform duration-300">→</span>

@@ -3,8 +3,7 @@
  * Generate a Midnight preprod wallet inside the Lovable sandbox.
  *
  * - Creates a fresh 24-word BIP-39 mnemonic.
- * - Builds a Midnight wallet against the preprod Indexer to derive the
- *   Bech32m-encoded shielded address (`mn_shield-…preprod1…`).
+ * - Derives Lace-compatible shielded + unshielded preprod addresses offline.
  * - Prints the mnemonic ONCE to stdout so the harness can capture it and
  *   store it as the MIDNIGHT_WALLET_SEED secret (never echoed to chat).
  * - Writes the public address + metadata to src/data/midnight-wallet.json.
@@ -12,48 +11,36 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { generateMnemonic, mnemonicToSeedSync } from "bip39";
-import { WalletBuilder } from "@midnight-ntwrk/wallet";
-import { NetworkId } from "@midnight-ntwrk/zswap";
-import { firstValueFrom, filter } from "rxjs";
+import { generateMnemonic } from "bip39";
+import { WalletSeeds } from "@midnight-ntwrk/testkit-js";
+import { createKeystore } from "@midnight-ntwrk/wallet-sdk";
+import { ShieldedAddress, ShieldedCoinPublicKey, ShieldedEncryptionPublicKey } from "@midnight-ntwrk/wallet-sdk-address-format";
+import * as ledger from "@midnight-ntwrk/ledger-v8";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const OUT = path.join(ROOT, "src/data/midnight-wallet.json");
 
-const NETWORK_ID = NetworkId.TestNet; // preprod runs the TestNet network id
-const INDEXER_HTTP = "https://indexer.preprod.midnight.network/api/v4/graphql";
-const INDEXER_WS = "wss://indexer.preprod.midnight.network/api/v4/graphql/ws";
-const NODE_RPC = "https://rpc.preprod.midnight.network";
-const PROOF_SERVER = "http://localhost:6300"; // not contacted for address derivation
-const FAUCET = "https://cloud.google.com/application/web3/faucet/midnight/testnet";
+const NETWORK_SUFFIX = "preprod";
+const FAUCET = "https://midnight-tmnight-preprod.nethermind.dev/";
 
 const mnemonic = generateMnemonic(256);
-const seedHex = mnemonicToSeedSync(mnemonic).toString("hex").slice(0, 64);
-
-console.error("[gen] building wallet to derive shielded address…");
-const wallet = await WalletBuilder.buildFromSeed(
-  INDEXER_HTTP,
-  INDEXER_WS,
-  PROOF_SERVER,
-  NODE_RPC,
-  seedHex,
-  NETWORK_ID,
-  "error",
+const seeds = WalletSeeds.fromMnemonic(mnemonic);
+const keystore = createKeystore(seeds.unshielded, NETWORK_SUFFIX);
+const shieldedKeys = ledger.ZswapSecretKeys.fromSeed(new Uint8Array(seeds.shielded));
+const shieldedAddrObj = new ShieldedAddress(
+  new ShieldedCoinPublicKey(Buffer.from(shieldedKeys.coinPublicKey, "hex")),
+  new ShieldedEncryptionPublicKey(Buffer.from(shieldedKeys.encryptionPublicKey, "hex")),
 );
-wallet.start();
-
-const state = await firstValueFrom(
-  wallet.state().pipe(filter((s) => Boolean(s && s.address))),
-);
-const address = state.address;
-console.error("[gen] derived address:", address);
-
-await wallet.close();
+const shieldedAddress = ShieldedAddress.codec.encode(NETWORK_SUFFIX, shieldedAddrObj).asString();
+const unshieldedAddress = keystore.getBech32Address().asString();
+console.error("[gen] derived shielded address:", shieldedAddress);
+console.error("[gen] derived unshielded address:", unshieldedAddress);
 
 const payload = {
   network: "preprod",
-  address,
+  shieldedAddress,
+  unshieldedAddress,
   createdAt: new Date().toISOString(),
   faucet: FAUCET,
 };

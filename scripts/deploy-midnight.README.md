@@ -31,11 +31,14 @@ curl -fsSL https://bun.sh/install | bash
 
 # 2. Install the Midnight SDK deps into this project
 bun add \
-  @midnight-ntwrk/wallet@4.0.0 \
+  @midnight-ntwrk/testkit-js@4.1.1 \
+  @midnight-ntwrk/wallet-sdk@1.1.0 \
+  @midnight-ntwrk/wallet-sdk-address-format@1.0.0 \
+  @midnight-ntwrk/ledger-v8@8.1.0 \
   @midnight-ntwrk/wallet-sdk-hd@3.1.0-beta.1 \
   @midnight-ntwrk/midnight-js-contracts@4.1.1 \
   @midnight-ntwrk/midnight-js-network-id@4.1.1 \
-  @midnight-ntwrk/midnight-js-fetch-zk-config-provider@4.1.1 \
+  @midnight-ntwrk/midnight-js-node-zk-config-provider@4.1.1 \
   @midnight-ntwrk/midnight-js-http-client-proof-provider@4.1.1 \
   @midnight-ntwrk/midnight-js-indexer-public-data-provider@4.1.1 \
   bip39
@@ -52,8 +55,11 @@ compact compile contracts/TimestampLog.compact contracts/managed/timestamp-log
 
 The script derives keys via `WalletSeeds.fromMnemonic` (from
 `@midnight-ntwrk/testkit-js` + `wallet-sdk-hd`) — the same HD path Lace uses.
-The same 24 words in `.midnight-wallet.local` and in Lace produce the same
+The same 12/24 words in `.midnight-wallet.local` and in Lace produce the same
 shielded + unshielded addresses.
+
+Never paste your recovery words into chat, screenshots, browser forms, or issue
+trackers. Keep them on your machine only.
 
 > **Upgrading from an older script?** Earlier versions fed the raw BIP-39 seed
 > straight into `WalletBuilder`, which produced a *different* private key from
@@ -61,14 +67,30 @@ shielded + unshielded addresses.
 > invisible to it. Just re-run — the new script derives the Lace-matching
 > address automatically and will see the balance.
 
-Verify at any time:
+Verify safely on your own machine before funding or deploying:
 
 ```bash
-MIDNIGHT_WALLET_SEED="$(cat .midnight-wallet.local)" \
-  bun scripts/derive-unshielded-address.mjs --network=preprod
+MIDNIGHT_WALLET_SEED="your words stay local" \
+  bun scripts/check-midnight-wallet.mjs --network=preview
+
+# or, if .midnight-wallet.local already contains the phrase:
+bun scripts/check-midnight-wallet.mjs --network=preview
 ```
 
-The printed shielded + unshielded addresses must match Lace exactly.
+The printed shielded + unshielded addresses must match Lace exactly. For Preview,
+both addresses should start with `mn_addr_preview1…` and
+`mn_shield-addr_preview1…`. If you see `mn_addr_test1…` or
+`mn_shield-addr_test1…`, do not fund or deploy yet.
+
+You can also run the deploy script with the phrase held only in your current
+terminal session:
+
+```bash
+MIDNIGHT_WALLET_SEED="your words stay local" VITE_NETWORK_ID=preview \
+  bun scripts/deploy-midnight.mjs
+```
+
+That mode does not write the phrase to `.midnight-wallet.local`.
 
 ## Phase 1 — fund the wallet with tNIGHT, then delegate to tDUST
 
@@ -76,8 +98,8 @@ The deploy spends **tDUST**. The preview/preprod faucets only dispense **tNIGHT*
 per <https://docs.midnight.network/guides/acquire-tokens> it only accepts the
 **unshielded** address (`mn_addr_preview1…` / `mn_addr_preprod1…`). Two important quirks:
 
-1. The `@midnight-ntwrk/wallet` SDK we use here derives only the *shielded*
-   address (`mn_shield-addr_preview1…` / `mn_shield-addr_preprod1…`). Pasting that into the faucet produces
+1. The wallet exposes both shielded and unshielded addresses. Pasting the
+   shielded address (`mn_shield-addr_preview1…` / `mn_shield-addr_preprod1…`) into the faucet produces
    "Provided address is invalid".
 2. Turning tNIGHT into tDUST (delegation) is a Lace-only UI action — there
    is no public SDK method for it in the current release train.
@@ -85,7 +107,7 @@ per <https://docs.midnight.network/guides/acquire-tokens> it only accepts the
 So Phase 1 is done in **Lace**, not this script:
 
 1. Install the Lace browser extension and switch it to **Midnight Preview** or **Midnight Preprod**.
-2. Either create a fresh wallet in Lace, or import the 24-word mnemonic
+2. Either create a fresh wallet in Lace, or import the 12/24-word mnemonic
    from `.midnight-wallet.local` (or the `MIDNIGHT_WALLET_SEED` secret)
    so it shares the same seed as this script.
 3. Copy Lace's **Unshielded** address (starts with `mn_addr_preview1…` or `mn_addr_preprod1…`).
@@ -133,7 +155,7 @@ The script will:
 1. Reload the mnemonic from `.midnight-wallet.local`.
 2. Sync your wallet against the Preprod Indexer and confirm tDUST balance ≥ 1.
 3. Load the compiled ZK keys + zkir from `contracts/managed/timestamp-log/`.
-4. Call `deployContract(TimestampLog, { witnesses: { localSecretKey } })`. This
+4. Call `deployContract(providers, { compiledContract: TimestampLog })`. This
    step generates the ZK proof against your local proof server — expect
    **30–120 seconds** for a `k=14` circuit.
 5. On success, write `address`, `deployTx`, `deployedAt`, and `verified` into
@@ -168,12 +190,12 @@ constitute "verification" here:
 | Balance stays at 0 after faucet | Wait 60s and re-run. Some drips take a bit; check the faucet page for a hash. |
 | `deployContract` throws with "no zk keys for circuit …" | `compact compile` did not run, or `contracts/managed/timestamp-log/` is missing. Re-run compile. |
 | Proving hangs past 3 minutes | Kill the script; check `docker logs <proof-server>`. First-time proofs can be slow while the container warms; retry once. |
-| `Cannot find module @midnight-ntwrk/wallet` | Run `bun add` step from "One-time setup". |
+| `Cannot find module @midnight-ntwrk/...` | Run the `bun add` step from "One-time setup". |
 
 ## Files created
 
 | File | Purpose | Committed? |
 | --- | --- | --- |
-| `.midnight-wallet.local` | 24-word mnemonic (0600) | **No** — gitignored |
+| `.midnight-wallet.local` | 12/24-word mnemonic (0600) | **No** — gitignored |
 | `.midnight-witness.local` | 32-byte private witness key (0600) | **No** — gitignored |
 | `src/data/midnight-contract.json` | Deployed address + tx | **Yes** — this is what the showcase reads |
