@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 /**
- * Derive the Midnight preprod UNSHIELDED address (mn_addr_test1…) from the
- * 24-word mnemonic stored in the MIDNIGHT_WALLET_SEED env var.
+ * Derive a Midnight UNSHIELDED address (mn_addr_preprod… / mn_addr_preview…)
+ * from the 24-word mnemonic stored in the MIDNIGHT_WALLET_SEED env var.
  *
  * Deterministic and offline — no Indexer, RPC, or proof server required.
  * Uses @midnight-ntwrk/testkit-js's WalletSeeds + wallet-sdk's createKeystore,
@@ -28,7 +28,7 @@ if (!mnemonic || mnemonic.trim().split(/\s+/).length !== 24) {
   process.exit(1);
 }
 
-// Midnight bech32m network suffix. preprod → "preprod", Preview (TestNet) → "test",
+// Midnight bech32m network suffix. preprod → "preprod", Preview → "preview",
 // DevNet → "dev", Undeployed → "undeployed", MainNet → "" (no suffix).
 // Override with --network=<suffix> or MIDNIGHT_NETWORK env var.
 const args = Object.fromEntries(
@@ -37,8 +37,9 @@ const args = Object.fromEntries(
     return [k, v];
   }),
 );
-const NETWORK_SUFFIX = args.network ?? process.env.MIDNIGHT_NETWORK ?? "preprod";
-const NETWORK_LABEL = NETWORK_SUFFIX === "test" ? "preview" : NETWORK_SUFFIX || "mainnet";
+const requestedNetwork = args.network ?? process.env.MIDNIGHT_NETWORK ?? "preprod";
+const NETWORK_SUFFIX = requestedNetwork === "test" ? "preview" : requestedNetwork;
+const NETWORK_LABEL = NETWORK_SUFFIX || "mainnet";
 
 const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
 const keystore = createKeystore(seeds.unshielded, NETWORK_SUFFIX);
@@ -68,7 +69,7 @@ const existing = fs.existsSync(OUT)
 
 const faucetByNetwork = {
   preprod: "https://midnight-tmnight-preprod.nethermind.dev/",
-  test: "https://midnight-faucet-testnet.midnight.network/",
+  preview: "https://midnight-tmnight-preview.nethermind.dev/",
 };
 
 const payload = {
