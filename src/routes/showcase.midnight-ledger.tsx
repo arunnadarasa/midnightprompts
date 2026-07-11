@@ -94,6 +94,10 @@ function MidnightLedgerDemo() {
       </p>
 
       <div className="mt-8">
+        <WalletConnectPanel expectedNetwork={network} />
+      </div>
+
+      <div className="mt-8">
         <span className="eyebrow block mb-2">Deploy status · both networks</span>
         <DualDeployStatus cfgs={[CONTRACTS.preview, CONTRACTS.preprod]} />
       </div>
