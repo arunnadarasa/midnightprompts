@@ -14,7 +14,7 @@
         "@midnight-ntwrk/midnight-js-node-zk-config-provider": "4.1.1",
         "@midnight-ntwrk/wallet-sdk": "1.1.0",
         "@midnight-ntwrk/wallet-sdk-address-format": "1.0.0",
-        "@midnight-ntwrk/wallet-sdk-hd": "^3.0.2",
+        "@midnight-ntwrk/wallet-sdk-hd": "3.1.0-beta.1",
         "@midnight-ntwrk/zswap": "^4.0.0",
         "@privy-io/react-auth": "^3.32.2",
         "@radix-ui/react-accordion": "^1.2.12",
@@ -394,7 +394,7 @@
 
     "@midnight-ntwrk/wallet-sdk-facade": ["@midnight-ntwrk/wallet-sdk-facade@4.0.1", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@midnight-ntwrk/wallet-sdk-facade/-/wallet-sdk-facade-4.0.1.tgz", { "dependencies": { "@midnight-ntwrk/ledger-v8": "^8.1.0", "@midnight-ntwrk/wallet-sdk-abstractions": "^2.1.0", "@midnight-ntwrk/wallet-sdk-address-format": "^3.1.2", "@midnight-ntwrk/wallet-sdk-capabilities": "^3.3.1", "@midnight-ntwrk/wallet-sdk-dust-wallet": "^4.1.0", "@midnight-ntwrk/wallet-sdk-indexer-client": "^1.2.2", "@midnight-ntwrk/wallet-sdk-shielded": "^3.0.1", "@midnight-ntwrk/wallet-sdk-unshielded-wallet": "^3.1.0", "rxjs": "^7.8.2" } }, "sha512-m1AgeoS+jQrj2h5jQRIKv4UT61sWBF5S5PtzGi8/gweug3XYqPlkxJBZKZzS2078QDi9ToH/epWQeoUEqzKhvw=="],
 
-    "@midnight-ntwrk/wallet-sdk-hd": ["@midnight-ntwrk/wallet-sdk-hd@3.0.2", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@midnight-ntwrk/wallet-sdk-hd/-/wallet-sdk-hd-3.0.2.tgz", { "dependencies": { "@scure/bip32": "^2.0.1", "@scure/bip39": "^2.0.1" } }, "sha512-GdzZsfURF4WBh+bmSiimwOnj2vLjtd1pvMUJjRtY3OOnnr1mSesuX9//UPzb0fCjU1ZMCNb6UK7M2YcI4Gef4A=="],
+    "@midnight-ntwrk/wallet-sdk-hd": ["@midnight-ntwrk/wallet-sdk-hd@3.1.0-beta.1", "https://europe-west1-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@midnight-ntwrk/wallet-sdk-hd/-/wallet-sdk-hd-3.1.0-beta.1.tgz", { "dependencies": { "@scure/bip32": "^2.0.1", "@scure/bip39": "^2.0.1" } }, "sha512-eLD9i8ezqZ8Yw9hUAGNU6Np2cnxkeTngFcnTIJAGQO+1akDecu1f/ZKl9cj/NoLBC7pUO+hzlhRITVXCs46IHQ=="],
 
     "@midnight-ntwrk/wallet-sdk-indexer-client": ["@midnight-ntwrk/wallet-sdk-indexer-client@1.2.2", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@midnight-ntwrk/wallet-sdk-indexer-client/-/wallet-sdk-indexer-client-1.2.2.tgz", { "dependencies": { "@graphql-typed-document-node/core": "^3.2.0", "@midnight-ntwrk/wallet-sdk-utilities": "^1.2.0", "effect": "^3.19.19", "graphql": "^16.13.0", "graphql-http": "^1.22.4", "graphql-ws": "^6.0.7" } }, "sha512-GokfgV1lOhF1h341cuglp1VoTT/+yEDuYIbiPex29JJkFrjOXdJfCKPoROySBtyIyI65lnEBAXBT0+AOBjPzhA=="],
 
@@ -2493,6 +2493,8 @@
     "@midnight-ntwrk/platform-js/@effect/platform": ["@effect/platform@0.95.0", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@effect/platform/-/platform-0.95.0.tgz", { "dependencies": { "find-my-way-ts": "^0.1.6", "msgpackr": "^1.11.4", "multipasta": "^0.2.7" }, "peerDependencies": { "effect": "^3.20.0" } }, "sha512-WDlRiWRSWlmhCPq09bvAofK0qr5vM4yNklXjoJdZHmugKRRTpN/Okn3ODnjgM/Kb/4hjMrRyrsUeH/Brieq7KA=="],
 
     "@midnight-ntwrk/wallet-sdk/@midnight-ntwrk/wallet-sdk-address-format": ["@midnight-ntwrk/wallet-sdk-address-format@3.1.2", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@midnight-ntwrk/wallet-sdk-address-format/-/wallet-sdk-address-format-3.1.2.tgz", { "dependencies": { "@midnight-ntwrk/ledger-v8": "^8.1.0", "@scure/base": "^2.0.0", "@subsquid/scale-codec": "^4.0.1" } }, "sha512-SRkgwmKFOZSUR25iurAB8U7kTKF7AljSl+tMkuuj8Pthc/l0yIg+/q1rFSozJ0Nz9FJRhshazDyrL0l84fOabg=="],
+
+    "@midnight-ntwrk/wallet-sdk/@midnight-ntwrk/wallet-sdk-hd": ["@midnight-ntwrk/wallet-sdk-hd@3.0.2", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@midnight-ntwrk/wallet-sdk-hd/-/wallet-sdk-hd-3.0.2.tgz", { "dependencies": { "@scure/bip32": "^2.0.1", "@scure/bip39": "^2.0.1" } }, "sha512-GdzZsfURF4WBh+bmSiimwOnj2vLjtd1pvMUJjRtY3OOnnr1mSesuX9//UPzb0fCjU1ZMCNb6UK7M2YcI4Gef4A=="],
 
     "@midnight-ntwrk/wallet-sdk-dust-wallet/@midnight-ntwrk/wallet-sdk-address-format": ["@midnight-ntwrk/wallet-sdk-address-format@3.1.2", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@midnight-ntwrk/wallet-sdk-address-format/-/wallet-sdk-address-format-3.1.2.tgz", { "dependencies": { "@midnight-ntwrk/ledger-v8": "^8.1.0", "@scure/base": "^2.0.0", "@subsquid/scale-codec": "^4.0.1" } }, "sha512-SRkgwmKFOZSUR25iurAB8U7kTKF7AljSl+tMkuuj8Pthc/l0yIg+/q1rFSozJ0Nz9FJRhshazDyrL0l84fOabg=="],
 
