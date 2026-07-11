@@ -97,6 +97,7 @@ async function buildWallet(mnemonic) {
   const { WalletBuilder } = await import("@midnight-ntwrk/wallet");
   const { setNetworkId } = await import("@midnight-ntwrk/midnight-js-network-id");
   const { NetworkId } = await import("@midnight-ntwrk/zswap");
+  const { WalletSeeds } = await import("@midnight-ntwrk/testkit-js");
   setNetworkId(NETWORK_ID);
 
   // The Scala.js wallet SDK requires the NetworkId enum, not a string.
@@ -116,9 +117,15 @@ async function buildWallet(mnemonic) {
   }
 
   log(`building wallet for network=${NETWORK_ID} (enum=${networkEnum})`);
-  // Midnight's zswap WASM wants exactly 32 bytes; BIP-39 gives 64. Take the
-  // first 32 bytes — deterministic across re-runs for the same mnemonic.
-  const seedHex = mnemonicToSeedSync(mnemonic).toString("hex").slice(0, 64);
+  // CRITICAL: match Lace's HD derivation. Lace uses WalletSeeds.fromMnemonic
+  // (from @midnight-ntwrk/testkit-js + wallet-sdk-hd), which splits the mnemonic
+  // into distinct shielded + unshielded seed material. The shielded seed drives
+  // the Zswap wallet used for balances + tx signing. Prior versions of this
+  // script fed the raw BIP-39 seed straight into WalletBuilder, producing a
+  // DIFFERENT private key from the same 24 words — so the script's derived
+  // address never matched Lace and never saw the user's tDUST.
+  const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
+  const seedHex = Buffer.from(seeds.shielded).toString("hex");
   const wallet = await WalletBuilder.buildFromSeed(
     INDEXER_HTTP,
     INDEXER_WS,
