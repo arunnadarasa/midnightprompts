@@ -430,7 +430,9 @@ async function main() {
   log(`derived (HD, matches Lace) unshielded: ${derived.unshieldedAddress}`);
   log(`derived (HD, matches Lace) shielded:   ${derived.shieldedAddress}`);
 
-  const { provider, state } = await buildWallet(mnemonic);
+  const wantsRegister = process.argv.includes("--register-dust");
+
+  const { provider, state, dustSecretKey } = await buildWallet(mnemonic);
   const address = derived.shieldedAddress;
 
   if (provider.getCoinPublicKey() !== derived.coinPublicKeyHex) {
@@ -457,33 +459,73 @@ async function main() {
   const tdust = Number(syncedDust.tdust);
   log(`current tDUST balance after sync: ${tdust}`);
 
-  if (fresh || tdust < 1) {
-    log("Not enough tDUST to deploy after waiting for wallet sync.");
-    log("If Lace shows tDUST for the exact same address, wait a minute and re-run; the Preview Indexer may still be catching up.");
-    log("Otherwise, fund the wallet using one of these options:");
-    log("");
-    log("  ── Option A: fund THIS script's wallet ──");
-    log(`  1. Install Lace, switch to Midnight ${ADDRESS_NETWORK}, and import the 12/24-word seed`);
-    log(`     from .midnight-wallet.local as a new wallet so it matches this script.`);
-    log(`  2. Copy Lace's Unshielded address (${expectedPrefix("unshielded")}…).`);
-    log(`  3. Paste into ${FAUCET} and click Request tokens (~2 min for 1000 tNIGHT).`);
-    log(`  4. In Lace, click "Generate tDUST" to delegate tNIGHT → tDUST.`);
-    log("");
-    log("  ── Option B: reuse an EXISTING Lace wallet that already has tDUST ──");
-    log(`  1. In Lace: Settings → Show Recovery Phrase (enter admin password).`);
-    log(`  2. Copy the 12/24 words as one whitespace-separated line.`);
-    log(`  3. Overwrite the script's seed with it:`);
-    log(`       echo "word1 word2 ..." > .midnight-wallet.local`);
-    log(`       chmod 600 .midnight-wallet.local`);
-    log(`     (Treat the phrase like a password. .midnight-wallet.local is gitignored.)`);
-    log("");
-    log("  Then, for either option:");
-    log(`  • Start the proof server:`);
-    log(`      docker run -d -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`);
-    log(`  • Re-run: bun scripts/deploy-midnight.mjs`);
+  const diag = diagnoseDust(syncedDust.state ?? state, dustSecretKey);
+
+  if (wantsRegister) {
+    log("── --register-dust: attempting to register NIGHT UTXOs for DUST generation ──");
+    const wallet = provider.wallet;
+    const fn =
+      wallet?.registerNightUtxosForDustGeneration ??
+      wallet?.registerForDustGeneration ??
+      wallet?.dust?.registerNightUtxos;
+    if (typeof fn !== "function") {
+      log("This build of @midnight-ntwrk/testkit-js does not expose");
+      log("wallet.registerNightUtxosForDustGeneration(). See docs:");
+      log("  https://docs.midnight.network/guides/generating-dust-programmatically");
+      log("You'll need to run the registration via Lace: click \"Generate tDUST\"");
+      log("with THIS script's derived DUST key active (or import this seed into Lace).");
+      await provider.stop?.();
+      process.exit(1);
+    }
+    try {
+      const res = await fn.call(wallet);
+      log(`registration tx submitted: ${JSON.stringify(res).slice(0, 200)}`);
+      log("Wait ~1–5 minutes for tDUST to accrue, then re-run without --register-dust.");
+    } catch (e) {
+      log(`registration failed: ${e?.message ?? e}`);
+    }
     await provider.stop?.();
     process.exit(0);
   }
+
+  if (tdust < 1) {
+    log("");
+    log("=== DIAGNOSIS ===");
+    if (diag.keyMatches === false) {
+      log("✗ DUST KEY MISMATCH.");
+      log(`  Script wallet DUST key:      ${diag.walletDustPk}`);
+      log(`  Seed-derived DUST key:       ${diag.seedDustPk}`);
+      log("  The wallet provider is wired to a different DUST key than seeds.dust derives.");
+      log("  This is an SDK wiring bug — MidnightWalletProvider is not using DustSecretKey.fromSeed(seeds.dust).");
+    } else if (diag.nightCoinCount === 0) {
+      log("✗ NO NIGHT UTXOs visible to this wallet.");
+      log("  Lace's 471 tDUST comes from NIGHT that Lace holds under a different unshielded key.");
+      log("  Two options:");
+      log("  A) In Lace, SEND some tNIGHT to this script's unshielded address:");
+      log(`       ${derived.unshieldedAddress}`);
+      log(`     Then in Lace click \"Generate tDUST\" AGAIN so the new NIGHT registers.`);
+      log("     Actually — easier: just send tDUST directly from Lace to this shielded address:");
+      log(`       ${derived.shieldedAddress}`);
+      log("  B) Import the .midnight-wallet.local seed into a fresh Lace wallet");
+      log("     and click \"Generate tDUST\" from there.");
+    } else if (diag.registeredCount === 0) {
+      log("✗ NIGHT UTXOs are visible but NONE are registered for DUST generation");
+      log("  against this script's DUST key. Lace registered its OWN DUST key against");
+      log("  those NIGHT UTXOs, so the resulting tDUST is only spendable by Lace.");
+      log("");
+      log("  Fix (one-shot):");
+      log("    bun scripts/deploy-midnight.mjs --register-dust");
+      log("  Then wait 1–5 min and re-run without the flag.");
+    } else {
+      log("? DUST key matches and NIGHT is registered, but balance is still 0.");
+      log("  DUST accrual may still be catching up on the ledger — wait 1–5 min and re-run.");
+    }
+    log("");
+    log("(Nothing to fix in Lace, Docker, or the seed. See the diagnostic block above.)");
+    await provider.stop?.();
+    process.exit(0);
+  }
+
 
 
 
