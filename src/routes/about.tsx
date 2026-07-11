@@ -37,7 +37,7 @@ function About() {
           <li>Pick a discipline that matches your team's strengths.</li>
           <li>Skim the 100 ideas; click into 2–3 that grab you.</li>
           <li>Install <a href="https://www.lace.io/" target="_blank" rel="noreferrer" className="text-foreground underline decoration-primary">Lace wallet</a> and set the network to Midnight preview.</li>
-          <li>Get tDUST from the <a href="https://cloud.google.com/application/web3/faucet/midnight/testnet" target="_blank" rel="noreferrer" className="text-foreground underline decoration-primary">Midnight preview faucet</a>.</li>
+          <li>Request tNIGHT from the Midnight faucet — <a href="https://midnight-tmnight-preview.nethermind.dev/" target="_blank" rel="noreferrer" className="text-foreground underline decoration-primary">Preview</a> or <a href="https://midnight-tmnight-preprod.nethermind.dev/" target="_blank" rel="noreferrer" className="text-foreground underline decoration-primary">Preprod</a> — then click <strong className="text-foreground">Generate tDUST</strong> in Lace.</li>
           <li>Add the five <code>VITE_*</code> secrets in your Lovable project (Settings → Secrets).</li>
           <li>Run the Compact toolchain locally (<code>compact update</code>, <code>compact compile</code>) and start the proof-server Docker container on port 6300.</li>
           <li>Copy the mega-prompt into Lovable. It scaffolds the app, wires Lace + proof server + Indexer, and ships a Compact contract with the hackathon credit baked in.</li>
