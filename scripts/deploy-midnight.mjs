@@ -310,13 +310,14 @@ function diagnoseDust(state, dustSecretKey) {
 }
 
 
-async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
+async function waitForDustBalance(wallet, initialState, timeoutMs = 1_200_000) {
   log("syncing wallet Dust balance from Indexer…");
-  log("(finish when DUST balance > 0, OR shielded+unshielded complete after ≥ 3 min)");
+  log("(finish when SDK sees a spendable tDUST coin — Preview sync often needs 10–20 min)");
   const SOFT_MIN_MS = 180_000; // give DUST a chance to converge for 3 min
   return new Promise((resolve, reject) => {
     let latest = initialState;
     let bestBalance = readDustBalance(initialState);
+    let bestCoins = initialState?.dust?.availableCoins?.length ?? 0;
     let settled = false;
     let sub = { unsubscribe: () => {} };
     const startedAt = Date.now();
@@ -326,7 +327,7 @@ async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
       clearTimeout(timer);
       clearInterval(progress);
       sub.unsubscribe();
-      resolve({ state: latest, tdust: bestBalance });
+      resolve({ state: latest, tdust: bestBalance, coins: bestCoins });
     };
     const flags = (state) => {
       const d = !!state?.dust?.state?.progress?.isStrictlyComplete?.();
@@ -337,13 +338,13 @@ async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
     const report = () => {
       const f = flags(latest);
       log(
-        `wallet sync check: tDUST=${bestBalance.toString()} ` +
+        `wallet sync check: coins=${bestCoins} tDUST=${bestBalance.toString()} ` +
         `dust.complete=${f.d} shielded.complete=${f.s} unshielded.complete=${f.u} ` +
         `(${Math.round((Date.now() - startedAt) / 1000)}s)`,
       );
     };
     const timer = setTimeout(() => {
-      log("sync timeout reached (10 min) — proceeding with best-known balance");
+      log("sync timeout reached (20 min) — proceeding with best-known state");
       finish();
     }, timeoutMs);
     const progress = setInterval(report, 10_000);
@@ -351,15 +352,17 @@ async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
     const update = (state) => {
       latest = state ?? latest;
       const balance = readDustBalance(latest);
+      const coins = latest?.dust?.availableCoins?.length ?? 0;
       if (balance > bestBalance) bestBalance = balance;
+      if (coins > bestCoins) bestCoins = coins;
       const f = flags(latest);
       const elapsed = Date.now() - startedAt;
-      // 1. Positive balance is always enough — stop immediately.
-      if (bestBalance > 0n) return finish();
-      // 2. All three streams strictly complete — nothing more to wait for.
+      // 1. Spendable DUST coin seen — ready to deploy.
+      if (bestCoins >= 1) return finish();
+      // 2. All three streams strictly complete AND still 0 coins — nothing more to wait for.
       if (f.d && f.s && f.u) return finish();
       // 3. Preview's dust stream often never flips complete. After 3 min, if
-      //    shielded + unshielded are done, stop waiting on dust.
+      //    shielded + unshielded are done and dust is still empty, stop waiting.
       if (elapsed >= SOFT_MIN_MS && f.s && f.u) return finish();
     };
 
@@ -374,6 +377,7 @@ async function waitForDustBalance(wallet, initialState, timeoutMs = 600_000) {
     });
   });
 }
+
 
 
 async function latestWalletSnapshot(wallet, timeoutMs = 30_000) {
@@ -482,7 +486,11 @@ async function main() {
 
   const syncedDust = await waitForDustBalance(provider.wallet, state);
   const tdust = Number(syncedDust.tdust);
-  log(`current tDUST balance after sync: ${tdust}`);
+  const spendableCoins = syncedDust.coins ?? 0;
+  log(`current tDUST balance after sync: ${tdust} · spendable coins: ${spendableCoins}`);
+  log(
+    `Lace shows: <check the extension>  ·  SDK sees: coins=${spendableCoins} balance=${tdust}`,
+  );
 
   const diag = diagnoseDust(syncedDust.state ?? state, dustSecretKey);
 
@@ -514,10 +522,15 @@ async function main() {
   }
 
   const allowZero = process.env.MIDNIGHT_ALLOW_ZERO_DUST === "1";
+  const forceDeploy = process.env.MIDNIGHT_FORCE_DEPLOY === "1";
+  const ready = spendableCoins >= 1;
 
-  if (tdust < 1 && !allowZero) {
+  if (!ready && !(allowZero && forceDeploy)) {
     log("");
     log("=== DIAGNOSIS ===");
+    log(
+      `SDK sees no spendable tDUST coin (coins=${spendableCoins}, balance=${tdust}).`,
+    );
     if (diag.keyMatches === false) {
       log("✗ DUST KEY MISMATCH.");
       log(`  Script wallet DUST key:      ${diag.walletDustPk}`);
@@ -526,49 +539,45 @@ async function main() {
       log("  This is an SDK wiring bug — MidnightWalletProvider is not using DustSecretKey.fromSeed(seeds.dust).");
     } else if (diag.nightCoinCount === 0) {
       log("✗ NO NIGHT UTXOs visible to this wallet.");
-      log("  Lace's 471 tDUST comes from NIGHT that Lace holds under a different unshielded key.");
-      log("  Two options:");
-      log("  A) In Lace, SEND some tNIGHT to this script's unshielded address:");
-      log(`       ${derived.unshieldedAddress}`);
-      log(`     Then in Lace click \"Generate tDUST\" AGAIN so the new NIGHT registers.`);
-      log("     Actually — easier: just send tDUST directly from Lace to this shielded address:");
-      log(`       ${derived.shieldedAddress}`);
-      log("  B) Import the .midnight-wallet.local seed into a fresh Lace wallet");
-      log("     and click \"Generate tDUST\" from there.");
+      log("  Lace's tDUST balance comes from NIGHT that Lace holds under a different unshielded key.");
+      log("  Either send tNIGHT from Lace to this script's unshielded address:");
+      log(`     ${derived.unshieldedAddress}`);
+      log("  …then Generate tDUST again — OR import .midnight-wallet.local into a fresh Lace wallet.");
     } else if (diag.registeredCount === 0) {
       log("✗ NIGHT UTXOs are visible but NONE are registered for DUST generation");
-      log("  against this script's DUST key. Lace registered its OWN DUST key against");
-      log("  those NIGHT UTXOs, so the resulting tDUST is only spendable by Lace.");
-      log("");
-      log("  Fix (one-shot):");
+      log("  against this script's DUST key. Fix:");
       log("    bun scripts/deploy-midnight.mjs --register-dust");
-      log("  Then wait 1–5 min and re-run without the flag.");
+      log("  Then wait 1–5 min and re-run.");
     } else {
-      log("? DUST key matches and NIGHT is registered, but balance is still 0.");
-      log("  Preview's DUST indexer stream often lags well behind the actual balance.");
-      log("  Try bypassing the balance gate and letting deployContract itself decide:");
+      log("? DUST key matches and NIGHT is registered, but SDK saw no spendable coin.");
+      log("  Almost always a Preview sync stall — the WS relay drops the first stream.");
       log("");
-      log("    MIDNIGHT_ALLOW_ZERO_DUST=1 VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs");
+      log("  RECOMMENDED: just re-run.");
+      log("    VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs");
       log("");
-      log("  If it succeeds, the cached balance was stale.");
-      log("  If it fails with 'insufficient DUST', Lace's tDUST is under a different");
-      log("  DUST key and you'll need to send tNIGHT from Lace to this address:");
-      log(`    ${derived.unshieldedAddress}`);
+      log("  A fresh run usually catches the sync the first attempt missed.");
+      log("  If two runs in a row both stall at coins=0 while Lace shows a real");
+      log("  balance, escalate — but bypassing with MIDNIGHT_ALLOW_ZERO_DUST alone");
+      log("  will fail inside deployContract with 'insufficient DUST'.");
+      log("");
+      log("  Absolute last-resort bypass (both flags required, off by default):");
+      log("    MIDNIGHT_ALLOW_ZERO_DUST=1 MIDNIGHT_FORCE_DEPLOY=1 \\");
+      log("      VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs");
     }
     log("");
-    log("(Nothing to fix in Lace, Docker, or the seed. See the diagnostic block above.)");
     await provider.stop?.();
     process.exit(0);
   }
 
-  if (tdust < 1 && allowZero) {
+  if (!ready && allowZero && forceDeploy) {
     log("");
-    log("⚠ MIDNIGHT_ALLOW_ZERO_DUST=1 — bypassing balance gate.");
-    log("  Proceeding into deployContract with cached balance = 0.");
+    log("⚠ MIDNIGHT_ALLOW_ZERO_DUST=1 + MIDNIGHT_FORCE_DEPLOY=1 — bypassing readiness gate.");
+    log("  Proceeding into deployContract with SDK-side coins=0.");
     log("  If the SDK's DUST sync was just stale, this will succeed.");
-    log("  If it fails with 'insufficient DUST', see the diagnostic block above.");
+    log("  If it fails with 'insufficient DUST', the SDK really doesn't hold spendable tDUST.");
     log("");
   }
+
 
 
 
