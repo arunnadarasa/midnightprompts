@@ -486,7 +486,11 @@ async function main() {
 
   const syncedDust = await waitForDustBalance(provider.wallet, state);
   const tdust = Number(syncedDust.tdust);
-  log(`current tDUST balance after sync: ${tdust}`);
+  const spendableCoins = syncedDust.coins ?? 0;
+  log(`current tDUST balance after sync: ${tdust} · spendable coins: ${spendableCoins}`);
+  log(
+    `Lace shows: <check the extension>  ·  SDK sees: coins=${spendableCoins} balance=${tdust}`,
+  );
 
   const diag = diagnoseDust(syncedDust.state ?? state, dustSecretKey);
 
