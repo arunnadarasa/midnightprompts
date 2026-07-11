@@ -193,6 +193,19 @@ async function main() {
   log("=== phase 1: wallet ===");
   const { mnemonic, fresh } = await loadOrCreateSeed();
 
+  // Derive + print addresses via the same HD path Lace uses, BEFORE building
+  // the wallet, so a mismatch surfaces immediately without hitting the Indexer.
+  try {
+    const { WalletSeeds } = await import("@midnight-ntwrk/testkit-js");
+    const { createKeystore } = await import("@midnight-ntwrk/wallet-sdk");
+    const suffix = NETWORK_ID === "preview" ? "test" : NETWORK_ID;
+    const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
+    const ks = createKeystore(seeds.unshielded, suffix);
+    log(`derived (HD, matches Lace) unshielded: ${ks.getBech32Address().asString()}`);
+  } catch (e) {
+    log(`(could not pre-derive unshielded address: ${e.message})`);
+  }
+
   const wallet = await buildWallet(mnemonic);
   const info = await currentAddressAndBalance(wallet);
   const address = info.address;
@@ -200,13 +213,15 @@ async function main() {
   console.log("");
   console.log("  Shielded address (SDK-side, used for contract state):");
   console.log("  " + address);
+  console.log("  ↑ This must match the shielded address Lace shows for the same seed.");
+  console.log("    If it doesn't, .midnight-wallet.local holds a different mnemonic.");
   console.log("");
-  console.log("  ⚠ The preview faucet does NOT accept this shielded address.");
-  console.log("    It only accepts an UNSHIELDED address (mn_addr_test1…),");
-  console.log("    which is exposed by Lace — not by the wallet SDK.");
+  console.log("  ⚠ Faucets do NOT accept shielded addresses.");
+  console.log("    Use the UNSHIELDED address (mn_addr_…) printed above / shown in Lace.");
   console.log("    See: https://docs.midnight.network/guides/acquire-tokens");
   console.log("    Faucet: " + FAUCET);
   console.log("");
+
 
   const tdust = Number(info.balances?.tdust ?? info.balances?.[Object.keys(info.balances)[0]] ?? 0);
   log(`current tDUST balance: ${tdust}`);
