@@ -1,70 +1,39 @@
-## Goal
+## Next step: install script dependencies locally
 
-Get a working local deploy on **Preview** first (before touching Preprod), using the Lace Mac Local seed that already holds tDUST on preview.
+The error means your fresh checkout hasn't installed npm packages yet. `bip39` (and the Midnight SDK packages the script dynamically imports) live in `package.json` but aren't on disk.
 
-## Why preview first
+Run once, from the project root:
 
-- Your Lace Mac Local wallet has tDUST on **both** networks (you pasted both `mn_shield-addr_preview1m6wf…` and `mn_shield-addr_preprod1cah9s…`).
-- Preview is the faster iteration loop and matches what the current `.midnight-wallet.local` / script defaults already target (`VITE_NETWORK_ID=preview`).
-- Once preview deploy succeeds end-to-end, repeating for preprod is just `VITE_NETWORK_ID=preprod bun scripts/deploy-midnight.mjs` with no code changes.
-
-## Fix that unblocks preview
-
-The last edit changed the seed derivation to match Lace, but the **network enum mapping is still wrong for preview**:
-
-```js
-case "preprod":
-case "preview":
-case "testnet":
-  networkEnum = NetworkId.TestNet;   // ← wrong for preview
+```bash
+bun install
 ```
 
-Preview addresses use the `…preview1…` bech32 suffix, which corresponds to `NetworkId.Undeployed` in `@midnight-ntwrk/zswap` (that's why `derive-unshielded-address.mjs` prints the right preview address today — it maps the suffix, not `TestNet`). Using `TestNet` for preview is why the script previously printed `mn_shield-addr_test1vzn…` instead of `mn_shield-addr_preview1m6wf…`.
+Then re-run:
 
-### Change in `scripts/deploy-midnight.mjs`
-
-Split the switch so each network maps to its actual enum:
-
-```js
-switch (NETWORK_ID) {
-  case "preview":  networkEnum = NetworkId.Undeployed; break;
-  case "preprod":  networkEnum = NetworkId.TestNet;    break;
-  case "mainnet":  networkEnum = NetworkId.MainNet;    break;
-  default: die(`Unknown VITE_NETWORK_ID="${NETWORK_ID}"`);
-}
+```bash
+VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs
 ```
 
-Also update the pre-derive sanity log to map `preview → "preview"` (not `"test"`) as the bech32 suffix passed to `createKeystore`, so the printed address matches what Lace shows.
-
-### Verification (no code, just runtime)
-
-Before deploying, the script should print:
+Expected phase‑1 output (with your Lace Mac Local seed in `.midnight-wallet.local`):
 
 ```
-[deploy] network=preview
-[deploy] shielded:   mn_shield-addr_preview1m6wf639g7tswe9xryuu2…   ← matches Lace
-[deploy] unshielded: mn_addr_preview15sz5jgljxtnh5cfxxe3ekf8egx6…   ← matches Lace
+[midnight-deploy] === phase 1: wallet ===
+[midnight-deploy] using existing wallet seed from .midnight-wallet.local
+[midnight-deploy] derived (HD, matches Lace) unshielded: mn_addr_preview15sz5jgljxtnh5cfxxe3ekf8egx6rh2lk28zswtdxprsj2hv4yrwql85qg8
+  Shielded address (SDK-side, used for contract state):
+  mn_shield-addr_preview1m6wf639g7tswe9xryuu2d87n4jcgl7w2dgt25yyzfw8xjjk3zkf0k283g9vz6ygmsplkxwq5vxlnsujr0zfpr3knsxfhj3rgmzpydyqy03tws
 ```
 
-If either address doesn't match the Lace values you pasted, abort before phase 2.
+If both addresses match what Lace shows for Mac Local on Preview, the script will detect your tDUST and move to phase 2 (which needs the Docker proof server running on `localhost:6300`).
 
-## Runbook for you (after the fix lands)
+## If it still errors after `bun install`
 
-1. Confirm `.midnight-wallet.local` holds your Lace Mac Local 24 words.
-2. Start Docker Desktop, then:
-   ```bash
-   docker run -d --name midnight-proof-server -p 6300:6300 \
-     midnightntwrk/proof-server:latest midnight-proof-server -v
-   curl http://localhost:6300/health
-   ```
-3. Run:
-   ```bash
-   VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs
-   ```
-4. Expect: matching preview addresses → tDUST balance detected → `deployContract` → hex address written to `src/data/midnight-contract.preview.json` → MidnightScan link.
+- `Cannot find package '@midnight-ntwrk/…'` → the SDK packages aren't pinned; tell me the exact package name and I'll add it to `package.json`.
+- Addresses don't match Lace → paste the printed values and I'll diagnose (likely `.midnight-wallet.local` holds a different mnemonic than the Lace Mac Local seed).
+- `Proof server not reachable at http://localhost:6300` → start Docker Desktop, then:
+  ```bash
+  docker run -d --name midnight-proof-server -p 6300:6300 \
+    midnightntwrk/proof-server:latest midnight-proof-server -v
+  ```
 
-## Out of scope for this plan
-
-- Preprod deploy (same script, run after preview works).
-- Any UI, contract, or provider changes.
-- Wallet page copy — the Option B callout already reflects the HD-derivation fix.
+No code changes needed for this step.
