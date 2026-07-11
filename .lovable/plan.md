@@ -1,32 +1,20 @@
-Add a second showcase item that surfaces the existing `scripts/dust-demo-preprod.mjs` local demo.
+## Bug
+The Midnight Ledger "Connect Lace" panel shows `e.enable is not a function`.
 
-## What to build
+`src/lib/use-midnight-wallet.ts` calls `connector.enable()`, but the Midnight DApp Connector 4.x API (which is what Lace's Midnight build exposes on `window.midnight[*]`) uses `connector.connect(networkId)`, not `.enable()`. The `lovable-midnight` skill's canonical bootstrap uses `await lace.connect(net)` for exactly this reason.
 
-1. **New card on `/showcase`** alongside the existing Midnight Ledger card.
-   - Tag row: `PREPROD ONLY · WALLET SDK`
-   - Title: `Programmatic DUST`
-   - Description: explains the script is the docs' end-to-end flow — create a wallet, print all three addresses, wait for tNIGHT, then explicitly register NIGHT UTXOs for DUST generation.
-   - No "LIVE ↗" link (it's a local script, not a browser demo). Use a right-hand label like `DOCS ↗` that links to the new detail page.
+## Fix
 
-2. **New route `/showcase/programmatic-dust`** (file: `src/routes/showcase.programmatic-dust.tsx`).
-   - Follow the same shell layout as `/showcase/midnight-ledger`: eyebrow, large title, explanatory paragraph, and content blocks.
-   - Head metadata: unique title/description for the page.
-   - Content blocks:
-     - One-liner command box: `bun scripts/dust-demo-preprod.mjs`
-     - What the script does (numbered list matching the script's comments)
-     - Gotchas / prerequisites (preprod faucet, local proof server on port 6300, Bun runtime)
-     - External links: Midnight docs guide, preprod faucet, `/proof-server` for full context
-   - Keep it read-only; no wallet connection needed.
+Edit only `src/lib/use-midnight-wallet.ts`:
 
-3. **No new dependencies** — reuse existing components and styling tokens.
+1. Update the `Connector` type: replace `enable: () => Promise<ConnectedApi>` with `connect: (networkId: string) => Promise<ConnectedApi>`. Keep the optional `isEnabled`.
+2. In `connect()`, replace `await c.enable()` with `await c.connect(networkId)`, where `networkId` is derived from `import.meta.env.VITE_NETWORK_ID` and falls back to `"preprod"` (matching the rest of the project). Guard for unknown values.
+3. Extend `ConnectedApi` with an optional `getConfiguration?: () => Promise<{ indexerUri?: string; proverServerUri?: string; indexerWsUri?: string }>` so we don't break future callers — no behavior change now.
+4. Improve the error surface: if `.connect` is missing, throw a clear `"This Lace build doesn't expose the 4.x DApp Connector API (missing connect()). Update Lace to the latest Midnight build."` instead of the raw TypeError.
+5. After a successful connect, keep the existing `api.state()` → address/coinPublicKey path unchanged.
 
-## Implementation notes
+No other files, dependencies, or UI changes. The connect panel will then either succeed (address + network chip appear) or surface a precise error.
 
-- Use the same `Link`/`createFileRoute` imports and card styling already in `src/routes/showcase.index.tsx`.
-- Make sure the new route file exists before the `<Link to="/showcase/programmatic-dust">` is added to avoid TanStack Router type errors.
-- Add a `head()` block to the new route with unique title/description.
-
-## Files touched
-
-- `src/routes/showcase.index.tsx` — add the new card.
-- `src/routes/showcase.programmatic-dust.tsx` — create the detail page.
+## Verification
+- Reload `/showcase/midnight-ledger`, click **Connect Lace** with Lace installed on Preview or Preprod → panel transitions to `connected` and shows the shielded address + inferred network.
+- Without Lace installed → same "Install Lace" message as before (detection path unchanged).
