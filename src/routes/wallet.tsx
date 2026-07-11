@@ -8,8 +8,15 @@ import step05 from "@/assets/lace-setup-05-all-done.png.asset.json";
 import step06 from "@/assets/lace-setup-06-wallet-view.png.asset.json";
 import step07 from "@/assets/lace-setup-07-wallet-tab.png.asset.json";
 import step08 from "@/assets/lace-setup-08-center-menu.png.asset.json";
-import step09 from "@/assets/lace-setup-09-receive-shielded.png.asset.json";
 import step10 from "@/assets/lace-setup-10-receive-unshielded.png.asset.json";
+import step11 from "@/assets/lace-setup-11-address-copied.png.asset.json";
+import faucet01 from "@/assets/lace-faucet-01-request.png.asset.json";
+import faucet02 from "@/assets/lace-faucet-02-processing.png.asset.json";
+import net01 from "@/assets/lace-net-01-settings.png.asset.json";
+import net02 from "@/assets/lace-net-02-network-modal.png.asset.json";
+import net03 from "@/assets/lace-net-03-truncated.png.asset.json";
+import net04 from "@/assets/lace-net-04-full-midnight.png.asset.json";
+import net05 from "@/assets/lace-net-05-topbar.png.asset.json";
 
 const SETUP_STEPS = [
   { img: step01, tag: "01 · account center", title: "Open Lace → Add wallet", caption: "Launch the Lace extension and click the purple Add wallet button at the top of the Account Center." },
@@ -22,7 +29,22 @@ const SETUP_STEPS = [
   { img: step08, tag: "08 · center menu", title: "Tap the center circle", caption: "Click the large circle icon in the middle of the bottom bar to open the Lace quick menu (Receive, Accounts, Contacts, Support)." },
   { img: step09, tag: "09 · receive · shielded", title: "Click Receive", caption: "Choose Receive. The default tab is Shielded (mn_shield-addr_…) — useful for private transfers." },
   { img: step10, tag: "10 · receive · unshielded", title: "Switch to Unshielded → copy", caption: "Switch to Unshielded, scroll down and copy the mn_addr_… address. Paste it into the faucet, then use the D icon next to Receive to convert tNIGHT → tDUST." },
+  { img: step11, tag: "11 · address copied", title: "Address on the clipboard", caption: "Lace confirms Address copied to clipboard. You now have the mn_addr_preview… / preprod… string ready for the faucet." },
 ];
+
+const FAUCET_STEPS = [
+  { img: faucet01, tag: "01 · paste address", title: "Open the matching faucet", caption: "Go to the preview or preprod faucet, paste your unshielded address, solve the Cloudflare check, then click Request tokens." },
+  { img: faucet02, tag: "02 · processing", title: "Transaction submitted", caption: "The button flips to Processing request… and Your transaction is being submitted. tNIGHT usually lands within a block or two." },
+];
+
+const NETWORK_STEPS = [
+  { img: net01, tag: "01 · settings", title: "Open Settings → Network", caption: "Back in Lace, tap the cogwheel on the bottom bar to open Settings, then choose Network." },
+  { img: net02, tag: "02 · pick testnet", title: "Testnet → Preprod / Preview", caption: "Select Testnet. Cardano offers Preprod or Preview — pick the one that matches the Midnight network you want." },
+  { img: net03, tag: "03 · small-screen bug", title: "Modal can truncate", caption: "Heads up: on a small laptop screen the Network modal cuts off before the Midnight section. If you only see Cardano and Bitcoin, resize the window." },
+  { img: net04, tag: "04 · midnight options", title: "Full modal — 3 Midnight options", caption: "On a larger viewport the modal scrolls to reveal Midnight has 3 options: Undeployed, Preview, Preprod. Pick one and Confirm." },
+  { img: net05, tag: "05 · top-bar switch", title: "Quick switch from the top bar", caption: "Once configured, the Network pill in the top-right lets you flip between Preview and Preprod without reopening Settings." },
+];
+
 
 
 
