@@ -7,6 +7,7 @@ import {
 } from "@/data/midnight-contract";
 import { NetworkToggle } from "@/components/NetworkToggle";
 import { DualDeployStatus } from "@/components/DeployStatusPanel";
+import { WalletConnectPanel } from "@/components/WalletConnectPanel";
 
 export const Route = createFileRoute("/showcase/midnight-ledger")({
   head: () => ({
