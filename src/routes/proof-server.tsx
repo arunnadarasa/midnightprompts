@@ -291,6 +291,68 @@ ${deployCmd}`}</Code>
           </div>
         </div>
 
+        {network === "preprod" && (
+          <div>
+            <span className="eyebrow text-primary">step 04b · preprod only</span>
+            <h2 className="font-display text-2xl mt-2 text-foreground">
+              Programmatic DUST demo <span className="italic text-primary">(optional)</span>
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">
+              A standalone tutorial that mirrors the official{" "}
+              <a
+                href="https://docs.midnight.network/guides/generating-dust-programmatically"
+                target="_blank"
+                rel="noreferrer"
+                className="text-primary hover:underline"
+              >
+                generating-dust-programmatically
+              </a>{" "}
+              guide. Creates a scratch wallet, prints all three preprod
+              addresses, waits for tNIGHT from the faucet, then calls{" "}
+              <span className="font-mono text-foreground">
+                registerNightUtxosForDustGeneration
+              </span>{" "}
+              — the same step Lace runs when you click <em>Generate tDUST</em>.
+              It then polls{" "}
+              <span className="font-mono text-foreground">
+                state.dust.availableCoins.length &ge; 1
+              </span>{" "}
+              (the correct readiness signal — balance alone is not spendable).
+            </p>
+            <div className="mt-3">
+              <Code>{`# preprod only — interactive
+bun scripts/dust-demo-preprod.mjs`}</Code>
+            </div>
+            <p className="mt-3 text-xs text-muted-foreground font-light">
+              Seed persists to{" "}
+              <span className="font-mono text-foreground">
+                .midnight-wallet-preprod-demo.local
+              </span>{" "}
+              (0600, gitignored). This wallet is intentionally separate from
+              the deploy wallet in{" "}
+              <span className="font-mono text-foreground">.midnight-wallet.local</span>
+              — treat it as a scratch demo.
+            </p>
+            <div className="mt-4 border-l-2 border-primary/50 pl-4 py-2 text-[12px] text-muted-foreground font-light leading-relaxed">
+              <span className="text-primary uppercase tracking-[0.24em] text-[10px] font-semibold">
+                when to run this
+              </span>
+              <p className="mt-2">
+                Run this before the deploy step if you want to see the DUST
+                registration flow spelled out end-to-end, or if the deploy
+                script logs{" "}
+                <span className="font-mono text-foreground">coins=0</span>{" "}
+                despite Lace showing a balance. If Lace already registered
+                your NIGHT for you, the demo will detect a spendable coin and
+                exit early.
+              </p>
+            </div>
+          </div>
+        )}
+
+
+
+
 
         <div>
           <span className="eyebrow text-primary">step 05</span>
