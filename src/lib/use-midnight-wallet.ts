@@ -28,7 +28,7 @@ export type MidnightWalletState = {
 type Connector = {
   apiVersion: string;
   name?: string;
-  enable: () => Promise<ConnectedApi>;
+  connect: (networkId: string) => Promise<ConnectedApi>;
   isEnabled?: () => Promise<boolean>;
 };
 
@@ -42,6 +42,11 @@ type ConnectedApi = {
     indexerUri?: string;
     proverServerUri?: string;
     substrateNodeUri?: string;
+  }>;
+  getConfiguration?: () => Promise<{
+    indexerUri?: string;
+    indexerWsUri?: string;
+    proverServerUri?: string;
   }>;
 };
 
