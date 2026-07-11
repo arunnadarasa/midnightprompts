@@ -1,50 +1,82 @@
-## Goal
-1. Swap the old faucet URL (`cloud.google.com/application/web3/faucet/midnight/testnet`) for both Nethermind faucets in the 1,000 mega-prompts.
-2. Fix the homepage bug where the **Preprod Faucet** button links to the Preview faucet.
+## Diagnosis
 
-## Faucet URLs
-- Preview: `https://midnight-tmnight-preview.nethermind.dev/`
-- Preprod: `https://midnight-tmnight-preprod.nethermind.dev/`
+Progress: the bypass worked — the balance gate no longer blocks, and the script actually called `deployContract`. But a fresh, unrelated error surfaced:
 
-## Changes
-
-### 1. Homepage bug — `src/routes/index.tsx` (line 48)
-The Preprod Faucet button's `href` is `…-preview.nethermind.dev`. Change it to `…-preprod.nethermind.dev`. Preview button (line 56) already correct.
-
-### 2. Mega-prompt footer — all 10 idea JSONs
-Files: `src/data/ideas/{dance,fashion,film-animation,games,music,photography,theater,video,visual-art,writing}.json`
-
-Replace the current single line:
 ```
-Faucet:  https://cloud.google.com/application/web3/faucet/midnight/testnet  (tDUST — pays proof / balance fees)
-```
-with:
-```
-Faucets: Preview  https://midnight-tmnight-preview.nethermind.dev/  ·  Preprod  https://midnight-tmnight-preprod.nethermind.dev/  (dispense tNIGHT — generate tDUST in Lace)
-```
-(The old "tDUST — pays proof / balance fees" note was inaccurate; faucets dispense tNIGHT, Lace delegates it to tDUST.)
-
-### 3. Prompt generator — `scripts/rewrite_mega_prompts.py` (line 46)
-Apply the same replacement so future regenerations stay consistent.
-
-### 4. About page — `src/routes/about.tsx` (line 40)
-Change the "Get tDUST from the Midnight preview faucet" list item to link both faucets:
-```
-Request tNIGHT from the Midnight faucet — Preview or Preprod — then click Generate tDUST in Lace.
-```
-with two anchor tags.
-
-### 5. Strategy page — `src/routes/strategy.tsx` (line 121)
-Replace the `open https://cloud.google.com/…` shell line with:
-```
-# 3. Get tNIGHT from the Midnight faucet (pick the network you're building on):
-open https://midnight-tmnight-preview.nethermind.dev/   # Preview
-open https://midnight-tmnight-preprod.nethermind.dev/   # Preprod
-#    Then in Lace click "Generate tDUST" to delegate tNIGHT → tDUST.
+TypeError: undefined is not an object (evaluating 'context.ctor')
+  at compactContext.js:23 (createContract)
+  at createUnprovenDeployTxFromVerifierKeys (midnight-js-contracts:953)
 ```
 
-## Verification
-- `rg -n "cloud.google.com/application/web3/faucet"` → no matches.
-- `rg -n "midnight-tmnight-preview.nethermind.dev"` and `rg -n "midnight-tmnight-preprod.nethermind.dev"` both hit `src/routes/index.tsx`, `src/routes/about.tsx`, `src/routes/strategy.tsx`, `scripts/rewrite_mega_prompts.py`, and each of the 10 idea JSONs.
-- Homepage renders "Preprod Faucet" pointing to the `-preprod` URL.
-- Build passes.
+This is a **shape mismatch between the script and the SDK**, not a wallet/DUST problem:
+
+- `scripts/deploy-midnight.mjs` currently builds `new Contract({ localSecretKey: … })` (raw class from `contracts/managed/timestamp-log/contract/index.js`) and passes that as `compiledContract`.
+- `midnight-js-contracts@4.1.1` now expects a **CompactContext-wrapped object** carrying an internal `Symbol` with `{ ctor, witnesses }`. A raw `Contract` instance has no such symbol, so `context.ctor` is undefined and it throws before any tx work happens.
+
+The public factory for the new shape is exported from `@midnight-ntwrk/compact-js` (already installed as a transitive dep):
+
+```js
+import { CompiledContract } from '@midnight-ntwrk/compact-js';
+const compiledContract = CompiledContract
+  .make('TimestampLog', Contract)                                  // class, not instance
+  .pipe(
+    CompiledContract.withWitnesses({
+      localSecretKey: (ctx) => [ctx.privateState, sk],
+    }),
+    CompiledContract.withCompiledFileAssets(MANAGED),              // path to contracts/managed/timestamp-log
+  );
+```
+
+The compiled `Contract` class itself is fine — the compact 0.23 output is still what the SDK targets; only the wrapping call changed.
+
+DUST is a separate story: the sync loop shows `dust.isStrictlyComplete=false` for the full 464s and `state.dust.availableCoins: 0`, while the unshielded UTXO is present and `registeredForDustGeneration=true`. That's normal Preview-network DUST-indexer lag, not a bug. Once the shape bug is fixed we'll see whether the deploy actually needs the DUST first or if the wallet's cached "insufficient DUST" surfaces next.
+
+## Plan
+
+Single file, single script — `scripts/deploy-midnight.mjs`.
+
+### Step 1 — Import the CompiledContract factory
+Alongside the existing `deployContract` import:
+
+```js
+const { CompiledContract } = await import("@midnight-ntwrk/compact-js");
+```
+
+### Step 2 — Replace the compiledContract construction
+Currently (line 634):
+```js
+const compiledContract = new Contract({ localSecretKey: (context) => [context.privateState, sk] });
+```
+
+Replace with:
+```js
+const compiledContract = CompiledContract
+  .make("TimestampLog", Contract)
+  .pipe(
+    CompiledContract.withWitnesses({
+      localSecretKey: (context) => [context.privateState, sk],
+    }),
+    CompiledContract.withCompiledFileAssets(MANAGED),
+  );
+```
+
+`MANAGED` is the existing constant pointing at `contracts/managed/timestamp-log`, which already holds `keys/` and `zkir/` used by `NodeZkConfigProvider`.
+
+### Step 3 — Keep everything else intact
+`deployContract(providers, { compiledContract })`, the balance-gate bypass, the DUST diagnostic, the `src/data/midnight-contract.<net>.json` write, and the Indexer verification poll all stay as-is.
+
+### Step 4 — Verify
+Have the user re-run with the same command:
+
+```
+VITE_NETWORK_ID=preview MIDNIGHT_ALLOW_ZERO_DUST=1 bun scripts/deploy-midnight.mjs
+```
+
+Three possible outcomes and what each means:
+
+1. Script proceeds through proving and prints a contract address + tx hash → done, remove the bypass on the next run.
+2. Script fails with a fresh, real "insufficient tDUST / balancing failed" error → the DUST sync really was empty, we send a small amount of tNIGHT from Lace to the script's unshielded address and rerun.
+3. Different error → we diagnose from the new stack.
+
+### Not changing (per user's UI-only convention)
+No UI/business-logic edits, no wallet or Docker changes, no re-derivation, no seed changes.
