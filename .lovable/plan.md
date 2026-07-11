@@ -1,44 +1,75 @@
-## Diagnosis (confirmed)
+## Goal
 
-- Lace shows **530 / 5,000 tDUST · Refilling** — funded, ready to spend.
-- Script SDK reports `tDUST=0`, `dust.availableCoins: 0`, `dust.complete=false` after 10 min.
-- DUST public key matches seed-derived key → same wallet, same chain view. It's a **sync stall**, not a funding gap.
-- The correct readiness signal is `state.dust.availableCoins.length >= 1` — balance alone is not spendable until an on-chain coin has minted.
-- Preview's fresh-wallet Dust sync commonly takes >10 min; our current 10-min ceiling is too aggressive.
-- `MIDNIGHT_ALLOW_ZERO_DUST=1` bypassed our own gate but the SDK's transaction balancer still saw 0 coins and threw `Wallet.InsufficientFunds`.
+Add a **preprod-only** DUST generation + deploy demo alongside the existing preview flow, based on the official Midnight docs (`generating-dust-programmatically`, `configure-providers`, `deploy-mn-app`) and the reference script provided.
 
-**5,000 is a tank cap, not a required threshold** — the deploy costs a fraction of one tDUST.
+This is additive — the current `scripts/deploy-midnight.mjs` (preview) stays untouched.
 
-## Fix: harden `scripts/deploy-midnight.mjs`
+## What we'll build
 
-1. **Change the readiness signal from `balance > 0` to `state.dust.availableCoins.length >= 1`.** Balance can be non-zero while no spendable coin exists yet; that's the trap.
+### 1. New script: `scripts/dust-demo-preprod.mjs`
 
-2. **Raise the sync timeout to 20 min** (from 10) and log the exact reason for each poll: `coins=N · balance=… · dust.complete=… · shielded.complete=… · unshielded.complete=…`.
+An interactive DUST tutorial hardcoded to **preprod**:
+- Create new wallet OR restore from seed (prompt-driven, like the reference).
+- Print shielded / unshielded / dust addresses with `mn_shield-addr_test1…` / `mn_addr_test1…` / `mn_dust_test…` prefixes.
+- Print the preprod faucet URL: `https://midnight-tmnight-preprod.nethermind.dev/`.
+- Sync wallet, wait for incoming tNIGHT on the unshielded address.
+- Prompt for a Dust address to designate (default = own dust address).
+- Call `wallet.registerNightUtxosForDustGeneration(...)` — this is the piece the current preview script is missing and is exactly what the docs teach.
+- Poll `state.dust.availableCoins.length >= 1` (the correct readiness signal) and print DUST balance until user quits.
+- Persist seed to `.midnight-wallet-preprod.local` (0600, gitignored) so re-runs restore automatically.
 
-3. **Auto-rebuild the wallet once when the WS relay drops.** The log shows `disconnected from wss://rpc.preview.midnight.network/` right after boot. If after ~3 min we still have 0 dust coins AND `dust.complete=false`, dispose the current wallet builder and reconstruct it — one retry, then continue polling.
+Uses `@midnightntwrk/wallet-sdk` `WalletFacade` / `HDWallet` / `Roles` — same API surface as the docs snippet, not the older `WalletBuilder`.
 
-4. **Neuter `MIDNIGHT_ALLOW_ZERO_DUST` on the happy path.** It's a foot-gun — it lets the SDK enter `deployContract` with a genuinely empty balance. Keep the env var but require an additional `MIDNIGHT_FORCE_DEPLOY=1` to actually skip. Otherwise print a clear "SDK didn't see any spendable tDUST coins — re-run; Preview sync often needs 10–20 min" and exit non-zero.
+### 2. New script: `scripts/deploy-midnight-preprod.mjs`
 
-5. **Print a Lace-vs-SDK reconciliation line** at the end of the sync loop so the mismatch is obvious:
-   `Lace shows: <check the extension>  ·  SDK sees: coins=0 balance=0 complete=false`.
+Preprod deploy, run **after** the dust demo has minted a spendable DUST coin:
+- Reuses `.midnight-wallet-preprod.local` seed.
+- Builds providers per `configure-providers` docs (preprod indexer + node URLs, local proof server).
+- Deploys the compiled `PromptLog` contract per `deploy-mn-app` docs.
+- Writes result to `src/data/midnight-contract-preprod.json` (separate from the existing preview JSON so both can coexist).
+- Validates bech32 prefix is `mn_shield-addr_test1…` before writing (guards against network mismatch).
 
-## UX follow-up on `/proof-server`
+### 3. New data file: `src/data/midnight-contract-preprod.json`
 
-- Add a "tank cap ≠ required balance" note under step 04: **"You can deploy as soon as Lace shows any tDUST balance. 5,000 is the tank ceiling, not a threshold — a deploy costs a fraction of one tDUST."**
-- Add a troubleshooting line: **"If the deploy script prints `tDUST=0` while Lace shows a real balance, just re-run. The Preview relay sometimes drops the initial WS sync; the script rebuilds the wallet once and typically catches it on the second attempt."**
+Placeholder with zero-address, mirroring the preview one. Explorer base = `https://preprod.midnightexplorer.com`.
 
-## Immediate action (before code changes)
+### 4. UI: extend `/proof-server` page
 
-Try this first — cheapest possible test:
+Add a **"Preprod demo (recommended for real users)"** section under the existing preview steps:
+- Explains preprod is the stable network and needs the two-step flow (dust-demo → deploy) because tNIGHT must be explicitly registered for DUST generation.
+- Command boxes for `bun scripts/dust-demo-preprod.mjs` and `bun scripts/deploy-midnight-preprod.mjs`.
+- Link to preprod faucet + preprod explorer.
+- Note that the existing preview flow (single `deploy-midnight.mjs`) remains for quick throwaway testing.
 
-```bash
-VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs
-```
+### 5. Wallet page: dual-network display
 
-No `MIDNIGHT_ALLOW_ZERO_DUST`. A fresh run often catches the sync the first attempt missed. If it still logs `coins=0` after 10 min, we ship the script changes above and try again.
+Update the wallet page to show both preview and preprod contract state side-by-side when both JSON files exist. Keep single-column when only one is deployed.
 
-## Non-goals
+### 6. Dependencies
 
-- No changes to `TimestampLog.compact` or compiled artefacts.
-- No changes to wallet generation / storage.
-- No changes to preprod flow.
+Add to `package.json` (via `bun add`):
+- `@midnightntwrk/wallet-sdk` — new SDK the docs use (different from existing `@midnight-ntwrk/wallet`).
+- `@midnight-ntwrk/midnight-js-utils`
+- `@midnight-ntwrk/midnight-js-protocol`
+- `ws`, `rxjs`, `readline` (readline is Node built-in but rxjs + ws are new).
+
+### 7. `.gitignore`
+
+Add `.midnight-wallet-preprod.local` and `.midnight-witness-preprod.local`.
+
+## Technical notes
+
+- **Two SDK namespaces coexist**: the reference script uses `@midnightntwrk/wallet-sdk` (no hyphen in `ntwrk`) — this is the newer SDK. The existing preview script uses `@midnight-ntwrk/wallet` (hyphenated). We keep both — the preview script keeps working, the preprod scripts use the newer one. Confirm the package name against npm before installing; if the un-hyphenated name isn't published, fall back to the hyphenated equivalents (`@midnight-ntwrk/wallet-sdk-*`).
+- **DUST readiness**: poll `availableCoins.length >= 1`, not balance. Same lesson as the earlier preview debug.
+- **Proof server**: same local Docker container on `:6300` serves both networks — no separate infrastructure.
+- **No SSR impact**: all new code is Node scripts + static JSON + read-only UI reads. Nothing touches server functions or the router loader chain.
+
+## Out of scope
+
+- Fixing the preview `deploy-midnight.mjs` (already patched last turn).
+- Automating the faucet request (still manual — user pastes address into the faucet page).
+- Deploying from the browser (still a local `bun` script, per skill rules).
+
+## Immediate next step after approval
+
+Install deps → write both scripts + JSON placeholder → extend `/proof-server` page → update `.gitignore`.
