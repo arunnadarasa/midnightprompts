@@ -117,8 +117,10 @@ VITE_PINATA_JWT=eyJhbGciOi...
 # 2. Install the Lace wallet extension:
 open https://www.lace.io/
 
-# 3. Get testnet DUST from the faucet:
-open https://cloud.google.com/application/web3/faucet/midnight/testnet
+# 3. Get tNIGHT from the Midnight faucet (pick the network you're building on):
+open https://midnight-tmnight-preview.nethermind.dev/   # Preview
+open https://midnight-tmnight-preprod.nethermind.dev/   # Preprod
+#    Then in Lace click "Generate tDUST" to delegate tNIGHT → tDUST.
 
 # 4. Start the local proof server (one terminal tab, leave running):
 docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v

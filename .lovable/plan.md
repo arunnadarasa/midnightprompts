@@ -1,58 +1,50 @@
-## What we know from the last run
+## Goal
+1. Swap the old faucet URL (`cloud.google.com/application/web3/faucet/midnight/testnet`) for both Nethermind faucets in the 1,000 mega-prompts.
+2. Fix the homepage bug where the **Preprod Faucet** button links to the Preview faucet.
 
-- DUST public key on the wallet **matches** the seed-derived key. ✓
-- 1 NIGHT UTXO is visible and `registeredForDustGeneration=true`. ✓
-- `shielded` and `unshielded` sync went strictly complete. ✓
-- `dust.isStrictlyComplete` **never flipped true** in 10 min, and balance stays `0`.
-- Meanwhile Lace (same seed) shows ~471 tDUST.
+## Faucet URLs
+- Preview: `https://midnight-tmnight-preview.nethermind.dev/`
+- Preprod: `https://midnight-tmnight-preprod.nethermind.dev/`
 
-That combination means the wiring is correct; the SDK's DUST indexer stream on Preview is just not converging for our wallet instance. Gating on `isStrictlyComplete` was the wrong stop condition — Lace clearly doesn't wait for it either.
+## Changes
 
-## Answer to the question
+### 1. Homepage bug — `src/routes/index.tsx` (line 48)
+The Preprod Faucet button's `href` is `…-preview.nethermind.dev`. Change it to `…-preprod.nethermind.dev`. Preview button (line 56) already correct.
 
-**No, don't add programmatic DUST generation.** The docs page "generating DUST programmatically" is about registering NIGHT for DUST generation — we already did that (`registeredForDustGeneration=true`). It won't produce more DUST or make the SDK see the existing DUST any faster. The problem is DUST *sync visibility*, not DUST *supply*.
+### 2. Mega-prompt footer — all 10 idea JSONs
+Files: `src/data/ideas/{dance,fashion,film-animation,games,music,photography,theater,video,visual-art,writing}.json`
 
-## Plan
-
-Two small, low-risk changes to `scripts/deploy-midnight.mjs`, then re-run.
-
-### 1. Stop gating on `dust.isStrictlyComplete`
-
-Preview's DUST stream doesn't reliably converge, but the balance is queryable well before that. Change the wait loop to finish as soon as **either**:
-
-- `state.dust.balance(new Date()) > 0`, **or**
-- `shielded.isStrictlyComplete && unshielded.isStrictlyComplete` and we've polled for ≥ 3 min (give DUST a chance, then move on).
-
-Keep the 10-min hard cap and the per-10s log.
-
-### 2. If balance is still 0 after the loop, try to proceed anyway
-
-Right now we hard-fail with "balance 0". Since NIGHT is registered and the key matches, add an env override:
-
+Replace the current single line:
 ```
-MIDNIGHT_ALLOW_ZERO_DUST=1 VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs
+Faucet:  https://cloud.google.com/application/web3/faucet/midnight/testnet  (tDUST — pays proof / balance fees)
+```
+with:
+```
+Faucets: Preview  https://midnight-tmnight-preview.nethermind.dev/  ·  Preprod  https://midnight-tmnight-preprod.nethermind.dev/  (dispense tNIGHT — generate tDUST in Lace)
+```
+(The old "tDUST — pays proof / balance fees" note was inaccurate; faucets dispense tNIGHT, Lace delegates it to tDUST.)
+
+### 3. Prompt generator — `scripts/rewrite_mega_prompts.py` (line 46)
+Apply the same replacement so future regenerations stay consistent.
+
+### 4. About page — `src/routes/about.tsx` (line 40)
+Change the "Get tDUST from the Midnight preview faucet" list item to link both faucets:
+```
+Request tNIGHT from the Midnight faucet — Preview or Preprod — then click Generate tDUST in Lace.
+```
+with two anchor tags.
+
+### 5. Strategy page — `src/routes/strategy.tsx` (line 121)
+Replace the `open https://cloud.google.com/…` shell line with:
+```
+# 3. Get tNIGHT from the Midnight faucet (pick the network you're building on):
+open https://midnight-tmnight-preview.nethermind.dev/   # Preview
+open https://midnight-tmnight-preprod.nethermind.dev/   # Preprod
+#    Then in Lace click "Generate tDUST" to delegate tNIGHT → tDUST.
 ```
 
-When set, log a loud warning and continue into `deployContract`. One of two things happens:
-
-- **Deploy succeeds** → the SDK's cached balance was stale; we're done and we know for future runs to skip the gate.
-- **Deploy fails with "insufficient DUST"** → confirms Lace's tDUST really is under a different DUST key than the SDK derives (despite the pubkey printout matching), and the fix is to send tNIGHT from Lace → our unshielded address so this wallet generates its own DUST from scratch. We'll handle that in a follow-up only if it happens.
-
-### Not doing
-
-- No programmatic DUST generation call (already registered).
-- No seed changes, no Lace changes, no Docker changes.
-- No re-derivation — key match is confirmed.
-
-### Files touched
-
-- `scripts/deploy-midnight.mjs` — relax the sync gate; add `MIDNIGHT_ALLOW_ZERO_DUST` bypass.
-- `.lovable/plan.md` — replace with this plan.
-
-### Next command for you
-
-After I apply the change:
-
-```
-VITE_NETWORK_ID=preview MIDNIGHT_ALLOW_ZERO_DUST=1 bun scripts/deploy-midnight.mjs
-```
+## Verification
+- `rg -n "cloud.google.com/application/web3/faucet"` → no matches.
+- `rg -n "midnight-tmnight-preview.nethermind.dev"` and `rg -n "midnight-tmnight-preprod.nethermind.dev"` both hit `src/routes/index.tsx`, `src/routes/about.tsx`, `src/routes/strategy.tsx`, `scripts/rewrite_mega_prompts.py`, and each of the 10 idea JSONs.
+- Homepage renders "Preprod Faucet" pointing to the `-preprod` URL.
+- Build passes.
