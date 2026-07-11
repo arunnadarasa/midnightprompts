@@ -218,8 +218,57 @@ async function buildWallet(mnemonic) {
     keystore,
   );
   await provider.start(false);
-  const state = await latestWalletSnapshot(provider.wallet, 8_000);
+  const state = await latestWalletSnapshot(provider.wallet, 30_000);
   return { provider, state };
+}
+
+function readDustBalance(state) {
+  try {
+    return BigInt(state?.dust?.balance?.(new Date()) ?? 0n);
+  } catch {
+    return 0n;
+  }
+}
+
+async function waitForDustBalance(wallet, initialState, timeoutMs = 90_000) {
+  log("syncing wallet Dust balance from Indexer…");
+  return new Promise((resolve, reject) => {
+    let latest = initialState;
+    let bestBalance = readDustBalance(initialState);
+    let settled = false;
+    let sub = { unsubscribe: () => {} };
+    const startedAt = Date.now();
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      clearInterval(progress);
+      sub.unsubscribe();
+      resolve({ state: latest, tdust: bestBalance });
+    };
+    const report = () => {
+      log(`wallet sync check: current tDUST balance ${bestBalance.toString()} (${Math.round((Date.now() - startedAt) / 1000)}s)`);
+    };
+    const timer = setTimeout(finish, timeoutMs);
+    const progress = setInterval(report, 10_000);
+
+    const update = (state) => {
+      latest = state ?? latest;
+      const balance = readDustBalance(latest);
+      if (balance > bestBalance) bestBalance = balance;
+      if (bestBalance > 0n) finish();
+    };
+
+    update(initialState);
+    sub = wallet.state().subscribe({
+      next: update,
+      error: (error) => {
+        clearTimeout(timer);
+        clearInterval(progress);
+        reject(error);
+      },
+    });
+  });
 }
 
 async function latestWalletSnapshot(wallet, timeoutMs = 30_000) {
@@ -324,11 +373,14 @@ async function main() {
   console.log("");
 
 
-  const tdust = Number(state.dust.balance(new Date()) ?? 0n);
-  log(`current tDUST balance: ${tdust}`);
+  const syncedDust = await waitForDustBalance(provider.wallet, state);
+  const tdust = Number(syncedDust.tdust);
+  log(`current tDUST balance after sync: ${tdust}`);
 
   if (fresh || tdust < 1) {
-    log("Not enough tDUST to deploy. Two options:");
+    log("Not enough tDUST to deploy after waiting for wallet sync.");
+    log("If Lace shows tDUST for the exact same address, wait a minute and re-run; the Preview Indexer may still be catching up.");
+    log("Otherwise, fund the wallet using one of these options:");
     log("");
     log("  ── Option A: fund THIS script's wallet ──");
     log(`  1. Install Lace, switch to Midnight ${ADDRESS_NETWORK}, and import the 12/24-word seed`);
