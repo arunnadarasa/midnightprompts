@@ -230,6 +230,35 @@ This lets the marketing page hydrate the moment the user's local deploy script w
 | Proof hangs / times out | Proof server not running, wrong port, or first-boot warm-up | `docker ps` → `curl http://localhost:6300/health`; first proof after boot takes ~30–120s |
 | `window is not defined` at build / SSR | MidnightJS at module scope in a TanStack route/loader | Move behind `useEffect` / `useHydrated()`; deploys go through the `bun scripts/deploy-midnight.mjs` Node script, not a server function |
 | `Lace not found` | Extension not installed / page loaded before injection | Poll `window.midnight` for 5s before rejecting |
+| `Cannot find package 'bip39'` (or `@midnight-ntwrk/*`) running the deploy script | Deploy/derive scripts are Node ESM, not bundled by Vite — every import must be a real dep in `package.json` | `bun add bip39 @midnight-ntwrk/wallet @midnight-ntwrk/wallet-sdk-hd @midnight-ntwrk/midnight-js-network-id @midnight-ntwrk/zswap` before running |
+| Deploy prints `mn_addr_preview1...` but Lace shows `mn_shield-addr_test1...` (or vice versa) — user says "addresses don't match" | Preview shielded vs unshielded encoders drifted: one uses the `preview` bech32 suffix, the other the legacy `test` suffix. Lace won't recognize a mixed pair | Derive BOTH addresses through the SAME `NetworkId` value (Preview → `NetworkId.Undeployed`, Preprod → `NetworkId.TestNet`); print expected prefix and hard-fail the script if the emitted bech32 suffix doesn't match |
+| User asks you to verify their wallet using their 12/24 recovery words in chat | Recovery phrase = full wallet control; sandbox exfiltration risk | REFUSE. Ship a local-only `scripts/check-midnight-wallet.mjs` that reads `MIDNIGHT_WALLET_SEED` from their shell env and prints only public addresses. Never accept, echo, or log the phrase |
+
+## Network → NetworkId mapping (source of the Preview mismatch)
+
+The MidnightJS `NetworkId` enum does NOT have a `Preview` member. Wrong mapping = wrong bech32 suffix = Lace rejects the address.
+
+| `VITE_NETWORK_ID` | `NetworkId` (from `@midnight-ntwrk/zswap`) | Unshielded prefix | Shielded prefix |
+| --- | --- | --- | --- |
+| `preview` | `NetworkId.Undeployed` | `mn_addr_undeployed1…` (Lace shows as "Preview") | `mn_shield-addr_undeployed1…` |
+| `preprod` / `testnet` | `NetworkId.TestNet` | `mn_addr_test1…` (Lace labels "Preprod") | `mn_shield-addr_test1…` |
+| `mainnet` | `NetworkId.MainNet` | `mn_addr1…` | `mn_shield-addr1…` |
+
+Use ONE `NetworkId` variable across both encoders in a script — do not branch per address type. Validate the emitted prefix before writing `src/data/midnight-contract.json`; abort on mismatch rather than deploying to the wrong network.
+
+## Recovery-phrase safety (hard rule)
+
+If the user offers their seed phrase to "just check it in the sandbox", refuse and give them a local script instead:
+
+```js
+// scripts/check-midnight-wallet.mjs — runs on the user's machine only
+import * as bip39 from 'bip39';
+import { NetworkId } from '@midnight-ntwrk/zswap';
+// ...derive the same way the deploy script does, from process.env.MIDNIGHT_WALLET_SEED
+// PRINT: network, unshielded address, shielded address. NEVER print the seed.
+```
+
+Invocation: `MIDNIGHT_WALLET_SEED="word1 word2 ..." bun scripts/check-midnight-wallet.mjs --network=preview`. Never log, echo, or `console.log` the seed; read it once, derive, discard.
 
 ## Anti-patterns
 
@@ -239,3 +268,6 @@ This lets the marketing page hydrate the moment the user's local deploy script w
 - Don't run the write path under SSR / `build:dev` prerender. Read-only Indexer views are SSR-safe; wallet + proof-server writes are not.
 - Don't try to deploy from a Cloudflare Worker / TanStack server function — no Docker, no proof-server access, no localhost. Deploys are a local `bun` script.
 - Don't hardcode `preview` when the user demoed on `preprod` (or vice versa). Explorer + faucet + indexer URLs all differ.
+- Don't accept a user's recovery phrase in chat or run it through the Lovable sandbox — give them a local script that reads the seed from their own shell env.
+- Don't derive unshielded and shielded addresses through different `NetworkId` values in the same script — that's the bug that makes Lace say the addresses don't match.
+- Don't assume Node scripts under `scripts/` inherit Vite's dep resolution — every `import` must be `bun add`-ed into `package.json`.
