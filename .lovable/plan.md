@@ -1,75 +1,51 @@
-## Goal
+## Add a live Lace connect widget to the Midnight Ledger demo page
 
-Add a **preprod-only** DUST generation + deploy demo alongside the existing preview flow, based on the official Midnight docs (`generating-dust-programmatically`, `configure-providers`, `deploy-mn-app`) and the reference script provided.
-
-This is additive — the current `scripts/deploy-midnight.mjs` (preview) stays untouched.
+Wire the docs' React wallet-connect flow into `/showcase/midnight-ledger` (the demo page you're viewing). `/wallet` stays a screenshot walkthrough; `/proof-server` stays script-focused. The demo is where a live "Connect wallet → see your preprod address" widget actually belongs.
 
 ## What we'll build
 
-### 1. New script: `scripts/dust-demo-preprod.mjs`
+### 1. New client-only hook: `src/lib/use-midnight-wallet.ts`
 
-An interactive DUST tutorial hardcoded to **preprod**:
-- Create new wallet OR restore from seed (prompt-driven, like the reference).
-- Print shielded / unshielded / dust addresses with `mn_shield-addr_test1…` / `mn_addr_test1…` / `mn_dust_test…` prefixes.
-- Print the preprod faucet URL: `https://midnight-tmnight-preprod.nethermind.dev/`.
-- Sync wallet, wait for incoming tNIGHT on the unshielded address.
-- Prompt for a Dust address to designate (default = own dust address).
-- Call `wallet.registerNightUtxosForDustGeneration(...)` — this is the piece the current preview script is missing and is exactly what the docs teach.
-- Poll `state.dust.availableCoins.length >= 1` (the correct readiness signal) and print DUST balance until user quits.
-- Persist seed to `.midnight-wallet-preprod.local` (0600, gitignored) so re-runs restore automatically.
+Per the `lovable-midnight` skill + the docs guide:
+- Polls `window.midnight` for up to 5s; picks the connector whose `apiVersion` satisfies `4.x`.
+- Exposes `connect()` / `disconnect()` and reactive state:
+  `status` (`idle | detecting | ready | connecting | connected | error`),
+  `address` (shielded), `coinPublicKey`, `apiVersion`, `network`
+  (from `connectedAPI.state()` / `getConfiguration()`), `error`.
+- Every `@midnight-ntwrk/*` import is dynamic, inside the hook, behind
+  `useHydrated()` — zero SSR touch.
 
-Uses `@midnightntwrk/wallet-sdk` `WalletFacade` / `HDWallet` / `Roles` — same API surface as the docs snippet, not the older `WalletBuilder`.
+### 2. New component: `src/components/WalletConnectPanel.tsx`
 
-### 2. New script: `scripts/deploy-midnight-preprod.mjs`
+Small panel matching the demo page tokens:
+- **Not detected** → lace.io link + "Refresh after install".
+- **Ready** → "Connect wallet" button.
+- **Connected** → truncated shielded address (with copy), connector API version, connected network; **yellow "Switch Lace to Preprod"** note when the connector network ≠ `preprod`.
+- **Error** → inline message + Retry.
 
-Preprod deploy, run **after** the dust demo has minted a spendable DUST coin:
-- Reuses `.midnight-wallet-preprod.local` seed.
-- Builds providers per `configure-providers` docs (preprod indexer + node URLs, local proof server).
-- Deploys the compiled `PromptLog` contract per `deploy-mn-app` docs.
-- Writes result to `src/data/midnight-contract-preprod.json` (separate from the existing preview JSON so both can coexist).
-- Validates bech32 prefix is `mn_shield-addr_test1…` before writing (guards against network mismatch).
+Rendered behind `useHydrated()`; SSR emits a stable skeleton.
 
-### 3. New data file: `src/data/midnight-contract-preprod.json`
+### 3. Wire it into `/showcase/midnight-ledger`
 
-Placeholder with zero-address, mirroring the preview one. Explorer base = `https://preprod.midnightexplorer.com`.
+Insert the panel near the top of the demo, above the existing content, framed as "Try it — connect your Lace wallet to this preprod demo." Nothing else on the page changes.
 
-### 4. UI: extend `/proof-server` page
+### 4. Package
 
-Add a **"Preprod demo (recommended for real users)"** section under the existing preview steps:
-- Explains preprod is the stable network and needs the two-step flow (dust-demo → deploy) because tNIGHT must be explicitly registered for DUST generation.
-- Command boxes for `bun scripts/dust-demo-preprod.mjs` and `bun scripts/deploy-midnight-preprod.mjs`.
-- Link to preprod faucet + preprod explorer.
-- Note that the existing preview flow (single `deploy-midnight.mjs`) remains for quick throwaway testing.
+`bun add @midnight-ntwrk/dapp-connector-api`. All uses dynamic-imported inside the hook.
 
-### 5. Wallet page: dual-network display
+## Non-goals
 
-Update the wallet page to show both preview and preprod contract state side-by-side when both JSON files exist. Keep single-column when only one is deployed.
+- No signing, no contract calls from the browser — writes stay in the local Node scripts.
+- No wallet-state subscription beyond the initial connect handshake.
+- No changes to `/wallet` or `/proof-server`.
 
-### 6. Dependencies
+## Failure-mode coverage (built in)
 
-Add to `package.json` (via `bun add`):
-- `@midnightntwrk/wallet-sdk` — new SDK the docs use (different from existing `@midnight-ntwrk/wallet`).
-- `@midnight-ntwrk/midnight-js-utils`
-- `@midnight-ntwrk/midnight-js-protocol`
-- `ws`, `rxjs`, `readline` (readline is Node built-in but rxjs + ws are new).
-
-### 7. `.gitignore`
-
-Add `.midnight-wallet-preprod.local` and `.midnight-witness-preprod.local`.
-
-## Technical notes
-
-- **Two SDK namespaces coexist**: the reference script uses `@midnightntwrk/wallet-sdk` (no hyphen in `ntwrk`) — this is the newer SDK. The existing preview script uses `@midnight-ntwrk/wallet` (hyphenated). We keep both — the preview script keeps working, the preprod scripts use the newer one. Confirm the package name against npm before installing; if the un-hyphenated name isn't published, fall back to the hyphenated equivalents (`@midnight-ntwrk/wallet-sdk-*`).
-- **DUST readiness**: poll `availableCoins.length >= 1`, not balance. Same lesson as the earlier preview debug.
-- **Proof server**: same local Docker container on `:6300` serves both networks — no separate infrastructure.
-- **No SSR impact**: all new code is Node scripts + static JSON + read-only UI reads. Nothing touches server functions or the router loader chain.
-
-## Out of scope
-
-- Fixing the preview `deploy-midnight.mjs` (already patched last turn).
-- Automating the faucet request (still manual — user pastes address into the faucet page).
-- Deploying from the browser (still a local `bun` script, per skill rules).
+- **SSR**: hook + panel `useHydrated()`-gated; no top-level `window` access.
+- **Lace not 4.x**: explicit "Install/update Lace" state.
+- **Wrong network** (Preview while demo is preprod): yellow warning, no auto-switch.
+- **Detect timeout**: 5s poll then "Not detected" with retry.
 
 ## Immediate next step after approval
 
-Install deps → write both scripts + JSON placeholder → extend `/proof-server` page → update `.gitignore`.
+Install `@midnight-ntwrk/dapp-connector-api` → write the hook + panel → wire into `/showcase/midnight-ledger`.
