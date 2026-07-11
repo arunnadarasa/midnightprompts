@@ -8,7 +8,9 @@ import step05 from "@/assets/lace-setup-05-all-done.png.asset.json";
 import step06 from "@/assets/lace-setup-06-wallet-view.png.asset.json";
 import step07 from "@/assets/lace-setup-07-wallet-tab.png.asset.json";
 import step08 from "@/assets/lace-setup-08-center-menu.png.asset.json";
+import step09 from "@/assets/lace-setup-09-receive-shielded.png.asset.json";
 import step10 from "@/assets/lace-setup-10-receive-unshielded.png.asset.json";
+
 import step11 from "@/assets/lace-setup-11-address-copied.png.asset.json";
 import faucet01 from "@/assets/lace-faucet-01-request.png.asset.json";
 import faucet02 from "@/assets/lace-faucet-02-processing.png.asset.json";
