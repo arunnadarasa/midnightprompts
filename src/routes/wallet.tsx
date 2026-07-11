@@ -19,6 +19,15 @@ import net02 from "@/assets/lace-net-02-network-modal.png.asset.json";
 import net03 from "@/assets/lace-net-03-truncated.png.asset.json";
 import net04 from "@/assets/lace-net-04-full-midnight.png.asset.json";
 import net05 from "@/assets/lace-net-05-topbar.png.asset.json";
+import expanded01 from "@/assets/lace-expanded-01-wallet.png.asset.json";
+import expanded02 from "@/assets/lace-expanded-02-settings.png.asset.json";
+import expanded03 from "@/assets/lace-expanded-03-view-mode.png.asset.json";
+
+const EXPANDED_STEPS = [
+  { img: expanded02, tag: "01 · settings", title: "Cogwheel → Default View Mode", caption: "Open Settings from the cogwheel and scroll to Default View Mode at the bottom of the list." },
+  { img: expanded03, tag: "02 · pick expanded", title: "Choose Expanded → Confirm", caption: "Switch from Side panel (recommended) to Expanded, then Confirm. Lace now opens in a full browser tab." },
+  { img: expanded01, tag: "03 · full canvas", title: "No more truncation", caption: "In Expanded mode the Network modal (and every other panel) has room to render — all three Midnight options stay visible." },
+];
 
 const SETUP_STEPS = [
   { img: step01, tag: "01 · account center", title: "Open Lace → Add wallet", caption: "Launch the Lace extension and click the purple Add wallet button at the top of the Account Center." },
