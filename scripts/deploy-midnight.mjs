@@ -2,7 +2,7 @@
 /**
  * scripts/deploy-midnight.mjs
  *
- * Two-phase LOCAL deploy for contracts/TimestampLog.compact against Midnight Preview.
+ * Two-phase LOCAL deploy for contracts/TimestampLog.compact against Midnight Preview/Preprod.
  *
  * WHERE TO RUN THIS: on your own machine. NOT in the Lovable sandbox — the sandbox
  * has no Docker daemon, and Midnight's proof server is only distributed as a
@@ -10,7 +10,7 @@
  *
  * PHASE 1 (no seed / no funds yet):
  *   bun scripts/deploy-midnight.mjs
- *     → generates a 24-word BIP-39 mnemonic
+ *     → generates a 24-word BIP-39 mnemonic, or uses MIDNIGHT_WALLET_SEED
  *     → writes it to .midnight-wallet.local (gitignored) so re-runs reuse it
  *     → derives the Midnight shielded address and prints it
  *     → exits: "Fund this address, then re-run"
@@ -77,10 +77,21 @@ function die(msg) {
 }
 
 async function loadOrCreateSeed() {
+  if (process.env.MIDNIGHT_WALLET_SEED) {
+    const mnemonic = process.env.MIDNIGHT_WALLET_SEED.trim();
+    const wordCount = mnemonic.split(/\s+/).length;
+    if (![12, 15, 18, 21, 24].includes(wordCount)) {
+      die("MIDNIGHT_WALLET_SEED is not a valid BIP-39 mnemonic length.");
+    }
+    log("using wallet seed from MIDNIGHT_WALLET_SEED (not printed, not written to disk)");
+    return { mnemonic, fresh: false };
+  }
+
   if (fs.existsSync(SEED_FILE)) {
     const mnemonic = fs.readFileSync(SEED_FILE, "utf8").trim();
-    if (mnemonic.split(/\s+/).length !== 24) {
-      die(`${SEED_FILE} exists but is not a 24-word BIP-39 mnemonic.`);
+    const wordCount = mnemonic.split(/\s+/).length;
+    if (![12, 15, 18, 21, 24].includes(wordCount)) {
+      die(`${SEED_FILE} exists but is not a valid BIP-39 mnemonic length.`);
     }
     log("using existing wallet seed from .midnight-wallet.local");
     return { mnemonic, fresh: false };
@@ -91,71 +102,155 @@ async function loadOrCreateSeed() {
   return { mnemonic, fresh: true };
 }
 
+function normalizeNetworkId(networkId) {
+  switch (networkId) {
+    case "preview":
+    case "preprod":
+    case "undeployed":
+    case "mainnet":
+      return networkId;
+    case "test":
+    case "testnet":
+      return "preview";
+    default:
+      die(`Unknown VITE_NETWORK_ID="${networkId}" (expected preview|preprod|undeployed|mainnet).`);
+  }
+}
+
+const ADDRESS_NETWORK = normalizeNetworkId(NETWORK_ID);
+const ADDRESS_SUFFIX = ADDRESS_NETWORK === "mainnet" ? null : ADDRESS_NETWORK;
+
+function expectedPrefix(kind, suffix = ADDRESS_SUFFIX) {
+  if (kind === "unshielded") return suffix ? `mn_addr_${suffix}1` : "mn_addr1";
+  if (kind === "shielded") return suffix ? `mn_shield-addr_${suffix}1` : "mn_shield-addr1";
+  if (kind === "cpk") return suffix ? `mn_shield-cpk_${suffix}1` : "mn_shield-cpk1";
+  if (kind === "epk") return suffix ? `mn_shield-epk_${suffix}1` : "mn_shield-epk1";
+  return "";
+}
+
+function assertAddressPrefix(label, address, kind) {
+  const prefix = expectedPrefix(kind);
+  if (!address.startsWith(prefix)) {
+    die(
+      `${label} has the wrong network prefix.\n` +
+        `Expected: ${prefix}…\n` +
+        `Got:      ${address.slice(0, Math.max(prefix.length, 32))}…\n` +
+        `Do not fund this wallet until the printed addresses match Lace for ${ADDRESS_NETWORK}.`,
+    );
+  }
+}
+
+async function deriveHdAddresses(mnemonic, network = ADDRESS_NETWORK) {
+  const { WalletSeeds } = await import("@midnight-ntwrk/testkit-js");
+  const { createKeystore } = await import("@midnight-ntwrk/wallet-sdk");
+  const {
+    ShieldedAddress,
+    ShieldedCoinPublicKey,
+    ShieldedEncryptionPublicKey,
+  } = await import("@midnight-ntwrk/wallet-sdk-address-format");
+  const ledger = await import("@midnight-ntwrk/ledger-v8");
+
+  const suffix = network === "mainnet" ? null : network;
+  const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
+  const keystore = createKeystore(seeds.unshielded, suffix ?? "");
+  const secretKeys = ledger.ZswapSecretKeys.fromSeed(new Uint8Array(seeds.shielded));
+  const coinPublicKeyHex = secretKeys.coinPublicKey;
+  const encryptionPublicKeyHex = secretKeys.encryptionPublicKey;
+  const coinPublicKey = new ShieldedCoinPublicKey(Buffer.from(coinPublicKeyHex, "hex"));
+  const encryptionPublicKey = new ShieldedEncryptionPublicKey(Buffer.from(encryptionPublicKeyHex, "hex"));
+  const shieldedAddress = ShieldedAddress.codec
+    .encode(suffix, new ShieldedAddress(coinPublicKey, encryptionPublicKey))
+    .asString();
+
+  return {
+    seedHex: Buffer.from(seeds.shielded).toString("hex"),
+    unshieldedAddress: keystore.getBech32Address().asString(),
+    shieldedAddress,
+    coinPublicKeyHex,
+    encryptionPublicKeyHex,
+  };
+}
+
 async function buildWallet(mnemonic) {
   // Dynamic imports — these are heavy Node/WASM modules; keep them out of top-level scope so
   // Phase 1 (which doesn't need them) runs fast on a fresh checkout.
-  const { WalletBuilder } = await import("@midnight-ntwrk/wallet");
   const { setNetworkId } = await import("@midnight-ntwrk/midnight-js-network-id");
-  const { NetworkId } = await import("@midnight-ntwrk/zswap");
-  const { WalletSeeds } = await import("@midnight-ntwrk/testkit-js");
-  setNetworkId(NETWORK_ID);
+  const {
+    FluentWalletBuilder,
+    MidnightWalletProvider,
+  } = await import("@midnight-ntwrk/testkit-js");
+  setNetworkId(ADDRESS_NETWORK);
 
-  // The Scala.js wallet SDK requires the Zswap NetworkId enum, not the public
-  // network string. Hosted Preview and Preprod are both persistent testnets at
-  // the Zswap layer, while their Lace/SDK bech32 address suffixes stay distinct
-  // via setNetworkId("preview" | "preprod") and createKeystore(..., suffix).
-  let networkEnum;
-  switch (NETWORK_ID) {
-    case "preview":
-    case "preprod":
-    case "testnet":
-      networkEnum = NetworkId.TestNet;
-      break;
-    case "undeployed":
-      networkEnum = NetworkId.Undeployed;
-      break;
-    case "mainnet":
-      networkEnum = NetworkId.MainNet;
-      break;
-    default:
-      die(`Unknown VITE_NETWORK_ID="${NETWORK_ID}" (expected preview|preprod|undeployed|mainnet).`);
-  }
-
-
-  log(`building wallet for network=${NETWORK_ID} (enum=${networkEnum})`);
+  log(`building Lace-compatible wallet for network=${ADDRESS_NETWORK}`);
   // CRITICAL: match Lace's HD derivation. Lace uses WalletSeeds.fromMnemonic
   // (from @midnight-ntwrk/testkit-js + wallet-sdk-hd), which splits the mnemonic
   // into distinct shielded + unshielded seed material. The shielded seed drives
-  // the Zswap wallet used for balances + tx signing. Prior versions of this
-  // script fed the raw BIP-39 seed straight into WalletBuilder, producing a
-  // DIFFERENT private key from the same 24 words — so the script's derived
-  // address never matched Lace and never saw the user's tDUST.
-  const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
-  const seedHex = Buffer.from(seeds.shielded).toString("hex");
-  const wallet = await WalletBuilder.buildFromSeed(
-    INDEXER_HTTP,
-    INDEXER_WS,
-    PROOF_SERVER,
-    NODE_RPC,
-    seedHex,
-    networkEnum,
+  // the Zswap wallet used for balances + tx signing. The old @midnight-ntwrk/wallet
+  // WalletBuilder path still derives different keys, so the deploy path uses the
+  // same facade/testkit wallet stack that exposes Lace-compatible addresses.
+  const env = {
+    walletNetworkId: ADDRESS_NETWORK,
+    networkId: ADDRESS_NETWORK,
+    indexer: INDEXER_HTTP,
+    indexerWS: INDEXER_WS,
+    node: NODE_RPC,
+    nodeWS: NODE_RPC.replace(/^https:/, "wss:"),
+    faucet: FAUCET,
+    proofServer: PROOF_SERVER,
+  };
+  const quietLogger = {
+    info: () => {},
+    warn: () => {},
+    error: () => {},
+    debug: () => {},
+    trace: () => {},
+  };
+  const { wallet, seeds, keystore } = await FluentWalletBuilder
+    .forEnvironment(env)
+    .withMnemonic(mnemonic.trim())
+    .buildWithoutStarting();
+  const provider = await MidnightWalletProvider.withWallet(
+    quietLogger,
+    env,
+    wallet,
+    (await import("@midnight-ntwrk/ledger-v8")).ZswapSecretKeys.fromSeed(seeds.shielded),
+    (await import("@midnight-ntwrk/ledger-v8")).DustSecretKey.fromSeed(seeds.dust),
+    keystore,
   );
-  wallet.start();
-  return wallet;
+  await provider.start(false);
+  const state = await latestWalletSnapshot(provider.wallet, 8_000);
+  return { provider, state };
 }
 
-
-async function currentAddressAndBalance(wallet) {
-  return new Promise((resolve) => {
-    const sub = wallet.state().subscribe((s) => {
-      if (s.address) {
-        sub.unsubscribe();
-        resolve({
-          address: s.address,
-          balances: s.balances ?? {},
-          syncProgress: s.syncProgress,
-        });
-      }
+async function latestWalletSnapshot(wallet, timeoutMs = 30_000) {
+  return new Promise((resolve, reject) => {
+    let latest;
+    let settled = false;
+    let sub = { unsubscribe: () => {} };
+    const finish = (value) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      sub.unsubscribe();
+      resolve(value);
+    };
+    const timer = setTimeout(() => {
+      if (latest) finish(latest);
+      else reject(new Error(`Wallet produced no state within ${timeoutMs}ms`));
+    }, timeoutMs);
+    sub = wallet.state().subscribe({
+      next: (state) => {
+        latest = state;
+        const synced =
+          state.shielded?.state?.progress?.isStrictlyComplete?.() &&
+          state.unshielded?.progress?.isStrictlyComplete?.() &&
+          state.dust?.state?.progress?.isStrictlyComplete?.();
+        if (synced) finish(state);
+      },
+      error: (error) => {
+        clearTimeout(timer);
+        reject(error);
+      },
     });
   });
 }
@@ -199,22 +294,22 @@ async function main() {
   log("=== phase 1: wallet ===");
   const { mnemonic, fresh } = await loadOrCreateSeed();
 
-  // Derive + print addresses via the same HD path Lace uses, BEFORE building
-  // the wallet, so a mismatch surfaces immediately without hitting the Indexer.
-  try {
-    const { WalletSeeds } = await import("@midnight-ntwrk/testkit-js");
-    const { createKeystore } = await import("@midnight-ntwrk/wallet-sdk");
-    const suffix = NETWORK_ID === "testnet" ? "preprod" : NETWORK_ID; // matches Lace bech32 HRP
-    const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
-    const ks = createKeystore(seeds.unshielded, suffix);
-    log(`derived (HD, matches Lace) unshielded: ${ks.getBech32Address().asString()}`);
-  } catch (e) {
-    log(`(could not pre-derive unshielded address: ${e.message})`);
-  }
+  const derived = await deriveHdAddresses(mnemonic);
+  assertAddressPrefix("HD unshielded address", derived.unshieldedAddress, "unshielded");
+  assertAddressPrefix("HD shielded address", derived.shieldedAddress, "shielded");
 
-  const wallet = await buildWallet(mnemonic);
-  const info = await currentAddressAndBalance(wallet);
-  const address = info.address;
+  log(`derived (HD, matches Lace) unshielded: ${derived.unshieldedAddress}`);
+  log(`derived (HD, matches Lace) shielded:   ${derived.shieldedAddress}`);
+
+  const { provider, state } = await buildWallet(mnemonic);
+  const address = derived.shieldedAddress;
+
+  if (provider.getCoinPublicKey() !== derived.coinPublicKeyHex) {
+    die("Wallet provider coin public key does not match the HD-derived Lace key.");
+  }
+  if (provider.getEncryptionPublicKey() !== derived.encryptionPublicKeyHex) {
+    die("Wallet provider encryption public key does not match the HD-derived Lace key.");
+  }
 
   console.log("");
   console.log("  Shielded address (SDK-side, used for contract state):");
@@ -229,24 +324,24 @@ async function main() {
   console.log("");
 
 
-  const tdust = Number(info.balances?.tdust ?? info.balances?.[Object.keys(info.balances)[0]] ?? 0);
+  const tdust = Number(state.dust.balance(new Date()) ?? 0n);
   log(`current tDUST balance: ${tdust}`);
 
   if (fresh || tdust < 1) {
     log("Not enough tDUST to deploy. Two options:");
     log("");
     log("  ── Option A: fund THIS script's wallet ──");
-    log(`  1. Install Lace, switch to Midnight ${NETWORK_ID}, and import the 24-word seed`);
+    log(`  1. Install Lace, switch to Midnight ${ADDRESS_NETWORK}, and import the 12/24-word seed`);
     log(`     from .midnight-wallet.local as a new wallet so it matches this script.`);
-    log(`  2. Copy Lace's Unshielded address (mn_addr_${NETWORK_ID}1…).`);
+    log(`  2. Copy Lace's Unshielded address (${expectedPrefix("unshielded")}…).`);
     log(`  3. Paste into ${FAUCET} and click Request tokens (~2 min for 1000 tNIGHT).`);
     log(`  4. In Lace, click "Generate tDUST" to delegate tNIGHT → tDUST.`);
     log("");
     log("  ── Option B: reuse an EXISTING Lace wallet that already has tDUST ──");
     log(`  1. In Lace: Settings → Show Recovery Phrase (enter admin password).`);
-    log(`  2. Copy the 24 words as one whitespace-separated line.`);
+    log(`  2. Copy the 12/24 words as one whitespace-separated line.`);
     log(`  3. Overwrite the script's seed with it:`);
-    log(`       echo "word1 word2 ... word24" > .midnight-wallet.local`);
+    log(`       echo "word1 word2 ..." > .midnight-wallet.local`);
     log(`       chmod 600 .midnight-wallet.local`);
     log(`     (Treat the phrase like a password. .midnight-wallet.local is gitignored.)`);
     log("");
@@ -254,7 +349,7 @@ async function main() {
     log(`  • Start the proof server:`);
     log(`      docker run -d -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`);
     log(`  • Re-run: bun scripts/deploy-midnight.mjs`);
-    await wallet.close?.();
+    await provider.stop?.();
     process.exit(0);
   }
 
@@ -275,14 +370,11 @@ async function main() {
   if (!Contract) die("Compiled contract module has no exported Contract class.");
 
   const { deployContract } = await import("@midnight-ntwrk/midnight-js-contracts");
-  const { FetchZkConfigProvider } = await import("@midnight-ntwrk/midnight-js-fetch-zk-config-provider");
+  const { NodeZkConfigProvider } = await import("@midnight-ntwrk/midnight-js-node-zk-config-provider");
   const { httpClientProofProvider } = await import("@midnight-ntwrk/midnight-js-http-client-proof-provider");
   const { indexerPublicDataProvider } = await import("@midnight-ntwrk/midnight-js-indexer-public-data-provider");
 
-  const zkConfigProvider = new FetchZkConfigProvider(
-    `file://${MANAGED}`,
-    fetch,
-  );
+  const zkConfigProvider = new NodeZkConfigProvider(MANAGED);
   const proofProvider = httpClientProofProvider(PROOF_SERVER, zkConfigProvider);
   const publicDataProvider = indexerPublicDataProvider(INDEXER_HTTP, INDEXER_WS);
 
@@ -302,7 +394,7 @@ async function main() {
 
   log("submitting deployContract — proving may take 30–120s…");
   const t0 = Date.now();
-  const deployed = await deployContract(new Contract({ localSecretKey: async () => sk }), {
+  const providers = {
     privateStateProvider: {
       get: async () => null,
       set: async () => {},
@@ -311,13 +403,16 @@ async function main() {
     proofProvider,
     publicDataProvider,
     walletProvider: {
-      coinPublicKey: address,
-      balanceTx: async (tx) => wallet.balanceTransaction(tx),
+      getCoinPublicKey: () => provider.getCoinPublicKey(),
+      getEncryptionPublicKey: () => provider.getEncryptionPublicKey(),
+      balanceTx: async (tx) => provider.balanceTx(tx),
     },
     midnightProvider: {
-      submitTx: async (tx) => wallet.submitTransaction(tx),
+      submitTx: async (tx) => provider.submitTx(tx),
     },
-  });
+  };
+  const compiledContract = new Contract({ localSecretKey: (context) => [context.privateState, sk] });
+  const deployed = await deployContract(providers, { compiledContract });
   const contractAddress = deployed.deployTxData.public.contractAddress;
   const deployTx = deployed.deployTxData.public.txId;
   log(`deployed in ${(Date.now() - t0) / 1000}s`);
@@ -348,7 +443,7 @@ async function main() {
   log(`updated ${path.relative(ROOT, CONTRACT_JSON)}`);
   log(`explorer: ${cfg.explorerAddress}`);
 
-  await wallet.close?.();
+  await provider.stop?.();
   process.exit(0);
 }
 

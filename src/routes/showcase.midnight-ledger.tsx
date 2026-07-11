@@ -5,7 +5,6 @@ import {
   isDeployed,
   type NetworkId,
 } from "@/data/midnight-contract";
-import walletPreviewCfg from "@/data/midnight-wallet-preview.json";
 import { NetworkToggle } from "@/components/NetworkToggle";
 import { DualDeployStatus } from "@/components/DeployStatusPanel";
 
@@ -149,18 +148,19 @@ function MidnightLedgerDemo() {
 
       <div className="mt-6 grid sm:grid-cols-1 gap-3">
         <div className="p-5 border border-primary/40 bg-card text-[11px]">
-          <div className="eyebrow text-primary">preview · fund this address</div>
-          <div className="font-mono mt-2 break-all text-foreground">
-            {walletPreviewCfg.unshieldedAddress}
-          </div>
+          <div className="eyebrow text-primary">preview · address sanity check</div>
+          <pre className="font-mono mt-2 break-all whitespace-pre-wrap text-foreground">
+{`MIDNIGHT_WALLET_SEED="your words stay local" \
+  bun scripts/check-midnight-wallet.mjs --network=preview`}
+          </pre>
           <p className="mt-3 text-muted-foreground text-xs leading-relaxed">
             The <a href={CONTRACTS.preview.faucet} target="_blank" rel="noreferrer" className="text-primary underline">preview faucet</a>{" "}
             only accepts an <em>unshielded</em> address (<code>mn_addr_preview…</code>).
           </p>
           <div className="mt-3">
-            <div className="eyebrow text-muted-foreground">shielded address (contract state)</div>
+            <div className="eyebrow text-muted-foreground">expected preview prefixes</div>
             <div className="font-mono mt-1 break-all text-muted-foreground">
-              {walletPreviewCfg.shieldedAddress}
+              mn_addr_preview1… · mn_shield-addr_preview1…
             </div>
           </div>
         </div>

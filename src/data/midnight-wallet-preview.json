@@ -1,9 +1,9 @@
 {
   "network": "preview",
-  "shieldedAddress": "mn_shield-addr_test1tew6c2svuqmac32jxx50g4jv68jdwnn8snydlrdn9lhq4vepr6qshktplcu902f4tkvcn2efpavdm5mtckvudlgmjkxcwld840xy88smmw9nd",
-  "unshieldedAddress": "mn_addr_test1kvr0hws7v7uwv5mg7mh3hud336mmd5vmwgw4v7mca422qpp6zrkqksmnch",
+  "shieldedAddress": "mn_shield-addr_preview1...derive-locally",
+  "unshieldedAddress": "mn_addr_preview1...derive-locally",
   "createdAt": "2026-07-10T05:45:14.270Z",
-  "faucet": "https://midnight-faucet-testnet.midnight.network/",
+  "faucet": "https://midnight-tmnight-preview.nethermind.dev/",
   "docs": "https://docs.midnight.network/guides/acquire-tokens",
   "faucetNote": "Paste the unshieldedAddress into the preview faucet to receive tNIGHT. Then delegate tNIGHT → tDUST in Lace before deploying."
 }

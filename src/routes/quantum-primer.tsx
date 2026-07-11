@@ -127,7 +127,7 @@ function Primer() {
               <tbody className="text-foreground/85 font-light align-top">
                 {[
                   ["Purpose", "Stable testnet mirroring the current mainnet release train.", "Bleeding-edge testnet for upcoming SDK / protocol changes.", "Real network. Real value."],
-                  ["Address prefix", <code className="font-mono text-[11px]">mn_addr_preprod1…</code>, <code className="font-mono text-[11px]">mn_addr_test1…</code>, <code className="font-mono text-[11px]">mn_addr1…</code>],
+                  ["Address prefix", <code className="font-mono text-[11px]">mn_addr_preprod1…</code>, <code className="font-mono text-[11px]">mn_addr_preview1…</code>, <code className="font-mono text-[11px]">mn_addr1…</code>],
                   ["Token", "tNIGHT → tDUST (free test tokens)", "tNIGHT → tDUST (free test tokens)", "NIGHT → DUST (real, purchased)"],
                   ["Faucet", "Nethermind preprod faucet", "Midnight preview faucet", "None"],
                   ["SDK version", "Stable, matches current mainnet.", "Next release candidate — may break between drops.", "Stable, audited."],
