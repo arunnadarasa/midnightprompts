@@ -8,21 +8,6 @@ import {
 } from "@/data/midnight-contract";
 import { NetworkToggle } from "@/components/NetworkToggle";
 import { DualDeployStatus } from "@/components/DeployStatusPanel";
-import tdust01 from "@/assets/lace-tdust-01-empty.png.asset.json";
-import tdust02 from "@/assets/lace-tdust-02-generate.png.asset.json";
-import tdust03 from "@/assets/lace-tdust-03-review.png.asset.json";
-import tdust04 from "@/assets/lace-tdust-04-password.png.asset.json";
-import tdust05 from "@/assets/lace-tdust-05-processing.png.asset.json";
-import tdust06 from "@/assets/lace-tdust-06-refilling.png.asset.json";
-
-const TDUST_WALKTHROUGH = [
-  { img: tdust01, tag: "01 · empty tank", caption: "0 / 0 tDUST after the faucet drops tNIGHT — tap the D icon next to Receive." },
-  { img: tdust02, tag: "02 · generate tdust", caption: "Send #1 — designate your full tNIGHT balance to your own Dust address." },
-  { img: tdust03, tag: "03 · review", caption: "Send #2 — Review Transaction confirms the 1,000 tNIGHT designation." },
-  { img: tdust04, tag: "04 · password", caption: "Confirm with your Lace admin password." },
-  { img: tdust05, tag: "05 · processing", caption: "Generating the zero-knowledge proof — ~30–120s on first run." },
-  { img: tdust06, tag: "06 · refilling", caption: "Tank flips to Refilling and tDUST balance climbs — ready to deploy." },
-];
 
 export const Route = createFileRoute("/proof-server")({
   head: () => ({
@@ -228,41 +213,14 @@ function ProofServer() {
             >
               <span className="eyebrow text-primary">wallet</span>
               <span className="text-foreground text-sm">Install Lace →</span>
-              <span className="text-[10px] text-muted-foreground">Browser extension + tDUST guide</span>
+              <span className="text-[10px] text-muted-foreground">Full setup + tDUST walkthrough →</span>
             </Link>
           </div>
 
-          <div className="mt-6">
-            <span className="eyebrow text-primary">visual walkthrough · lace</span>
-            <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {[
-                { src: laceEmpty.url, tag: "01 · empty tank", caption: "0/0 tDUST after the faucet drops tNIGHT." },
-                { src: laceGenerate.url, tag: "02 · generate tDUST", caption: "Delegate tNIGHT to your own Dust address." },
-                { src: laceRefilling.url, tag: "03 · refilling", caption: "1,000 tNIGHT designated — tDUST tank fills." },
-              ].map((f) => (
-                <figure key={f.tag} className="border border-border bg-card flex flex-col">
-                  <img src={f.src} alt={f.caption} loading="lazy" className="w-full h-auto block border-b border-border" />
-                  <figcaption className="p-3">
-                    <span className="eyebrow text-primary block">{f.tag}</span>
-                    <span className="mt-1 block text-[11px] text-muted-foreground font-light leading-relaxed">
-                      {f.caption}
-                    </span>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-            <p className="mt-3 text-[11px] text-muted-foreground font-light">
-              Screenshots:{" "}
-              <a
-                href="https://docs.midnight.network/guides/acquire-tokens"
-                target="_blank"
-                rel="noreferrer"
-                className="text-primary hover:underline"
-              >
-                Midnight Docs — Acquire tokens ↗
-              </a>
-            </p>
-          </div>
+          <p className="mt-4 text-[11px] text-muted-foreground font-light">
+            Step-by-step Lace screenshots for funding tDUST live on the{" "}
+            <Link to="/wallet" className="text-primary hover:underline">Wallet page</Link>.
+          </p>
         </div>
 
 
