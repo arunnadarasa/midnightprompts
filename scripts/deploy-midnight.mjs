@@ -203,7 +203,7 @@ async function main() {
   try {
     const { WalletSeeds } = await import("@midnight-ntwrk/testkit-js");
     const { createKeystore } = await import("@midnight-ntwrk/wallet-sdk");
-    const suffix = NETWORK_ID === "preview" ? "test" : NETWORK_ID;
+    const suffix = NETWORK_ID; // "preview" | "preprod" | "mainnet" — matches Lace bech32 HRP
     const seeds = WalletSeeds.fromMnemonic(mnemonic.trim());
     const ks = createKeystore(seeds.unshielded, suffix);
     log(`derived (HD, matches Lace) unshielded: ${ks.getBech32Address().asString()}`);
