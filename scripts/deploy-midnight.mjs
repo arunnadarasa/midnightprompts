@@ -513,7 +513,9 @@ async function main() {
     process.exit(0);
   }
 
-  if (tdust < 1) {
+  const allowZero = process.env.MIDNIGHT_ALLOW_ZERO_DUST === "1";
+
+  if (tdust < 1 && !allowZero) {
     log("");
     log("=== DIAGNOSIS ===");
     if (diag.keyMatches === false) {
@@ -543,13 +545,32 @@ async function main() {
       log("  Then wait 1–5 min and re-run without the flag.");
     } else {
       log("? DUST key matches and NIGHT is registered, but balance is still 0.");
-      log("  DUST accrual may still be catching up on the ledger — wait 1–5 min and re-run.");
+      log("  Preview's DUST indexer stream often lags well behind the actual balance.");
+      log("  Try bypassing the balance gate and letting deployContract itself decide:");
+      log("");
+      log("    MIDNIGHT_ALLOW_ZERO_DUST=1 VITE_NETWORK_ID=preview bun scripts/deploy-midnight.mjs");
+      log("");
+      log("  If it succeeds, the cached balance was stale.");
+      log("  If it fails with 'insufficient DUST', Lace's tDUST is under a different");
+      log("  DUST key and you'll need to send tNIGHT from Lace to this address:");
+      log(`    ${derived.unshieldedAddress}`);
     }
     log("");
     log("(Nothing to fix in Lace, Docker, or the seed. See the diagnostic block above.)");
     await provider.stop?.();
     process.exit(0);
   }
+
+  if (tdust < 1 && allowZero) {
+    log("");
+    log("⚠ MIDNIGHT_ALLOW_ZERO_DUST=1 — bypassing balance gate.");
+    log("  Proceeding into deployContract with cached balance = 0.");
+    log("  If the SDK's DUST sync was just stale, this will succeed.");
+    log("  If it fails with 'insufficient DUST', see the diagnostic block above.");
+    log("");
+  }
+
+
 
 
 
