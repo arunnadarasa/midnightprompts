@@ -1,16 +1,11 @@
-## Goal
+## Why the header is missing
 
-Add a top-nav "Known Issues" link so builders can jump straight to `/known-issues` from anywhere.
+Every other page (`index.tsx`, `about.tsx`, etc.) wraps its content in `<SiteShell>`, which renders the top nav. `src/routes/known-issues.tsx` skips that wrapper, so the page renders bare — no nav, no footer.
 
-## Change: `src/components/site-shell.tsx`
+## Fix
 
-- Desktop nav (~line 35, after `<NavLink to="/about">About</NavLink>`): add `<NavLink to="/known-issues">Known Issues</NavLink>`.
-- Mobile menu (~line 81, after the About `<MobileLink>`): add `<MobileLink to="/known-issues" onClick={close}>Known Issues</MobileLink>`.
+Edit `src/routes/known-issues.tsx`:
+1. Add `import { SiteShell } from "@/components/site-shell";`.
+2. Wrap the component's returned JSX in `<SiteShell>…</SiteShell>`, matching the pattern used by `about.tsx`.
 
-Placement is deliberate: keeps the primary content links (Themes → About) together, and puts Known Issues immediately before the external Hackathon/Docs/Explorer buttons — matching how it reads as a reference/utility link, not a content section.
-
-## Out of scope
-
-- No visual/style changes to the nav itself.
-- No new page — `/known-issues` already exists.
-- No changes to the existing homepage / showcase Known Issues callouts.
+No other changes — content, styles, and route config stay as-is.
