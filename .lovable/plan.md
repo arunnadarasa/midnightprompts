@@ -1,54 +1,39 @@
 ## Goal
 
-The mega-prompt on each `/ideas/:id` page must be **self-contained** — when a user pastes it into a fresh Lovable project, it should instruct that project's AI to build a working "Connect Lace" button using the v4 DApp Connector API, without relying on the private `lovable-midnight` skill or any file in this repo.
+Capture the Midnight-team Discord Q&A screenshots as an in-app "Known issues" reference so future users hitting the same failure modes (Preprod DUST sync, DustSpendProcessed decode errors, 0.31 ZKIR /check rejection, `1010 InvalidDustSpendProof`, tDUST-vs-tNIGHT gotcha, currentBlockTime roadmap) land on a page with the workaround instead of trial-and-error.
 
-## What we add
+## New route: `src/routes/known-issues.tsx`
 
-### A) Fix the local wallet hook (so this app also works)
-`src/lib/use-midnight-wallet.ts` — replace the removed `api.state()` call with v4 methods:
-- Try `api.getShieldedAddresses()` → first entry (handles both array and record shapes).
-- Fall back to `api.getUnshieldedAddress()`.
-- Legacy fallback: `if (typeof api.state === "function") await api.state()`.
-- Type `ConnectedApi` updated to match v4; keep candidate-network loop and `inferNetworkFromAddress`.
+One dedicated page, linked from the showcase index and both showcase demos. Content pulled verbatim (paraphrased short-form) from the screenshots, attributed to "Midnight team via Discord, July 2026".
 
-### B) One shared "Connect Wallet" boilerplate, appended to every mega-prompt
+Sections (each = a short card: title · symptom · cause · workaround · source):
 
-Create `src/data/mega-prompt-wallet-boilerplate.ts` exporting a single `WALLET_CONNECT_BOILERPLATE` string. It's a self-contained instruction block written to be pasted verbatim into a fresh Lovable project. It tells the target AI to:
+1. **Preprod fresh-wallet sync never completes** — 7.5h without finishing + OOM = struggling, not just slow. Workarounds: use Preview for benchmarking; pin to Preprod row on the support matrix; ensure indexer at chain tip; `NODE_OPTIONS=--max-old-space-size=8192`.
+2. **`DustSpendProcessed` ledger event decode failures** — wallet-sdk ↔ ledger/indexer event-format mismatch on Preprod. Re-pin `wallet + ledger + midnight-js + proof-server` from the Preprod support-matrix row in one pass; resync fresh wallet dir.
+3. **DUST regeneration caps concurrent settlement** — `InsufficientFunds: could not balance dust` after ~3 concurrent txs. Workarounds: serialize submits per wallet (or 1–2 in flight); pre-warm DUST; use multiple wallets for parallel lanes.
+4. **Prove + submit coupled, submit hangs without timeout** — decouple: `createUnprovenCallTx → proofProvider.proveTx → walletProvider.balanceTx → midnightProvider.submitTx`. Add app-level timeouts around submit.
+5. **`1010 Custom error: 170 = InvalidDustSpendProof`** — stale DUST proof. Common causes: pruned Merkle roots, indexer lag, version mismatch. Try: fresh resync before submit, compare indexer height vs RPC tip, pin full stack to Preprod matrix, retry only after sync completes.
+6. **`/check 400 bad input` on callTx (deploy works, callTx fails)** — proof-server `/check` deserializer rejecting the ZKIR/wrapped-ir wire format on Compact 0.31.0. Workaround: temporarily point `httpClientProofProvider` at the public prover `https://lace-proof-pub.preprod.midnight.network` to isolate client vs server; bisect the reworked op (`decimals Uint<8>`, secret-key → owner-id conversion); note upstream fix "coming in a later release" per 0.31.0 toolchain notes.
+7. **Preprod matrix (current docs, July 2026)** — bulleted list: `ledger-v8: 8.0.3`, `proof-server: 8.0.3` (must match ledger tag), `compact: 0.5.1 / toolchain 0.31.1`, `compact-runtime: 0.16.0`, `compact-js: 2.5.1`, `midnight-js-*: 4.1.1`, `onchain-runtime-v3: 3.0.0`. Wallet SDK: align to matrix row (don't mix facade 4.x + dust 4.x + shielded 3.x). Link to `https://docs.midnight.network/relnotes/support-matrix`.
+8. **Preprod public RPC** — `https://rpc.preprod.midnight.network` (HTTP) + `wss://rpc.preprod.midnight.network` (WS). Alternatives: Blockfrost (API key), self-hosted `midnight-node`, or Preview WS `wss://rpc.preview.midnight.network` if you can switch networks. Includes the `chain_getHeader` curl smoke-check.
+9. **currentBlockTime() roadmap** — no public in-circuit readable block time/height today (only `blockTime*` comparators). Feedback via Midnight Service Desk if settlement flows need it.
 
-1. Create `src/lib/use-midnight-wallet.ts` with the v4-correct hook (candidate-network loop over `preview` / `preprod` / `mainnet`, no `.state()`, uses `getShieldedAddresses` → `getUnshieldedAddress`, error/redetect states).
-2. Create `src/components/WalletConnectPanel.tsx` — the same panel shape we use here (hydration-gated, connect/connecting/connected/error states, address truncation + copy, wrong-network hint).
-3. Mount `<WalletConnectPanel expectedNetwork={import.meta.env.VITE_NETWORK_ID ?? "preprod"} />` on the primary page.
-4. Note prerequisites in the pasted text: install Lace, switch it to Preview or Preprod, get tDUST from the matching faucet; no signing / no funds moved by connect.
-5. Explicit contract with the target AI: **do not** import `@midnight-ntwrk/*` for the connect step, **do not** call `enable()` or `state()` (v4 removed them), read `window.midnight` under `useEffect` only.
+Each card ends with a `[Service Desk ↗]` link to `https://midnightntwrk.github.io/servicedesk/` for the ones the team routed to a ticket. Page head: title/description reflecting "Known issues on Midnight Preprod — July 2026 snapshot" so it stays date-scoped.
 
-The block is delimited with a clearly marked header so it's obvious in the rendered prompt:
-```
---- BEGIN: Connect-Lace boilerplate (self-contained, DApp Connector v4) ---
-…
---- END: Connect-Lace boilerplate ---
-```
+## Wire-up
 
-### C) Rewrite every idea JSON to append the boilerplate
-
-Update `scripts/rewrite_mega_prompts.py` (or add a new small script — pick the existing one if it already targets these files) to:
-- Load each of `src/data/ideas/{dance,music,visual-art,video,photography,writing,film-animation,games,theater,fashion}.json`.
-- For every idea in `ideas[]`, if `megaPrompt` doesn't already contain the boilerplate sentinel (`--- BEGIN: Connect-Lace boilerplate`), append `\n\n` + boilerplate.
-- Write the JSON back with the same 2-space formatting.
-- Idempotent: rerunning does nothing.
-
-Run it once. Result: every `Idea.megaPrompt` now ends with the self-contained wallet section, and `/ideas/:id` renders it inside the existing `<pre>` — no route/component change needed.
-
-### D) Idea page (optional, small)
-
-Above the mega-prompt in `src/routes/ideas.$id.tsx`, add one line: "The prompt below includes a self-contained Connect Lace step — no extra setup on the target project." No wallet panel embedded on the idea page itself (that's showcase's job).
+- `src/routes/showcase.index.tsx`: add a small linked card at the bottom pointing to `/known-issues`.
+- `src/routes/showcase.midnight-ledger.tsx` and `src/routes/showcase.programmatic-dust.tsx`: one-line inline callout ("Hit a `1010` error or `DustSpendProcessed` decode? → Known issues") linking to `/known-issues`.
+- `src/routes/__root.tsx` nav / footer: no change (keep the page discoverable via showcase, not top-nav clutter).
 
 ## Not in scope
 
-- The tDUST / ZKIR support-matrix screenshot: that's a Midnight infra ticket (server-side prover vs. wallet-sdk-dust-wallet version drift). Nothing in this repo can fix it. Happy to add a "known issue" callout on the Programmatic DUST page as a follow-up if you want.
+- No changes to `scripts/dust-demo-preprod.mjs` (the underlying SDK bugs are on Midnight's side; documenting is the fix we can ship).
+- Not appending this to the mega-prompts (they're per-idea implementation prompts, not a Midnight status page).
+- No route/component refactor.
 
 ## Verification
 
-- Local app: `/showcase/midnight-ledger` connects with Lace on Preview or Preprod (no `i.state is not a function`), chip reflects the actual network.
-- Open any `/ideas/:id`: the mega-prompt now ends with the `--- BEGIN: Connect-Lace boilerplate ---` block containing full `use-midnight-wallet.ts` and `WalletConnectPanel.tsx` source.
-- Rerun the rewrite script → no diff (idempotent).
-- Copy one prompt into a fresh Lovable project → that project's AI can build the Connect Lace button without needing this repo's skill.
+- Visit `/known-issues` → all 9 sections render, links to Service Desk and support-matrix open in new tab.
+- `/showcase`, `/showcase/midnight-ledger`, `/showcase/programmatic-dust` each surface a link into `/known-issues`.
+- SEO head: unique title/description; single H1; no og:image (leave to platform default).
