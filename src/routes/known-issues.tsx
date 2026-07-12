@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
+import { SiteShell } from "@/components/site-shell";
 
 
 export const Route = createFileRoute("/known-issues")({
@@ -330,6 +331,7 @@ const ISSUES: Issue[] = [
 
 function KnownIssuesPage() {
   return (
+    <SiteShell>
     <div className="max-w-4xl mx-auto px-5 sm:px-8 py-12 sm:py-20">
       <span className="eyebrow">Reference · July 2026 snapshot</span>
       <h1 className="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
@@ -417,5 +419,6 @@ function KnownIssuesPage() {
         <Link to="/showcase/programmatic-dust" className="text-primary hover:text-foreground">Programmatic DUST →</Link>
       </div>
     </div>
+    </SiteShell>
   );
 }
