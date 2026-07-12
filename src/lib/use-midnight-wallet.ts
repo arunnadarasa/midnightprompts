@@ -33,7 +33,17 @@ type Connector = {
 };
 
 type ConnectedApi = {
-  state: () => Promise<{
+  // v4 methods
+  getShieldedAddresses?: () => Promise<string[] | Record<string, string>>;
+  getUnshieldedAddress?: () => Promise<string>;
+  getDustAddress?: () => Promise<string>;
+  getConfiguration?: () => Promise<{
+    indexerUri?: string;
+    indexerWsUri?: string;
+    proverServerUri?: string;
+  }>;
+  // legacy (pre-v4) — keep as fallback
+  state?: () => Promise<{
     address: string;
     coinPublicKey?: string;
     encryptionPublicKey?: string;
@@ -43,12 +53,8 @@ type ConnectedApi = {
     proverServerUri?: string;
     substrateNodeUri?: string;
   }>;
-  getConfiguration?: () => Promise<{
-    indexerUri?: string;
-    indexerWsUri?: string;
-    proverServerUri?: string;
-  }>;
 };
+
 
 function pickConnector(): Connector | null {
   if (typeof window === "undefined") return null;
@@ -158,12 +164,41 @@ export function useMidnightWallet(): MidnightWalletState {
             : "Failed to connect to Lace.",
         );
       }
-      const state = await api.state();
-      setAddress(state.address);
-      setCoinPublicKey(state.coinPublicKey ?? null);
-      setNetwork(usedNetwork ?? inferNetworkFromAddress(state.address));
+      let addr: string | null = null;
+      let coinPk: string | null = null;
+      // v4 DApp Connector API: state() removed, use granular methods.
+      if (typeof api.getShieldedAddresses === "function") {
+        try {
+          const s = await api.getShieldedAddresses();
+          if (Array.isArray(s)) addr = s[0] ?? null;
+          else if (s && typeof s === "object") addr = Object.values(s)[0] ?? null;
+        } catch {
+          /* fall through */
+        }
+      }
+      if (!addr && typeof api.getUnshieldedAddress === "function") {
+        try {
+          addr = await api.getUnshieldedAddress();
+        } catch {
+          /* fall through */
+        }
+      }
+      if (!addr && typeof api.state === "function") {
+        const legacy = await api.state();
+        addr = legacy.address;
+        coinPk = legacy.coinPublicKey ?? null;
+      }
+      if (!addr) {
+        throw new Error(
+          "Connected to Lace but couldn't read an address. Update Lace to a 4.x Midnight build.",
+        );
+      }
+      setAddress(addr);
+      setCoinPublicKey(coinPk);
+      setNetwork(usedNetwork ?? inferNetworkFromAddress(addr));
       setApiVersion(c.apiVersion);
       setStatus("connected");
+
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
       setStatus("error");
