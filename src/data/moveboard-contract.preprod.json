@@ -1,0 +1,17 @@
+{
+  "network": "Midnight Preprod Testnet",
+  "networkId": "preprod",
+  "compactVersion": "0.23",
+  "sdkVersion": "midnight-js-contracts@4.1.1 · wallet@4.0.0 · wallet-sdk-hd@3.1.0-beta.1",
+  "proofServerVersion": "docker: midnightntwrk/proof-server:latest",
+  "address": "0000000000000000000000000000000000000000000000000000000000000000",
+  "deployTx": null,
+  "explorer": "https://preprod.midnightexplorer.com",
+  "rpc": "https://rpc.preprod.midnight.network",
+  "indexerHttp": "https://indexer.preprod.midnight.network/api/v4/graphql",
+  "indexerWs": "wss://indexer.preprod.midnight.network/api/v4/graphql/ws",
+  "faucet": "https://midnight-tmnight-preprod.nethermind.dev/",
+  "addressPrefix": "mn_shield-addr_preprod1…",
+  "unshieldedPrefix": "mn_addr_preprod1…",
+  "note": "Deploy once with MIDNIGHT_CONTRACT=move-board VITE_NETWORK_ID=preprod bun scripts/deploy-midnight.mjs — the script writes the resulting address into this file."
+}
