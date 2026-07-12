@@ -25,7 +25,7 @@ function SiteHeader() {
             Creative <span className="italic text-primary">Midnight</span>
           </span>
         </Link>
-        <nav className="hidden md:flex items-center gap-0.5 text-sm">
+        <nav className="hidden lg:flex items-center gap-0.5 text-sm">
           <NavLink to="/themes">Themes</NavLink>
           <NavLink to="/showcase">Showcase</NavLink>
           <NavLink to="/wallet">Wallet</NavLink>
@@ -63,7 +63,7 @@ function SiteHeader() {
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger
             aria-label="Open menu"
-            className="md:hidden inline-flex items-center justify-center h-10 w-10 border border-border text-foreground hover:border-primary/60 transition shrink-0"
+            className="lg:hidden inline-flex items-center justify-center h-10 w-10 border border-border text-foreground hover:border-primary/60 transition shrink-0"
           >
             <Menu className="h-5 w-5" />
           </SheetTrigger>
