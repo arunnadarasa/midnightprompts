@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import type { ReactNode } from "react";
+
 
 export const Route = createFileRoute("/known-issues")({
   head: () => ({
