@@ -60,6 +60,44 @@ const ISSUES: Issue[] = [
     ),
   },
   {
+    id: "lace-dust-sdk-zero",
+    title: "Lace shows DUST but SDK reports 0 / unshielded never syncs",
+    symptom:
+      "Lace displays a healthy DUST balance while `DustWallet.balance() = 0` and/or the unshielded leg never finishes syncing from the SDK. If the SDK dust leg doesn't reach tip, deploys fail with \"no fee DUST\" even though Lace looks funded.",
+    cause:
+      "Confirmed known Preprod pattern (Midnight team, Discord, 30/06/2026). Tracked on their side; wallet-SDK fixes in progress.",
+    fix: (
+      <ol className="list-decimal pl-5 space-y-1">
+        <li>
+          Pin every package to the current Preprod row on the{" "}
+          <a href={SUPPORT_MATRIX} target="_blank" rel="noreferrer" className="text-primary underline">
+            support matrix
+          </a>.
+        </li>
+        <li>
+          Preprod indexer v4:{" "}
+          <code>https://indexer.preprod.midnight.network/api/v4/graphql</code> ·{" "}
+          <code>wss://indexer.preprod.midnight.network/api/v4/graphql/ws</code>
+        </li>
+        <li>
+          Wallet config workaround that helps some setups:{" "}
+          <code>batchUpdates: {"{ size: 5000, timeout: 1, spacing: 4 }"}</code>
+        </li>
+        <li><code>NODE_OPTIONS="--max-old-space-size=8192"</code> for OOM during first sync.</li>
+        <li>Confirm the SDK uses the <strong>same seed</strong> as Lace — different seed = different wallet.</li>
+        <li>Only read DUST <strong>after full sync on all legs</strong>.</li>
+        <li>
+          Unblock local dev with <code>create-mn-app</code> / local docker network (undeployed) while
+          Preprod sync is rough.
+        </li>
+      </ol>
+    ),
+    links: [
+      { label: "Service Desk ↗", href: SERVICE_DESK },
+      { label: "Support matrix ↗", href: SUPPORT_MATRIX },
+    ],
+  },
+  {
     id: "dust-spend-processed-decode",
     title: "DustSpendProcessed ledger event decode failures",
     symptom:
