@@ -77,7 +77,13 @@ function ProgrammaticDustDemo() {
           <a href={FAUCET_URL} target="_blank" rel="noreferrer" className="text-primary underline">Preprod tNIGHT faucet ↗</a>
           <a href="/proof-server" className="text-primary underline">Proof-server setup ↗</a>
         </div>
+        <p className="mt-3 text-[12px] text-muted-foreground">
+          Preprod-specific gotchas (fresh-wallet sync stalls, <code>DustSpendProcessed</code> decode errors,
+          DUST-regeneration concurrency caps):{" "}
+          <Link to="/known-issues" className="text-primary underline">see known issues →</Link>
+        </p>
       </div>
+
     </div>
   );
 }
