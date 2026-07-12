@@ -121,7 +121,7 @@ function MoveBoardDemo() {
       </div>
 
       <div className="mt-8 flex items-center justify-between gap-4 flex-wrap">
-        <NetworkToggle network={network} onChange={setNetwork} />
+        <NetworkToggle value={network} onChange={setNetwork} />
         <a
           href={cfg.faucet}
           target="_blank"
