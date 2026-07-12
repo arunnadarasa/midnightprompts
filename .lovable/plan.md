@@ -1,39 +1,40 @@
 ## Goal
 
-Capture the Midnight-team Discord Q&A screenshots as an in-app "Known issues" reference so future users hitting the same failure modes (Preprod DUST sync, DustSpendProcessed decode errors, 0.31 ZKIR /check rejection, `1010 InvalidDustSpendProof`, tDUST-vs-tNIGHT gotcha, currentBlockTime roadmap) land on a page with the workaround instead of trial-and-error.
+Add two more first-hand references to `/known-issues` sourced from the July 2026 Midnight team Discord replies in the uploaded screenshots. Keep the existing 9 sections; append/enrich rather than restructure.
 
-## New route: `src/routes/known-issues.tsx`
+## Changes to `src/routes/known-issues.tsx`
 
-One dedicated page, linked from the showcase index and both showcase demos. Content pulled verbatim (paraphrased short-form) from the screenshots, attributed to "Midnight team via Discord, July 2026".
+### 1. New section: "Lace shows DUST but SDK reports 0 / unshielded never syncs" (Nasihudeen Jimoh, 30/06/2026)
 
-Sections (each = a short card: title · symptom · cause · workaround · source):
+Confirmed **known Preprod pattern**: Lace can display DUST while `DustWallet.balance() = 0` and/or the unshielded leg never finishes syncing. If the SDK dust leg doesn't reach tip, deploys fail with "no fee DUST" even though Lace looks funded. Tracked by the team; wallet-SDK fixes in progress.
 
-1. **Preprod fresh-wallet sync never completes** — 7.5h without finishing + OOM = struggling, not just slow. Workarounds: use Preview for benchmarking; pin to Preprod row on the support matrix; ensure indexer at chain tip; `NODE_OPTIONS=--max-old-space-size=8192`.
-2. **`DustSpendProcessed` ledger event decode failures** — wallet-sdk ↔ ledger/indexer event-format mismatch on Preprod. Re-pin `wallet + ledger + midnight-js + proof-server` from the Preprod support-matrix row in one pass; resync fresh wallet dir.
-3. **DUST regeneration caps concurrent settlement** — `InsufficientFunds: could not balance dust` after ~3 concurrent txs. Workarounds: serialize submits per wallet (or 1–2 in flight); pre-warm DUST; use multiple wallets for parallel lanes.
-4. **Prove + submit coupled, submit hangs without timeout** — decouple: `createUnprovenCallTx → proofProvider.proveTx → walletProvider.balanceTx → midnightProvider.submitTx`. Add app-level timeouts around submit.
-5. **`1010 Custom error: 170 = InvalidDustSpendProof`** — stale DUST proof. Common causes: pruned Merkle roots, indexer lag, version mismatch. Try: fresh resync before submit, compare indexer height vs RPC tip, pin full stack to Preprod matrix, retry only after sync completes.
-6. **`/check 400 bad input` on callTx (deploy works, callTx fails)** — proof-server `/check` deserializer rejecting the ZKIR/wrapped-ir wire format on Compact 0.31.0. Workaround: temporarily point `httpClientProofProvider` at the public prover `https://lace-proof-pub.preprod.midnight.network` to isolate client vs server; bisect the reworked op (`decimals Uint<8>`, secret-key → owner-id conversion); note upstream fix "coming in a later release" per 0.31.0 toolchain notes.
-7. **Preprod matrix (current docs, July 2026)** — bulleted list: `ledger-v8: 8.0.3`, `proof-server: 8.0.3` (must match ledger tag), `compact: 0.5.1 / toolchain 0.31.1`, `compact-runtime: 0.16.0`, `compact-js: 2.5.1`, `midnight-js-*: 4.1.1`, `onchain-runtime-v3: 3.0.0`. Wallet SDK: align to matrix row (don't mix facade 4.x + dust 4.x + shielded 3.x). Link to `https://docs.midnight.network/relnotes/support-matrix`.
-8. **Preprod public RPC** — `https://rpc.preprod.midnight.network` (HTTP) + `wss://rpc.preprod.midnight.network` (WS). Alternatives: Blockfrost (API key), self-hosted `midnight-node`, or Preview WS `wss://rpc.preview.midnight.network` if you can switch networks. Includes the `chain_getHeader` curl smoke-check.
-9. **currentBlockTime() roadmap** — no public in-circuit readable block time/height today (only `blockTime*` comparators). Feedback via Midnight Service Desk if settlement flows need it.
+Things to try (verbatim from the reply):
+1. Pin packages to the support matrix
+2. Preprod indexer v4: `https://indexer.preprod.midnight.network/api/v4/graphql` + `wss://indexer.preprod.midnight.network/api/v4/graphql/ws`
+3. Wallet config workaround: `batchUpdates: { size: 5000, timeout: 1, spacing: 4 }`
+4. `NODE_OPTIONS="--max-old-space-size=8192"`
+5. Confirm SDK uses the **same seed** as Lace (different seed = different wallet)
+6. Only read DUST **after full sync on all legs**
 
-Each card ends with a `[Service Desk ↗]` link to `https://midnightntwrk.github.io/servicedesk/` for the ones the team routed to a ticket. Page head: title/description reflecting "Known issues on Midnight Preprod — July 2026 snapshot" so it stays date-scoped.
+Fallback: local undeployed (`create-mn-app` / local docker network) while Preprod sync is rough. Link to Service Desk.
 
-## Wire-up
+### 2. New section: "/check 400 — 0.31 ZKIR serialization gap (engineering-team issue)" (Nasihudeen Jimoh, 03/07/2026)
 
-- `src/routes/showcase.index.tsx`: add a small linked card at the bottom pointing to `/known-issues`.
-- `src/routes/showcase.midnight-ledger.tsx` and `src/routes/showcase.programmatic-dust.tsx`: one-line inline callout ("Hit a `1010` error or `DustSpendProcessed` decode? → Known issues") linking to `/known-issues`.
-- `src/routes/__root.tsx` nav / footer: no change (keep the page discoverable via showcase, not top-nav clutter).
+Engineering-confirmed: it's a **client/server `/check` serialization gap for 0.31 ZKIR**, not user error or version drift. Ruled out by Lace-vs-httpClientProofProvider comparison against the same 8.0.3 public prover — Lace's wallet-delegated proving of the exact same callTx succeeds, while `httpClientProofProvider`'s `createCheckPayload(preimage, keyMaterial.ir)` is rejected.
 
-## Not in scope
+Action: open Service Desk ticket with two linked issues:
+- **/check bad input**: include that deploy/create_market work, register_asset fails, `Uint<64>` widen didn't fix (→ second reworked op), `check()` isn't skippable (stub → WASM unreachable), latest stable provider is 4.1.1. Ask which prover parses 0.31 ZKIR on `/check`, ETA for the ZKIR-format fix from 0.31.0 notes, and the precise list of reworked ops to avoid on 8.0.3.
+- **Matrix conflict**: ledger-v8 8.0.3 (matrix) vs wallet-sdk-dust-wallet 4.1.0 needing 8.1.0's `Transaction.addIntent`. Ask for the coherent wallet-sdk set for the 8.0.3 row.
 
-- No changes to `scripts/dust-demo-preprod.mjs` (the underlying SDK bugs are on Midnight's side; documenting is the fix we can ship).
-- Not appending this to the mega-prompts (they're per-idea implementation prompts, not a Midnight status page).
-- No route/component refactor.
+Also note `lace-proof-pub.preprod.midnight.network` from COMPATIBILITY.md doesn't resolve publicly.
 
-## Verification
+### 3. Cross-link both new sections
 
-- Visit `/known-issues` → all 9 sections render, links to Service Desk and support-matrix open in new tab.
-- `/showcase`, `/showcase/midnight-ledger`, `/showcase/programmatic-dust` each surface a link into `/known-issues`.
-- SEO head: unique title/description; single H1; no og:image (leave to platform default).
+- Reference the existing sections they overlap with (Section 1 links to the OOM/support-matrix section; Section 2 links to the existing `/check 400` section and to the support-matrix section).
+- Add a top-of-page callout: "Sourced from Midnight team replies in Discord (June–July 2026) and the public support matrix."
+- Link the Service Desk (`https://midnightntwrk.github.io/servicedesk/`) inline in both new sections.
+
+## Out of scope
+
+- No SDK changes, no mega-prompt changes, no route/component refactor.
+- No screenshots embedded — text-only references with attribution ("Midnight team, Discord, DD/MM/2026").
