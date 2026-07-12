@@ -61,6 +61,22 @@ function ShowcaseIndex() {
           </p>
         </Link>
       </div>
+
+      <Link
+        to="/known-issues"
+        className="mt-8 group block p-5 border border-primary/30 hover:border-primary/60 transition-colors duration-500"
+      >
+        <div className="flex items-center justify-between gap-4">
+          <span className="eyebrow text-primary">Reference · Preprod snapshot</span>
+          <span className="text-[10px] tracking-[0.28em] uppercase text-muted-foreground">Known issues ↗</span>
+        </div>
+        <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+          Hitting <code>1010 InvalidDustSpendProof</code>, <code>DustSpendProcessed</code> decode errors, or{" "}
+          <code>/check 400 bad input</code>? Field notes from the Midnight team, with the current workaround
+          for each.
+        </p>
+      </Link>
     </div>
   );
 }
+
