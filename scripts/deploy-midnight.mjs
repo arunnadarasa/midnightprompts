@@ -466,7 +466,7 @@ function loadContractModule() {
   if (!fs.existsSync(chosen)) {
     die(
       `Compiled contract not found. Expected ${cjs} or ${js}. ` +
-        `Run: compact compile contracts/TimestampLog.compact contracts/managed/timestamp-log`,
+        `Run: compact compile ${CONTRACT_CFG.sourceFile} ${CONTRACT_CFG.managedDir}`,
     );
   }
   return chosen;
@@ -666,7 +666,7 @@ async function main() {
     },
   };
   const compiledContract = CompiledContract
-    .make("TimestampLog", Contract)
+    .make(CONTRACT_CFG.contractName, Contract)
     .pipe(
       CompiledContract.withWitnesses({
         localSecretKey: (context) => [context.privateState, sk],
