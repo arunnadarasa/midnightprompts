@@ -33,6 +33,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { generateMnemonic } from "bip39";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.join(__dirname, "..");
+const SEED_FILE = path.join(ROOT, ".midnight-wallet.local");
+
 // Selects which contract this run targets. Default keeps the historical
 // timestamp-log / midnight-contract.<net>.json flow untouched.
 const CONTRACT_KEY = process.env.MIDNIGHT_CONTRACT ?? "timestamp-log";
