@@ -33,7 +33,17 @@ type Connector = {
 };
 
 type ConnectedApi = {
-  state: () => Promise<{
+  // v4 methods
+  getShieldedAddresses?: () => Promise<string[] | Record<string, string>>;
+  getUnshieldedAddress?: () => Promise<string>;
+  getDustAddress?: () => Promise<string>;
+  getConfiguration?: () => Promise<{
+    indexerUri?: string;
+    indexerWsUri?: string;
+    proverServerUri?: string;
+  }>;
+  // legacy (pre-v4) — keep as fallback
+  state?: () => Promise<{
     address: string;
     coinPublicKey?: string;
     encryptionPublicKey?: string;
@@ -43,12 +53,8 @@ type ConnectedApi = {
     proverServerUri?: string;
     substrateNodeUri?: string;
   }>;
-  getConfiguration?: () => Promise<{
-    indexerUri?: string;
-    indexerWsUri?: string;
-    proverServerUri?: string;
-  }>;
 };
+
 
 function pickConnector(): Connector | null {
   if (typeof window === "undefined") return null;
