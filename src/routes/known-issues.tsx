@@ -30,7 +30,7 @@ type Issue = {
   title: string;
   symptom: string;
   cause: string;
-  fix: React.ReactNode;
+  fix: ReactNode;
   links?: { label: string; href: string }[];
 };
 
