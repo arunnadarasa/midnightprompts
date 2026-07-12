@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { THEMES, ALL_IDEAS, HOOKS } from "@/data/ideas";
 import { CONTRACTS, isDeployed, NETWORK_IDS } from "@/data/midnight-contract";
+import { MOVEBOARD_CONTRACTS, isMoveBoardDeployed } from "@/data/moveboard-contract";
 
 export const Route = createFileRoute("/")({
   head: () => ({
