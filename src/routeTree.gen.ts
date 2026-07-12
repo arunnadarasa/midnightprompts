@@ -22,6 +22,7 @@ import { Route as ThemesIndexRouteImport } from './routes/themes.index'
 import { Route as ShowcaseIndexRouteImport } from './routes/showcase.index'
 import { Route as ThemesThemeRouteImport } from './routes/themes.$theme'
 import { Route as ShowcaseProgrammaticDustRouteImport } from './routes/showcase.programmatic-dust'
+import { Route as ShowcaseMoveBoardRouteImport } from './routes/showcase.move-board'
 import { Route as ShowcaseMidnightLedgerRouteImport } from './routes/showcase.midnight-ledger'
 import { Route as IdeasIdRouteImport } from './routes/ideas.$id'
 
@@ -91,6 +92,11 @@ const ShowcaseProgrammaticDustRoute =
     path: '/programmatic-dust',
     getParentRoute: () => ShowcaseRoute,
   } as any)
+const ShowcaseMoveBoardRoute = ShowcaseMoveBoardRouteImport.update({
+  id: '/move-board',
+  path: '/move-board',
+  getParentRoute: () => ShowcaseRoute,
+} as any)
 const ShowcaseMidnightLedgerRoute = ShowcaseMidnightLedgerRouteImport.update({
   id: '/midnight-ledger',
   path: '/midnight-ledger',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
+  '/showcase/move-board': typeof ShowcaseMoveBoardRoute
   '/showcase/programmatic-dust': typeof ShowcaseProgrammaticDustRoute
   '/themes/$theme': typeof ThemesThemeRoute
   '/showcase/': typeof ShowcaseIndexRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
+  '/showcase/move-board': typeof ShowcaseMoveBoardRoute
   '/showcase/programmatic-dust': typeof ShowcaseProgrammaticDustRoute
   '/themes/$theme': typeof ThemesThemeRoute
   '/showcase': typeof ShowcaseIndexRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
+  '/showcase/move-board': typeof ShowcaseMoveBoardRoute
   '/showcase/programmatic-dust': typeof ShowcaseProgrammaticDustRoute
   '/themes/$theme': typeof ThemesThemeRoute
   '/showcase/': typeof ShowcaseIndexRoute
@@ -166,6 +175,7 @@ export interface FileRouteTypes {
     | '/wallet'
     | '/ideas/$id'
     | '/showcase/midnight-ledger'
+    | '/showcase/move-board'
     | '/showcase/programmatic-dust'
     | '/themes/$theme'
     | '/showcase/'
@@ -181,6 +191,7 @@ export interface FileRouteTypes {
     | '/wallet'
     | '/ideas/$id'
     | '/showcase/midnight-ledger'
+    | '/showcase/move-board'
     | '/showcase/programmatic-dust'
     | '/themes/$theme'
     | '/showcase'
@@ -198,6 +209,7 @@ export interface FileRouteTypes {
     | '/wallet'
     | '/ideas/$id'
     | '/showcase/midnight-ledger'
+    | '/showcase/move-board'
     | '/showcase/programmatic-dust'
     | '/themes/$theme'
     | '/showcase/'
@@ -310,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShowcaseProgrammaticDustRouteImport
       parentRoute: typeof ShowcaseRoute
     }
+    '/showcase/move-board': {
+      id: '/showcase/move-board'
+      path: '/move-board'
+      fullPath: '/showcase/move-board'
+      preLoaderRoute: typeof ShowcaseMoveBoardRouteImport
+      parentRoute: typeof ShowcaseRoute
+    }
     '/showcase/midnight-ledger': {
       id: '/showcase/midnight-ledger'
       path: '/midnight-ledger'
@@ -329,12 +348,14 @@ declare module '@tanstack/react-router' {
 
 interface ShowcaseRouteChildren {
   ShowcaseMidnightLedgerRoute: typeof ShowcaseMidnightLedgerRoute
+  ShowcaseMoveBoardRoute: typeof ShowcaseMoveBoardRoute
   ShowcaseProgrammaticDustRoute: typeof ShowcaseProgrammaticDustRoute
   ShowcaseIndexRoute: typeof ShowcaseIndexRoute
 }
 
 const ShowcaseRouteChildren: ShowcaseRouteChildren = {
   ShowcaseMidnightLedgerRoute: ShowcaseMidnightLedgerRoute,
+  ShowcaseMoveBoardRoute: ShowcaseMoveBoardRoute,
   ShowcaseProgrammaticDustRoute: ShowcaseProgrammaticDustRoute,
   ShowcaseIndexRoute: ShowcaseIndexRoute,
 }

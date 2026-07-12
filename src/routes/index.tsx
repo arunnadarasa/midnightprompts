@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { THEMES, ALL_IDEAS, HOOKS } from "@/data/ideas";
 import { CONTRACTS, isDeployed, NETWORK_IDS } from "@/data/midnight-contract";
+import { MOVEBOARD_CONTRACTS, isMoveBoardDeployed } from "@/data/moveboard-contract";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -163,6 +164,23 @@ function Index() {
                     <Link
                       key={n}
                       to="/proof-server"
+                      className={`flex items-center justify-between gap-2 hover:text-primary transition-colors ${live ? "text-primary" : "text-muted-foreground"}`}
+                    >
+                      <span>{live ? "●" : "○"} {n}</span>
+                      <span className="text-muted-foreground/70">{live ? "deployed" : "awaiting"}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+              <div className="mt-2 pt-3 border-t border-border/60 flex flex-col gap-1.5 text-[10px] tracking-[0.24em] uppercase">
+                <span className="text-muted-foreground/70 normal-case tracking-[0.16em]">Move Board · bboard pattern</span>
+                {NETWORK_IDS.map((n) => {
+                  const cfg = MOVEBOARD_CONTRACTS[n];
+                  const live = isMoveBoardDeployed(cfg);
+                  return (
+                    <Link
+                      key={`mb-${n}`}
+                      to="/showcase/move-board"
                       className={`flex items-center justify-between gap-2 hover:text-primary transition-colors ${live ? "text-primary" : "text-muted-foreground"}`}
                     >
                       <span>{live ? "●" : "○"} {n}</span>

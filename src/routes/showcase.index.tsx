@@ -60,6 +60,25 @@ function ShowcaseIndex() {
             locally with <code>bun scripts/dust-demo-preprod.mjs</code>.
           </p>
         </Link>
+
+        <Link
+          to="/showcase/move-board"
+          className="group block p-6 sm:p-8 border border-border hover:border-primary/60 transition-colors duration-500"
+        >
+          <div className="flex items-center justify-between gap-4">
+            <span className="eyebrow text-primary">Bboard pattern · call an existing contract</span>
+            <span className="text-[10px] tracking-[0.28em] uppercase text-muted-foreground">Live ↗</span>
+          </div>
+          <h2 className="font-display text-2xl sm:text-3xl mt-3 group-hover:text-primary transition-colors">
+            Move Board
+          </h2>
+          <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-2xl">
+            Post a dance move against an <strong>already-deployed</strong> contract — no fresh deploy per visitor.
+            Skips the DUST-heavy deploy step (helpful while the Preprod DUST sync bug is around) and only pays the
+            small <code>callTx</code> fee. Contract pattern from{" "}
+            <code>midnightntwrk/example-bboard</code>.
+          </p>
+        </Link>
       </div>
 
       <Link

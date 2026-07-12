@@ -33,10 +33,34 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { generateMnemonic } from "bip39";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, "..");
-const SEED_FILE = path.join(ROOT, ".midnight-wallet.local");
-const MANAGED = path.join(ROOT, "contracts/managed/timestamp-log");
+// Selects which contract this run targets. Default keeps the historical
+// timestamp-log / midnight-contract.<net>.json flow untouched.
+const CONTRACT_KEY = process.env.MIDNIGHT_CONTRACT ?? "timestamp-log";
+const CONTRACT_MAP = {
+  "timestamp-log": {
+    managedDir: "contracts/managed/timestamp-log",
+    sourceFile: "contracts/TimestampLog.compact",
+    contractName: "TimestampLog",
+    dataFile: (net) => `src/data/midnight-contract.${net}.json`,
+  },
+  "move-board": {
+    managedDir: "contracts/managed/move-board",
+    sourceFile: "contracts/MoveBoard.compact",
+    contractName: "MoveBoard",
+    dataFile: (net) => `src/data/moveboard-contract.${net}.json`,
+  },
+};
+const CONTRACT_CFG = CONTRACT_MAP[CONTRACT_KEY];
+if (!CONTRACT_CFG) {
+  console.error(
+    `[midnight-deploy] FATAL: MIDNIGHT_CONTRACT="${CONTRACT_KEY}" is not one of ${Object.keys(CONTRACT_MAP).join(", ")}`,
+  );
+  process.exit(1);
+}
+const MANAGED = path.join(ROOT, CONTRACT_CFG.managedDir);
+
+const NETWORK_ID = process.env.VITE_NETWORK_ID ?? "preview";
+const CONTRACT_JSON = path.join(ROOT, CONTRACT_CFG.dataFile(NETWORK_ID));
 
 const NETWORK_ID = process.env.VITE_NETWORK_ID ?? "preview";
 const CONTRACT_JSON = path.join(ROOT, `src/data/midnight-contract.${NETWORK_ID}.json`);
@@ -442,7 +466,7 @@ function loadContractModule() {
   if (!fs.existsSync(chosen)) {
     die(
       `Compiled contract not found. Expected ${cjs} or ${js}. ` +
-        `Run: compact compile contracts/TimestampLog.compact contracts/managed/timestamp-log`,
+        `Run: compact compile ${CONTRACT_CFG.sourceFile} ${CONTRACT_CFG.managedDir}`,
     );
   }
   return chosen;
@@ -642,7 +666,7 @@ async function main() {
     },
   };
   const compiledContract = CompiledContract
-    .make("TimestampLog", Contract)
+    .make(CONTRACT_CFG.contractName, Contract)
     .pipe(
       CompiledContract.withWitnesses({
         localSecretKey: (context) => [context.privateState, sk],
