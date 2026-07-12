@@ -173,6 +173,31 @@ function Index() {
               </div>
             </div>
           </div>
+
+          <div className="bg-card border border-border p-7 md:col-span-2">
+            <div className="h-full border-l border-primary/30 pl-5 flex flex-col justify-center gap-3">
+              <span className="eyebrow">Support · Midnight team</span>
+              <p className="font-display text-xl italic text-foreground leading-tight">
+                Hit a Preprod wall? Open a Service Desk ticket.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Bug reports, 1010 rejections, /check 400, DUST sync stalls — routed to the Midnight engineering team.
+              </p>
+              <div className="flex flex-wrap gap-5 text-[11px] uppercase tracking-[0.24em] mt-1">
+                <a
+                  href="https://midnightntwrk.github.io/servicedesk/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-primary hover:text-foreground transition-colors"
+                >
+                  Service Desk ↗
+                </a>
+                <Link to="/known-issues" className="text-primary hover:text-foreground transition-colors">
+                  Known issues →
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
