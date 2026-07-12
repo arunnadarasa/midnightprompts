@@ -213,6 +213,51 @@ const ISSUES: Issue[] = [
     ],
   },
   {
+    id: "check-400-engineering-confirmed",
+    title: "/check 400 — engineering-confirmed 0.31 ZKIR serialization gap",
+    symptom:
+      "`httpClientProofProvider`'s `createCheckPayload(preimage, keyMaterial.ir)` is rejected by `/check` on the 8.0.3 public prover, while Lace's wallet-delegated proving of the exact same callTx succeeds against that same prover.",
+    cause:
+      "Midnight team confirmed (Discord, 03/07/2026): this is a client/server `/check` serialization gap for 0.31 ZKIR, not user error or version drift. Needs the engineering team.",
+    fix: (
+      <>
+        <p>
+          Open a{" "}
+          <a href={SERVICE_DESK} target="_blank" rel="noreferrer" className="text-primary underline">
+            Service Desk ticket
+          </a>{" "}
+          with two linked issues:
+        </p>
+        <ol className="list-decimal pl-5 space-y-2 mt-2">
+          <li>
+            <strong>/check bad input.</strong> Include: deploy / create_market work, register_asset fails,{" "}
+            <code>Uint&lt;64&gt;</code> widen didn't fix (→ second reworked op), <code>check()</code> isn't
+            skippable (stub → WASM unreachable), latest stable provider is 4.1.1. Ask which prover parses
+            0.31 ZKIR on <code>/check</code>, ETA for the ZKIR-format fix from the 0.31.0 notes, and the
+            precise list of reworked ops to avoid on 8.0.3.
+          </li>
+          <li>
+            <strong>Matrix conflict.</strong> ledger-v8 8.0.3 (matrix) vs wallet-sdk-dust-wallet 4.1.0
+            needing 8.1.0's <code>Transaction.addIntent</code>. Ask for the coherent wallet-sdk set for the
+            8.0.3 row.
+          </li>
+        </ol>
+        <p className="mt-3">
+          Also note in the ticket that <code>lace-proof-pub.preprod.midnight.network</code> from
+          COMPATIBILITY.md doesn't resolve publicly. See the{" "}
+          <a href="#check-400-zkir-031" className="text-primary underline">
+            local-repro workaround section
+          </a>{" "}
+          for the Lace-vs-httpClientProofProvider bisect that produced this evidence.
+        </p>
+      </>
+    ),
+    links: [
+      { label: "Service Desk ↗", href: SERVICE_DESK },
+      { label: "Support matrix ↗", href: SUPPORT_MATRIX },
+    ],
+  },
+  {
     id: "preprod-matrix",
     title: "Preprod support matrix (current docs)",
     symptom: "Mixing SDK rows silently produces the failures above. Align every dep to the SAME row.",
