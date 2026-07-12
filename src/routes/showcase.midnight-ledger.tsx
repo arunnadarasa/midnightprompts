@@ -93,6 +93,13 @@ function MidnightLedgerDemo() {
         the local proof server, and a small amount of tDUST from the faucet.
       </p>
 
+      <p className="mt-3 text-[12px] text-muted-foreground">
+        Hit a <code>1010 InvalidDustSpendProof</code>, <code>DustSpendProcessed</code> decode error, or{" "}
+        <code>/check 400 bad input</code>?{" "}
+        <Link to="/known-issues" className="text-primary underline">See known issues →</Link>
+      </p>
+
+
       <div className="mt-8">
         <WalletConnectPanel expectedNetwork={network} />
       </div>
