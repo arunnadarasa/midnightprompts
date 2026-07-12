@@ -66,9 +66,6 @@ const MANAGED = path.join(ROOT, CONTRACT_CFG.managedDir);
 const NETWORK_ID = process.env.VITE_NETWORK_ID ?? "preview";
 const CONTRACT_JSON = path.join(ROOT, CONTRACT_CFG.dataFile(NETWORK_ID));
 
-const NETWORK_ID = process.env.VITE_NETWORK_ID ?? "preview";
-const CONTRACT_JSON = path.join(ROOT, `src/data/midnight-contract.${NETWORK_ID}.json`);
-
 // Per-network defaults (overridable via env). Preview + preprod are the two
 // hackathon-facing testnets; both are proved by the same local Docker proof server.
 const NETWORK_DEFAULTS = {
