@@ -137,6 +137,11 @@ function IdeaPage() {
             Paste into a fresh Lovable project. Make sure all five secrets above are set first.{" "}
             <Link to="/strategy" className="story-gold text-primary">read the build strategy →</Link>
           </p>
+          <p className="text-xs text-primary/80 mb-4 font-light leading-relaxed">
+            The prompt below includes a self-contained Connect-Lace step (DApp Connector v4) —
+            no extra setup needed on the target project.
+          </p>
+
           <pre className="whitespace-pre-wrap break-all font-mono text-[11px] sm:text-[13px] leading-relaxed p-4 sm:p-8 border border-border bg-card text-foreground/90 w-full max-w-full overflow-x-hidden" style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", letterSpacing: 0, wordBreak: "break-word", overflowWrap: "anywhere" }}>
 {idea.megaPrompt}
           </pre>
