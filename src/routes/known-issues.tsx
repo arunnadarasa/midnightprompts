@@ -60,6 +60,44 @@ const ISSUES: Issue[] = [
     ),
   },
   {
+    id: "lace-dust-sdk-zero",
+    title: "Lace shows DUST but SDK reports 0 / unshielded never syncs",
+    symptom:
+      "Lace displays a healthy DUST balance while `DustWallet.balance() = 0` and/or the unshielded leg never finishes syncing from the SDK. If the SDK dust leg doesn't reach tip, deploys fail with \"no fee DUST\" even though Lace looks funded.",
+    cause:
+      "Confirmed known Preprod pattern (Midnight team, Discord, 30/06/2026). Tracked on their side; wallet-SDK fixes in progress.",
+    fix: (
+      <ol className="list-decimal pl-5 space-y-1">
+        <li>
+          Pin every package to the current Preprod row on the{" "}
+          <a href={SUPPORT_MATRIX} target="_blank" rel="noreferrer" className="text-primary underline">
+            support matrix
+          </a>.
+        </li>
+        <li>
+          Preprod indexer v4:{" "}
+          <code>https://indexer.preprod.midnight.network/api/v4/graphql</code> ·{" "}
+          <code>wss://indexer.preprod.midnight.network/api/v4/graphql/ws</code>
+        </li>
+        <li>
+          Wallet config workaround that helps some setups:{" "}
+          <code>batchUpdates: {"{ size: 5000, timeout: 1, spacing: 4 }"}</code>
+        </li>
+        <li><code>NODE_OPTIONS="--max-old-space-size=8192"</code> for OOM during first sync.</li>
+        <li>Confirm the SDK uses the <strong>same seed</strong> as Lace — different seed = different wallet.</li>
+        <li>Only read DUST <strong>after full sync on all legs</strong>.</li>
+        <li>
+          Unblock local dev with <code>create-mn-app</code> / local docker network (undeployed) while
+          Preprod sync is rough.
+        </li>
+      </ol>
+    ),
+    links: [
+      { label: "Service Desk ↗", href: SERVICE_DESK },
+      { label: "Support matrix ↗", href: SUPPORT_MATRIX },
+    ],
+  },
+  {
     id: "dust-spend-processed-decode",
     title: "DustSpendProcessed ledger event decode failures",
     symptom:
@@ -172,6 +210,51 @@ const ISSUES: Issue[] = [
       { label: "Toolchain 0.31.0 notes ↗", href: "https://docs.midnight.network/relnotes/compact/toolchain-0.31.0" },
       { label: "Troubleshoot ↗", href: "https://docs.midnight.network/sdks/troubleshoot" },
       { label: "Service Desk ↗", href: SERVICE_DESK },
+    ],
+  },
+  {
+    id: "check-400-engineering-confirmed",
+    title: "/check 400 — engineering-confirmed 0.31 ZKIR serialization gap",
+    symptom:
+      "`httpClientProofProvider`'s `createCheckPayload(preimage, keyMaterial.ir)` is rejected by `/check` on the 8.0.3 public prover, while Lace's wallet-delegated proving of the exact same callTx succeeds against that same prover.",
+    cause:
+      "Midnight team confirmed (Discord, 03/07/2026): this is a client/server `/check` serialization gap for 0.31 ZKIR, not user error or version drift. Needs the engineering team.",
+    fix: (
+      <>
+        <p>
+          Open a{" "}
+          <a href={SERVICE_DESK} target="_blank" rel="noreferrer" className="text-primary underline">
+            Service Desk ticket
+          </a>{" "}
+          with two linked issues:
+        </p>
+        <ol className="list-decimal pl-5 space-y-2 mt-2">
+          <li>
+            <strong>/check bad input.</strong> Include: deploy / create_market work, register_asset fails,{" "}
+            <code>Uint&lt;64&gt;</code> widen didn't fix (→ second reworked op), <code>check()</code> isn't
+            skippable (stub → WASM unreachable), latest stable provider is 4.1.1. Ask which prover parses
+            0.31 ZKIR on <code>/check</code>, ETA for the ZKIR-format fix from the 0.31.0 notes, and the
+            precise list of reworked ops to avoid on 8.0.3.
+          </li>
+          <li>
+            <strong>Matrix conflict.</strong> ledger-v8 8.0.3 (matrix) vs wallet-sdk-dust-wallet 4.1.0
+            needing 8.1.0's <code>Transaction.addIntent</code>. Ask for the coherent wallet-sdk set for the
+            8.0.3 row.
+          </li>
+        </ol>
+        <p className="mt-3">
+          Also note in the ticket that <code>lace-proof-pub.preprod.midnight.network</code> from
+          COMPATIBILITY.md doesn't resolve publicly. See the{" "}
+          <a href="#check-400-zkir-031" className="text-primary underline">
+            local-repro workaround section
+          </a>{" "}
+          for the Lace-vs-httpClientProofProvider bisect that produced this evidence.
+        </p>
+      </>
+    ),
+    links: [
+      { label: "Service Desk ↗", href: SERVICE_DESK },
+      { label: "Support matrix ↗", href: SUPPORT_MATRIX },
     ],
   },
   {
