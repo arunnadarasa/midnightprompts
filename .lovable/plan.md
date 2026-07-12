@@ -1,11 +1,19 @@
-## Why the header is missing
+## Issue
 
-Every other page (`index.tsx`, `about.tsx`, etc.) wraps its content in `<SiteShell>`, which renders the top nav. `src/routes/known-issues.tsx` skips that wrapper, so the page renders bare — no nav, no footer.
+At tablet (≥ md, < lg — e.g. 768–1023px) the full desktop nav (Themes → Known Issues + Docs/Explorer) is shown, which overflows and clips off-screen. The burger menu currently only shows below `md`.
 
-## Fix
+## Fix — bump the desktop-nav breakpoint from `md` to `lg`
 
-Edit `src/routes/known-issues.tsx`:
-1. Add `import { SiteShell } from "@/components/site-shell";`.
-2. Wrap the component's returned JSX in `<SiteShell>…</SiteShell>`, matching the pattern used by `about.tsx`.
+In `src/components/site-shell.tsx`:
 
-No other changes — content, styles, and route config stay as-is.
+- Line 28 (`<nav>`): `hidden md:flex` → `hidden lg:flex` so the horizontal nav only shows from 1024px up.
+- Line 66 (`<SheetTrigger>`): `md:hidden` → `lg:hidden` so the burger stays visible on tablet.
+- Line 42 (Hackathon link): keep `hidden xl:inline-block` (already fine).
+
+The mobile sheet already contains every nav item + Hackathon/Docs/Explorer, so tablet users get the full menu via the burger — no content lost.
+
+## Out of scope
+
+- No visual/type/spacing redesign, no new components.
+- No change to the mobile sheet's contents or the desktop nav's contents.
+- No changes to page content, only the header breakpoint.
