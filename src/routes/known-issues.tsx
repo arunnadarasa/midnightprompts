@@ -332,11 +332,12 @@ const ISSUES: Issue[] = [
 function KnownIssuesPage() {
   return (
     <SiteShell>
-    <div className="max-w-4xl mx-auto px-5 sm:px-8 py-12 sm:py-20">
+    <div className="max-w-4xl mx-auto px-4 sm:px-8 py-10 sm:py-20 [&_code]:break-all [&_code]:whitespace-normal [&_code]:text-[11px] sm:[&_code]:text-[12px] [&_pre]:text-[10px] sm:[&_pre]:text-[11px]">
       <span className="eyebrow">Reference · July 2026 snapshot</span>
-      <h1 className="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
+      <h1 className="font-display text-3xl sm:text-4xl md:text-5xl mt-3 leading-[1.05] break-words">
         Midnight Preprod · <span className="italic text-primary">Known issues</span>
       </h1>
+
       <p className="mt-5 text-muted-foreground max-w-2xl leading-relaxed">
         Paraphrased notes from the Midnight team on Discord (July 2026). These are moving targets — always
         cross-check the{" "}
