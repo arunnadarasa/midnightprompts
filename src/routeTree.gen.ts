@@ -24,6 +24,7 @@ import { Route as ThemesThemeRouteImport } from './routes/themes.$theme'
 import { Route as ShowcaseProgrammaticDustRouteImport } from './routes/showcase.programmatic-dust'
 import { Route as ShowcaseMoveBoardRouteImport } from './routes/showcase.move-board'
 import { Route as ShowcaseMidnightLedgerRouteImport } from './routes/showcase.midnight-ledger'
+import { Route as ShowcaseChoreoLedgerLocalRouteImport } from './routes/showcase.choreo-ledger-local'
 import { Route as IdeasIdRouteImport } from './routes/ideas.$id'
 
 const WalletRoute = WalletRouteImport.update({
@@ -102,6 +103,12 @@ const ShowcaseMidnightLedgerRoute = ShowcaseMidnightLedgerRouteImport.update({
   path: '/midnight-ledger',
   getParentRoute: () => ShowcaseRoute,
 } as any)
+const ShowcaseChoreoLedgerLocalRoute =
+  ShowcaseChoreoLedgerLocalRouteImport.update({
+    id: '/choreo-ledger-local',
+    path: '/choreo-ledger-local',
+    getParentRoute: () => ShowcaseRoute,
+  } as any)
 const IdeasIdRoute = IdeasIdRouteImport.update({
   id: '/ideas/$id',
   path: '/ideas/$id',
@@ -119,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/themes': typeof ThemesRouteWithChildren
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
+  '/showcase/choreo-ledger-local': typeof ShowcaseChoreoLedgerLocalRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
   '/showcase/move-board': typeof ShowcaseMoveBoardRoute
   '/showcase/programmatic-dust': typeof ShowcaseProgrammaticDustRoute
@@ -135,6 +143,7 @@ export interface FileRoutesByTo {
   '/strategy': typeof StrategyRoute
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
+  '/showcase/choreo-ledger-local': typeof ShowcaseChoreoLedgerLocalRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
   '/showcase/move-board': typeof ShowcaseMoveBoardRoute
   '/showcase/programmatic-dust': typeof ShowcaseProgrammaticDustRoute
@@ -154,6 +163,7 @@ export interface FileRoutesById {
   '/themes': typeof ThemesRouteWithChildren
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
+  '/showcase/choreo-ledger-local': typeof ShowcaseChoreoLedgerLocalRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
   '/showcase/move-board': typeof ShowcaseMoveBoardRoute
   '/showcase/programmatic-dust': typeof ShowcaseProgrammaticDustRoute
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/themes'
     | '/wallet'
     | '/ideas/$id'
+    | '/showcase/choreo-ledger-local'
     | '/showcase/midnight-ledger'
     | '/showcase/move-board'
     | '/showcase/programmatic-dust'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/strategy'
     | '/wallet'
     | '/ideas/$id'
+    | '/showcase/choreo-ledger-local'
     | '/showcase/midnight-ledger'
     | '/showcase/move-board'
     | '/showcase/programmatic-dust'
@@ -208,6 +220,7 @@ export interface FileRouteTypes {
     | '/themes'
     | '/wallet'
     | '/ideas/$id'
+    | '/showcase/choreo-ledger-local'
     | '/showcase/midnight-ledger'
     | '/showcase/move-board'
     | '/showcase/programmatic-dust'
@@ -336,6 +349,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShowcaseMidnightLedgerRouteImport
       parentRoute: typeof ShowcaseRoute
     }
+    '/showcase/choreo-ledger-local': {
+      id: '/showcase/choreo-ledger-local'
+      path: '/choreo-ledger-local'
+      fullPath: '/showcase/choreo-ledger-local'
+      preLoaderRoute: typeof ShowcaseChoreoLedgerLocalRouteImport
+      parentRoute: typeof ShowcaseRoute
+    }
     '/ideas/$id': {
       id: '/ideas/$id'
       path: '/ideas/$id'
@@ -347,6 +367,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface ShowcaseRouteChildren {
+  ShowcaseChoreoLedgerLocalRoute: typeof ShowcaseChoreoLedgerLocalRoute
   ShowcaseMidnightLedgerRoute: typeof ShowcaseMidnightLedgerRoute
   ShowcaseMoveBoardRoute: typeof ShowcaseMoveBoardRoute
   ShowcaseProgrammaticDustRoute: typeof ShowcaseProgrammaticDustRoute
@@ -354,6 +375,7 @@ interface ShowcaseRouteChildren {
 }
 
 const ShowcaseRouteChildren: ShowcaseRouteChildren = {
+  ShowcaseChoreoLedgerLocalRoute: ShowcaseChoreoLedgerLocalRoute,
   ShowcaseMidnightLedgerRoute: ShowcaseMidnightLedgerRoute,
   ShowcaseMoveBoardRoute: ShowcaseMoveBoardRoute,
   ShowcaseProgrammaticDustRoute: ShowcaseProgrammaticDustRoute,
