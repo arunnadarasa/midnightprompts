@@ -62,6 +62,25 @@ function ShowcaseIndex() {
         </Link>
 
         <Link
+          to="/showcase/choreo-ledger-local"
+          className="group block p-6 sm:p-8 border border-border hover:border-primary/60 transition-colors duration-500"
+        >
+          <div className="flex items-center justify-between gap-4">
+            <span className="eyebrow text-primary">Local dev · advised by Midnight DevRel</span>
+            <span className="text-[10px] tracking-[0.28em] uppercase text-muted-foreground">Local ↗</span>
+          </div>
+          <h2 className="font-display text-2xl sm:text-3xl mt-3 group-hover:text-primary transition-colors">
+            Choreo Ledger (Local)
+          </h2>
+          <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-2xl">
+            The Demo 01 Compact contract, run against a <strong>local standalone stack</strong>{" "}
+            (<code>NetworkId.Undeployed</code>: node + indexer + proof-server on{" "}
+            <code>localhost</code>). Zero faucet, unlimited tDUST, no Preprod sync bugs — the
+            path Midnight DevRel currently recommends while Preprod stabilises.
+          </p>
+        </Link>
+
+        <Link
           to="/showcase/move-board"
           className="group block p-6 sm:p-8 border border-border hover:border-primary/60 transition-colors duration-500"
         >
