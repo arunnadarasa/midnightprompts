@@ -384,32 +384,32 @@ function KnownIssuesPage() {
           <article
             key={issue.id}
             id={issue.id}
-            className="scroll-mt-20 p-6 sm:p-7 border border-border bg-card"
+            className="scroll-mt-20 p-4 sm:p-6 md:p-7 border border-border bg-card overflow-hidden"
           >
-            <h2 className="font-display text-2xl text-foreground">{issue.title}</h2>
-            <div className="mt-4 grid gap-3 text-sm text-foreground/85 leading-relaxed">
-              <div>
+            <h2 className="font-display text-xl sm:text-2xl text-foreground break-words">{issue.title}</h2>
+            <div className="mt-4 grid gap-3 text-sm text-foreground/85 leading-relaxed min-w-0">
+              <div className="min-w-0">
                 <div className="eyebrow text-primary mb-1">Symptom</div>
                 <p>{issue.symptom}</p>
               </div>
-              <div>
+              <div className="min-w-0">
                 <div className="eyebrow text-primary mb-1">Cause</div>
                 <p>{issue.cause}</p>
               </div>
-              <div>
+              <div className="min-w-0">
                 <div className="eyebrow text-primary mb-1">Workaround</div>
                 <div>{issue.fix}</div>
               </div>
             </div>
             {issue.links && issue.links.length > 0 && (
-              <div className="mt-5 flex flex-wrap gap-4 text-[11px] uppercase tracking-[0.24em]">
+              <div className="mt-5 flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-4 text-[11px] uppercase tracking-[0.24em]">
                 {issue.links.map((l) => (
                   <a
                     key={l.href}
                     href={l.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-primary hover:text-foreground transition-colors"
+                    className="text-primary hover:text-foreground transition-colors break-all"
                   >
                     {l.label}
                   </a>
@@ -417,6 +417,7 @@ function KnownIssuesPage() {
               </div>
             )}
           </article>
+
         ))}
       </div>
 
