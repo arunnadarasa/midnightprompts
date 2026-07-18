@@ -421,7 +421,7 @@ function KnownIssuesPage() {
         ))}
       </div>
 
-      <div className="mt-12 p-6 border border-primary/30 bg-card text-sm text-muted-foreground">
+      <div className="mt-12 p-4 sm:p-6 border border-primary/30 bg-card text-sm text-muted-foreground">
         Source: Midnight team (Nasihudeen Jimoh) responses on the Midnight Discord, June–July 2026, paraphrased
         for reference. When escalating, open a{" "}
         <a href={SERVICE_DESK} target="_blank" rel="noreferrer" className="text-primary underline">
@@ -430,12 +430,13 @@ function KnownIssuesPage() {
         with pinned versions, indexer URLs, and whether you're seeing unshielded/DUST sync errors or hangs.
       </div>
 
-      <div className="mt-10 flex flex-wrap gap-4 text-[11px] uppercase tracking-[0.24em]">
+      <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 text-[11px] uppercase tracking-[0.24em]">
         <Link to="/showcase" className="text-primary hover:text-foreground">← Back to showcase</Link>
         <Link to="/showcase/choreo-ledger-local" className="text-primary hover:text-foreground">Choreo Ledger (Local) →</Link>
         <Link to="/showcase/midnight-ledger" className="text-primary hover:text-foreground">Midnight Ledger demo →</Link>
         <Link to="/showcase/programmatic-dust" className="text-primary hover:text-foreground">Programmatic DUST →</Link>
       </div>
+
     </div>
     </SiteShell>
   );
