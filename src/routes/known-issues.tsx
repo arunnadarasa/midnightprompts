@@ -350,6 +350,20 @@ function KnownIssuesPage() {
         with your pinned versions before assuming a workaround still applies.
       </p>
 
+      <div className="mt-6 p-5 border border-primary/40 bg-card">
+        <span className="eyebrow text-primary">recommended workaround · local devnet</span>
+        <p className="mt-2 text-sm text-foreground/90 leading-relaxed">
+          For active development, Midnight DevRel currently advises running against a{" "}
+          <strong>local standalone stack</strong> (<code>NetworkId.Undeployed</code>) rather
+          than fighting Preprod DUST sync. The node mints unlimited tDUST to the genesis
+          wallet and every version is guaranteed to match the SDK bundle you're building
+          against.{" "}
+          <Link to="/showcase/choreo-ledger-local" className="text-primary underline">
+            See the Choreo Ledger (Local) demo →
+          </Link>
+        </p>
+      </div>
+
       <nav className="mt-8 p-4 border border-border bg-card text-[12px]">
         <div className="eyebrow text-primary mb-2">On this page</div>
         <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-1">
@@ -415,6 +429,7 @@ function KnownIssuesPage() {
 
       <div className="mt-10 flex flex-wrap gap-4 text-[11px] uppercase tracking-[0.24em]">
         <Link to="/showcase" className="text-primary hover:text-foreground">← Back to showcase</Link>
+        <Link to="/showcase/choreo-ledger-local" className="text-primary hover:text-foreground">Choreo Ledger (Local) →</Link>
         <Link to="/showcase/midnight-ledger" className="text-primary hover:text-foreground">Midnight Ledger demo →</Link>
         <Link to="/showcase/programmatic-dust" className="text-primary hover:text-foreground">Programmatic DUST →</Link>
       </div>
