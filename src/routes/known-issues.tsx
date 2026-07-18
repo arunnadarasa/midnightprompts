@@ -367,15 +367,16 @@ function KnownIssuesPage() {
 
       <nav className="mt-8 p-4 border border-border bg-card text-[12px]">
         <div className="eyebrow text-primary mb-2">On this page</div>
-        <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-1">
+        <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-2">
           {ISSUES.map((i) => (
             <li key={i.id}>
-              <a href={`#${i.id}`} className="text-foreground/80 hover:text-primary transition-colors">
+              <a href={`#${i.id}`} className="block py-1 text-foreground/80 hover:text-primary transition-colors">
                 → {i.title}
               </a>
             </li>
           ))}
         </ul>
+
       </nav>
 
       <div className="mt-10 space-y-6">
