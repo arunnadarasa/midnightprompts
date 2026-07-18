@@ -351,7 +351,7 @@ function KnownIssuesPage() {
         with your pinned versions before assuming a workaround still applies.
       </p>
 
-      <div className="mt-6 p-5 border border-primary/40 bg-card">
+      <div className="mt-6 p-4 sm:p-5 border border-primary/40 bg-card">
         <span className="eyebrow text-primary">recommended workaround · local devnet</span>
         <p className="mt-2 text-sm text-foreground/90 leading-relaxed">
           For active development, Midnight DevRel currently advises running against a{" "}
