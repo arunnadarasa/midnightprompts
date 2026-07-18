@@ -332,11 +332,12 @@ const ISSUES: Issue[] = [
 function KnownIssuesPage() {
   return (
     <SiteShell>
-    <div className="max-w-4xl mx-auto px-5 sm:px-8 py-12 sm:py-20">
+    <div className="max-w-4xl mx-auto px-4 sm:px-8 py-10 sm:py-20 [&_code]:break-all [&_code]:whitespace-normal [&_code]:text-[11px] sm:[&_code]:text-[12px] [&_pre]:text-[10px] sm:[&_pre]:text-[11px]">
       <span className="eyebrow">Reference · July 2026 snapshot</span>
-      <h1 className="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
+      <h1 className="font-display text-3xl sm:text-4xl md:text-5xl mt-3 leading-[1.05] break-words">
         Midnight Preprod · <span className="italic text-primary">Known issues</span>
       </h1>
+
       <p className="mt-5 text-muted-foreground max-w-2xl leading-relaxed">
         Paraphrased notes from the Midnight team on Discord (July 2026). These are moving targets — always
         cross-check the{" "}
@@ -350,7 +351,7 @@ function KnownIssuesPage() {
         with your pinned versions before assuming a workaround still applies.
       </p>
 
-      <div className="mt-6 p-5 border border-primary/40 bg-card">
+      <div className="mt-6 p-4 sm:p-5 border border-primary/40 bg-card">
         <span className="eyebrow text-primary">recommended workaround · local devnet</span>
         <p className="mt-2 text-sm text-foreground/90 leading-relaxed">
           For active development, Midnight DevRel currently advises running against a{" "}
@@ -366,15 +367,16 @@ function KnownIssuesPage() {
 
       <nav className="mt-8 p-4 border border-border bg-card text-[12px]">
         <div className="eyebrow text-primary mb-2">On this page</div>
-        <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-1">
+        <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-2">
           {ISSUES.map((i) => (
             <li key={i.id}>
-              <a href={`#${i.id}`} className="text-foreground/80 hover:text-primary transition-colors">
+              <a href={`#${i.id}`} className="block py-1 text-foreground/80 hover:text-primary transition-colors">
                 → {i.title}
               </a>
             </li>
           ))}
         </ul>
+
       </nav>
 
       <div className="mt-10 space-y-6">
@@ -382,32 +384,32 @@ function KnownIssuesPage() {
           <article
             key={issue.id}
             id={issue.id}
-            className="scroll-mt-20 p-6 sm:p-7 border border-border bg-card"
+            className="scroll-mt-20 p-4 sm:p-6 md:p-7 border border-border bg-card overflow-hidden"
           >
-            <h2 className="font-display text-2xl text-foreground">{issue.title}</h2>
-            <div className="mt-4 grid gap-3 text-sm text-foreground/85 leading-relaxed">
-              <div>
+            <h2 className="font-display text-xl sm:text-2xl text-foreground break-words">{issue.title}</h2>
+            <div className="mt-4 grid gap-3 text-sm text-foreground/85 leading-relaxed min-w-0">
+              <div className="min-w-0">
                 <div className="eyebrow text-primary mb-1">Symptom</div>
                 <p>{issue.symptom}</p>
               </div>
-              <div>
+              <div className="min-w-0">
                 <div className="eyebrow text-primary mb-1">Cause</div>
                 <p>{issue.cause}</p>
               </div>
-              <div>
+              <div className="min-w-0">
                 <div className="eyebrow text-primary mb-1">Workaround</div>
                 <div>{issue.fix}</div>
               </div>
             </div>
             {issue.links && issue.links.length > 0 && (
-              <div className="mt-5 flex flex-wrap gap-4 text-[11px] uppercase tracking-[0.24em]">
+              <div className="mt-5 flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-4 text-[11px] uppercase tracking-[0.24em]">
                 {issue.links.map((l) => (
                   <a
                     key={l.href}
                     href={l.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-primary hover:text-foreground transition-colors"
+                    className="text-primary hover:text-foreground transition-colors break-all"
                   >
                     {l.label}
                   </a>
@@ -415,10 +417,11 @@ function KnownIssuesPage() {
               </div>
             )}
           </article>
+
         ))}
       </div>
 
-      <div className="mt-12 p-6 border border-primary/30 bg-card text-sm text-muted-foreground">
+      <div className="mt-12 p-4 sm:p-6 border border-primary/30 bg-card text-sm text-muted-foreground">
         Source: Midnight team (Nasihudeen Jimoh) responses on the Midnight Discord, June–July 2026, paraphrased
         for reference. When escalating, open a{" "}
         <a href={SERVICE_DESK} target="_blank" rel="noreferrer" className="text-primary underline">
@@ -427,12 +430,13 @@ function KnownIssuesPage() {
         with pinned versions, indexer URLs, and whether you're seeing unshielded/DUST sync errors or hangs.
       </div>
 
-      <div className="mt-10 flex flex-wrap gap-4 text-[11px] uppercase tracking-[0.24em]">
+      <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 text-[11px] uppercase tracking-[0.24em]">
         <Link to="/showcase" className="text-primary hover:text-foreground">← Back to showcase</Link>
         <Link to="/showcase/choreo-ledger-local" className="text-primary hover:text-foreground">Choreo Ledger (Local) →</Link>
         <Link to="/showcase/midnight-ledger" className="text-primary hover:text-foreground">Midnight Ledger demo →</Link>
         <Link to="/showcase/programmatic-dust" className="text-primary hover:text-foreground">Programmatic DUST →</Link>
       </div>
+
     </div>
     </SiteShell>
   );
