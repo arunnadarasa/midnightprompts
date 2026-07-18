@@ -1,7 +1,8 @@
 import preview from "./midnight-contract.preview.json";
 import preprod from "./midnight-contract.preprod.json";
+import undeployed from "./midnight-contract.undeployed.json";
 
-export type NetworkId = "preview" | "preprod";
+export type NetworkId = "preview" | "preprod" | "undeployed";
 
 export type MidnightContractCfg = {
   network: string;
@@ -27,9 +28,10 @@ export const PLACEHOLDER_ADDRESS =
 export const CONTRACTS: Record<NetworkId, MidnightContractCfg> = {
   preview: preview as MidnightContractCfg,
   preprod: preprod as MidnightContractCfg,
+  undeployed: undeployed as MidnightContractCfg,
 };
 
-export const NETWORK_IDS: NetworkId[] = ["preview", "preprod"];
+export const NETWORK_IDS: NetworkId[] = ["preview", "preprod", "undeployed"];
 
 export function isDeployed(cfg: MidnightContractCfg) {
   return !!cfg.address && cfg.address !== PLACEHOLDER_ADDRESS;

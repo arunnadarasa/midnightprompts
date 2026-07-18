@@ -1,0 +1,17 @@
+{
+  "network": "Midnight Local · Undeployed",
+  "networkId": "undeployed",
+  "compactVersion": "0.23",
+  "sdkVersion": "midnight-js-contracts@4.1.1 · wallet@4.0.0 · wallet-sdk-hd@3.1.0-beta.1",
+  "proofServerVersion": "docker: midnightntwrk/proof-server:latest (local)",
+  "address": "0000000000000000000000000000000000000000000000000000000000000000",
+  "deployTx": null,
+  "explorer": "",
+  "rpc": "ws://localhost:9944",
+  "indexerHttp": "http://localhost:8088/api/v1/graphql",
+  "indexerWs": "ws://localhost:8088/api/v1/graphql/ws",
+  "faucet": "",
+  "addressPrefix": "mn_shield-addr_undeployed1",
+  "unshieldedPrefix": "mn_addr_undeployed1",
+  "note": "Local standalone stack (node + indexer + proof-server via docker compose). No faucet needed — the genesis wallet mints tDUST directly. Deploy with VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs after the standalone containers are healthy."
+}
