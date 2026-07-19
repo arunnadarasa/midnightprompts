@@ -260,18 +260,18 @@ function PreflightPage() {
           <div className="p-4 border border-border bg-card">
             <div className="flex items-center justify-between">
               <div className="eyebrow text-primary">env for a fresh Lovable project</div>
-              <button
-                type="button"
-                onClick={() => {
-                  void navigator.clipboard.writeText(ENV_SNIPPET).then(() => {
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 1500);
-                  });
-                }}
-                className="text-[10px] uppercase tracking-[0.24em] text-primary hover:text-foreground transition-colors"
-              >
-                {copied ? "copied" : "copy"}
-              </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    void navigator.clipboard.writeText(ENV_SNIPPET).then(() => {
+                      setCopiedEnv(true);
+                      setTimeout(() => setCopiedEnv(false), 1500);
+                    });
+                  }}
+                  className="text-[10px] uppercase tracking-[0.24em] text-primary hover:text-foreground transition-colors"
+                >
+                  {copiedEnv ? "copied" : "copy"}
+                </button>
             </div>
             <pre className="mt-2 font-mono text-[10px] text-muted-foreground whitespace-pre-wrap break-all">
 {ENV_SNIPPET}
