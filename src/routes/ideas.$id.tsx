@@ -137,21 +137,13 @@ function IdeaPage() {
         </section>
 
         <section className="mt-12">
-          <div className="flex items-baseline justify-between gap-4 mb-4 flex-wrap">
-            <div>
-              <span className="eyebrow block mb-2">Appendix · Mega-prompt</span>
-              <h2 className="font-display text-3xl italic text-foreground">The build prompt.</h2>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="hidden sm:inline-flex items-center gap-1 px-3 py-2 border border-primary/40 eyebrow text-primary">
-                budget · 1 message
-              </span>
-              <CopyButton text={activePrompt} label={`Copy · ${activeMeta.label}`} />
-            </div>
+          <div className="mb-4">
+            <span className="eyebrow block mb-2">Appendix · Mega-prompt</span>
+            <h2 className="font-display text-3xl italic text-foreground">The build prompt.</h2>
           </div>
 
-          <div className="mb-4">
-            <div className="inline-flex flex-wrap gap-px bg-border border border-border">
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div className="grid grid-cols-3 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
               {VARIANT_KEYS.map((k) => {
                 const active = k === variant;
                 return (
@@ -160,7 +152,7 @@ function IdeaPage() {
                     type="button"
                     onClick={() => setVariant(k)}
                     className={
-                      "px-4 py-2 text-[11px] uppercase tracking-[0.24em] transition-colors " +
+                      "px-2 py-2 text-[10px] tracking-[0.18em] uppercase text-center transition-colors sm:px-4 sm:text-[11px] sm:tracking-[0.24em] " +
                       (active
                         ? "bg-primary text-primary-foreground"
                         : "bg-card text-foreground/70 hover:text-primary hover:bg-background")
@@ -172,25 +164,32 @@ function IdeaPage() {
                 );
               })}
             </div>
-            <p className="mt-3 text-xs text-muted-foreground font-light leading-relaxed max-w-3xl">
-              <span className="eyebrow text-primary mr-2">{activeMeta.label}</span>
-              {activeMeta.caption}
-            </p>
-            {variant === "undeployed" && (
-              <p className="mt-2 text-xs text-primary/80 font-light leading-relaxed max-w-3xl">
-                This variant includes step-by-step Docker + Compose instructions for macOS, Windows (WSL2),
-                and Linux inside the prompt.{" "}
-                <Link to="/showcase/choreo-ledger-local" className="story-gold text-primary">
-                  see the Choreo Ledger (Local) demo →
-                </Link>{" "}
-                <Link to="/known-issues" className="story-gold text-primary">
-                  known issues →
-                </Link>
-              </p>
-            )}
+            <div className="flex items-center gap-2 self-end sm:self-auto">
+              <span className="hidden sm:inline-flex items-center gap-1 px-3 py-2 border border-primary/40 eyebrow text-primary">
+                budget · 1 message
+              </span>
+              <CopyButton text={activePrompt} label={`Copy · ${activeMeta.label}`} />
+            </div>
           </div>
 
-          <p className="text-sm text-muted-foreground mb-4 font-light leading-relaxed">
+          <p className="mt-3 text-xs text-muted-foreground font-light leading-relaxed max-w-3xl">
+            <span className="eyebrow text-primary mr-2">{activeMeta.label}</span>
+            {activeMeta.caption}
+          </p>
+          {variant === "undeployed" && (
+            <p className="mt-2 text-xs text-primary/80 font-light leading-relaxed max-w-3xl">
+              This variant includes step-by-step Docker + Compose instructions for macOS, Windows (WSL2),
+              and Linux inside the prompt.{" "}
+              <Link to="/showcase/choreo-ledger-local" className="story-gold text-primary">
+                see the Choreo Ledger (Local) demo →
+              </Link>{" "}
+              <Link to="/known-issues" className="story-gold text-primary">
+                known issues →
+              </Link>
+            </p>
+          )}
+
+          <p className="mt-4 text-sm text-muted-foreground mb-4 font-light leading-relaxed">
             Paste into a fresh Lovable project. Make sure the secrets for this target are set first.{" "}
             <Link to="/strategy" className="story-gold text-primary">read the build strategy →</Link>
           </p>
@@ -199,7 +198,7 @@ function IdeaPage() {
             no extra setup needed on the target project.
           </p>
 
-          <pre className="whitespace-pre-wrap break-all font-mono text-[11px] sm:text-[13px] leading-relaxed p-4 sm:p-8 border border-border bg-card text-foreground/90 w-full max-w-full overflow-x-hidden" style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", letterSpacing: 0, wordBreak: "break-word", overflowWrap: "anywhere" }}>
+          <pre className="whitespace-pre-wrap break-words font-mono text-[11px] sm:text-[13px] leading-relaxed p-4 sm:p-6 border border-border bg-card text-foreground/90 w-full max-w-full overflow-x-hidden" style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", letterSpacing: 0, wordBreak: "break-word", overflowWrap: "anywhere" }}>
 {activePrompt}
           </pre>
           <div className="mt-5 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.28em]">
@@ -207,7 +206,7 @@ function IdeaPage() {
               href={`https://lovable.dev/?prompt=${encodeURIComponent(activePrompt)}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold hover:bg-foreground transition-colors duration-500"
+              className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold hover:bg-foreground transition-colors duration-500"
             >
               Open in Lovable · {activeMeta.label} ↗
             </a>
@@ -216,7 +215,7 @@ function IdeaPage() {
                 href={activeMeta.explorer}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 border border-primary/40 text-foreground hover:bg-primary hover:text-primary-foreground transition-colors duration-500"
+                className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-3 border border-primary/40 text-foreground hover:bg-primary hover:text-primary-foreground transition-colors duration-500"
               >
                 Midnight Explorer ↗
               </a>
@@ -224,13 +223,14 @@ function IdeaPage() {
             {variant === "undeployed" && (
               <Link
                 to="/showcase/choreo-ledger-local"
-                className="inline-flex items-center gap-2 px-6 py-3 border border-primary/40 text-foreground hover:bg-primary hover:text-primary-foreground transition-colors duration-500"
+                className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-3 border border-primary/40 text-foreground hover:bg-primary hover:text-primary-foreground transition-colors duration-500"
               >
                 Local stack guide →
               </Link>
             )}
           </div>
         </section>
+
 
         <section className="mt-12">
           <span className="eyebrow block mb-2">Appendix · Market</span>
