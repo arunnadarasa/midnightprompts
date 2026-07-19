@@ -552,10 +552,14 @@ def main():
                 f"This idea fits {new_hook['name']} because {new_hook['tag']} is exactly what "
                 f"a {idea.get('subDiscipline','creative')} demo needs: {new_hook['kernel'][:120]}..."
             )
-            variants = {net: make_prompt(idea, t, net) for net in VARIANTS}
-            idea["megaPromptVariants"] = variants
-            idea["megaPrompt"] = variants["preview"]  # backward-compat default
+            # Prompts are NOT written to JSON anymore — they are built at render time by
+            # src/lib/mega-prompt-variants.ts (buildVariant). This script keeps the metadata
+            # fields (hook, rationale, etc.) authoritative. If you change any prompt string
+            # here, mirror the same edit in src/lib/mega-prompt-variants.ts.
+            idea.pop("megaPromptVariants", None)
+            idea.pop("megaPrompt", None)
             total += 1
+
         p.write_text(json.dumps(doc, indent=2, ensure_ascii=False))
         print(f"  {t['slug']}: {len(doc['ideas'])} × 3 variants rewritten")
     print(f"total ideas: {total} — total prompts: {total * 3}")
