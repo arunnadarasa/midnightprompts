@@ -91,6 +91,7 @@ function SiteHeader() {
               <MobileLink to="/quantum-primer" onClick={close}>Primer</MobileLink>
               <MobileLink to="/about" onClick={close}>About</MobileLink>
               <MobileLink to="/known-issues" onClick={close}>Known Issues</MobileLink>
+              <MobileLink to="/undeployed" onClick={close}>Undeployed</MobileLink>
               <MobileLink to="/undeployed-preflight" onClick={close}>Preflight</MobileLink>
               <a
                 href="https://creativequantum.lovable.app/"
