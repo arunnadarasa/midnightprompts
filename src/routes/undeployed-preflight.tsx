@@ -193,9 +193,23 @@ function PreflightPage() {
         </p>
 
         <div className="mt-6 p-4 border border-primary/30 bg-card text-[12px] leading-relaxed">
-          <span className="eyebrow text-primary">no stack yet?</span>
+          <div className="flex items-center justify-between gap-3">
+            <span className="eyebrow text-primary">start / restart stack</span>
+            <button
+              type="button"
+              onClick={() => {
+                void navigator.clipboard.writeText("bun scripts/midnight-standalone.mjs up").then(() => {
+                  setCopiedStack(true);
+                  setTimeout(() => setCopiedStack(false), 1500);
+                });
+              }}
+              className="text-[10px] uppercase tracking-[0.24em] text-primary hover:text-foreground transition-colors"
+            >
+              {copiedStack ? "copied" : "copy"}
+            </button>
+          </div>
           <p className="mt-2 text-muted-foreground">
-            Start it in one command (requires Docker running):
+            Requires Docker Desktop (macOS/Windows) or Docker Engine (Linux) running.
           </p>
           <pre className="mt-2 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto">
 {`bun scripts/midnight-standalone.mjs up`}
