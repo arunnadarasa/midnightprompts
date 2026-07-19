@@ -264,38 +264,73 @@ function PreflightPage() {
 
         <div className="mt-8 grid sm:grid-cols-2 gap-3 text-[11px]">
           <div className="p-4 border border-border bg-card">
-            <div className="eyebrow text-primary">Lace</div>
+            <div className="eyebrow text-primary">Lace wallet</div>
             <div className="mt-2 text-muted-foreground leading-relaxed">
               {laceNetwork
-                ? <>Detected connector: <code className="text-foreground">{laceNetwork}</code>. Set Lace network to a custom RPC pointing at <code className="text-foreground">ws://localhost:9944</code>.</>
+                ? <>Detected connector: <code className="text-foreground">{laceNetwork}</code>. Set Lace → Settings → Network → Custom → RPC = <code className="text-foreground">ws://localhost:9944</code>, then switch to that network.</>
                 : "Lace connector not detected in this browser. Install/enable the Midnight-enabled Lace extension, then point it at ws://localhost:9944."}
             </div>
           </div>
           <div className="p-4 border border-border bg-card">
             <div className="flex items-center justify-between">
-              <div className="eyebrow text-primary">env for a fresh Lovable project</div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    void navigator.clipboard.writeText(ENV_SNIPPET).then(() => {
-                      setCopiedEnv(true);
-                      setTimeout(() => setCopiedEnv(false), 1500);
-                    });
-                  }}
-                  className="text-[10px] uppercase tracking-[0.24em] text-primary hover:text-foreground transition-colors"
-                >
-                  {copiedEnv ? "copied" : "copy"}
-                </button>
+              <div className="eyebrow text-primary">Lovable env secrets</div>
+              <button
+                type="button"
+                onClick={() => {
+                  void navigator.clipboard.writeText(ENV_SNIPPET).then(() => {
+                    setCopiedEnv(true);
+                    setTimeout(() => setCopiedEnv(false), 1500);
+                  });
+                }}
+                className="text-[10px] uppercase tracking-[0.24em] text-primary hover:text-foreground transition-colors"
+              >
+                {copiedEnv ? "copied" : "copy"}
+              </button>
             </div>
             <pre className="mt-2 font-mono text-[10px] text-muted-foreground whitespace-pre-wrap break-all">
 {ENV_SNIPPET}
             </pre>
           </div>
+          <div className="p-4 border border-border bg-card">
+            <div className="flex items-center justify-between">
+              <div className="eyebrow text-primary">deploy contract</div>
+              <button
+                type="button"
+                onClick={() => {
+                  void navigator.clipboard.writeText("VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs").then(() => {
+                    setCopiedDeploy(true);
+                    setTimeout(() => setCopiedDeploy(false), 1500);
+                  });
+                }}
+                className="text-[10px] uppercase tracking-[0.24em] text-primary hover:text-foreground transition-colors"
+              >
+                {copiedDeploy ? "copied" : "copy"}
+              </button>
+            </div>
+            <pre className="mt-2 font-mono text-[10px] text-muted-foreground whitespace-pre-wrap break-all">
+{`VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs`}
+            </pre>
+            <p className="mt-2 text-muted-foreground">
+              Paste the printed hex address into <code className="text-foreground">VITE_DEFAULT_CONTRACT</code>.
+            </p>
+          </div>
+          <div className="p-4 border border-border bg-card">
+            <div className="eyebrow text-primary">local endpoints</div>
+            <div className="mt-2 font-mono text-[10px] text-muted-foreground break-all">
+              node · {NODE_WS}
+            </div>
+            <div className="mt-1 font-mono text-[10px] text-muted-foreground break-all">
+              indexer · {INDEXER_HTTP}
+            </div>
+            <div className="mt-1 font-mono text-[10px] text-muted-foreground break-all">
+              proof · {PROOF_HTTP}
+            </div>
+          </div>
         </div>
 
         <div className="mt-8 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.28em]">
-          <a
-            href="/showcase/choreo-ledger-local"
+          <Link
+            to="/showcase/choreo-ledger-local"
             className={`inline-flex items-center gap-2 px-6 py-3 font-semibold transition-colors duration-500 ${
               allOk
                 ? "bg-primary text-primary-foreground hover:bg-foreground"
@@ -303,12 +338,20 @@ function PreflightPage() {
             }`}
           >
             Choreo Ledger (Local) →
-          </a>
-          <a
-            href="/known-issues"
+          </Link>
+          <Link
+            to="/known-issues"
             className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground hover:border-primary/60 transition-colors duration-500"
           >
             Known issues
+          </Link>
+          <a
+            href="https://midnightntwrk.github.io/servicedesk/"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground hover:border-primary/60 transition-colors duration-500"
+          >
+            Service Desk ↗
           </a>
         </div>
       </article>
