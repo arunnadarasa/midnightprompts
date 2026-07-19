@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { CopyButton } from "@/components/copy-button";
 import { QuantumChip } from "@/components/quantum-chip";
 import { getIdea, getTheme, getHook, IDEAS_BY_THEME, type NetworkVariant } from "@/data/ideas";
+import { buildVariant } from "@/lib/mega-prompt-variants";
 import { getPlainProposition } from "@/lib/plain-language";
+
 
 const VARIANT_META: Record<NetworkVariant, { label: string; caption: string; explorer: string | null }> = {
   preview:    { label: "Preview",             caption: "Fastest to demo. Testnet resets often. Faucet: nethermind.dev preview.", explorer: "https://preview.midnightexplorer.com/" },
@@ -54,15 +56,10 @@ function IdeaPage() {
     .filter((i) => i.id !== idea.id && (i.subDiscipline === idea.subDiscipline || i.quantumHookId === idea.quantumHookId))
     .slice(0, 4);
 
-  const variants =
-    idea.megaPromptVariants ?? {
-      preview: idea.megaPrompt,
-      preprod: idea.megaPrompt,
-      undeployed: idea.megaPrompt,
-    };
   const [variant, setVariant] = useState<NetworkVariant>("preview");
-  const activePrompt = variants[variant];
+  const activePrompt = useMemo(() => buildVariant(idea, theme, variant), [idea, theme, variant]);
   const activeMeta = VARIANT_META[variant];
+
 
   return (
     <SiteShell>

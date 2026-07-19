@@ -1,83 +1,67 @@
-Goal: reduce the friction for a hackathon participant to go from the Lovable app to a working local Midnight demo. All actual Midnight node / indexer / proof-server traffic stays on the user's machine (Docker on localhost); the Lovable app only probes and guides from the browser.
+## Diagnosis
 
-Current state:
-- `bun scripts/midnight-standalone.mjs up` starts node + indexer + proof-server locally.
-- `/undeployed-preflight` probes the four local endpoints from the browser.
-- `/showcase/choreo-ledger-local` documents the manual steps.
-- The wallet panel connects to Lace but doesn't special-case the Undeployed custom-RPC flow.
+Cloudflare **Error 1102 "Worker exceeded resource limits"** on `midnightprompts.lovable.app` = the SSR Worker ran out of CPU/memory while rendering.
 
-What we will build:
+Root cause is the ideas dataset:
 
-1. New `/undeployed` quick-start route
-   - Plain-language explanation of the architecture: Lovable app runs in the browser, the Midnight stack runs locally via Docker, Lace talks to `ws://localhost:9944`.
-   - Visual 3-step checklist:
-     1. Docker Desktop / Docker Engine running.
-     2. `bun scripts/midnight-standalone.mjs up`.
-     3. Open `/undeployed-preflight` and verify four green pills.
-   - Links to `/showcase/choreo-ledger-local`, `/known-issues`, and the Midnight Service Desk.
+- `src/data/ideas/` = **48 MB of JSON** across 10 theme files (~4.8 MB each).
+- Every file is **statically imported at module scope** by `src/data/ideas.ts`, which is imported by `src/routes/index.tsx`, the themes routes, `ideas.$id`, etc.
+- So every route the Worker renders — including the homepage — has to load and parse all 48 MB into memory. On Cloudflare Workers that blows the CPU/startup budget → 1102.
+- Each idea now stores **4 near-duplicate copies** of the same ~11 KB prompt: `megaPrompt` + `megaPromptVariants.{preview,preprod,undeployed}`. That's what tripled the bundle when we added the 3-variant selector.
 
-2. Enhance `/undeployed-preflight`
-   - Add a "Start / restart stack" card with the copyable one-command `bun scripts/midnight-standalone.mjs up`.
-   - Add a "Lace network" card: if `window.midnight` is detected, show the exact custom-RPC value (`ws://localhost:9944`) and a link to Lace settings; if not, show the install/enable extension hint.
-   - Add a "Deploy contract" card that generates and copies the command:
-     ```bash
-     VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs
-     ```
-   - Add a "Copy env vars for Lovable" button that copies the full `VITE_*` snippet so the user can paste it into Lovable Project Settings → Secrets.
-   - Keep the existing four endpoint probes and the all-green "ready to deploy" state.
+## Fix (two layers)
 
-3. Network-aware wallet panel
-   - Update `WalletConnectPanel` to recognize `undeployed` addresses (`mn_shield-addr_undeployed1…`).
-   - When the app is set to `VITE_NETWORK_ID=undeployed`, warn if Lace is connected to a public network (`preview`/`preprod`) and point the user to `/undeployed-preflight`.
-   - Show the detected Lace network name and the expected local RPC.
+### 1. Stop shipping 3× duplicated prompt bodies
 
-4. Showcase network selector
-   - Add a small network selector on `/showcase` and `/showcase/choreo-ledger-local` (Preview / Preprod / Undeployed).
-   - When Undeployed is selected, surface the one-command bring-up, the preflight link, and the local deploy command instead of faucet/explorer instructions.
+Store only the **base megaPrompt** in JSON. Compute the Preview / Preprod / Undeployed variants at render time in TypeScript by wrapping the base with the same header/secrets/local-stack block that `scripts/rewrite_mega_prompts.py` already generates.
 
-5. Navigation and cross-links
-   - Add an "Undeployed" link to the desktop nav and mobile burger menu between "Preflight" and the external links.
-   - Update the homepage service-desk card to also mention the local devnet path.
-   - Update the 1000-prompts generator (`scripts/rewrite_mega_prompts.py`) so the Undeployed variant links directly to `/undeployed` and `/undeployed-preflight`, then regenerate the prompt files.
+- Add `src/lib/mega-prompt-variants.ts` — pure function `buildVariant(idea, network) → string` that returns the same text the Python script produces today.
+- Update `scripts/rewrite_mega_prompts.py` to write only `megaPrompt` (the base) and drop `megaPromptVariants` from JSON. Regenerate all 12 files.
+- Update `src/routes/ideas.$id.tsx` to call `buildVariant` when a tab is selected instead of reading `idea.megaPromptVariants[network]`.
 
-Architecture diagram:
+Expected size drop: **~48 MB → ~16 MB** (one prompt body per idea instead of four).
 
-````text
-  +--------------------+        ws://localhost:9944        +------------------+
-  | Lovable app        |  <------------------------------> | local midnight   |
-  | (browser)          |                                   | node (Docker)    |
-  |                    |  http://localhost:8088            |                  |
-  | /undeployed        |  <------------------------------> | local indexer    |
-  | /undeployed-preflight                                  | (Docker)         |
-  +--------------------+  http://localhost:6300            |                  |
-         |             |  <------------------------------> | local proof-srv  |
-         |             |                                   +------------------+
-         |             |                                          ^
-         |             |                                          |
-         |             |                                          |
-         |             |                                   +------------------+
-         |             |                                   | Lace wallet      |
-         |             |                                   | (browser ext)    |
-         |             |                                   +------------------+
-         |             |
-         v             v
-  +--------------------+
-  | Lovable Cloud      |  <- no direct connection to local stack; only serves
-  | (SSR + static)     |     the app shell and routes
-  +--------------------+
-````
+### 2. Only load full prompt bodies on the detail route
 
-Files to create/edit:
-- `src/routes/undeployed.tsx` (new)
-- `src/routes/undeployed-preflight.tsx` (edit)
-- `src/components/WalletConnectPanel.tsx` (edit)
-- `src/routes/showcase.index.tsx` (edit)
-- `src/routes/showcase.choreo-ledger-local.tsx` (edit)
-- `src/components/site-shell.tsx` (edit)
-- `src/routes/index.tsx` (edit)
-- `scripts/rewrite_mega_prompts.py` (edit) + regenerate prompts
+16 MB is still too much to eager-import into every route. Split the data:
 
-Out of scope:
-- Hosting a Midnight node inside Lovable Cloud (serverless Workers cannot run Docker or long-lived local processes).
-- Automating Docker installation (we will link to the official installers).
-- Changing the existing `midnight-standalone.mjs` container logic beyond minor CLI-output polish.
+- Generate a **slim index** `src/data/ideas-index.json` containing only listing fields (`id`, `theme`, `title`, `pitch`, `subDiscipline`, `quantumHook*`, `quantumTag`, `tam`, `sam`, `som`) — the fields used by `idea-card.tsx`, `themes.*`, `quantum-primer.tsx`, and `index.tsx`. Estimated ~2–3 MB total.
+- Keep the per-theme files but move them to a **dynamic-import map** used only by `/ideas/$id`:
+
+  ```ts
+  const themeLoaders = {
+    dance: () => import("./ideas/dance.json"),
+    music: () => import("./ideas/music.json"),
+    // …
+  };
+  ```
+
+  `ideas.$id.tsx`'s loader does `await themeLoaders[idea.theme]()` and returns only that theme's ideas (or just the one matching idea). Cloudflare's bundler splits each `import()` into its own chunk, so listing routes never touch the 4.8 MB body files.
+- Rewrite `src/data/ideas.ts`:
+  - `ALL_IDEAS`, `IDEAS_BY_THEME`, `THEMES`, `HOOKS`, `getIdea`, `getTheme`, `getHook` all backed by the slim index (no `megaPrompt` field on the slim type).
+  - Add `loadFullIdea(id): Promise<Idea>` for the detail route.
+
+### 3. Verify
+
+- `bun run build` succeeds, then `du -sh dist` or inspect chunk sizes to confirm the homepage chunk no longer contains theme JSON.
+- Reload the published site — homepage, `/themes`, `/ideas/<id>` all render, and the 1102 goes away.
+- Spot-check that the Preview/Preprod/Undeployed tabs still produce the exact same prompt text they do today (diff one idea before/after).
+
+## Files touched
+
+- `src/data/ideas.ts` — rewrite for slim index + dynamic per-theme loader.
+- `src/data/ideas-index.json` — new (generated).
+- `src/data/ideas/*.json` — regenerated without `megaPromptVariants`.
+- `src/lib/mega-prompt-variants.ts` — new; TS port of the Python variant wrapper.
+- `scripts/rewrite_mega_prompts.py` — emit base-only + build slim index.
+- `src/routes/ideas.$id.tsx` — async loader + call `buildVariant` in the tab.
+- No UI/design changes.
+
+## Not doing
+
+- Not changing routes, navigation, styling, or the wallet-connect boilerplate.
+- Not touching any showcase demo pages.
+
+## Note
+
+I cannot verify by re-reading the Python script or running the build in plan mode, so the "same text as today" guarantee in step 1 will be confirmed by a byte-diff of one idea's variants once we're in build mode.

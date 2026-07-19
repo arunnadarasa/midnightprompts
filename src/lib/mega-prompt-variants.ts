@@ -1,0 +1,295 @@
+// AUTO-GENERATED helper. Constants mirrored from scripts/rewrite_mega_prompts.py.
+// If you change any block here, mirror the same edit in the Python script
+// (or vice-versa) so regenerated JSON and runtime prompts stay in sync.
+
+import type { Idea, Theme, NetworkVariant } from "@/data/ideas";
+
+const CREDIT = "Built during the Creative AI & Quantum Hackathon organised by StreetKode Fam during Indian Krump Festival 14";
+
+const BUDGET = "5-CREDIT BUDGET (HARD LIMIT):\n- ONE single-page Vite + React app. No router, no Lovable Cloud, no database, no server-side auth.\n- ONE Compact contract, \u226480 lines, deployed to Midnight preview testnet.\n- Lace wallet is the auth + tx layer. `window.midnight` is polled; the shielded address is the identity.\n- A locally-run proof server (Docker port 6300) is REQUIRED for any tx submit; the UI must show a\n  \"Proving\u2026 this can take 30\u2013120s\" state and stay usable while proofs generate.\n- Pinata / IPFS only if the idea genuinely stores a file or artefact \u2014 then the CID is committed on-chain.\n- At most ONE AI call per user action (Lovable AI Gateway with LOVABLE_API_KEY if AI is part of the idea).\n- Skip tests, skip CI, skip docs pages. Ship the demo, nothing else.";
+
+const PACKAGES = "PACKAGES (all pinned to the versions Midnight ships together):\n- @midnight-ntwrk/dapp-connector-api@4.0.1\n- @midnight-ntwrk/midnight-js-contracts@4.1.1\n- @midnight-ntwrk/midnight-js-types@4.1.1\n- @midnight-ntwrk/midnight-js-protocol@4.1.1\n- @midnight-ntwrk/midnight-js-network-id@4.1.1\n- @midnight-ntwrk/midnight-js-fetch-zk-config-provider@4.1.1\n- @midnight-ntwrk/midnight-js-http-client-proof-provider@4.1.1\n- @midnight-ntwrk/midnight-js-indexer-public-data-provider@4.1.1\n- @midnight-ntwrk/midnight-js-utils@4.1.1\n- @midnight-ntwrk/compact-runtime@0.16.0\n- rxjs fp-ts semver buffer pino\n- vite-plugin-wasm  vite-plugin-top-level-await  (dev)";
+
+const TOOLCHAIN = "COMPACT TOOLCHAIN (one-time setup \u2014 the human runs this in a terminal, not Lovable):\n```bash\ncurl --proto '=https' --tlsv1.2 -LsSf \\\n  https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh\nsource ~/.bashrc && compact update\ncompact compile contracts/YourContract.compact contracts/managed/your-contract\ncp -r contracts/managed/your-contract/keys public/keys\ncp -r contracts/managed/your-contract/zkir public/zkir\ndocker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v\n```";
+
+const VITE_CONFIG = "VITE CONFIG (vite.config.ts) \u2014 WASM + top-level await are MANDATORY for MidnightJS:\n```ts\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport wasm from 'vite-plugin-wasm';\nimport topLevelAwait from 'vite-plugin-top-level-await';\nexport default defineConfig({\n  build: { target: 'esnext', commonjsOptions: { transformMixedEsModules: true, extensions: ['.js','.cjs'] } },\n  plugins: [react(), wasm(), topLevelAwait()],\n  optimizeDeps: {\n    esbuildOptions: { target: 'esnext', supported: { 'top-level-await': true } },\n    include: ['@midnight-ntwrk/compact-runtime'],\n    exclude: ['@midnight-ntwrk/onchain-runtime-v3',\n              '@midnight-ntwrk/onchain-runtime-v3/midnight_onchain_runtime_wasm_bg.wasm'],\n  },\n});\n```\n\nSSR RULE: never import a `@midnight-ntwrk/*` package at module scope of a route file \u2014 it uses\nNode Buffer + browser globals + WASM top-level await and crashes SSR. Load providers behind\n`useEffect` or a dynamic `import()` inside a `<ClientOnly>` boundary.";
+
+const MIDNIGHTJS_BOOT = "WALLET DETECT (src/lib/lace.ts) \u2014 poll window.midnight up to 5s:\n```ts\nimport type { InitialAPI } from '@midnight-ntwrk/dapp-connector-api';\nimport semver from 'semver';\nexport async function waitForLace(timeoutMs = 5000): Promise<InitialAPI> {\n  return new Promise((resolve, reject) => {\n    const start = Date.now();\n    const t = setInterval(() => {\n      const m = (window as any).midnight ?? {};\n      const w = Object.values(m).find((x: any) =>\n        x && typeof x === 'object' && 'apiVersion' in x &&\n        semver.satisfies(x.apiVersion, '4.x')) as InitialAPI | undefined;\n      if (w) { clearInterval(t); resolve(w); return; }\n      if (Date.now() - start > timeoutMs) { clearInterval(t);\n        reject(new Error('Lace Midnight wallet not found. Install it: https://www.lace.io/')); }\n    }, 100);\n  });\n}\n```\n\nBUFFER POLYFILL (src/main.tsx, MUST be the very first line):\n```ts\nimport { Buffer } from 'buffer'; (globalThis as any).Buffer = Buffer;\n```\n\nPROVIDERS (src/lib/providers.ts) \u2014 chain Lace + proof server + indexer:\n```ts\nimport { setNetworkId } from '@midnight-ntwrk/midnight-js-network-id';\nimport { FetchZkConfigProvider } from '@midnight-ntwrk/midnight-js-fetch-zk-config-provider';\nimport { httpClientProofProvider } from '@midnight-ntwrk/midnight-js-http-client-proof-provider';\nimport { indexerPublicDataProvider } from '@midnight-ntwrk/midnight-js-indexer-public-data-provider';\nimport { waitForLace } from './lace';\n\nexport async function initProviders() {\n  setNetworkId(import.meta.env.VITE_NETWORK_ID ?? 'preview');\n  const lace = await waitForLace();\n  const connectedAPI = await lace.connect(import.meta.env.VITE_NETWORK_ID ?? 'preview');\n  const cfg = await connectedAPI.getConfiguration();\n  const zk = new FetchZkConfigProvider(window.location.origin, fetch.bind(window));\n  return {\n    connectedAPI,\n    zkConfigProvider: zk,\n    proofProvider: httpClientProofProvider(cfg.proverServerUri ?? import.meta.env.VITE_PROOF_SERVER_URL, zk),\n    publicDataProvider: indexerPublicDataProvider(cfg.indexerUri, cfg.indexerWsUri),\n  };\n}\n```\n\nREAD-ONLY LEDGER FETCH (no wallet needed \u2014 great for public feeds):\n```ts\nconst INDEXER = import.meta.env.VITE_INDEXER_URL;\nexport async function readLedger(address: string) {\n  const r = await fetch(INDEXER, {\n    method: 'POST', headers: { 'Content-Type': 'application/json' },\n    body: JSON.stringify({\n      query: `query($a:HexEncoded!){ contractAction(address:$a){ state } }`,\n      variables: { address },\n    }),\n  });\n  return (await r.json()).data?.contractAction?.state as string | null;\n}\n```";
+
+const REDFLAGS = "RED FLAGS \u2014 DO NOT ATTEMPT:\n- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.\n- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.\n- No sub-second finality UX. Proofs for k=14 circuits take 30\u2013120s \u2014 build for that latency.\n- No recursion in Compact. Loops must be bounded by compile-time constants.\n- No SSR. MidnightJS uses browser globals + WASM + top-level-await; ClientOnly is mandatory.";
+
+const LOCAL_STACK_SETUP = "LOCAL STACK SETUP (Undeployed variant only \u2014 humans run this in a terminal, NOT Lovable):\n\nThe `undeployed` target expects a full Midnight standalone stack (node + indexer + proof server)\nrunning on your own machine. All three services are Docker containers.\n\n--- One-command bring-up (all OSes, after Docker is running) ---\n```bash\nbun scripts/midnight-standalone.mjs up      # pull + start + wait for ready\nbun scripts/midnight-standalone.mjs status  # check health\nbun scripts/midnight-standalone.mjs down    # stop\n```\nThe `up` command writes `.midnight/standalone.docker-compose.yml`, pulls pinned node / indexer /\nproof-server images, starts the three services, and polls readiness on ws://localhost:9944,\nhttp://localhost:8088/api/v4/graphql, and http://localhost:6300/health. First run pulls ~1 GB\nand takes 2-5 min; later boots are seconds.\n\nThen verify in the browser: navigate to `/undeployed-preflight` in the app. Four green pills = ready.\n\nFor a human-readable walkthrough with copy buttons, also see:\nhttps://midnightprompts.lovable.app/undeployed\n\n--- Docker prerequisites per OS ---\n\nmacOS:\n```bash\nbrew install --cask docker      # or download from docker.com/products/docker-desktop\nopen -a Docker                  # wait for whale icon in menu bar\n```\n\nWindows (WSL2):\n```powershell\nwsl --install                   # then reboot\n# Install Docker Desktop, enable \"Use the WSL 2 based engine\" + Ubuntu integration.\n# Run `bun scripts/midnight-standalone.mjs up` from INSIDE the WSL2 Ubuntu shell so\n# localhost port forwarding to the browser works.\n```\n\nLinux (Ubuntu/Debian):\n```bash\nsudo apt update\nsudo apt install -y docker.io docker-compose-plugin\nsudo systemctl enable --now docker\nsudo usermod -aG docker \"$USER\" && newgrp docker\n```\nFor Fedora/Arch swap `apt install` for `dnf install docker docker-compose-plugin` or\n`pacman -S docker docker-compose`.\n\n--- Point Lace at the local node (all OSes) ---\nLace -> Settings -> Network -> Custom -> RPC = `ws://localhost:9944` -> Save -> Switch.\nThe genesis wallet is pre-funded with unlimited tDUST -- no faucet click, no delegation step.\n\n--- Deploy the Compact contract (all OSes) ---\n```bash\n# after `compact compile` produced contracts/managed/<name>/\nVITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs\n# -> prints contract hex address; paste into VITE_DEFAULT_CONTRACT\n```\n\nFull troubleshooting: see the `midnight-environment-setup` skill\n(https://midnight-skills.netlify.app/skills/midnight-environment-setup) -- it covers\nDocker Desktop failing to start, port 6300 conflicts, WSL2 clock drift, and Lace network\nswitching.";
+
+const NETWORK_LABELS: Record<NetworkVariant, string> = {"preview": "Preview testnet", "preprod": "Preprod testnet (closer to mainnet)", "undeployed": "Undeployed / local standalone stack (no faucet needed)"};
+
+const NETWORK_SECRETS: Record<NetworkVariant, string> = {
+  preview: "REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **PREVIEW** target:\n- VITE_NETWORK_ID           preview\n- VITE_INDEXER_URL          https://indexer.preview.midnight.network/api/v4/graphql\n- VITE_INDEXER_WS_URL       wss://indexer.preview.midnight.network/api/v4/graphql/ws\n- VITE_PROOF_SERVER_URL     http://localhost:6300   (run `docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`)\n- VITE_DEFAULT_CONTRACT     hex address printed by your first deploy \u2014 paste it here so users skip the deploy step\n\nFaucet:   https://midnight-tmnight-preview.nethermind.dev/  (dispenses tNIGHT \u2014 click \"Generate tDUST\" in Lace to delegate)\nExplorer: https://preview.midnightexplorer.com/\nNotes:    Preview is the fastest network to demo on but resets frequently. Best for iterative dev + hackathon judges.",
+  preprod: "REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **PREPROD** target:\n- VITE_NETWORK_ID           preprod\n- VITE_INDEXER_URL          https://indexer.preprod.midnight.network/api/v4/graphql\n- VITE_INDEXER_WS_URL       wss://indexer.preprod.midnight.network/api/v4/graphql/ws\n- VITE_PROOF_SERVER_URL     http://localhost:6300   (run `docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`)\n- VITE_DEFAULT_CONTRACT     hex address printed by your first deploy \u2014 paste it here so users skip the deploy step\n\nFaucet:   https://midnight-tmnight-preprod.nethermind.dev/  (dispenses tNIGHT \u2014 click \"Generate tDUST\" in Lace to delegate)\nExplorer: https://preprod.midnightexplorer.com/\nNotes:    Preprod is closer to mainnet parameters but has known DUST-sync and ZKIR 0.31 quirks. If your\n          demo stalls at \"Balancing\u2026\", switch to the Undeployed local stack variant of this prompt.",
+  undeployed: "REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **UNDEPLOYED / LOCAL** target:\n- VITE_NETWORK_ID           undeployed\n- VITE_INDEXER_URL          http://localhost:8088/api/v4/graphql\n- VITE_INDEXER_WS_URL       ws://localhost:8088/api/v4/graphql/ws\n- VITE_PROOF_SERVER_URL     http://localhost:6300\n- VITE_NODE_WS              ws://localhost:9944\n- VITE_DEFAULT_CONTRACT     hex address printed by your local deploy\n\nNo faucet needed \u2014 the local node mints unlimited tDUST to the genesis wallet.\nExplorer: not applicable (chain is local); browse state via the local Indexer GraphQL.\nNotes:    This is the **DevRel-advised** path for hackathon work. It bypasses every Preprod\n          tDUST-sync + `/check 400` ZKIR issue by pinning the SDK and node to the same version.",
+};
+
+type Hook = { id: string; name: string; tag: string; kernel: string; ui: string };
+const HOOKS: Record<string, Hook> = {"compact-deploy": {"id": "compact-deploy", "name": "Compact ZK contract", "tag": "onchain logic", "kernel": "a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with public ledger state readable from the Indexer", "ui": "a 'verified on Midnight' badge with the live contract address and a Midnight explorer link"}, "private-witness": {"id": "private-witness", "name": "Private witness proof", "tag": "zero-knowledge", "kernel": "a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands on Midnight, the secret never leaves the browser", "ui": "a 'proved without revealing' chip that flips green after the ZK circuit accepts the witness"}, "lace-wallet": {"id": "lace-wallet", "name": "Lace wallet + tDUST", "tag": "wallet UX", "kernel": "detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit it via `midnightProvider.submitTx`", "ui": "a 'Connected via Lace' status pill, the shielded address, and a Proving \u2192 Submitting \u2192 Confirmed transaction trail"}, "ipfs-content": {"id": "ipfs-content", "name": "IPFS content + on-chain CID", "tag": "decentralized storage", "kernel": "pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so provenance is verifiable but the file itself stays on IPFS", "ui": "a 'pinned to IPFS \u00b7 logged on Midnight' chip with the CID, gateway preview, and a Midnight explorer link"}};
+
+
+function safeName(title: string, fallback: string): string {
+  return (title.replace(/[^A-Za-z0-9]/g, "").slice(0, 36)) || fallback;
+}
+function snake(title: string, fallback: string): string {
+  const s = title.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "").slice(0, 40);
+  return s || fallback;
+}
+
+function compactLog(title: string, pitch: string): string {
+  const n = safeName(title, "TimestampLog");
+  return `// contracts/${n}.compact
+// ${pitch}
+// ${CREDIT}
+pragma language_version 0.23;
+
+import CompactStandardLibrary;
+
+// Public ledger state — visible to everyone via the Indexer
+export ledger entry_count: Counter;
+export ledger last_message: Opaque<"string">;
+export ledger last_author_commitment: Bytes<32>;
+
+// Private callback wired from TypeScript; the returned bytes never touch chain
+witness localSecretKey(): Bytes<32>;
+
+constructor() {
+  entry_count.increment(1);
+  last_message = disclose("(empty)");
+}
+
+export circuit authorCommitment(sk: Bytes<32>, seq: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<3, Bytes<32>>>(
+    [pad(32, "${snake(title, "log")}:author:"), seq, sk]
+  );
+}
+
+export circuit appendEntry(newMessage: Opaque<"string">): [] {
+  const sk = localSecretKey();
+  const seq = entry_count as Field as Bytes<32>;
+  last_author_commitment = disclose(authorCommitment(sk, seq));
+  last_message = disclose(newMessage);      // disclose is REQUIRED before writing to ledger
+  entry_count.increment(1);
+}`;
+}
+
+function compactWitness(title: string, pitch: string): string {
+  const n = safeName(title, "PrivateProof");
+  return `// contracts/${n}.compact
+// ${pitch}  (private-witness pattern)
+// ${CREDIT}
+pragma language_version 0.23;
+
+import CompactStandardLibrary;
+
+export ledger enrolled_commitments: Set<Bytes<32>>;   // public: which commitments are valid
+export ledger last_action_count: Counter;
+
+witness localSecretKey(): Bytes<32>;
+
+constructor() { last_action_count.increment(1); }
+
+export circuit enroll(commitmentTag: Bytes<32>): [] {
+  const sk = localSecretKey();
+  const c = persistentHash<Vector<2, Bytes<32>>>([commitmentTag, sk]);
+  enrolled_commitments.insert(disclose(c));            // sk stays local; only c goes public
+}
+
+export circuit proveOwnership(commitmentTag: Bytes<32>): [] {
+  const sk = localSecretKey();
+  const c = persistentHash<Vector<2, Bytes<32>>>([commitmentTag, sk]);
+  assert(enrolled_commitments.member(c), "not enrolled");
+  last_action_count.increment(1);
+}`;
+}
+
+function compactIpfs(title: string, pitch: string): string {
+  const n = safeName(title, "CIDLedger");
+  return `// contracts/${n}.compact
+// ${pitch}  (pin-to-IPFS-then-commit-CID pattern)
+// ${CREDIT}
+pragma language_version 0.23;
+
+import CompactStandardLibrary;
+
+export ledger cid_count: Counter;
+export ledger last_cid: Opaque<"string">;
+export ledger last_author_commitment: Bytes<32>;
+
+witness localSecretKey(): Bytes<32>;
+
+constructor() { cid_count.increment(1); last_cid = disclose("(empty)"); }
+
+export circuit commitCid(cid: Opaque<"string">): [] {
+  const sk = localSecretKey();
+  const seq = cid_count as Field as Bytes<32>;
+  last_author_commitment = disclose(
+    persistentHash<Vector<3, Bytes<32>>>([pad(32, "cid:author:"), seq, sk])
+  );
+  last_cid = disclose(cid);
+  cid_count.increment(1);
+}`;
+}
+
+
+function bodyCompactDeploy(title: string, pitch: string, sub: string, contract: string): string {
+  return `CONTRACT
+\`\`\`compact
+${contract}
+\`\`\`
+
+FRONTEND FLOW
+1. Land on page → 'Connect Lace' button → poll \`window.midnight\` → \`connect('preview')\`.
+2. Show shielded address, tDUST reminder ("Get testnet DUST → {VITE_FAUCET_URL}"), and Deploy button.
+3. On Deploy: import \`deployContract\` from \`@midnight-ntwrk/midnight-js-contracts\`, pass witnesses
+   ({ localSecretKey: async () => sk }) where \`sk\` is a 32-byte value persisted in localStorage.
+4. Show a "Proving…" spinner for up to 120s while the local proof server crunches.
+5. On success, render the deployed address + a Midnight explorer link and persist it to
+   \`src/data/midnight-contract.json\` so the app boots straight into it next time.
+6. The "${sub}" action calls \`appendEntry(payload)\` — same flow: prove, submit, refresh feed.`;
+}
+
+function bodyIpfsContent(title: string, pitch: string, sub: string, contract: string): string {
+  return `PINATA STEP (src/lib/pinata.ts):
+\`\`\`ts
+export async function pinToIPFS(file: Blob, name = "${sub}") {
+  const fd = new FormData(); fd.append("file", file, name);
+  const r = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {
+    method: "POST", headers: { Authorization: \`Bearer \${import.meta.env.VITE_PINATA_JWT}\` },
+    body: fd,
+  });
+  return (await r.json()).IpfsHash as string;
+}
+\`\`\`
+
+CONTRACT
+\`\`\`compact
+${contract}
+\`\`\`
+
+FRONTEND FLOW
+1. User creates a ${sub} artefact in the UI (upload / draw / record / generate).
+2. \`const cid = await pinToIPFS(blob)\` → show \`https://gateway.pinata.cloud/ipfs/<cid>\`.
+3. \`commitCid(cid)\` via \`findContractInstance(...).callTx.commitCid(witnesses, cid)\`.
+4. Proving spinner (30–120s) → confirmation → append \`{cid, tx, at}\` to the on-screen feed.
+5. Feed is hydrated from the Indexer (\`readLedger\`), so refreshes work with just the wallet disconnected.`;
+}
+
+function bodyLaceWallet(title: string, pitch: string, sub: string, contract: string): string {
+  return `CONTRACT
+\`\`\`compact
+${contract}
+\`\`\`
+
+FRONTEND FLOW — Lace is the whole auth story
+1. Landing page shows one button: "Connect Lace". No email, no password, no OAuth.
+2. On click: \`initProviders()\` → shielded address becomes the identity.
+3. tDUST balance strip: \`const bal = await connectedAPI.balanceAndProofOfBalance();\` render it.
+4. Every ${sub} action = \`contract.callTx.appendEntry(witnesses, payload)\`. Show status:
+   \`Proving → Balancing (Lace adds tDUST fees) → Submitting → Confirmed\` with a Midnight explorer link.
+5. If \`waitForLace\` rejects, render the exact install URL for Lace with a friendly nudge —
+   no fake "click here to install" placeholder. This is the single biggest onboarding drop-off.`;
+}
+
+function bodyPrivateWitness(title: string, pitch: string, sub: string, contract: string): string {
+  return `CONTRACT
+\`\`\`compact
+${contract}
+\`\`\`
+
+FRONTEND FLOW — the secret NEVER leaves the browser
+1. On first visit, generate a 32-byte secret with \`crypto.getRandomValues(new Uint8Array(32))\`
+   and persist it base64-encoded in localStorage. Warn users that clearing storage revokes proofs.
+2. The witness callback returns that secret to the Compact circuit — it is used inside the ZK proof
+   but never appears in the transaction that goes on chain.
+3. "Enroll" action → \`enroll(commitmentTag)\` — commits \`hash(tag, sk)\` on chain.
+4. "Prove ${sub}" action → \`proveOwnership(commitmentTag)\` — the circuit asserts the commitment
+   is in \`enrolled_commitments\` for THIS wallet's secret. UI shows a green "proved without revealing" chip.
+5. Anyone reading the Indexer sees only commitments and a bumped counter — they cannot link
+   two proofs to the same user because the secret never appeared on chain.`;
+}
+
+type BodyPair = {
+  contract: (title: string, pitch: string) => string;
+  body: (title: string, pitch: string, sub: string, contract: string) => string;
+};
+const BODY_BY_HOOK: Record<string, BodyPair> = {
+  "compact-deploy":  { contract: compactLog,     body: bodyCompactDeploy },
+  "ipfs-content":    { contract: compactIpfs,    body: bodyIpfsContent },
+  "lace-wallet":     { contract: compactLog,     body: bodyLaceWallet },
+  "private-witness": { contract: compactWitness, body: bodyPrivateWitness },
+};
+
+const WALLET_BOILERPLATE = "\n\n--- BEGIN: Connect-Lace boilerplate (self-contained, DApp Connector v4) ---\n\nAdd a working \"Connect Lace\" button to the primary page of the app. This\nsection is self-contained \u2014 do NOT install any @midnight-ntwrk/* package for\nthe connect step; the Lace browser extension injects everything you need at\n`window.midnight`. Follow the DApp Connector API v4 exactly as written below.\n\nHARD RULES\n- Do NOT call `enable()` or `state()` \u2014 DApp Connector v4.0 removed them.\n- Do NOT read `window.midnight` at module scope or during SSR \u2014 only inside\n  `useEffect`. Gate the panel render until after hydration.\n- Do NOT hardcode the network \u2014 try Preview, Preprod, and Mainnet in order\n  and use whichever `connect(networkId)` accepts.\n- Reading a shielded address is a permission-only handshake \u2014 no signing,\n  no funds moved.\n\nCREATE FILE: src/lib/use-midnight-wallet.ts\n```ts\nimport { useCallback, useEffect, useState } from \"react\";\n\nexport type WalletStatus =\n  | \"idle\" | \"detecting\" | \"ready\" | \"connecting\" | \"connected\" | \"error\";\n\ntype Connector = {\n  apiVersion: string;\n  name?: string;\n  connect: (networkId: string) => Promise<ConnectedApi>;\n  isEnabled?: () => Promise<boolean>;\n};\n\ntype ConnectedApi = {\n  getShieldedAddresses?: () => Promise<string[] | Record<string, string>>;\n  getUnshieldedAddress?: () => Promise<string>;\n  getDustAddress?: () => Promise<string>;\n  getConfiguration?: () => Promise<{\n    indexerUri?: string; indexerWsUri?: string; proverServerUri?: string;\n  }>;\n};\n\nfunction pickConnector(): Connector | null {\n  if (typeof window === \"undefined\") return null;\n  const m = (window as unknown as { midnight?: Record<string, Connector> }).midnight;\n  if (!m) return null;\n  for (const v of Object.values(m)) {\n    if (v && typeof v === \"object\" && \"apiVersion\" in v && /^4\\\\./.test(String(v.apiVersion))) {\n      return v as Connector;\n    }\n  }\n  const first = Object.values(m)[0];\n  return first && \"apiVersion\" in first ? (first as Connector) : null;\n}\n\nfunction inferNetwork(addr: string): string {\n  const m = addr.match(/^mn_(?:shield-)?addr_([a-z0-9]+?)1/i);\n  if (!m) return \"unknown\";\n  const s = m[1].toLowerCase();\n  if (s === \"test\") return \"preprod\";\n  if (s === \"undeployed\") return \"preview\";\n  return s;\n}\n\nexport function useMidnightWallet() {\n  const [status, setStatus] = useState<WalletStatus>(\"idle\");\n  const [address, setAddress] = useState<string | null>(null);\n  const [apiVersion, setApiVersion] = useState<string | null>(null);\n  const [network, setNetwork] = useState<string | null>(null);\n  const [error, setError] = useState<string | null>(null);\n  const [tick, setTick] = useState(0);\n\n  useEffect(() => {\n    if (typeof window === \"undefined\") return;\n    setStatus((p) => (p === \"connected\" ? p : \"detecting\"));\n    setError(null);\n    const t0 = Date.now();\n    const iv = window.setInterval(() => {\n      const c = pickConnector();\n      if (c) {\n        window.clearInterval(iv);\n        setApiVersion(c.apiVersion);\n        setStatus((p) => (p === \"connected\" ? p : \"ready\"));\n        if (!/^4\\\\./.test(c.apiVersion)) {\n          setStatus(\"error\");\n          setError(`Lace connector ${c.apiVersion} is not compatible. Update Lace.`);\n        }\n      } else if (Date.now() - t0 > 5000) {\n        window.clearInterval(iv);\n        setStatus(\"error\");\n        setError(\"No Midnight wallet detected. Install Lace from lace.io.\");\n      }\n    }, 100);\n    return () => window.clearInterval(iv);\n  }, [tick]);\n\n  const connect = useCallback(async () => {\n    try {\n      setError(null);\n      setStatus(\"connecting\");\n      const c = pickConnector();\n      if (!c) throw new Error(\"No Midnight wallet detected.\");\n      const preferred = (import.meta.env.VITE_NETWORK_ID as string) || \"preprod\";\n      const candidates = Array.from(new Set([preferred, \"preview\", \"preprod\", \"mainnet\"]));\n      let api: ConnectedApi | null = null;\n      let used: string | null = null;\n      let mismatch: unknown = null;\n      for (const n of candidates) {\n        try { api = await c.connect(n); used = n; break; }\n        catch (e) {\n          const msg = e instanceof Error ? e.message : String(e);\n          if (/network|mismatch/i.test(msg)) { mismatch = e; continue; }\n          throw e;\n        }\n      }\n      if (!api || !used) {\n        throw new Error(\n          mismatch\n            ? \"Lace is on a different network than this app supports. Switch Lace to Preview or Preprod and retry.\"\n            : \"Failed to connect to Lace.\",\n        );\n      }\n      let addr: string | null = null;\n      if (typeof api.getShieldedAddresses === \"function\") {\n        try {\n          const s = await api.getShieldedAddresses();\n          if (Array.isArray(s)) addr = s[0] ?? null;\n          else if (s && typeof s === \"object\") addr = Object.values(s)[0] ?? null;\n        } catch {}\n      }\n      if (!addr && typeof api.getUnshieldedAddress === \"function\") {\n        try { addr = await api.getUnshieldedAddress(); } catch {}\n      }\n      if (!addr) throw new Error(\"Connected but couldn't read an address. Update Lace.\");\n      setAddress(addr);\n      setNetwork(used ?? inferNetwork(addr));\n      setApiVersion(c.apiVersion);\n      setStatus(\"connected\");\n    } catch (e) {\n      setError(e instanceof Error ? e.message : String(e));\n      setStatus(\"error\");\n    }\n  }, []);\n\n  return {\n    status, address, apiVersion, network, error,\n    connect,\n    disconnect: () => { setAddress(null); setNetwork(null); setStatus(\"ready\"); setError(null); },\n    redetect: () => setTick((n) => n + 1),\n  };\n}\n```\n\nCREATE FILE: src/components/WalletConnectPanel.tsx\n```tsx\nimport { useEffect, useState } from \"react\";\nimport { useMidnightWallet } from \"@/lib/use-midnight-wallet\";\n\nfunction truncate(a: string, h = 12, t = 8) {\n  return a.length <= h + t + 1 ? a : `${a.slice(0, h)}\u2026${a.slice(-t)}`;\n}\n\nexport function WalletConnectPanel({ expectedNetwork = \"preprod\" }: { expectedNetwork?: string }) {\n  const [hydrated, setHydrated] = useState(false);\n  useEffect(() => setHydrated(true), []);\n  const w = useMidnightWallet();\n  const [copied, setCopied] = useState(false);\n  useEffect(() => {\n    if (!copied) return;\n    const t = setTimeout(() => setCopied(false), 1400);\n    return () => clearTimeout(t);\n  }, [copied]);\n\n  if (!hydrated) {\n    return (\n      <div className=\"p-5 border rounded-md\">\n        <div className=\"text-xs uppercase tracking-widest\">connect lace</div>\n        <div className=\"mt-3 h-10 bg-muted animate-pulse rounded\" />\n      </div>\n    );\n  }\n\n  const wrong = w.status === \"connected\" && w.network && w.network !== \"unknown\" && w.network !== expectedNetwork;\n\n  return (\n    <div className=\"p-5 border rounded-md space-y-3\">\n      <div className=\"flex items-center justify-between gap-3\">\n        <span className=\"text-xs uppercase tracking-widest\">connect lace</span>\n        {w.apiVersion && <span className=\"text-[10px] font-mono opacity-60\">connector v{w.apiVersion}</span>}\n      </div>\n\n      {w.status === \"detecting\" && <p className=\"text-sm opacity-70\">Detecting Midnight wallet\u2026</p>}\n\n      {w.status === \"ready\" && (\n        <div className=\"flex items-center gap-3 flex-wrap\">\n          <button onClick={() => void w.connect()}\n            className=\"px-4 py-2 bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider rounded\">\n            Connect wallet\n          </button>\n          <span className=\"text-xs opacity-70\">Reads your shielded address \u2014 no signing, no funds moved.</span>\n        </div>\n      )}\n\n      {w.status === \"connecting\" && <p className=\"text-sm opacity-70\">Approve the connection in Lace\u2026</p>}\n\n      {w.status === \"connected\" && w.address && (\n        <div className=\"space-y-2\">\n          <div className=\"text-[10px] uppercase tracking-widest opacity-60\">shielded address</div>\n          <div className=\"flex items-center gap-2 flex-wrap\">\n            <code className=\"font-mono text-xs break-all\">{truncate(w.address, 16, 12)}</code>\n            <button onClick={() => { void navigator.clipboard.writeText(w.address ?? \"\"); setCopied(true); }}\n              className=\"text-[10px] uppercase tracking-widest text-primary\">\n              {copied ? \"copied\" : \"copy\"}\n            </button>\n          </div>\n          <div className=\"flex items-center gap-4 text-[11px] flex-wrap\">\n            <span>network \u00b7 <span className=\"font-mono\">{w.network}</span></span>\n            <button onClick={w.disconnect} className=\"text-[10px] uppercase tracking-widest opacity-60\">disconnect</button>\n          </div>\n          {wrong && (\n            <p className=\"text-[12px] opacity-80\">\n              Lace is on <span className=\"font-mono\">{w.network}</span> but this app expects{\" \"}\n              <span className=\"font-mono\">{expectedNetwork}</span>. Switch networks inside Lace.\n            </p>\n          )}\n        </div>\n      )}\n\n      {w.status === \"error\" && (\n        <div className=\"space-y-2\">\n          <p className=\"text-sm opacity-80\">{w.error ?? \"Something went wrong.\"}</p>\n          <div className=\"flex gap-3 flex-wrap\">\n            <button onClick={w.redetect} className=\"px-3 py-2 border text-[10px] uppercase tracking-widest rounded\">Retry</button>\n            <a href=\"https://www.lace.io/\" target=\"_blank\" rel=\"noreferrer\"\n              className=\"px-3 py-2 border text-[10px] uppercase tracking-widest rounded\">Install Lace \u2197</a>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n```\n\nMOUNT on the primary page (e.g. src/routes/index.tsx or wherever the main\ndemo lives):\n```tsx\nimport { WalletConnectPanel } from \"@/components/WalletConnectPanel\";\n\n// Inside your JSX:\n<WalletConnectPanel expectedNetwork={import.meta.env.VITE_NETWORK_ID || \"preprod\"} />\n```\n\nPREREQUISITES to tell the end user in your UI copy:\n1. Install Lace from https://www.lace.io/ (desktop browser extension).\n2. Switch Lace to Midnight Preview or Preprod.\n3. Get tNIGHT from the matching faucet, then click \"Generate tDUST\" in Lace\n   to delegate \u2014 deploys and shielded writes spend tDUST, not tNIGHT.\n\n--- END: Connect-Lace boilerplate ---\n";
+
+export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant): string {
+  const { title, pitch, subDiscipline: sub } = idea;
+  const hid = idea.quantumHookId || "compact-deploy";
+  const hook = HOOKS[hid] ?? HOOKS["compact-deploy"];
+  const hookName = hook.name;
+  const rationale = idea.quantumRationale || `This idea fits ${hookName} because it needs ${hook.tag}.`;
+
+  const pair = BODY_BY_HOOK[hid] ?? BODY_BY_HOOK["compact-deploy"];
+  const contract = pair.contract(title, pitch);
+  const body = pair.body(title, pitch, sub, contract);
+
+  const netLabel = NETWORK_LABELS[network] ?? network;
+  const netSecrets = NETWORK_SECRETS[network] ?? NETWORK_SECRETS.preview;
+  const localBlock = network === "undeployed" ? `\n\n${LOCAL_STACK_SETUP}\n` : "";
+
+  return `Build "${title}" in ONE Lovable message. Single-page Midnight ZK demo.
+
+TARGET NETWORK: **${netLabel}** (VITE_NETWORK_ID = \`${network}\`)
+This is one of three variants of the same idea — Preview / Preprod / Undeployed. Only the network
+config, secrets, and (for Undeployed) local-stack setup differ. Contract + UI + Lace flow are identical.
+
+CONCEPT
+${pitch}
+Discipline: ${theme.name} (${sub}).
+Onchain primitive: ${hookName} (${hook.tag}). Why this primitive: ${rationale}
+
+${BUDGET}
+
+STACK
+- React + Vite single page (index route only).
+- Midnight ${netLabel}. Compact language 0.23. MidnightJS SDK 4.1.1.
+- Lace wallet is the sole auth surface — no Privy, no MetaMask, no OAuth.
+- Local proof server (Docker port 6300) does all ZK proving. The UI shows Proving state.
+- No SSR. All MidnightJS imports live behind \`<ClientOnly>\` + \`useEffect\`.
+
+${PACKAGES}
+
+${TOOLCHAIN}
+${localBlock}
+${VITE_CONFIG}
+
+${MIDNIGHTJS_BOOT}
+
+${body}
+
+${REDFLAGS}
+
+${netSecrets}
+
+FURTHER REFERENCE (community skills registry — browsable, per-primitive scaffolds):
+- Site:   https://midnight-skills.netlify.app
+- Source: https://github.com/Kali-Decoder/Midnight-skills
+- This app's Undeployed quick-start: https://midnightprompts.lovable.app/undeployed
+- This app's preflight checks:      https://midnightprompts.lovable.app/undeployed-preflight
+- \`compact\`                    — Compact 0.23 language deep-dive, ledger vs witness, disclose(), Merkle patterns
+- \`react-wallet-connector\`     — full DApp Connector API scaffold (enumerate window.midnight by UUID)
+- \`midnight-environment-setup\` — Compact compiler + Docker + proof server bring-up
+- \`indexer\`                    — public data provider + GraphQL patterns for read-only ledger views
+- \`example-locker-dapp\`        — timelock vault reference (blockTimeGte, receive/sendUnshielded)
+- \`example-counter\`            — smallest end-to-end Compact + MidnightJS reference
+If the target Lovable session is on this workspace, those six skills are already active. Otherwise, drop
+\`.agents/skills/<name>/SKILL.md\` into your project from the repo above and run \`skills--apply_draft\`.
+
+CREDIT (must appear in UI footer AND as a header comment on every Compact contract):
+${CREDIT}
+`.replace(/\s+$/, "") + WALLET_BOILERPLATE;
+}
