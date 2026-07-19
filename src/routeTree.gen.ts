@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WalletRouteImport } from './routes/wallet'
 import { Route as UndeployedPreflightRouteImport } from './routes/undeployed-preflight'
+import { Route as UndeployedRouteImport } from './routes/undeployed'
 import { Route as ThemesRouteImport } from './routes/themes'
 import { Route as StrategyRouteImport } from './routes/strategy'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
@@ -36,6 +37,11 @@ const WalletRoute = WalletRouteImport.update({
 const UndeployedPreflightRoute = UndeployedPreflightRouteImport.update({
   id: '/undeployed-preflight',
   path: '/undeployed-preflight',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UndeployedRoute = UndeployedRouteImport.update({
+  id: '/undeployed',
+  path: '/undeployed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ThemesRoute = ThemesRouteImport.update({
@@ -130,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/showcase': typeof ShowcaseRouteWithChildren
   '/strategy': typeof StrategyRoute
   '/themes': typeof ThemesRouteWithChildren
+  '/undeployed': typeof UndeployedRoute
   '/undeployed-preflight': typeof UndeployedPreflightRoute
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
@@ -148,6 +155,7 @@ export interface FileRoutesByTo {
   '/proof-server': typeof ProofServerRoute
   '/quantum-primer': typeof QuantumPrimerRoute
   '/strategy': typeof StrategyRoute
+  '/undeployed': typeof UndeployedRoute
   '/undeployed-preflight': typeof UndeployedPreflightRoute
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
@@ -169,6 +177,7 @@ export interface FileRoutesById {
   '/showcase': typeof ShowcaseRouteWithChildren
   '/strategy': typeof StrategyRoute
   '/themes': typeof ThemesRouteWithChildren
+  '/undeployed': typeof UndeployedRoute
   '/undeployed-preflight': typeof UndeployedPreflightRoute
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
@@ -191,6 +200,7 @@ export interface FileRouteTypes {
     | '/showcase'
     | '/strategy'
     | '/themes'
+    | '/undeployed'
     | '/undeployed-preflight'
     | '/wallet'
     | '/ideas/$id'
@@ -209,6 +219,7 @@ export interface FileRouteTypes {
     | '/proof-server'
     | '/quantum-primer'
     | '/strategy'
+    | '/undeployed'
     | '/undeployed-preflight'
     | '/wallet'
     | '/ideas/$id'
@@ -229,6 +240,7 @@ export interface FileRouteTypes {
     | '/showcase'
     | '/strategy'
     | '/themes'
+    | '/undeployed'
     | '/undeployed-preflight'
     | '/wallet'
     | '/ideas/$id'
@@ -250,6 +262,7 @@ export interface RootRouteChildren {
   ShowcaseRoute: typeof ShowcaseRouteWithChildren
   StrategyRoute: typeof StrategyRoute
   ThemesRoute: typeof ThemesRouteWithChildren
+  UndeployedRoute: typeof UndeployedRoute
   UndeployedPreflightRoute: typeof UndeployedPreflightRoute
   WalletRoute: typeof WalletRoute
   IdeasIdRoute: typeof IdeasIdRoute
@@ -269,6 +282,13 @@ declare module '@tanstack/react-router' {
       path: '/undeployed-preflight'
       fullPath: '/undeployed-preflight'
       preLoaderRoute: typeof UndeployedPreflightRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/undeployed': {
+      id: '/undeployed'
+      path: '/undeployed'
+      fullPath: '/undeployed'
+      preLoaderRoute: typeof UndeployedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/themes': {
@@ -428,6 +448,7 @@ const rootRouteChildren: RootRouteChildren = {
   ShowcaseRoute: ShowcaseRouteWithChildren,
   StrategyRoute: StrategyRoute,
   ThemesRoute: ThemesRouteWithChildren,
+  UndeployedRoute: UndeployedRoute,
   UndeployedPreflightRoute: UndeployedPreflightRoute,
   WalletRoute: WalletRoute,
   IdeasIdRoute: IdeasIdRoute,
