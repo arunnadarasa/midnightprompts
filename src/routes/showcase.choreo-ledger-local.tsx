@@ -62,33 +62,29 @@ function ChoreoLedgerLocalDemo() {
       <div className="mt-10 p-6 sm:p-8 border border-primary/30 bg-card">
         <h2 className="font-display text-2xl">Run it locally</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Requires Docker Desktop running. Everything else — node, indexer, proof-server — is a
-          single compose file.
+          Requires Docker Desktop (macOS / Windows) or Docker Engine (Linux) running.
         </p>
 
         <ol className="mt-5 space-y-4 text-sm text-foreground/90 list-decimal pl-5">
           <li>
-            <strong>Start the standalone stack.</strong> Grab the canonical{" "}
-            <code>standalone.yml</code> from{" "}
-            <a
-              href="https://github.com/midnightntwrk/example-hello-world"
-              target="_blank"
-              rel="noreferrer"
-              className="text-primary underline"
-            >
-              midnightntwrk/example-hello-world
-            </a>{" "}
-            and boot it:
+            <strong>Start the standalone stack — one command.</strong>
             <pre className="mt-2 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto">
-              {`docker compose -f standalone.yml up -d --wait`}
+              {`bun scripts/midnight-standalone.mjs up`}
             </pre>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Writes <code>.midnight/standalone.docker-compose.yml</code>, pulls the pinned node /
+              indexer / proof-server images, boots the three services, and polls readiness. First
+              run pulls ~1&nbsp;GB and takes 2–5 min; subsequent boots are seconds. Use{" "}
+              <code>down</code>, <code>status</code>, or <code>logs</code> in place of{" "}
+              <code>up</code> for lifecycle control.
+            </p>
           </li>
           <li>
-            <strong>Sanity-check the proof server:</strong>
-            <pre className="mt-2 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto">
-              {`curl http://localhost:6300/health
-# → {"status":"ok","timestamp":"..."}`}
-            </pre>
+            <strong>Verify from the browser:</strong>{" "}
+            <Link to="/undeployed-preflight" className="text-primary underline">
+              /undeployed-preflight
+            </Link>
+            . Four green pills = ready. Any red pill shows the exact endpoint + error.
           </li>
           <li>
             <strong>Point Lace at the local node.</strong> Add a custom network in Lace →
@@ -116,6 +112,32 @@ bun scripts/deploy-midnight.mjs`}
             placeholder to a real hex contract ID.
           </li>
         </ol>
+
+        <details className="mt-6 text-xs text-muted-foreground">
+          <summary className="cursor-pointer text-primary uppercase tracking-[0.24em] text-[10px]">
+            OS-specific fallback (manual docker compose)
+          </summary>
+          <div className="mt-3 space-y-3 leading-relaxed">
+            <div>
+              <strong className="text-foreground">macOS:</strong>{" "}
+              <code>brew install --cask docker</code> → <code>open -a Docker</code> → wait for
+              the whale icon → run the <code>up</code> command above.
+            </div>
+            <div>
+              <strong className="text-foreground">Windows (WSL2):</strong>{" "}
+              <code>wsl --install</code>, install Docker Desktop with "Use WSL 2 based engine",
+              then run the <code>up</code> command from inside the WSL2 Ubuntu shell so browser
+              port-forwarding works.
+            </div>
+            <div>
+              <strong className="text-foreground">Linux:</strong>{" "}
+              <code>sudo apt install -y docker.io docker-compose-plugin</code> →{" "}
+              <code>sudo systemctl enable --now docker</code> →{" "}
+              <code>sudo usermod -aG docker "$USER" &amp;&amp; newgrp docker</code>, then run the{" "}
+              <code>up</code> command.
+            </div>
+          </div>
+        </details>
       </div>
 
       <div className="mt-8 grid sm:grid-cols-2 gap-3 text-[11px]">
