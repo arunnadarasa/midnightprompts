@@ -79,7 +79,7 @@ function inferNetworkFromAddress(address: string): string {
   if (!m) return "unknown";
   const suffix = m[1].toLowerCase();
   if (suffix === "test") return "preprod";
-  if (suffix === "undeployed") return "preview";
+  if (suffix === "undeployed") return "undeployed";
   return suffix; // e.g. "mainnet"
 }
 
