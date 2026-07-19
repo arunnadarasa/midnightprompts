@@ -1,9 +1,18 @@
+import { useState } from "react";
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { CopyButton } from "@/components/copy-button";
 import { QuantumChip } from "@/components/quantum-chip";
-import { getIdea, getTheme, getHook, IDEAS_BY_THEME } from "@/data/ideas";
+import { getIdea, getTheme, getHook, IDEAS_BY_THEME, type NetworkVariant } from "@/data/ideas";
 import { getPlainProposition } from "@/lib/plain-language";
+
+const VARIANT_META: Record<NetworkVariant, { label: string; caption: string; explorer: string | null }> = {
+  preview:    { label: "Preview",             caption: "Fastest to demo. Testnet resets often. Faucet: nethermind.dev preview.", explorer: "https://preview.midnightexplorer.com/" },
+  preprod:    { label: "Preprod",             caption: "Closer to mainnet parameters. Stable but occasional DUST-sync quirks.", explorer: "https://preprod.midnightexplorer.com/" },
+  undeployed: { label: "Undeployed (local)",  caption: "Run the standalone stack on your own machine. No faucet, unlimited tDUST. DevRel-advised.", explorer: null },
+};
+const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed"];
+
 
 export const Route = createFileRoute("/ideas/$id")({
   head: ({ params }) => {
