@@ -1,50 +1,82 @@
-# Plan — adopt Midnight-skills
+## Goal
 
-The upstream repo is https://github.com/Kali-Decoder/Midnight-skills. Its layout is already Lovable-compatible: every skill lives at `.agents/skills/<name>/SKILL.md` with valid frontmatter (`name`, `description`). No `AGENTS.md` file exists in the repo (the snippet you pasted is out of date on that one line); the repo README + `skills.json` are the real index.
+For every one of the 996 hackathon ideas, ship three variants of the mega-prompt so participants can pick their target network. All three share the same concept, contract, and UI — only the network config, secrets, and (for Undeployed) local-stack setup differ.
 
-Importing all 30+ skills would bloat retrieval and duplicate ground we already cover in the existing `lovable-midnight` skill. Instead we pick the ones that add net-new value for the current app + the 1,000 idea prompts.
+## Three variants
 
-## Skills to import (6)
+| Variant | `VITE_NETWORK_ID` | Indexer | Node | Faucet | Best for |
+|---|---|---|---|---|---|
+| **Preview** | `preview` | `https://indexer.preview.midnight.network/api/v4/graphql` | Midnight-hosted | `midnight-tmnight-preview.nethermind.dev` | Fastest to demo, resets often |
+| **Preprod** | `preprod` | `https://indexer.preprod.midnight.network/api/v4/graphql` | Midnight-hosted | `midnight-tmnight-preprod.nethermind.dev` | Closer to mainnet, more stable |
+| **Undeployed (local)** | `undeployed` | `http://localhost:8088/api/v4/graphql` | `ws://localhost:9944` | Genesis wallet (unlimited tDUST) | Bypasses Preprod DUST sync + ZKIR 0.31 bugs — DevRel-advised |
 
-Copy `SKILL.md` (and any bundled `references/`, `scripts/`, `assets/`) from the upstream repo into our `.agents/skills/<name>/`, then activate each with `skills--apply_draft`:
+## Data model
 
-1. `compact` — deep Compact 0.23 reference (ledger vs witness, `disclose()`, ADTs, hashing, Merkle, security patterns). Complements our terse `lovable-midnight` skill.
-2. `react-wallet-connector` — full DApp Connector API scaffold matching our `WalletConnectPanel` pattern; useful for the 1,000-ideas boilerplate.
-3. `midnight-environment-setup` — Compact + Docker + proof server install steps (mirrors, and can supersede, part of `/proof-server`).
-4. `indexer` — public data provider polling + GraphQL patterns for read-only ledger views (used by `showcase.midnight-ledger` and `showcase.move-board`).
-5. `example-locker-dapp` — canonical time-lock vault template; good reference for the ideas prompts.
-6. `example-counter` — smallest end-to-end Compact + MidnightJS example; great "hello world" for new users.
+Extend `src/data/ideas.ts` `Idea` type:
 
-Any bundled `references/` in the upstream repo (e.g. `midnight-session.md`, `gotchas.md`, `versions.json`) get copied alongside the SKILL.md that references them so progressive disclosure keeps working.
+```ts
+megaPrompt: string;                  // keep = Preview variant (backward-compat)
+megaPromptVariants: {
+  preview: string;
+  preprod: string;
+  undeployed: string;
+};
+```
 
-We are NOT importing: `gsap-core`, `gsap-utils`, `nft`, `android-example-voting`, `1am-wallet` (conflicts with our Lace-first stance), and the DeFi templates we don't currently teach. They stay available upstream if needed later.
+`megaPrompt` continues to point at Preview so existing links (`/?prompt=...`) keep working.
 
-## Reference wiring
+## Script changes — `scripts/rewrite_mega_prompts.py`
 
-**Known Issues page** (`src/routes/known-issues.tsx`): add a new "External references" card at the top linking to:
-- https://midnight-skills.netlify.app (browsable skill site)
-- https://github.com/Kali-Decoder/Midnight-skills (source)
-- Direct links to the 6 imported skills' upstream pages, so users can read them in a browser without invoking an agent.
+1. Refactor `make_prompt(idea, theme)` → `make_prompt(idea, theme, network)` where `network ∈ {"preview","preprod","undeployed"}`.
+2. Move network-specific bits into a `NETWORK_PROFILES` dict:
+   - `network_id`, `indexer_url`, `indexer_ws_url`, `explorer_url`, `faucet_url`, `secrets_block`, `setup_block`.
+3. Preview / Preprod: use existing `SECRETS` block with the right URLs; setup step is unchanged (Docker proof server + `compact compile`).
+4. **Undeployed** variant adds a `LOCAL STACK SETUP` block with OS-specific instructions:
+   - **macOS**: `brew install --cask docker`, launch Docker Desktop, `docker compose up` on the standalone stack YAML.
+   - **Windows**: install Docker Desktop for Windows + WSL2 backend, run the same `docker compose up` in a WSL2 shell so localhost port forwarding works.
+   - **Linux**: `sudo apt install docker.io docker-compose-plugin` (or distro equivalent), add user to `docker` group, `docker compose up`.
+   - Common steps for all OSes: clone `midnightntwrk/midnight-node-docker`, `docker compose up -d`, verify `curl http://localhost:8088/api/v4/health`, point Lace at `ws://localhost:9944` (custom network), deploy contract with `VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs`.
+   - Reference the imported `midnight-environment-setup` skill for detailed troubleshooting.
+5. In `main()`, populate `megaPromptVariants` for each idea by calling `make_prompt` three times; set `megaPrompt = megaPromptVariants.preview`.
+6. Update `scripts/append_wallet_boilerplate.py` to append the wallet boilerplate to each of the three variants (not just `megaPrompt`), so all three stay self-contained.
 
-**Homepage** (`src/routes/index.tsx`): tuck a one-line "Skills registry" link into the existing Service Desk card so it lives alongside the other support surfaces — no new hero block.
+## UI changes — `src/routes/ideas.$id.tsx`
 
-**Ideas mega-prompts** (`scripts/rewrite_mega_prompts.py`): append a short "FURTHER REFERENCE" section to every prompt with:
-- The Midnight-skills site URL
-- Named links to `compact`, `react-wallet-connector`, and `midnight-environment-setup` skill pages
-- A one-liner telling the downstream Lovable session to run `skills--apply_draft` on those three if the target project doesn't already have them.
+Add a small tab selector above the prompt block:
 
-Then re-run the script once to regenerate all 996 prompts (idempotent — the section is fenced by a marker so future re-runs replace, not duplicate).
+```
+┌─────────────┬──────────┬────────────────────┐
+│  Preview    │ Preprod  │  Undeployed (local) │
+└─────────────┴──────────┴────────────────────┘
+```
 
-## Out of scope
+- Client-side `useState<"preview"|"preprod"|"undeployed">("preview")`.
+- Selected variant drives `<pre>` content, `<CopyButton text={...}>`, and the "Open in Lovable" href.
+- Small caption below tabs describing each ("fastest demo" / "stable" / "no faucet — best if Preprod is stuck").
+- Explorer button link swaps between preview/preprod explorer per selection; hides for Undeployed.
+- Link to `/known-issues` and `/showcase/choreo-ledger-local` when Undeployed is active.
 
-- The `npx skills add …` / `git clone …` commands you pasted are for Cursor/Claude Code local setups. Lovable's equivalent is the `.agents/skills/` copy + `skills--apply_draft` flow, so we do that instead.
-- No new demo pages. No changes to contracts, wallet hook, or deploy scripts.
-- Skills we skip today can be added later on request — same recipe.
+Type update: `Idea` may not have `megaPromptVariants` on older cached data — fall back to `{ preview: idea.megaPrompt, preprod: idea.megaPrompt, undeployed: idea.megaPrompt }` for safety, but after the script runs every idea will have all three.
+
+## Skill usage
+
+Reference the imported skills inside the Undeployed instructions:
+- `midnight-environment-setup` — install Compact + Docker + proof server per OS.
+- `example-counter` and `example-locker-dapp` — link as canonical local-deploy templates.
+- `indexer` — for the local GraphQL patterns.
+
+The existing "FURTHER REFERENCE" section already links the skill registry; the Undeployed variant adds a dedicated inline callout.
 
 ## Files touched
 
-- `.agents/skills/{compact,react-wallet-connector,midnight-environment-setup,indexer,example-locker-dapp,example-counter}/` (new dirs, copied from upstream)
-- `src/routes/known-issues.tsx`
-- `src/routes/index.tsx`
-- `scripts/rewrite_mega_prompts.py`
-- `src/data/ideas/*.json` (regenerated by the script)
+1. `scripts/rewrite_mega_prompts.py` — network profile refactor + 3-variant generation.
+2. `scripts/append_wallet_boilerplate.py` — apply to all three variants.
+3. `src/data/ideas.ts` — extend `Idea` type with `megaPromptVariants`.
+4. `src/data/ideas/*.json` (10 files, 996 ideas) — regenerated by scripts.
+5. `src/routes/ideas.$id.tsx` — add variant tabs + swap prompt/copy/link on selection.
+
+## Verification
+
+- `bun run typecheck` clean.
+- Spot-check one idea page: switch tabs, verify prompt swaps, copy button works, "Open in Lovable" URL updates.
+- Confirm Undeployed variant contains all three OS setup blocks and points at `localhost:9944` / `localhost:8088`.

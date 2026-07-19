@@ -278,6 +278,12 @@ PREREQUISITES to tell the end user in your UI copy:
 """
 
 
+def _append(mp: str) -> str:
+    if not isinstance(mp, str) or SENTINEL_BEGIN in mp:
+        return mp
+    return mp.rstrip() + BOILERPLATE
+
+
 def main() -> int:
     changed = 0
     for path in sorted(DATA.glob("*.json")):
@@ -289,14 +295,29 @@ def main() -> int:
             continue
         dirty = False
         for idea in ideas:
+            variants = idea.get("megaPromptVariants")
+            touched = False
+            if isinstance(variants, dict):
+                for k, v in list(variants.items()):
+                    new = _append(v)
+                    if new is not v:
+                        variants[k] = new
+                        touched = True
             mp = idea.get("megaPrompt")
-            if not isinstance(mp, str):
-                continue
-            if SENTINEL_BEGIN in mp:
-                continue
-            idea["megaPrompt"] = mp.rstrip() + BOILERPLATE
-            dirty = True
-            changed += 1
+            if isinstance(mp, str):
+                # Keep megaPrompt in sync with the preview variant when present
+                if isinstance(variants, dict) and "preview" in variants:
+                    if idea["megaPrompt"] != variants["preview"]:
+                        idea["megaPrompt"] = variants["preview"]
+                        touched = True
+                else:
+                    new = _append(mp)
+                    if new is not mp:
+                        idea["megaPrompt"] = new
+                        touched = True
+            if touched:
+                dirty = True
+                changed += 1
         if dirty:
             path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
             print(f"updated {path.relative_to(ROOT)}")

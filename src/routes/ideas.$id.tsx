@@ -1,9 +1,18 @@
+import { useState } from "react";
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { CopyButton } from "@/components/copy-button";
 import { QuantumChip } from "@/components/quantum-chip";
-import { getIdea, getTheme, getHook, IDEAS_BY_THEME } from "@/data/ideas";
+import { getIdea, getTheme, getHook, IDEAS_BY_THEME, type NetworkVariant } from "@/data/ideas";
 import { getPlainProposition } from "@/lib/plain-language";
+
+const VARIANT_META: Record<NetworkVariant, { label: string; caption: string; explorer: string | null }> = {
+  preview:    { label: "Preview",             caption: "Fastest to demo. Testnet resets often. Faucet: nethermind.dev preview.", explorer: "https://preview.midnightexplorer.com/" },
+  preprod:    { label: "Preprod",             caption: "Closer to mainnet parameters. Stable but occasional DUST-sync quirks.", explorer: "https://preprod.midnightexplorer.com/" },
+  undeployed: { label: "Undeployed (local)",  caption: "Run the standalone stack on your own machine. No faucet, unlimited tDUST. DevRel-advised.", explorer: null },
+};
+const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed"];
+
 
 export const Route = createFileRoute("/ideas/$id")({
   head: ({ params }) => {
@@ -44,6 +53,16 @@ function IdeaPage() {
   const related = IDEAS_BY_THEME[theme.slug]
     .filter((i) => i.id !== idea.id && (i.subDiscipline === idea.subDiscipline || i.quantumHookId === idea.quantumHookId))
     .slice(0, 4);
+
+  const variants =
+    idea.megaPromptVariants ?? {
+      preview: idea.megaPrompt,
+      preprod: idea.megaPrompt,
+      undeployed: idea.megaPrompt,
+    };
+  const [variant, setVariant] = useState<NetworkVariant>("preview");
+  const activePrompt = variants[variant];
+  const activeMeta = VARIANT_META[variant];
 
   return (
     <SiteShell>
@@ -121,7 +140,7 @@ function IdeaPage() {
         </section>
 
         <section className="mt-12">
-          <div className="flex items-baseline justify-between gap-4 mb-4">
+          <div className="flex items-baseline justify-between gap-4 mb-4 flex-wrap">
             <div>
               <span className="eyebrow block mb-2">Appendix · Mega-prompt</span>
               <h2 className="font-display text-3xl italic text-foreground">The build prompt.</h2>
@@ -130,11 +149,52 @@ function IdeaPage() {
               <span className="hidden sm:inline-flex items-center gap-1 px-3 py-2 border border-primary/40 eyebrow text-primary">
                 budget · 1 message
               </span>
-              <CopyButton text={idea.megaPrompt} label="Copy prompt" />
+              <CopyButton text={activePrompt} label={`Copy · ${activeMeta.label}`} />
             </div>
           </div>
+
+          <div className="mb-4">
+            <div className="inline-flex flex-wrap gap-px bg-border border border-border">
+              {VARIANT_KEYS.map((k) => {
+                const active = k === variant;
+                return (
+                  <button
+                    key={k}
+                    type="button"
+                    onClick={() => setVariant(k)}
+                    className={
+                      "px-4 py-2 text-[11px] uppercase tracking-[0.24em] transition-colors " +
+                      (active
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-card text-foreground/70 hover:text-primary hover:bg-background")
+                    }
+                    aria-pressed={active}
+                  >
+                    {VARIANT_META[k].label}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="mt-3 text-xs text-muted-foreground font-light leading-relaxed max-w-3xl">
+              <span className="eyebrow text-primary mr-2">{activeMeta.label}</span>
+              {activeMeta.caption}
+            </p>
+            {variant === "undeployed" && (
+              <p className="mt-2 text-xs text-primary/80 font-light leading-relaxed max-w-3xl">
+                This variant includes step-by-step Docker + Compose instructions for macOS, Windows (WSL2),
+                and Linux inside the prompt.{" "}
+                <Link to="/showcase/choreo-ledger-local" className="story-gold text-primary">
+                  see the Choreo Ledger (Local) demo →
+                </Link>{" "}
+                <Link to="/known-issues" className="story-gold text-primary">
+                  known issues →
+                </Link>
+              </p>
+            )}
+          </div>
+
           <p className="text-sm text-muted-foreground mb-4 font-light leading-relaxed">
-            Paste into a fresh Lovable project. Make sure all five secrets above are set first.{" "}
+            Paste into a fresh Lovable project. Make sure the secrets for this target are set first.{" "}
             <Link to="/strategy" className="story-gold text-primary">read the build strategy →</Link>
           </p>
           <p className="text-xs text-primary/80 mb-4 font-light leading-relaxed">
@@ -143,25 +203,35 @@ function IdeaPage() {
           </p>
 
           <pre className="whitespace-pre-wrap break-all font-mono text-[11px] sm:text-[13px] leading-relaxed p-4 sm:p-8 border border-border bg-card text-foreground/90 w-full max-w-full overflow-x-hidden" style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace", letterSpacing: 0, wordBreak: "break-word", overflowWrap: "anywhere" }}>
-{idea.megaPrompt}
+{activePrompt}
           </pre>
           <div className="mt-5 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.28em]">
             <a
-              href={`https://lovable.dev/?prompt=${encodeURIComponent(idea.megaPrompt)}`}
+              href={`https://lovable.dev/?prompt=${encodeURIComponent(activePrompt)}`}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold hover:bg-foreground transition-colors duration-500"
             >
-              Open in Lovable ↗
+              Open in Lovable · {activeMeta.label} ↗
             </a>
-            <a
-              href="https://preview.midnightexplorer.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-primary/40 text-foreground hover:bg-primary hover:text-primary-foreground transition-colors duration-500"
-            >
-              Midnight Explorer ↗
-            </a>
+            {activeMeta.explorer && (
+              <a
+                href={activeMeta.explorer}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 border border-primary/40 text-foreground hover:bg-primary hover:text-primary-foreground transition-colors duration-500"
+              >
+                Midnight Explorer ↗
+              </a>
+            )}
+            {variant === "undeployed" && (
+              <Link
+                to="/showcase/choreo-ledger-local"
+                className="inline-flex items-center gap-2 px-6 py-3 border border-primary/40 text-foreground hover:bg-primary hover:text-primary-foreground transition-colors duration-500"
+              >
+                Local stack guide →
+              </Link>
+            )}
           </div>
         </section>
 

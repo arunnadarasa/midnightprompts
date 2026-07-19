@@ -36,16 +36,130 @@ HOOK_REMAP = {
     "private-witness": "private-witness",
 }
 
-SECRETS = """REQUIRED SECRETS (Lovable → Project Settings → Secrets):
-- VITE_NETWORK_ID           preview   (Midnight preview testnet; set to `preprod` for the more stable network)
+NETWORK_LABELS = {
+    "preview":    "Preview testnet",
+    "preprod":    "Preprod testnet (closer to mainnet)",
+    "undeployed": "Undeployed / local standalone stack (no faucet needed)",
+}
+
+NETWORK_SECRETS = {
+    "preview": """REQUIRED SECRETS (Lovable → Project Settings → Secrets) — **PREVIEW** target:
+- VITE_NETWORK_ID           preview
 - VITE_INDEXER_URL          https://indexer.preview.midnight.network/api/v4/graphql
 - VITE_INDEXER_WS_URL       wss://indexer.preview.midnight.network/api/v4/graphql/ws
 - VITE_PROOF_SERVER_URL     http://localhost:6300   (run `docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`)
-- VITE_DEFAULT_CONTRACT     the hex address printed by your first deploy — paste it here so users skip the deploy step
+- VITE_DEFAULT_CONTRACT     hex address printed by your first deploy — paste it here so users skip the deploy step
 
-Faucets: Preview  https://midnight-tmnight-preview.nethermind.dev/  ·  Preprod  https://midnight-tmnight-preprod.nethermind.dev/  (dispense tNIGHT — generate tDUST in Lace)
-Explorer: Preview  https://preview.midnightexplorer.com/  ·  Preprod  https://preprod.midnightexplorer.com/
-Docs:    https://docs.midnight.network/llms-full.txt"""
+Faucet:   https://midnight-tmnight-preview.nethermind.dev/  (dispenses tNIGHT — click "Generate tDUST" in Lace to delegate)
+Explorer: https://preview.midnightexplorer.com/
+Notes:    Preview is the fastest network to demo on but resets frequently. Best for iterative dev + hackathon judges.""",
+
+    "preprod": """REQUIRED SECRETS (Lovable → Project Settings → Secrets) — **PREPROD** target:
+- VITE_NETWORK_ID           preprod
+- VITE_INDEXER_URL          https://indexer.preprod.midnight.network/api/v4/graphql
+- VITE_INDEXER_WS_URL       wss://indexer.preprod.midnight.network/api/v4/graphql/ws
+- VITE_PROOF_SERVER_URL     http://localhost:6300   (run `docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`)
+- VITE_DEFAULT_CONTRACT     hex address printed by your first deploy — paste it here so users skip the deploy step
+
+Faucet:   https://midnight-tmnight-preprod.nethermind.dev/  (dispenses tNIGHT — click "Generate tDUST" in Lace to delegate)
+Explorer: https://preprod.midnightexplorer.com/
+Notes:    Preprod is closer to mainnet parameters but has known DUST-sync and ZKIR 0.31 quirks. If your
+          demo stalls at "Balancing…", switch to the Undeployed local stack variant of this prompt.""",
+
+    "undeployed": """REQUIRED SECRETS (Lovable → Project Settings → Secrets) — **UNDEPLOYED / LOCAL** target:
+- VITE_NETWORK_ID           undeployed
+- VITE_INDEXER_URL          http://localhost:8088/api/v4/graphql
+- VITE_INDEXER_WS_URL       ws://localhost:8088/api/v4/graphql/ws
+- VITE_PROOF_SERVER_URL     http://localhost:6300
+- VITE_NODE_WS              ws://localhost:9944
+- VITE_DEFAULT_CONTRACT     hex address printed by your local deploy
+
+No faucet needed — the local node mints unlimited tDUST to the genesis wallet.
+Explorer: not applicable (chain is local); browse state via the local Indexer GraphQL.
+Notes:    This is the **DevRel-advised** path for hackathon work. It bypasses every Preprod
+          tDUST-sync + `/check 400` ZKIR issue by pinning the SDK and node to the same version.""",
+}
+
+# Backwards-compat alias — some legacy body helpers reference `SECRETS`
+SECRETS = NETWORK_SECRETS["preview"]
+
+def local_stack_setup() -> str:
+    """OS-specific bring-up instructions for the standalone local Midnight stack."""
+    return """LOCAL STACK SETUP (Undeployed variant only — humans run this in a terminal, NOT Lovable):
+
+The `undeployed` target expects a full Midnight standalone stack (node + indexer + proof server)
+running on your own machine. All three services are Docker containers.
+
+--- macOS ---
+```bash
+# 1. Docker Desktop (once)
+brew install --cask docker      # or download from docker.com/products/docker-desktop
+open -a Docker                  # wait for whale icon in menu bar
+
+# 2. Clone the standalone stack repo
+git clone https://github.com/midnightntwrk/midnight-node-docker.git
+cd midnight-node-docker
+
+# 3. Bring up node + indexer + proof server
+docker compose up -d
+docker compose ps               # confirm 3 services healthy
+
+# 4. Verify (should each return 200)
+curl http://localhost:8088/api/v4/health
+curl http://localhost:6300/health
+```
+
+--- Windows (WSL2) ---
+```powershell
+# 1. Enable WSL2 + Ubuntu (PowerShell as Admin)
+wsl --install
+# reboot when prompted
+
+# 2. Install Docker Desktop for Windows — https://docker.com/products/docker-desktop
+#    In Docker settings, enable "Use the WSL 2 based engine" and integration with your Ubuntu distro.
+
+# 3. In the Ubuntu (WSL2) shell:
+git clone https://github.com/midnightntwrk/midnight-node-docker.git
+cd midnight-node-docker
+docker compose up -d
+curl http://localhost:8088/api/v4/health
+curl http://localhost:6300/health
+```
+Run `docker compose` from inside WSL2 so localhost port forwarding to the browser works.
+
+--- Linux (Ubuntu/Debian) ---
+```bash
+# 1. Docker Engine + compose plugin
+sudo apt update
+sudo apt install -y docker.io docker-compose-plugin
+sudo systemctl enable --now docker
+sudo usermod -aG docker "$USER" && newgrp docker    # log out/in if `docker ps` still needs sudo
+
+# 2. Clone + start
+git clone https://github.com/midnightntwrk/midnight-node-docker.git
+cd midnight-node-docker
+docker compose up -d
+curl http://localhost:8088/api/v4/health
+curl http://localhost:6300/health
+```
+For Fedora/Arch swap `apt install` for `dnf install docker docker-compose-plugin` or
+`pacman -S docker docker-compose`.
+
+--- Point Lace at the local node (all OSes) ---
+Lace → Settings → Network → Custom → RPC = `ws://localhost:9944` → Save → Switch.
+The genesis wallet is pre-funded with unlimited tDUST — no faucet click, no delegation step.
+
+--- Deploy the Compact contract (all OSes) ---
+```bash
+# after `compact compile` produced contracts/managed/<name>/
+VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs
+# → prints contract hex address; paste into VITE_DEFAULT_CONTRACT
+```
+
+Full troubleshooting: see the `midnight-environment-setup` skill
+(https://midnight-skills.netlify.app/skills/midnight-environment-setup) — it covers
+Docker Desktop failing to start, port 6300 conflicts, WSL2 clock drift, and Lace network
+switching."""
 
 BUDGET = """5-CREDIT BUDGET (HARD LIMIT):
 - ONE single-page Vite + React app. No router, no Lovable Cloud, no database, no server-side auth.
@@ -364,7 +478,7 @@ BODY_BY_HOOK = {
 
 # ---------------------------------------------------------------- prompt builder
 
-def make_prompt(idea: dict, theme: dict) -> str:
+def make_prompt(idea: dict, theme: dict, network: str = "preview") -> str:
     title = idea["title"]; pitch = idea["pitch"]; sub = idea["subDiscipline"]
     hid = idea.get("quantumHookId") or "compact-deploy"
     hook = HOOKS.get(hid) or HOOKS["compact-deploy"]
@@ -375,7 +489,15 @@ def make_prompt(idea: dict, theme: dict) -> str:
     contract = contract_fn(title, pitch)
     body = body_fn(title, pitch, sub, contract)
 
+    net_label = NETWORK_LABELS.get(network, network)
+    net_secrets = NETWORK_SECRETS.get(network, NETWORK_SECRETS["preview"])
+    local_block = f"\n\n{local_stack_setup()}\n" if network == "undeployed" else ""
+
     return f"""Build "{title}" in ONE Lovable message. Single-page Midnight ZK demo.
+
+TARGET NETWORK: **{net_label}** (VITE_NETWORK_ID = `{network}`)
+This is one of three variants of the same idea — Preview / Preprod / Undeployed. Only the network
+config, secrets, and (for Undeployed) local-stack setup differ. Contract + UI + Lace flow are identical.
 
 CONCEPT
 {pitch}
@@ -386,7 +508,7 @@ Onchain primitive: {hook_name} ({hook['tag']}). Why this primitive: {rationale}
 
 STACK
 - React + Vite single page (index route only).
-- Midnight preview testnet. Compact language 0.23. MidnightJS SDK 4.1.1.
+- Midnight {net_label}. Compact language 0.23. MidnightJS SDK 4.1.1.
 - Lace wallet is the sole auth surface — no Privy, no MetaMask, no OAuth.
 - Local proof server (Docker port 6300) does all ZK proving. The UI shows Proving state.
 - No SSR. All MidnightJS imports live behind `<ClientOnly>` + `useEffect`.
@@ -394,7 +516,7 @@ STACK
 {PACKAGES}
 
 {TOOLCHAIN}
-
+{local_block}
 {VITE_CONFIG}
 
 {MIDNIGHTJS_BOOT}
@@ -403,7 +525,7 @@ STACK
 
 {REDFLAGS}
 
-{SECRETS}
+{net_secrets}
 
 FURTHER REFERENCE (community skills registry — browsable, per-primitive scaffolds):
 - Site:   https://midnight-skills.netlify.app
@@ -423,6 +545,8 @@ CREDIT (must appear in UI footer AND as a header comment on every Compact contra
 
 # ---------------------------------------------------------------- main
 
+VARIANTS = ("preview", "preprod", "undeployed")
+
 def main():
     total = 0
     for t in THEMES:
@@ -435,16 +559,17 @@ def main():
             idea["quantumHookId"] = new_hid
             idea["quantumHook"] = new_hook["name"]
             idea["quantumTag"] = new_hook["tag"]
-            # Refresh rationale so it names the new primitive
             idea["quantumRationale"] = (
                 f"This idea fits {new_hook['name']} because {new_hook['tag']} is exactly what "
                 f"a {idea.get('subDiscipline','creative')} demo needs: {new_hook['kernel'][:120]}..."
             )
-            idea["megaPrompt"] = make_prompt(idea, t)
+            variants = {net: make_prompt(idea, t, net) for net in VARIANTS}
+            idea["megaPromptVariants"] = variants
+            idea["megaPrompt"] = variants["preview"]  # backward-compat default
             total += 1
         p.write_text(json.dumps(doc, indent=2, ensure_ascii=False))
-        print(f"  {t['slug']}: {len(doc['ideas'])} prompts rewritten")
-    print(f"total: {total}")
+        print(f"  {t['slug']}: {len(doc['ideas'])} × 3 variants rewritten")
+    print(f"total ideas: {total} — total prompts: {total * 3}")
 
 if __name__ == "__main__":
     main()
