@@ -34,6 +34,7 @@ function SiteHeader() {
           <NavLink to="/quantum-primer">Primer</NavLink>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/known-issues">Known Issues</NavLink>
+          <NavLink to="/undeployed-preflight">Preflight</NavLink>
           <span className="mx-2 h-5 w-px bg-border" aria-hidden />
           <a
             href="https://creativequantum.lovable.app/"
