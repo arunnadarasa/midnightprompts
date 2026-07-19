@@ -361,7 +361,14 @@ function KnownIssuesPage() {
           against.{" "}
           <Link to="/showcase/choreo-ledger-local" className="text-primary underline">
             See the Choreo Ledger (Local) demo →
+          </Link>{" "}
+          One-command bring-up:{" "}
+          <code className="text-foreground">bun scripts/midnight-standalone.mjs up</code> · verify
+          in your browser at{" "}
+          <Link to="/undeployed-preflight" className="text-primary underline">
+            /undeployed-preflight
           </Link>
+          .
         </p>
       </div>
 
