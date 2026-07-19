@@ -52,6 +52,14 @@ function SiteHeader() {
             Docs ↗
           </a>
           <a
+            href="https://midskills.sevryn.xyz/"
+            target="_blank"
+            rel="noreferrer"
+            className="px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
+          >
+            Midskills ↗
+          </a>
+          <a
             href="https://preview.midnightexplorer.com/"
             target="_blank"
             rel="noreferrer"
