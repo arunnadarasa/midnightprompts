@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { useMidnightWallet } from "@/lib/use-midnight-wallet";
 
 function truncate(addr: string, head = 12, tail = 8) {
@@ -33,6 +34,8 @@ export function WalletConnectPanel({
 
   if (!hydrated) return skeleton;
 
+  const isUndeployed = expectedNetwork === "undeployed";
+  const publicNetwork = w.network === "preview" || w.network === "preprod" || w.network === "mainnet";
   const wrongNetwork =
     w.status === "connected" &&
     w.network &&
@@ -111,7 +114,7 @@ export function WalletConnectPanel({
             </button>
           </div>
 
-          {wrongNetwork && (
+          {wrongNetwork && !isUndeployed && (
             <div className="border-l-2 border-yellow-500/70 pl-3 py-2 text-[12px] text-muted-foreground">
               <span className="text-yellow-500 uppercase tracking-[0.24em] text-[10px] font-semibold">
                 switch network
@@ -124,6 +127,41 @@ export function WalletConnectPanel({
                   {expectedNetwork}
                 </span>
                 . Switch networks inside Lace to see matching state.
+              </p>
+            </div>
+          )}
+
+          {isUndeployed && publicNetwork && (
+            <div className="border-l-2 border-yellow-500/70 pl-3 py-2 text-[12px] text-muted-foreground">
+              <span className="text-yellow-500 uppercase tracking-[0.24em] text-[10px] font-semibold">
+                point lace at localhost
+              </span>
+              <p className="mt-1">
+                Lace is connected to the public{" "}
+                <span className="text-foreground font-mono">{w.network}</span>{" "}
+                network, but this demo needs the local Undeployed stack. In Lace,
+                add a custom network with RPC{" "}
+                <span className="text-foreground font-mono">ws://localhost:9944</span>{" "}
+                and switch to it. Then run the{" "}
+                <Link to="/undeployed-preflight" className="text-primary underline">
+                  preflight checks
+                </Link>{" "}
+                if you haven't already.
+              </p>
+            </div>
+          )}
+
+          {isUndeployed && w.network === "undeployed" && (
+            <div className="border-l-2 border-green-500/70 pl-3 py-2 text-[12px] text-muted-foreground">
+              <span className="text-green-500 uppercase tracking-[0.24em] text-[10px] font-semibold">
+                on local network
+              </span>
+              <p className="mt-1">
+                Lace is connected to the local Undeployed stack. Make sure the{" "}
+                <Link to="/undeployed-preflight" className="text-primary underline">
+                  preflight checks
+                </Link>{" "}
+                are all green before deploying or submitting transactions.
               </p>
             </div>
           )}
@@ -150,6 +188,14 @@ export function WalletConnectPanel({
             >
               Install Lace ↗
             </a>
+            {isUndeployed && (
+              <Link
+                to="/undeployed-preflight"
+                className="px-3 py-2 border border-border text-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:border-primary/60 hover:text-primary transition"
+              >
+                Preflight →
+              </Link>
+            )}
           </div>
         </div>
       )}
