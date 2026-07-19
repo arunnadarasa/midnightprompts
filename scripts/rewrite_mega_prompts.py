@@ -90,74 +90,58 @@ def local_stack_setup() -> str:
 The `undeployed` target expects a full Midnight standalone stack (node + indexer + proof server)
 running on your own machine. All three services are Docker containers.
 
---- macOS ---
+--- One-command bring-up (all OSes, after Docker is running) ---
 ```bash
-# 1. Docker Desktop (once)
+bun scripts/midnight-standalone.mjs up      # pull + start + wait for ready
+bun scripts/midnight-standalone.mjs status  # check health
+bun scripts/midnight-standalone.mjs down    # stop
+```
+The `up` command writes `.midnight/standalone.docker-compose.yml`, pulls pinned node / indexer /
+proof-server images, starts the three services, and polls readiness on ws://localhost:9944,
+http://localhost:8088/api/v4/graphql, and http://localhost:6300/health. First run pulls ~1 GB
+and takes 2-5 min; later boots are seconds.
+
+Then verify in the browser: navigate to `/undeployed-preflight` in the app. Four green pills = ready.
+
+--- Docker prerequisites per OS ---
+
+macOS:
+```bash
 brew install --cask docker      # or download from docker.com/products/docker-desktop
 open -a Docker                  # wait for whale icon in menu bar
-
-# 2. Clone the standalone stack repo
-git clone https://github.com/midnightntwrk/midnight-node-docker.git
-cd midnight-node-docker
-
-# 3. Bring up node + indexer + proof server
-docker compose up -d
-docker compose ps               # confirm 3 services healthy
-
-# 4. Verify (should each return 200)
-curl http://localhost:8088/api/v4/health
-curl http://localhost:6300/health
 ```
 
---- Windows (WSL2) ---
+Windows (WSL2):
 ```powershell
-# 1. Enable WSL2 + Ubuntu (PowerShell as Admin)
-wsl --install
-# reboot when prompted
-
-# 2. Install Docker Desktop for Windows — https://docker.com/products/docker-desktop
-#    In Docker settings, enable "Use the WSL 2 based engine" and integration with your Ubuntu distro.
-
-# 3. In the Ubuntu (WSL2) shell:
-git clone https://github.com/midnightntwrk/midnight-node-docker.git
-cd midnight-node-docker
-docker compose up -d
-curl http://localhost:8088/api/v4/health
-curl http://localhost:6300/health
+wsl --install                   # then reboot
+# Install Docker Desktop, enable "Use the WSL 2 based engine" + Ubuntu integration.
+# Run `bun scripts/midnight-standalone.mjs up` from INSIDE the WSL2 Ubuntu shell so
+# localhost port forwarding to the browser works.
 ```
-Run `docker compose` from inside WSL2 so localhost port forwarding to the browser works.
 
---- Linux (Ubuntu/Debian) ---
+Linux (Ubuntu/Debian):
 ```bash
-# 1. Docker Engine + compose plugin
 sudo apt update
 sudo apt install -y docker.io docker-compose-plugin
 sudo systemctl enable --now docker
-sudo usermod -aG docker "$USER" && newgrp docker    # log out/in if `docker ps` still needs sudo
-
-# 2. Clone + start
-git clone https://github.com/midnightntwrk/midnight-node-docker.git
-cd midnight-node-docker
-docker compose up -d
-curl http://localhost:8088/api/v4/health
-curl http://localhost:6300/health
+sudo usermod -aG docker "$USER" && newgrp docker
 ```
 For Fedora/Arch swap `apt install` for `dnf install docker docker-compose-plugin` or
 `pacman -S docker docker-compose`.
 
 --- Point Lace at the local node (all OSes) ---
-Lace → Settings → Network → Custom → RPC = `ws://localhost:9944` → Save → Switch.
-The genesis wallet is pre-funded with unlimited tDUST — no faucet click, no delegation step.
+Lace -> Settings -> Network -> Custom -> RPC = `ws://localhost:9944` -> Save -> Switch.
+The genesis wallet is pre-funded with unlimited tDUST -- no faucet click, no delegation step.
 
 --- Deploy the Compact contract (all OSes) ---
 ```bash
 # after `compact compile` produced contracts/managed/<name>/
 VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs
-# → prints contract hex address; paste into VITE_DEFAULT_CONTRACT
+# -> prints contract hex address; paste into VITE_DEFAULT_CONTRACT
 ```
 
 Full troubleshooting: see the `midnight-environment-setup` skill
-(https://midnight-skills.netlify.app/skills/midnight-environment-setup) — it covers
+(https://midnight-skills.netlify.app/skills/midnight-environment-setup) -- it covers
 Docker Desktop failing to start, port 6300 conflicts, WSL2 clock drift, and Lace network
 switching."""
 
