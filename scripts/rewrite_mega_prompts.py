@@ -517,13 +517,15 @@ STACK
 FURTHER REFERENCE (community skills registry — browsable, per-primitive scaffolds):
 - Site:   https://midnight-skills.netlify.app
 - Source: https://github.com/Kali-Decoder/Midnight-skills
+- This app's Undeployed quick-start: https://midnightprompts.lovable.app/undeployed
+- This app's preflight checks:      https://midnightprompts.lovable.app/undeployed-preflight
 - `compact`                    — Compact 0.23 language deep-dive, ledger vs witness, disclose(), Merkle patterns
 - `react-wallet-connector`     — full DApp Connector API scaffold (enumerate window.midnight by UUID)
 - `midnight-environment-setup` — Compact compiler + Docker + proof server bring-up
 - `indexer`                    — public data provider + GraphQL patterns for read-only ledger views
 - `example-locker-dapp`        — timelock vault reference (blockTimeGte, receive/sendUnshielded)
 - `example-counter`            — smallest end-to-end Compact + MidnightJS reference
-If the target Lovable session is on this workspace, those six are already active. Otherwise, drop
+If the target Lovable session is on this workspace, those six skills are already active. Otherwise, drop
 `.agents/skills/<name>/SKILL.md` into your project from the repo above and run `skills--apply_draft`.
 
 CREDIT (must appear in UI footer AND as a header comment on every Compact contract):
