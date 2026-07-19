@@ -213,6 +213,14 @@ function Index() {
                 <Link to="/known-issues" className="text-primary hover:text-foreground transition-colors">
                   Known issues →
                 </Link>
+                <a
+                  href="https://midnight-skills.netlify.app"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-primary hover:text-foreground transition-colors"
+                >
+                  Skills registry ↗
+                </a>
               </div>
             </div>
           </div>

@@ -365,6 +365,56 @@ function KnownIssuesPage() {
         </p>
       </div>
 
+      <div className="mt-6 p-4 sm:p-5 border border-border bg-card">
+        <span className="eyebrow text-primary">External references · Midnight-skills</span>
+        <p className="mt-2 text-sm text-foreground/90 leading-relaxed">
+          Browsable skill registry from the community (Kali-Decoder / Tusharpamnani). Each page is a full
+          scaffold: contract, wallet wiring, indexer patterns, troubleshooting tables.
+        </p>
+        <ul className="mt-3 grid sm:grid-cols-2 gap-x-4 gap-y-1.5 text-[12px]">
+          <li>
+            <a href="https://midnight-skills.netlify.app" target="_blank" rel="noreferrer" className="text-primary underline break-all">
+              midnight-skills.netlify.app ↗
+            </a>{" "}<span className="text-muted-foreground">— site</span>
+          </li>
+          <li>
+            <a href="https://github.com/Kali-Decoder/Midnight-skills" target="_blank" rel="noreferrer" className="text-primary underline break-all">
+              GitHub source ↗
+            </a>
+          </li>
+          <li>
+            <a href="https://midnight-skills.netlify.app/skills/compact" target="_blank" rel="noreferrer" className="text-primary underline break-all">
+              compact
+            </a>{" "}<span className="text-muted-foreground">— language deep-dive</span>
+          </li>
+          <li>
+            <a href="https://midnight-skills.netlify.app/skills/react-wallet-connector" target="_blank" rel="noreferrer" className="text-primary underline break-all">
+              react-wallet-connector
+            </a>
+          </li>
+          <li>
+            <a href="https://midnight-skills.netlify.app/skills/midnight-environment-setup" target="_blank" rel="noreferrer" className="text-primary underline break-all">
+              midnight-environment-setup
+            </a>
+          </li>
+          <li>
+            <a href="https://midnight-skills.netlify.app/skills/indexer" target="_blank" rel="noreferrer" className="text-primary underline break-all">
+              indexer
+            </a>
+          </li>
+          <li>
+            <a href="https://midnight-skills.netlify.app/skills/example-locker-dapp" target="_blank" rel="noreferrer" className="text-primary underline break-all">
+              example-locker-dapp
+            </a>
+          </li>
+          <li>
+            <a href="https://midnight-skills.netlify.app/skills/example-counter" target="_blank" rel="noreferrer" className="text-primary underline break-all">
+              example-counter
+            </a>
+          </li>
+        </ul>
+      </div>
+
       <nav className="mt-8 p-4 border border-border bg-card text-[12px]">
         <div className="eyebrow text-primary mb-2">On this page</div>
         <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-2">
