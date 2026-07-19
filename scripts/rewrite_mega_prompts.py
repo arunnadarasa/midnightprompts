@@ -478,7 +478,7 @@ BODY_BY_HOOK = {
 
 # ---------------------------------------------------------------- prompt builder
 
-def make_prompt(idea: dict, theme: dict) -> str:
+def make_prompt(idea: dict, theme: dict, network: str = "preview") -> str:
     title = idea["title"]; pitch = idea["pitch"]; sub = idea["subDiscipline"]
     hid = idea.get("quantumHookId") or "compact-deploy"
     hook = HOOKS.get(hid) or HOOKS["compact-deploy"]
@@ -489,7 +489,15 @@ def make_prompt(idea: dict, theme: dict) -> str:
     contract = contract_fn(title, pitch)
     body = body_fn(title, pitch, sub, contract)
 
+    net_label = NETWORK_LABELS.get(network, network)
+    net_secrets = NETWORK_SECRETS.get(network, NETWORK_SECRETS["preview"])
+    local_block = f"\n\n{local_stack_setup()}\n" if network == "undeployed" else ""
+
     return f"""Build "{title}" in ONE Lovable message. Single-page Midnight ZK demo.
+
+TARGET NETWORK: **{net_label}** (VITE_NETWORK_ID = `{network}`)
+This is one of three variants of the same idea — Preview / Preprod / Undeployed. Only the network
+config, secrets, and (for Undeployed) local-stack setup differ. Contract + UI + Lace flow are identical.
 
 CONCEPT
 {pitch}
@@ -500,7 +508,7 @@ Onchain primitive: {hook_name} ({hook['tag']}). Why this primitive: {rationale}
 
 STACK
 - React + Vite single page (index route only).
-- Midnight preview testnet. Compact language 0.23. MidnightJS SDK 4.1.1.
+- Midnight {net_label}. Compact language 0.23. MidnightJS SDK 4.1.1.
 - Lace wallet is the sole auth surface — no Privy, no MetaMask, no OAuth.
 - Local proof server (Docker port 6300) does all ZK proving. The UI shows Proving state.
 - No SSR. All MidnightJS imports live behind `<ClientOnly>` + `useEffect`.
@@ -508,7 +516,7 @@ STACK
 {PACKAGES}
 
 {TOOLCHAIN}
-
+{local_block}
 {VITE_CONFIG}
 
 {MIDNIGHTJS_BOOT}
@@ -517,7 +525,7 @@ STACK
 
 {REDFLAGS}
 
-{SECRETS}
+{net_secrets}
 
 FURTHER REFERENCE (community skills registry — browsable, per-primitive scaffolds):
 - Site:   https://midnight-skills.netlify.app
@@ -537,6 +545,8 @@ CREDIT (must appear in UI footer AND as a header comment on every Compact contra
 
 # ---------------------------------------------------------------- main
 
+VARIANTS = ("preview", "preprod", "undeployed")
+
 def main():
     total = 0
     for t in THEMES:
@@ -549,16 +559,17 @@ def main():
             idea["quantumHookId"] = new_hid
             idea["quantumHook"] = new_hook["name"]
             idea["quantumTag"] = new_hook["tag"]
-            # Refresh rationale so it names the new primitive
             idea["quantumRationale"] = (
                 f"This idea fits {new_hook['name']} because {new_hook['tag']} is exactly what "
                 f"a {idea.get('subDiscipline','creative')} demo needs: {new_hook['kernel'][:120]}..."
             )
-            idea["megaPrompt"] = make_prompt(idea, t)
+            variants = {net: make_prompt(idea, t, net) for net in VARIANTS}
+            idea["megaPromptVariants"] = variants
+            idea["megaPrompt"] = variants["preview"]  # backward-compat default
             total += 1
         p.write_text(json.dumps(doc, indent=2, ensure_ascii=False))
-        print(f"  {t['slug']}: {len(doc['ideas'])} prompts rewritten")
-    print(f"total: {total}")
+        print(f"  {t['slug']}: {len(doc['ideas'])} × 3 variants rewritten")
+    print(f"total ideas: {total} — total prompts: {total * 3}")
 
 if __name__ == "__main__":
     main()
