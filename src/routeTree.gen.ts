@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WalletRouteImport } from './routes/wallet'
+import { Route as UndeployedPreflightRouteImport } from './routes/undeployed-preflight'
 import { Route as ThemesRouteImport } from './routes/themes'
 import { Route as StrategyRouteImport } from './routes/strategy'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
@@ -30,6 +31,11 @@ import { Route as IdeasIdRouteImport } from './routes/ideas.$id'
 const WalletRoute = WalletRouteImport.update({
   id: '/wallet',
   path: '/wallet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UndeployedPreflightRoute = UndeployedPreflightRouteImport.update({
+  id: '/undeployed-preflight',
+  path: '/undeployed-preflight',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ThemesRoute = ThemesRouteImport.update({
@@ -124,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/showcase': typeof ShowcaseRouteWithChildren
   '/strategy': typeof StrategyRoute
   '/themes': typeof ThemesRouteWithChildren
+  '/undeployed-preflight': typeof UndeployedPreflightRoute
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/choreo-ledger-local': typeof ShowcaseChoreoLedgerLocalRoute
@@ -141,6 +148,7 @@ export interface FileRoutesByTo {
   '/proof-server': typeof ProofServerRoute
   '/quantum-primer': typeof QuantumPrimerRoute
   '/strategy': typeof StrategyRoute
+  '/undeployed-preflight': typeof UndeployedPreflightRoute
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/choreo-ledger-local': typeof ShowcaseChoreoLedgerLocalRoute
@@ -161,6 +169,7 @@ export interface FileRoutesById {
   '/showcase': typeof ShowcaseRouteWithChildren
   '/strategy': typeof StrategyRoute
   '/themes': typeof ThemesRouteWithChildren
+  '/undeployed-preflight': typeof UndeployedPreflightRoute
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/choreo-ledger-local': typeof ShowcaseChoreoLedgerLocalRoute
@@ -182,6 +191,7 @@ export interface FileRouteTypes {
     | '/showcase'
     | '/strategy'
     | '/themes'
+    | '/undeployed-preflight'
     | '/wallet'
     | '/ideas/$id'
     | '/showcase/choreo-ledger-local'
@@ -199,6 +209,7 @@ export interface FileRouteTypes {
     | '/proof-server'
     | '/quantum-primer'
     | '/strategy'
+    | '/undeployed-preflight'
     | '/wallet'
     | '/ideas/$id'
     | '/showcase/choreo-ledger-local'
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/showcase'
     | '/strategy'
     | '/themes'
+    | '/undeployed-preflight'
     | '/wallet'
     | '/ideas/$id'
     | '/showcase/choreo-ledger-local'
@@ -238,6 +250,7 @@ export interface RootRouteChildren {
   ShowcaseRoute: typeof ShowcaseRouteWithChildren
   StrategyRoute: typeof StrategyRoute
   ThemesRoute: typeof ThemesRouteWithChildren
+  UndeployedPreflightRoute: typeof UndeployedPreflightRoute
   WalletRoute: typeof WalletRoute
   IdeasIdRoute: typeof IdeasIdRoute
 }
@@ -249,6 +262,13 @@ declare module '@tanstack/react-router' {
       path: '/wallet'
       fullPath: '/wallet'
       preLoaderRoute: typeof WalletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/undeployed-preflight': {
+      id: '/undeployed-preflight'
+      path: '/undeployed-preflight'
+      fullPath: '/undeployed-preflight'
+      preLoaderRoute: typeof UndeployedPreflightRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/themes': {
@@ -408,19 +428,10 @@ const rootRouteChildren: RootRouteChildren = {
   ShowcaseRoute: ShowcaseRouteWithChildren,
   StrategyRoute: StrategyRoute,
   ThemesRoute: ThemesRouteWithChildren,
+  UndeployedPreflightRoute: UndeployedPreflightRoute,
   WalletRoute: WalletRoute,
   IdeasIdRoute: IdeasIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
