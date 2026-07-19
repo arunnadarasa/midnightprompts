@@ -86,33 +86,31 @@ pragma language_version 0.23;
 
 import CompactStandardLibrary;
 
-export ledger enrolled_commitments: Set<Bytes<32>>;   // public: which commitments exist
-export ledger proof_count: Counter;
+export ledger enrolled_commitments: Set<Bytes<32>>;   // public: which commitments are valid
+export ledger last_action_count: Counter;
 
 witness localSecretKey(): Bytes<32>;
 
-constructor() { proof_count.increment(1); }
+constructor() { last_action_count.increment(1); }
 
-export circuit commitment(sk: Bytes<32>, tag: Bytes<32>): Bytes<32> {
-  return persistentHash<Vector<2, Bytes<32>>>([tag, sk]);
+export circuit enroll(commitmentTag: Bytes<32>): [] {
+  const sk = localSecretKey();
+  const c = persistentHash<Vector<2, Bytes<32>>>([commitmentTag, sk]);
+  enrolled_commitments.insert(disclose(c));            // sk stays local; only c goes public
 }
 
-export circuit enroll(tag: Bytes<32>): [] {
+export circuit proveOwnership(commitmentTag: Bytes<32>): [] {
   const sk = localSecretKey();
-  enrolled_commitments.insert(disclose(commitment(sk, tag)));
-}
-
-export circuit proveOwnership(tag: Bytes<32>): [] {
-  const sk = localSecretKey();
-  assert(enrolled_commitments.member(disclose(commitment(sk, tag))), "not enrolled");
-  proof_count.increment(1);
+  const c = persistentHash<Vector<2, Bytes<32>>>([commitmentTag, sk]);
+  assert(enrolled_commitments.member(c), "not enrolled");
+  last_action_count.increment(1);
 }`;
 }
 
 function compactIpfs(title: string, pitch: string): string {
-  const n = safeName(title, "CIDLog");
+  const n = safeName(title, "CIDLedger");
   return `// contracts/${n}.compact
-// ${pitch}  (IPFS CID commitment pattern)
+// ${pitch}  (pin-to-IPFS-then-commit-CID pattern)
 // ${CREDIT}
 pragma language_version 0.23;
 
@@ -136,6 +134,7 @@ export circuit commitCid(cid: Opaque<"string">): [] {
   cid_count.increment(1);
 }`;
 }
+
 
 function bodyCompactDeploy(title: string, pitch: string, sub: string, contract: string): string {
   return `CONTRACT
