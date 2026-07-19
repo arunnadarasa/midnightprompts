@@ -10,6 +10,14 @@ import theaterData from "./ideas/theater.json";
 import fashionData from "./ideas/fashion.json";
 import hooksData from "./ideas/hooks.json";
 
+export type NetworkVariant = "preview" | "preprod" | "undeployed";
+
+export type MegaPromptVariants = {
+  preview: string;
+  preprod: string;
+  undeployed: string;
+};
+
 export type Idea = {
   id: string;
   theme: string;
@@ -21,6 +29,7 @@ export type Idea = {
   quantumTag: string;
   quantumRationale: string;
   megaPrompt: string;
+  megaPromptVariants?: MegaPromptVariants;
   tam: string;
   sam: string;
   som: string;
