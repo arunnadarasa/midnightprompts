@@ -1,60 +1,83 @@
-Ship two things that lower the setup bar for the Undeployed (local Midnight standalone stack) variant, while keeping the actual node/indexer/proof-server running on the user's own machine (Cloudflare Workers can't host them).
+Goal: reduce the friction for a hackathon participant to go from the Lovable app to a working local Midnight demo. All actual Midnight node / indexer / proof-server traffic stays on the user's machine (Docker on localhost); the Lovable app only probes and guides from the browser.
 
-## 1. One-command stack wrapper — `scripts/midnight-standalone.mjs`
+Current state:
+- `bun scripts/midnight-standalone.mjs up` starts node + indexer + proof-server locally.
+- `/undeployed-preflight` probes the four local endpoints from the browser.
+- `/showcase/choreo-ledger-local` documents the manual steps.
+- The wallet panel connects to Lace but doesn't special-case the Undeployed custom-RPC flow.
 
-A Node/Bun script that wraps the official standalone `docker compose` file so users run **one** command instead of five.
+What we will build:
 
-Commands:
-- `bun scripts/midnight-standalone.mjs up` — pulls images, writes `.midnight/standalone.docker-compose.yml` (bundled inline in the script), runs `docker compose … up -d`, polls readiness on `ws://localhost:9944` and `http://localhost:8088`, prints a green "ready" banner with the three endpoint URLs + a link to `/undeployed-preflight`.
-- `bun scripts/midnight-standalone.mjs down` — `docker compose … down` and reports.
-- `bun scripts/midnight-standalone.mjs logs [service]` — tails logs.
-- `bun scripts/midnight-standalone.mjs status` — prints health of each container + `curl` results.
+1. New `/undeployed` quick-start route
+   - Plain-language explanation of the architecture: Lovable app runs in the browser, the Midnight stack runs locally via Docker, Lace talks to `ws://localhost:9944`.
+   - Visual 3-step checklist:
+     1. Docker Desktop / Docker Engine running.
+     2. `bun scripts/midnight-standalone.mjs up`.
+     3. Open `/undeployed-preflight` and verify four green pills.
+   - Links to `/showcase/choreo-ledger-local`, `/known-issues`, and the Midnight Service Desk.
 
-Pre-flight checks the script performs before `up`:
-- `docker info` reachable (else print the "start Docker Desktop" hint from the existing skill).
-- Ports 9944, 8088, 6300 free (else print which process holds them).
-- Prints platform-specific WSL2 note on Windows.
+2. Enhance `/undeployed-preflight`
+   - Add a "Start / restart stack" card with the copyable one-command `bun scripts/midnight-standalone.mjs up`.
+   - Add a "Lace network" card: if `window.midnight` is detected, show the exact custom-RPC value (`ws://localhost:9944`) and a link to Lace settings; if not, show the install/enable extension hint.
+   - Add a "Deploy contract" card that generates and copies the command:
+     ```bash
+     VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs
+     ```
+   - Add a "Copy env vars for Lovable" button that copies the full `VITE_*` snippet so the user can paste it into Lovable Project Settings → Secrets.
+   - Keep the existing four endpoint probes and the all-green "ready to deploy" state.
 
-Files:
-- `scripts/midnight-standalone.mjs` — new.
-- `.gitignore` — add `.midnight/`.
-- `src/routes/showcase.choreo-ledger-local.tsx` — replace the multi-step Docker walkthrough with a short "run `bun scripts/midnight-standalone.mjs up`" block, keep the OS notes as a collapsible fallback.
-- Mega-prompt generator `scripts/rewrite_mega_prompts.py` — swap the current `local_stack_setup()` body for the one-command version, keep OS notes as an appendix. Regenerate the 996 undeployed prompts + re-run `append_wallet_boilerplate.py`.
+3. Network-aware wallet panel
+   - Update `WalletConnectPanel` to recognize `undeployed` addresses (`mn_shield-addr_undeployed1…`).
+   - When the app is set to `VITE_NETWORK_ID=undeployed`, warn if Lace is connected to a public network (`preview`/`preprod`) and point the user to `/undeployed-preflight`.
+   - Show the detected Lace network name and the expected local RPC.
 
-## 2. `/undeployed-preflight` health-check page
+4. Showcase network selector
+   - Add a small network selector on `/showcase` and `/showcase/choreo-ledger-local` (Preview / Preprod / Undeployed).
+   - When Undeployed is selected, surface the one-command bring-up, the preflight link, and the local deploy command instead of faucet/explorer instructions.
 
-A client-only diagnostic page that talks to the user's local stack from their browser and confirms each piece works before they attempt a deploy.
+5. Navigation and cross-links
+   - Add an "Undeployed" link to the desktop nav and mobile burger menu between "Preflight" and the external links.
+   - Update the homepage service-desk card to also mention the local devnet path.
+   - Update the 1000-prompts generator (`scripts/rewrite_mega_prompts.py`) so the Undeployed variant links directly to `/undeployed` and `/undeployed-preflight`, then regenerate the prompt files.
 
-Route: `src/routes/undeployed-preflight.tsx` (wrapped in `<SiteShell>`).
+Architecture diagram:
 
-Four checks, each with a status pill (checking / ok / fail) and the raw response/error shown on click:
+````text
+  +--------------------+        ws://localhost:9944        +------------------+
+  | Lovable app        |  <------------------------------> | local midnight   |
+  | (browser)          |                                   | node (Docker)    |
+  |                    |  http://localhost:8088            |                  |
+  | /undeployed        |  <------------------------------> | local indexer    |
+  | /undeployed-preflight                                  | (Docker)         |
+  +--------------------+  http://localhost:6300            |                  |
+         |             |  <------------------------------> | local proof-srv  |
+         |             |                                   +------------------+
+         |             |                                          ^
+         |             |                                          |
+         |             |                                          |
+         |             |                                   +------------------+
+         |             |                                   | Lace wallet      |
+         |             |                                   | (browser ext)    |
+         |             |                                   +------------------+
+         |             |
+         v             v
+  +--------------------+
+  | Lovable Cloud      |  <- no direct connection to local stack; only serves
+  | (SSR + static)     |     the app shell and routes
+  +--------------------+
+````
 
-1. **Proof server** — `GET http://localhost:6300/health` → expect `{ status: "ok" }`.
-2. **Indexer HTTP** — `POST http://localhost:8088/api/v4/graphql` with a trivial introspection query → expect 200 + `data`.
-3. **Indexer WS** — open `ws://localhost:8088/api/v4/graphql/ws`, send connection_init, wait for `connection_ack`, close.
-4. **Node RPC** — open `ws://localhost:9944`, send a `system_chain` JSON-RPC call, expect a response.
+Files to create/edit:
+- `src/routes/undeployed.tsx` (new)
+- `src/routes/undeployed-preflight.tsx` (edit)
+- `src/components/WalletConnectPanel.tsx` (edit)
+- `src/routes/showcase.index.tsx` (edit)
+- `src/routes/showcase.choreo-ledger-local.tsx` (edit)
+- `src/components/site-shell.tsx` (edit)
+- `src/routes/index.tsx` (edit)
+- `scripts/rewrite_mega_prompts.py` (edit) + regenerate prompts
 
-Extras:
-- "Re-run all" button.
-- Lace network hint — reads `window.midnight` (via existing `useMidnightWallet` hook) and warns if Lace isn't on `Undeployed`.
-- "All green → open Choreo Ledger demo" CTA linking to `/showcase/choreo-ledger-local`.
-- Copy-to-clipboard block of the exact env vars (`VITE_NETWORK_ID=undeployed`, indexer URL, proof server URL) for a fresh Lovable project.
-
-Because Cloudflare Workers can't reach the user's `localhost`, every fetch runs in the browser inside `useEffect` — no SSR, no server function.
-
-Wire-ups:
-- Add "Preflight" link to `src/components/site-shell.tsx` desktop + mobile nav under a small "Undeployed" group, or inline next to Known Issues.
-- Add a callout on `/showcase/choreo-ledger-local` linking to `/undeployed-preflight` as step 2 after `up`.
-- Add a link from `/known-issues` DUST-sync workaround section.
-
-## Non-goals (explicit)
-
-- No hosted node in Lovable's sandbox — infeasible for reasons discussed.
-- No changes to Preview or Preprod variants.
-- No Docker-in-Docker in the Lovable build sandbox.
-
-## Verification
-
-- Run `bun scripts/midnight-standalone.mjs up` in a local terminal; confirm the readiness banner appears within ~60s and `/undeployed-preflight` shows four greens.
-- Playwright screenshot the preflight page in the empty-state (no stack) — should show four reds with actionable messages.
-- Typecheck + build.
+Out of scope:
+- Hosting a Midnight node inside Lovable Cloud (serverless Workers cannot run Docker or long-lived local processes).
+- Automating Docker installation (we will link to the official installers).
+- Changing the existing `midnight-standalone.mjs` container logic beyond minor CLI-output polish.

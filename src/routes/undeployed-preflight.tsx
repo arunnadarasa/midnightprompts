@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { SiteShell } from "@/components/site-shell";
 
@@ -148,7 +148,9 @@ function PreflightPage() {
     proof: false, indexerHttp: false, indexerWs: false, node: false,
   });
   const [running, setRunning] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [copiedEnv, setCopiedEnv] = useState(false);
+  const [copiedDeploy, setCopiedDeploy] = useState(false);
+  const [copiedStack, setCopiedStack] = useState(false);
   const [laceNetwork, setLaceNetwork] = useState<string | null>(null);
 
   const runAll = useCallback(async () => {
@@ -191,9 +193,23 @@ function PreflightPage() {
         </p>
 
         <div className="mt-6 p-4 border border-primary/30 bg-card text-[12px] leading-relaxed">
-          <span className="eyebrow text-primary">no stack yet?</span>
+          <div className="flex items-center justify-between gap-3">
+            <span className="eyebrow text-primary">start / restart stack</span>
+            <button
+              type="button"
+              onClick={() => {
+                void navigator.clipboard.writeText("bun scripts/midnight-standalone.mjs up").then(() => {
+                  setCopiedStack(true);
+                  setTimeout(() => setCopiedStack(false), 1500);
+                });
+              }}
+              className="text-[10px] uppercase tracking-[0.24em] text-primary hover:text-foreground transition-colors"
+            >
+              {copiedStack ? "copied" : "copy"}
+            </button>
+          </div>
           <p className="mt-2 text-muted-foreground">
-            Start it in one command (requires Docker running):
+            Requires Docker Desktop (macOS/Windows) or Docker Engine (Linux) running.
           </p>
           <pre className="mt-2 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto">
 {`bun scripts/midnight-standalone.mjs up`}
@@ -248,38 +264,73 @@ function PreflightPage() {
 
         <div className="mt-8 grid sm:grid-cols-2 gap-3 text-[11px]">
           <div className="p-4 border border-border bg-card">
-            <div className="eyebrow text-primary">Lace</div>
+            <div className="eyebrow text-primary">Lace wallet</div>
             <div className="mt-2 text-muted-foreground leading-relaxed">
               {laceNetwork
-                ? <>Detected connector: <code className="text-foreground">{laceNetwork}</code>. Set Lace network to a custom RPC pointing at <code className="text-foreground">ws://localhost:9944</code>.</>
+                ? <>Detected connector: <code className="text-foreground">{laceNetwork}</code>. Set Lace → Settings → Network → Custom → RPC = <code className="text-foreground">ws://localhost:9944</code>, then switch to that network.</>
                 : "Lace connector not detected in this browser. Install/enable the Midnight-enabled Lace extension, then point it at ws://localhost:9944."}
             </div>
           </div>
           <div className="p-4 border border-border bg-card">
             <div className="flex items-center justify-between">
-              <div className="eyebrow text-primary">env for a fresh Lovable project</div>
+              <div className="eyebrow text-primary">Lovable env secrets</div>
               <button
                 type="button"
                 onClick={() => {
                   void navigator.clipboard.writeText(ENV_SNIPPET).then(() => {
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 1500);
+                    setCopiedEnv(true);
+                    setTimeout(() => setCopiedEnv(false), 1500);
                   });
                 }}
                 className="text-[10px] uppercase tracking-[0.24em] text-primary hover:text-foreground transition-colors"
               >
-                {copied ? "copied" : "copy"}
+                {copiedEnv ? "copied" : "copy"}
               </button>
             </div>
             <pre className="mt-2 font-mono text-[10px] text-muted-foreground whitespace-pre-wrap break-all">
 {ENV_SNIPPET}
             </pre>
           </div>
+          <div className="p-4 border border-border bg-card">
+            <div className="flex items-center justify-between">
+              <div className="eyebrow text-primary">deploy contract</div>
+              <button
+                type="button"
+                onClick={() => {
+                  void navigator.clipboard.writeText("VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs").then(() => {
+                    setCopiedDeploy(true);
+                    setTimeout(() => setCopiedDeploy(false), 1500);
+                  });
+                }}
+                className="text-[10px] uppercase tracking-[0.24em] text-primary hover:text-foreground transition-colors"
+              >
+                {copiedDeploy ? "copied" : "copy"}
+              </button>
+            </div>
+            <pre className="mt-2 font-mono text-[10px] text-muted-foreground whitespace-pre-wrap break-all">
+{`VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs`}
+            </pre>
+            <p className="mt-2 text-muted-foreground">
+              Paste the printed hex address into <code className="text-foreground">VITE_DEFAULT_CONTRACT</code>.
+            </p>
+          </div>
+          <div className="p-4 border border-border bg-card">
+            <div className="eyebrow text-primary">local endpoints</div>
+            <div className="mt-2 font-mono text-[10px] text-muted-foreground break-all">
+              node · {NODE_WS}
+            </div>
+            <div className="mt-1 font-mono text-[10px] text-muted-foreground break-all">
+              indexer · {INDEXER_HTTP}
+            </div>
+            <div className="mt-1 font-mono text-[10px] text-muted-foreground break-all">
+              proof · {PROOF_HTTP}
+            </div>
+          </div>
         </div>
 
         <div className="mt-8 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.28em]">
-          <a
-            href="/showcase/choreo-ledger-local"
+          <Link
+            to="/showcase/choreo-ledger-local"
             className={`inline-flex items-center gap-2 px-6 py-3 font-semibold transition-colors duration-500 ${
               allOk
                 ? "bg-primary text-primary-foreground hover:bg-foreground"
@@ -287,12 +338,20 @@ function PreflightPage() {
             }`}
           >
             Choreo Ledger (Local) →
-          </a>
-          <a
-            href="/known-issues"
+          </Link>
+          <Link
+            to="/known-issues"
             className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground hover:border-primary/60 transition-colors duration-500"
           >
             Known issues
+          </Link>
+          <a
+            href="https://midnightntwrk.github.io/servicedesk/"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground hover:border-primary/60 transition-colors duration-500"
+          >
+            Service Desk ↗
           </a>
         </div>
       </article>

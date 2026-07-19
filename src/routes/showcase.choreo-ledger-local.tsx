@@ -55,7 +55,26 @@ function ChoreoLedgerLocalDemo() {
         </p>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 p-4 sm:p-5 border border-primary/30 bg-card text-[12px] leading-relaxed">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <span className="eyebrow text-primary">network · undeployed (local)</span>
+          <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.24em]">
+            <Link to="/undeployed" className="px-3 py-1.5 border border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground transition-colors">
+              Quick start
+            </Link>
+            <Link to="/undeployed-preflight" className="px-3 py-1.5 border border-border text-muted-foreground hover:border-primary/60 hover:text-foreground transition-colors">
+              Preflight
+            </Link>
+          </div>
+        </div>
+        <p className="mt-3 text-muted-foreground">
+          This demo only works when the local Midnight standalone stack is running on your machine.
+          Use the wallet panel below to confirm Lace is pointing at{" "}
+          <code className="text-foreground">ws://localhost:9944</code>.
+        </p>
+      </div>
+
+      <div className="mt-6">
         <WalletConnectPanel expectedNetwork="undeployed" />
       </div>
 

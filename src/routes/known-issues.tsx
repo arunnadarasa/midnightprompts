@@ -359,14 +359,18 @@ function KnownIssuesPage() {
           than fighting Preprod DUST sync. The node mints unlimited tDUST to the genesis
           wallet and every version is guaranteed to match the SDK bundle you're building
           against.{" "}
-          <Link to="/showcase/choreo-ledger-local" className="text-primary underline">
-            See the Choreo Ledger (Local) demo →
+          <Link to="/undeployed" className="text-primary underline">
+            Start with the Undeployed quick-start →
           </Link>{" "}
-          One-command bring-up:{" "}
-          <code className="text-foreground">bun scripts/midnight-standalone.mjs up</code> · verify
+          then run{" "}
+          <code className="text-foreground">bun scripts/midnight-standalone.mjs up</code>. Verify
           in your browser at{" "}
           <Link to="/undeployed-preflight" className="text-primary underline">
             /undeployed-preflight
+          </Link>
+          , and see the{" "}
+          <Link to="/showcase/choreo-ledger-local" className="text-primary underline">
+            Choreo Ledger (Local) demo
           </Link>
           .
         </p>

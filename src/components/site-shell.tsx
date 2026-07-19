@@ -34,6 +34,7 @@ function SiteHeader() {
           <NavLink to="/quantum-primer">Primer</NavLink>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/known-issues">Known Issues</NavLink>
+          <NavLink to="/undeployed">Undeployed</NavLink>
           <NavLink to="/undeployed-preflight">Preflight</NavLink>
           <span className="mx-2 h-5 w-px bg-border" aria-hidden />
           <a
@@ -90,6 +91,7 @@ function SiteHeader() {
               <MobileLink to="/quantum-primer" onClick={close}>Primer</MobileLink>
               <MobileLink to="/about" onClick={close}>About</MobileLink>
               <MobileLink to="/known-issues" onClick={close}>Known Issues</MobileLink>
+              <MobileLink to="/undeployed" onClick={close}>Undeployed</MobileLink>
               <MobileLink to="/undeployed-preflight" onClick={close}>Preflight</MobileLink>
               <a
                 href="https://creativequantum.lovable.app/"
