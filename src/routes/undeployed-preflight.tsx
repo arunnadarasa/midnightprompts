@@ -148,7 +148,9 @@ function PreflightPage() {
     proof: false, indexerHttp: false, indexerWs: false, node: false,
   });
   const [running, setRunning] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [copiedEnv, setCopiedEnv] = useState(false);
+  const [copiedDeploy, setCopiedDeploy] = useState(false);
+  const [copiedStack, setCopiedStack] = useState(false);
   const [laceNetwork, setLaceNetwork] = useState<string | null>(null);
 
   const runAll = useCallback(async () => {
