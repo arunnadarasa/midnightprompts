@@ -202,6 +202,9 @@ function Index() {
                 Bug reports, 1010 rejections, /check 400, DUST sync stalls — routed to the Midnight engineering team.
               </p>
               <div className="flex flex-wrap gap-5 text-[11px] uppercase tracking-[0.24em] mt-1">
+                <Link to="/undeployed" className="text-primary hover:text-foreground transition-colors">
+                  Undeployed quick-start →
+                </Link>
                 <a
                   href="https://midnightntwrk.github.io/servicedesk/"
                   target="_blank"
