@@ -103,6 +103,9 @@ and takes 2-5 min; later boots are seconds.
 
 Then verify in the browser: navigate to `/undeployed-preflight` in the app. Four green pills = ready.
 
+For a human-readable walkthrough with copy buttons, also see:
+https://midnightprompts.lovable.app/undeployed
+
 --- Docker prerequisites per OS ---
 
 macOS:
