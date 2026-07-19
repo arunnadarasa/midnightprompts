@@ -1,38 +1,50 @@
-## Goal
-Fix mobile readability on `/known-issues`. Screenshot shows long code/URL strings (indexer URLs, `NODE_OPTIONS=...`, `batchUpdates: {...}`) breaking out of the viewport and forcing horizontal scroll, plus dense list items that feel cramped on a 384px screen.
+# Plan — adopt Midnight-skills
 
-## Changes (single file: `src/routes/known-issues.tsx`)
+The upstream repo is https://github.com/Kali-Decoder/Midnight-skills. Its layout is already Lovable-compatible: every skill lives at `.agents/skills/<name>/SKILL.md` with valid frontmatter (`name`, `description`). No `AGENTS.md` file exists in the repo (the snippet you pasted is out of date on that one line); the repo README + `skills.json` are the real index.
 
-1. **Wrap long inline code**
-   - Add a shared class for all inline `<code>` usages: `break-all whitespace-normal text-[11px] sm:text-[12px]` so URLs and env-var strings wrap instead of overflowing.
-   - Apply to every `<code>` in the ISSUES array (indexer URLs, `NODE_OPTIONS`, `batchUpdates`, RPC URLs, `contract-info.json` path, etc.).
+Importing all 30+ skills would bloat retrieval and duplicate ground we already cover in the existing `lovable-midnight` skill. Instead we pick the ones that add net-new value for the current app + the 1,000 idea prompts.
 
-2. **Constrain article cards**
-   - Add `overflow-hidden` to each `<article>` and `min-w-0` on inner content wrappers so nothing forces the card wider than the viewport.
-   - Reduce card padding on mobile: `p-4 sm:p-6 md:p-7`.
+## Skills to import (6)
 
-3. **Tighten typography on mobile**
-   - H1: `text-3xl sm:text-4xl md:text-5xl` (currently jumps straight to 4xl).
-   - H2 (issue titles): `text-xl sm:text-2xl`.
-   - Body copy: keep `text-sm` but add `leading-relaxed` consistently.
-   - Outer container padding: `px-4 sm:px-8`, `py-10 sm:py-20`.
+Copy `SKILL.md` (and any bundled `references/`, `scripts/`, `assets/`) from the upstream repo into our `.agents/skills/<name>/`, then activate each with `skills--apply_draft`:
 
-4. **Pre blocks (code samples)**
-   - Already have `overflow-x-auto`; add `text-[10px] sm:text-[11px]` and `-mx-1 sm:mx-0` so the pipeline diagram and curl snippet fit without pushing the card.
+1. `compact` — deep Compact 0.23 reference (ledger vs witness, `disclose()`, ADTs, hashing, Merkle, security patterns). Complements our terse `lovable-midnight` skill.
+2. `react-wallet-connector` — full DApp Connector API scaffold matching our `WalletConnectPanel` pattern; useful for the 1,000-ideas boilerplate.
+3. `midnight-environment-setup` — Compact + Docker + proof server install steps (mirrors, and can supersede, part of `/proof-server`).
+4. `indexer` — public data provider polling + GraphQL patterns for read-only ledger views (used by `showcase.midnight-ledger` and `showcase.move-board`).
+5. `example-locker-dapp` — canonical time-lock vault template; good reference for the ideas prompts.
+6. `example-counter` — smallest end-to-end Compact + MidnightJS example; great "hello world" for new users.
 
-5. **On-this-page nav**
-   - Single column on mobile: keep `grid sm:grid-cols-2`, add `gap-y-2` for tap targets, `py-1` on each link so they're easier to hit.
+Any bundled `references/` in the upstream repo (e.g. `midnight-session.md`, `gotchas.md`, `versions.json`) get copied alongside the SKILL.md that references them so progressive disclosure keeps working.
 
-6. **Bottom link row**
-   - Change `flex flex-wrap gap-4` to `flex flex-col sm:flex-row gap-3 sm:gap-4` so the four nav links stack cleanly on mobile.
+We are NOT importing: `gsap-core`, `gsap-utils`, `nft`, `android-example-voting`, `1am-wallet` (conflicts with our Lace-first stance), and the DeFi templates we don't currently teach. They stay available upstream if needed later.
 
-7. **Recommended-workaround callout**
-   - Reduce `p-5` → `p-4 sm:p-5`, ensure the inline `<Link>` wraps.
+## Reference wiring
+
+**Known Issues page** (`src/routes/known-issues.tsx`): add a new "External references" card at the top linking to:
+- https://midnight-skills.netlify.app (browsable skill site)
+- https://github.com/Kali-Decoder/Midnight-skills (source)
+- Direct links to the 6 imported skills' upstream pages, so users can read them in a browser without invoking an agent.
+
+**Homepage** (`src/routes/index.tsx`): tuck a one-line "Skills registry" link into the existing Service Desk card so it lives alongside the other support surfaces — no new hero block.
+
+**Ideas mega-prompts** (`scripts/rewrite_mega_prompts.py`): append a short "FURTHER REFERENCE" section to every prompt with:
+- The Midnight-skills site URL
+- Named links to `compact`, `react-wallet-connector`, and `midnight-environment-setup` skill pages
+- A one-liner telling the downstream Lovable session to run `skills--apply_draft` on those three if the target project doesn't already have them.
+
+Then re-run the script once to regenerate all 996 prompts (idempotent — the section is fenced by a marker so future re-runs replace, not duplicate).
 
 ## Out of scope
-- No content changes (symptoms/causes/fixes stay identical).
-- No changes to other routes or `SiteShell`.
-- No new components.
 
-## Verification
-- Playwright at 384×800 viewport, screenshot the top of the page and the "Lace shows DUST but SDK reports 0" card (the one in the user's screenshot) to confirm no horizontal scroll and code strings wrap.
+- The `npx skills add …` / `git clone …` commands you pasted are for Cursor/Claude Code local setups. Lovable's equivalent is the `.agents/skills/` copy + `skills--apply_draft` flow, so we do that instead.
+- No new demo pages. No changes to contracts, wallet hook, or deploy scripts.
+- Skills we skip today can be added later on request — same recipe.
+
+## Files touched
+
+- `.agents/skills/{compact,react-wallet-connector,midnight-environment-setup,indexer,example-locker-dapp,example-counter}/` (new dirs, copied from upstream)
+- `src/routes/known-issues.tsx`
+- `src/routes/index.tsx`
+- `scripts/rewrite_mega_prompts.py`
+- `src/data/ideas/*.json` (regenerated by the script)
