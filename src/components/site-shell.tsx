@@ -108,6 +108,15 @@ function SiteHeader() {
                 Midnight Docs ↗
               </a>
               <a
+                href="https://midskills.sevryn.xyz/"
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+                className="mt-2 px-4 py-3 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+              >
+                Midskills ↗
+              </a>
+              <a
                 href="https://preview.midnightexplorer.com/"
                 target="_blank"
                 rel="noreferrer"
