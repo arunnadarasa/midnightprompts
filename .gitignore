@@ -38,3 +38,6 @@ dist-ssr
 
 # Midnight preprod DUST demo (standalone wallet — separate from deploy flow)
 .midnight-wallet-preprod-demo.local
+
+# Midnight standalone stack (generated compose file)
+.midnight/
