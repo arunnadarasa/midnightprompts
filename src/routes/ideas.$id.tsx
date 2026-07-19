@@ -54,6 +54,16 @@ function IdeaPage() {
     .filter((i) => i.id !== idea.id && (i.subDiscipline === idea.subDiscipline || i.quantumHookId === idea.quantumHookId))
     .slice(0, 4);
 
+  const variants =
+    idea.megaPromptVariants ?? {
+      preview: idea.megaPrompt,
+      preprod: idea.megaPrompt,
+      undeployed: idea.megaPrompt,
+    };
+  const [variant, setVariant] = useState<NetworkVariant>("preview");
+  const activePrompt = variants[variant];
+  const activeMeta = VARIANT_META[variant];
+
   return (
     <SiteShell>
       <article className="max-w-4xl mx-auto px-5 sm:px-8 pt-12 sm:pt-20 pb-20 animate-fade-in">
