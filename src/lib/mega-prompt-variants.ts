@@ -409,7 +409,7 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, 
 
   const netLabel = NETWORK_LABELS[network] ?? network;
   const netSecrets = NETWORK_SECRETS[network] ?? NETWORK_SECRETS.preview;
-  const localBlock = network === "undeployed" ? `\n\n${LOCAL_STACK_SETUP}\n` : "";
+  const localBlock = network === "undeployed" ? `\n\n${localStackSetup(os)}\n` : "";
   const undeployedFundBlock = network === "undeployed" ? `\n${UNDEPLOYED_FUND_LACE}\n` : "";
 
   return `Build "${title}" in ONE Lovable message. Single-page Midnight ZK demo.
