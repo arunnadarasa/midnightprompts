@@ -1,34 +1,33 @@
-Expand the Docker setup guide using the official Docker LLM docs as a reference source.
+Fix the mobile burger menu so the full list of links is reachable on small screens.
 
-## Goal
-Make the in-app Docker setup guide more authoritative, OS-specific, and useful for the Midnight local stack (proof server + Undeployed node). Keep it inside the existing `DockerSetupGuide` component so all consumers (`/proof-server`, `/undeployed`, `/known-issues`) benefit automatically.
+## Current state
 
-## What will change
+- The mobile menu is rendered in a shadcn `Sheet` that slides in from the right and fills the full viewport height.
+- Inside the sheet there is a header ("Creative Midnight") and a single `<nav>` column containing 10 internal links + 4 external CTA buttons (14 items total).
+- The `<nav>` has no `overflow-y-auto` or constrained height, so on short viewports the bottom items (Explorer, Hackathon) are pushed off-screen and cannot be reached.
 
-1. **Enrich the per-OS panels** in `src/components/DockerSetupGuide.tsx` with official Docker links and clearer install steps derived from the Docker LLM docs (Get Docker, Get Started, Docker Desktop / Engine install pages).
+## Plan
 
-2. **Add a "Docker CLI for Midnight" panel** after the OS tabs covering the commands users actually need:
-   - `docker run -d -p 6300:6300 --name ...` for the proof server
-   - `docker ps`, `docker logs -f`, `docker stop`, `docker start`, `docker rm`
-   - `docker info` / `docker --version` as smoke checks
-   - `docker compose` basics for the local Undeployed stack
+1. Make the mobile menu scrollable
+   - Wrap the `<nav>` in a flex column with `flex-1` and `overflow-y-auto` so the link list scrolls independently while the header stays fixed.
+   - Add bottom padding (`pb-6` plus `pb-safe` if the project uses a Tailwind safe-area plugin) so the last item is not hidden behind the device home bar or Lovable preview chrome.
 
-3. **Add a "Common Docker errors" mini-FAQ** linking to official Docker troubleshooting docs and the Windows blockers we already document (BIOS virtualization, WSL update, PowerShell policy).
+2. Reduce visual weight of the CTA buttons so they fit better
+   - Keep the 4 external buttons (Midnight Docs, Midskills, Explorer, Hackathon) but change their vertical spacing from `mt-3` / `mt-2` to a consistent `mt-1` or use a single `gap-1` on the nav.
+   - Slightly reduce the external CTA button padding on very small screens (`py-2.5` instead of `py-3`) so the menu does not require excessive scrolling.
 
-4. **Add a "Further reading" footer** linking to the Docker docs (including the LLM-friendly `llms.txt` and `get-started.md`) so users can dig deeper without leaving the workflow.
+3. Verify on the actual preview
+   - Open the preview at a mobile viewport (e.g., 384x681 CSS px matching the user's screenshot).
+   - Open the burger menu and scroll to confirm the bottom "Hackathon ↗" button is fully visible and tappable.
+   - Check that no horizontal overflow or clipping occurs on the link text.
 
-5. **Update the mega-prompt builder** (`src/lib/mega-prompt-variants.ts`) to reference the expanded guide in the Undeployed variant, so hackathon prompts point participants to the same authoritative Docker setup steps.
+## Files to change
 
-## Files to edit
-- `src/components/DockerSetupGuide.tsx` (primary changes)
-- `src/lib/mega-prompt-variants.ts` (add reference to the in-app guide)
-- `src/routes/proof-server.tsx` and `src/routes/undeployed.tsx` (minor cross-link text updates if needed)
+- `src/components/site-shell.tsx` — update the mobile `<SheetContent>` nav layout and styling.
+- No new dependencies or routes required.
 
 ## Out of scope
-- No new routes or pages.
-- No changes to the wallet, Lace, or contract code.
-- No backend changes.
 
-## Verification
-- Type-check with `bunx tsgo --noEmit`.
-- Smoke-test the `/proof-server` and `/undeployed` pages in the preview to confirm the guide still collapses/expands and tabs render correctly.
+- Reordering or removing menu items; the last change already moved Hackathon to the bottom, and we will keep that order.
+- Desktop nav changes; this only affects the `lg:hidden` mobile sheet.
+- Adding collapsible sections unless the simple scroll fix proves insufficient during verification.
