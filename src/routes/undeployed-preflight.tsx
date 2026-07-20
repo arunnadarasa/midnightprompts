@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { SiteShell } from "@/components/site-shell";
+import { WindowsSetupGuide } from "@/components/WindowsSetupGuide";
 
 export const Route = createFileRoute("/undeployed-preflight")({
   head: () => ({
@@ -217,6 +218,10 @@ function PreflightPage() {
           <p className="mt-2 text-muted-foreground">
             Then click <em>Re-run all</em> below. First run pulls ~1&nbsp;GB of images and takes 2–5 minutes.
           </p>
+        </div>
+
+        <div className="mt-6">
+          <WindowsSetupGuide />
         </div>
 
         <div className="mt-8 flex items-center gap-3 flex-wrap">

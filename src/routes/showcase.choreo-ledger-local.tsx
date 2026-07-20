@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CONTRACTS, isDeployed } from "@/data/midnight-contract";
 import { WalletConnectPanel } from "@/components/WalletConnectPanel";
+import { WindowsSetupGuide } from "@/components/WindowsSetupGuide";
 
 export const Route = createFileRoute("/showcase/choreo-ledger-local")({
   head: () => ({
@@ -98,6 +99,13 @@ function ChoreoLedgerLocalDemo() {
               <code>up</code> for lifecycle control.
             </p>
           </li>
+        </ol>
+
+        <div className="mt-6">
+          <WindowsSetupGuide />
+        </div>
+
+        <ol className="mt-5 space-y-4 text-sm text-foreground/90 list-decimal pl-5" start={2}>
           <li>
             <strong>Verify from the browser:</strong>{" "}
             <Link to="/undeployed-preflight" className="text-primary underline">

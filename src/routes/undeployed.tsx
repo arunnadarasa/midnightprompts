@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/site-shell";
+import { WindowsSetupGuide } from "@/components/WindowsSetupGuide";
 
 export const Route = createFileRoute("/undeployed")({
   head: () => ({
@@ -67,6 +68,10 @@ function UndeployedPage() {
             Requires Docker Desktop (macOS/Windows) or Docker Engine (Linux). First run pulls ~1&nbsp;GB
             and takes 2–5 minutes; later boots are seconds.
           </p>
+        </div>
+
+        <div className="mt-6">
+          <WindowsSetupGuide />
         </div>
 
         <ol className="mt-10 space-y-8">
