@@ -142,9 +142,13 @@ function MacOSPanel() {
       <Step n={1} title="Install Docker Desktop">
         <ol className="list-decimal pl-5 space-y-1">
           <li>
-            Download from{" "}
+            Download from the official{" "}
+            <a href="https://docs.docker.com/get-started/get-docker/" target="_blank" rel="noreferrer" className="text-primary underline">
+              Docker Get Docker page
+            </a>{" "}
+            or the macOS install guide at{" "}
             <a href="https://docs.docker.com/desktop/setup/install/mac-install/" target="_blank" rel="noreferrer" className="text-primary underline">
-              docs.docker.com
+              docs.docker.com/desktop/setup/install/mac-install
             </a>{" "}
             — pick the <strong>Apple Silicon</strong> or <strong>Intel</strong> build to match your Mac.
           </li>
@@ -152,6 +156,9 @@ function MacOSPanel() {
           <li>Wait until the menu-bar whale says "Docker Desktop is running".</li>
           <li>
             Verify in Terminal: <CodeBlock>docker --version{"\n"}docker info</CodeBlock>
+          </li>
+          <li>
+            Stuck at <em>Starting</em>? Quit and reopen Docker Desktop; if it still hangs, reset to factory defaults from the <strong>Troubleshoot</strong> menu.
           </li>
         </ol>
       </Step>
