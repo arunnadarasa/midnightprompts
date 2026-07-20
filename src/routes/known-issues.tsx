@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { SiteShell } from "@/components/site-shell";
-import { WindowsSetupGuide } from "@/components/WindowsSetupGuide";
+import { DockerSetupGuide } from "@/components/DockerSetupGuide";
 
 
 export const Route = createFileRoute("/known-issues")({
@@ -378,7 +378,7 @@ function KnownIssuesPage() {
       </div>
 
       <div className="mt-6">
-        <WindowsSetupGuide />
+        <DockerSetupGuide />
         <p className="mt-2 text-[11px] text-muted-foreground">
           These were the real blockers hit setting up Docker on a Windows 11 HP laptop before the
           Midnight stack would even start. Not Midnight-specific, but bites every Windows

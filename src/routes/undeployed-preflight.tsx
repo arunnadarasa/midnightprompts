@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { SiteShell } from "@/components/site-shell";
-import { WindowsSetupGuide } from "@/components/WindowsSetupGuide";
+import { DockerSetupGuide } from "@/components/DockerSetupGuide";
 
 export const Route = createFileRoute("/undeployed-preflight")({
   head: () => ({
@@ -221,7 +221,7 @@ function PreflightPage() {
         </div>
 
         <div className="mt-6">
-          <WindowsSetupGuide />
+          <DockerSetupGuide />
         </div>
 
         <div className="mt-8 flex items-center gap-3 flex-wrap">

@@ -8,7 +8,7 @@ import {
 } from "@/data/midnight-contract";
 import { NetworkToggle } from "@/components/NetworkToggle";
 import { DualDeployStatus } from "@/components/DeployStatusPanel";
-import { WindowsSetupGuide } from "@/components/WindowsSetupGuide";
+import { DockerSetupGuide } from "@/components/DockerSetupGuide";
 
 export const Route = createFileRoute("/proof-server")({
   head: () => ({
@@ -127,7 +127,7 @@ function ProofServer() {
         </div>
 
         <div className="mt-2">
-          <WindowsSetupGuide defaultOpen={platform === "windows"} />
+          <DockerSetupGuide defaultOpen={platform === "windows"} />
         </div>
 
         <div>
