@@ -179,8 +179,36 @@ function IdeaPage() {
               <span className="hidden sm:inline-flex items-center gap-1 px-3 py-2 border border-primary/40 eyebrow text-primary">
                 budget · 1 message
               </span>
-              <CopyButton text={activePrompt} label={`Copy · ${activeMeta.label}`} />
+              <CopyButton text={activePrompt} label={`Copy · ${activeMeta.label} · ${OS_LABELS[os]}`} />
             </div>
+          </div>
+
+          <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <span className="eyebrow text-muted-foreground">Your machine</span>
+            <div className="grid grid-cols-3 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
+              {OS_KEYS.map((k) => {
+                const active = k === os;
+                return (
+                  <button
+                    key={k}
+                    type="button"
+                    onClick={() => setOs(k)}
+                    className={
+                      "px-2 py-2 text-[10px] tracking-[0.18em] uppercase text-center transition-colors sm:px-4 sm:text-[11px] sm:tracking-[0.24em] " +
+                      (active
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-card text-foreground/70 hover:text-primary hover:bg-background")
+                    }
+                    aria-pressed={active}
+                  >
+                    {OS_LABELS[k]}
+                  </button>
+                );
+              })}
+            </div>
+            <span className="text-xs text-muted-foreground font-light">
+              Swaps the Docker + prerequisites block in the prompt.
+            </span>
           </div>
 
           <p className="mt-3 text-xs text-muted-foreground font-light leading-relaxed max-w-3xl">
