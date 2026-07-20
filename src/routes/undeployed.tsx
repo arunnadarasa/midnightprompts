@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/site-shell";
-import { WindowsSetupGuide } from "@/components/WindowsSetupGuide";
+import { DockerSetupGuide } from "@/components/DockerSetupGuide";
 
 export const Route = createFileRoute("/undeployed")({
   head: () => ({
@@ -71,7 +71,7 @@ function UndeployedPage() {
         </div>
 
         <div className="mt-6">
-          <WindowsSetupGuide />
+          <DockerSetupGuide />
         </div>
 
         <ol className="mt-10 space-y-8">
