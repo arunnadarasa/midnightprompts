@@ -363,7 +363,7 @@ function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
    VITE_NETWORK_ID=${network} bun scripts/deploy-midnight.mjs
 6. Paste the printed hex address into VITE_DEFAULT_CONTRACT and reload.`;
 
-  const undeployed = `1. Install Docker Desktop (macOS/Windows) or Docker Engine (Linux).
+  const undeployed = `1. ${dockerInstall[os]}
 2. Start the local Midnight stack:
    bun scripts/midnight-standalone.mjs up
 3. Point Lace at ws://localhost:9944 (Settings → Network → Custom).
