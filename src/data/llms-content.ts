@@ -1,0 +1,250 @@
+// Plain-text mirrors of the site's reference guides.
+// Used by scripts/build-llms-full.mjs to generate public/llms-full.txt and by
+// /llms to describe what participants get. Keep concise — this is what people
+// feed into ChatGPT / Claude / Cursor.
+
+export type GuideSection = { id: string; title: string; body: string };
+
+export const SITE_HEADER = `midnightprompts.lovable.app — Creative Midnight
+
+Hackathon reference bundle for building Midnight ZK dApps with Lovable, Lace, and Compact.
+Includes: wallet setup, proof server / Docker install (macOS + Windows + Linux),
+Undeployed local stack, known issues, showcase demos, and 1,000 idea mega-prompts
+in 9 variants each (3 networks × 3 host OSes).
+
+Upstream Midnight docs (kept fresh by the Midnight team): https://docs.midnight.network/llms-full.txt
+This site: https://midnightprompts.lovable.app
+Companion skills registry: https://midskills.sevryn.xyz | https://midnight-skills.netlify.app
+`;
+
+export const GUIDES: GuideSection[] = [
+  {
+    id: "wallet",
+    title: "Lace Wallet Setup (Preview / Preproduction / Undeployed)",
+    body: `Lace is the only supported Midnight wallet as of DApp Connector v4. Install from https://www.lace.io/, then choose ONE of three networks depending on the demo you're building.
+
+PREVIEW (default hackathon target)
+- Fast, community-friendly testnet. Contracts here are ephemeral — expect resets.
+- In Lace: Settings → Network → Preview.
+- Faucet: request tDUST from the Midnight community faucet (Discord #faucet channel).
+
+PREPRODUCTION
+- Longer-lived testnet mirroring mainnet behaviour.
+- In Lace: Settings → Network → Preprod.
+- Faucet: same Discord channel, ask specifically for preprod.
+
+UNDEPLOYED (local standalone stack)
+- Your laptop is the entire chain. Requires Docker + midnight-standalone.
+- In Lace: Settings → Network → Custom. RPC endpoint: ws://localhost:9944.
+- Fund from the genesis wallet baked into midnight-standalone (see /undeployed-preflight).
+- Perfect when the community testnets are unstable or when you want deterministic replays.
+
+DApp Connector v4 quick facts
+- window.midnight is populated by Lace at page load. Enumerate its values, keep the one whose apiVersion starts with 4.x.
+- connect(networkId) replaces the removed enable() call.
+- getShieldedAddresses() returns your identity — reading it is permission-only, no signature or funds moved.
+- Never touch window.midnight during SSR; wrap every read in useEffect or <ClientOnly>.
+`,
+  },
+  {
+    id: "proof-server",
+    title: "Proof Server (local Docker on port 6300)",
+    body: `Every Midnight transaction needs a ZK proof. Proving is heavy — 30–120 seconds per k=14 circuit — so it happens on your machine via a Docker container, never in the browser.
+
+Start the proof server (all OSes):
+    docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v
+
+Health check: http://localhost:6300/health should return "ok".
+
+In your dApp:
+- Configure httpClientProofProvider with proverServerUri: http://localhost:6300
+- Show a "Proving… this can take 30–120s" state on any tx submit
+- Keep the UI responsive while proofs generate
+
+Common failures:
+- "Cannot connect to Docker daemon" → Docker Desktop isn't running (macOS/Windows) or the docker service is down (Linux).
+- Container exits immediately → you're on an M-series Mac with an older single-arch image; pull the multi-arch tag (default now is multi-arch).
+- Port 6300 already in use → another proof-server is running; docker ps and stop it.
+`,
+  },
+  {
+    id: "docker",
+    title: "Docker Setup (macOS · Windows · Linux)",
+    body: `Docker Desktop / Docker Engine is a hard prerequisite for the proof server and for the Undeployed local stack.
+
+macOS
+- Install: brew install --cask docker  (or download from https://docker.com/products/docker-desktop)
+- Launch: open -a Docker. Wait for the whale icon to stop animating.
+- Apple Silicon: no --platform flag needed; Midnight images are multi-arch.
+- If Docker Desktop stalls at "Starting": quit + reopen; if that fails, Troubleshoot → Reset to factory defaults.
+
+Windows (the three real blockers people hit)
+  (1) Enable virtualization in BIOS/UEFI.
+      Task Manager → Performance → CPU should show "Virtualization: Enabled".
+      If Disabled: shut down, tap Esc/F10 (HP) or F2/Del at boot, enable
+      SVM Mode / AMD-V / Intel VT-x / Virtualization Technology, save & exit.
+  (2) Enable Windows features + update WSL.
+      Win+R → optionalfeatures → tick Windows Subsystem for Linux, Virtual Machine Platform,
+      Windows Hypervisor Platform → OK → reboot. Then in PowerShell (Admin):
+          wsl --update
+          wsl --install
+  (3) Install Node.js LTS + fix PowerShell execution policy.
+      Windows x64 LTS .msi from https://nodejs.org/download (keep "Add to PATH").
+      If npm install errors with "running scripts is disabled":
+          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+  Then install Docker Desktop with "Use the WSL 2 based engine" + Ubuntu integration.
+  Run all toolchain commands INSIDE the WSL2 Ubuntu shell so localhost:6300 forwards to Windows browsers.
+
+Linux (Ubuntu/Debian shown; adapt for your distro)
+    sudo apt update
+    sudo apt install -y docker.io docker-compose-plugin curl nodejs npm
+    sudo systemctl enable --now docker
+    sudo usermod -aG docker "$USER" && newgrp docker
+  Fedora: sudo dnf install docker docker-compose-plugin nodejs
+  Arch:   sudo pacman -S docker docker-compose nodejs npm
+  Verify: docker run --rm hello-world should print the welcome banner without sudo.
+
+Docker cheat-sheet
+  docker ps                  list running containers
+  docker ps -a               include stopped
+  docker logs -f <name>      follow logs
+  docker stop <name>         graceful stop
+  docker rm -f <name>        force remove
+  docker system prune -af    reclaim disk (careful)
+
+Common errors
+- "Cannot connect to the Docker daemon"           → daemon not running.
+- "port is already allocated"                     → another container owns 6300; docker ps and stop it.
+- "exec format error" on Apple Silicon            → pulled a linux/amd64-only tag; use the multi-arch default.
+- "permission denied while trying to connect"     → Linux: add user to docker group (see install block above).
+
+Reference: https://docs.docker.com/llms.txt
+`,
+  },
+  {
+    id: "undeployed",
+    title: "Undeployed Local Stack",
+    body: `Undeployed = a full Midnight standalone stack on your laptop: node + indexer + proof server. Use it when the community testnets are down, when you want deterministic replays, or when your judge has flaky Wi-Fi.
+
+Bring it up (macOS/Linux — Windows: run these inside WSL2):
+    node scripts/midnight-standalone.mjs up
+This wraps docker-compose and pins matching versions of node + indexer + proof-server.
+
+Endpoints once healthy
+- Node RPC (WS):      ws://localhost:9944
+- Indexer GraphQL:    http://localhost:8088/graphql
+- Proof Server:       http://localhost:6300
+
+Lace configuration
+- Settings → Network → Custom → RPC ws://localhost:9944.
+- Fund your address from the genesis wallet: the standalone stack ships with a preloaded key; the preflight page walks you through exporting it and sending tDUST to your Lace shielded address.
+
+Preflight checks (/undeployed-preflight)
+- Node reachable?      WS handshake on 9944.
+- Indexer alive?       GraphQL introspection query.
+- Proof server alive?  GET /health on 6300.
+- Lace on the right network? apiVersion 4.x + connected networkId === "undeployed".
+
+Teardown
+    node scripts/midnight-standalone.mjs down
+    node scripts/midnight-standalone.mjs reset   # wipes chain state
+`,
+  },
+  {
+    id: "known-issues",
+    title: "Known Issues & Workarounds",
+    body: `Live gotchas from the Midnight Discord + our own scars, kept current.
+
+Sync stalls
+- Symptom: Lace shows "Syncing…" indefinitely on Preview or Preprod.
+- Cause: indexer behind, or Lace cache stale.
+- Workaround: Settings → Advanced → Resync wallet. If still stuck, switch to Undeployed for the demo.
+
+Decode failures / ZKIR 0.31 mismatches
+- Symptom: "invalid ZKIR" or "unexpected representation" on tx submit.
+- Cause: your Compact compiler emitted a newer ZKIR than the proof server or on-chain runtime supports.
+- Workaround: pin compact toolchain to the version listed on https://docs.midnight.network/relnotes/support-matrix and rebuild both keys/ and zkir/ folders.
+
+DUST concurrency
+- Symptom: two parallel tx submits fail with "insufficient DUST" even though the balance looks fine.
+- Cause: DUST commitments are consumed as UTXOs; parallel spends collide.
+- Workaround: serialize submits in the UI (one in-flight at a time) or split into distinct shielded addresses.
+
+Prover / on-chain runtime version drift
+- Always cross-check: dapp-connector-api, midnight-js-* packages, compact-runtime, proof-server image, and Lace version must all sit on the same row of the support matrix.
+
+Undeployed as an escape hatch
+- Any time the shared testnet misbehaves, switch VITE_NETWORK_ID to "undeployed" and rerun. Your contract + UI don't change; only the network config and secrets do.
+`,
+  },
+  {
+    id: "showcase",
+    title: "Showcase Demos",
+    body: `Four reference demos ship with the site. Each is deployable stand-alone.
+
+01 · Proof Server demo (/showcase/midnight-ledger)
+- The classic "increment a counter, prove it, submit it" flow.
+- Confirms your Docker proof server + Lace + Preview testnet all agree.
+
+02 · Programmatic DUST (/showcase/programmatic-dust)
+- Node script (scripts/dust-demo-preprod.mjs) that creates a wallet, derives addresses,
+  requests tNIGHT, and registers DUST — all without a browser.
+- Use it when Lace itself is misbehaving and you need to prove the network is live.
+
+03 · Move Board (/showcase/move-board)
+- Minimal bboard-pattern contract (contracts/MoveBoard.compact). Anyone can post a move;
+  the ledger stores the last-mover and a monotonically-increasing counter.
+- Deployable to Preview, Preprod, or Undeployed via scripts/deploy-midnight.mjs (env MIDNIGHT_CONTRACT=move-board).
+
+04 · Choreo Ledger Local (/showcase/choreo-ledger-local)
+- Same contract shape as Move Board, but targeted at the Undeployed standalone stack.
+- Recommended when the shared testnets are unstable — matches Midnight DevRel's advice.
+`,
+  },
+  {
+    id: "strategy",
+    title: "Hackathon Strategy",
+    body: `A 5-credit Lovable budget forces discipline. What we learned building 1,000 mega-prompts:
+
+- ONE Compact contract, ≤80 lines. Anything bigger blows the credit budget on compile+prove cycles.
+- ONE single-page Vite + React app. Skip routers, skip Lovable Cloud, skip auth beyond Lace.
+- Lace is your auth layer. The shielded address IS the user id.
+- Proof server MUST run locally. There is no hosted prover.
+- Pick the smallest primitive that showcases your discipline: commit-reveal, sealed-bid, private-set,
+  merkle-membership, or the four "hooks" we ship in ideas/hooks.json.
+- Latency is real: proofs take 30–120s. Design UX around that from minute one — not as an afterthought.
+- Ship the demo, nothing else. No tests, no CI, no docs pages. The judges want to see it work.
+`,
+  },
+  {
+    id: "primer",
+    title: "Quantum + ZK Primer (why Midnight?)",
+    body: `Two ideas underpin the whole hackathon:
+
+1. Zero-knowledge proofs let a prover convince a verifier that a statement is true without revealing
+   why. Midnight uses Halo2 + Compact circuits: you write high-level code, the compiler emits a
+   proving key + verifier key, and the proof server (Docker port 6300) generates proofs the chain
+   can check cheaply.
+
+2. Creative disciplines (dance, music, film, fashion, games…) all share primitives that map cleanly
+   onto ZK: attribution, sealed submissions, timed reveals, private matching, provable rarity,
+   verifiable randomness. That's the entire premise of Creative Midnight — take a well-worn
+   creative workflow, find the ZK primitive it secretly needs, and ship a 5-credit demo.
+
+Read the site's /quantum-primer route for the long-form version.
+`,
+  },
+  {
+    id: "about",
+    title: "About",
+    body: `Creative Midnight is a hackathon companion for the Creative AI & Quantum Hackathon
+organised by StreetKode Fam during Indian Krump Festival 14.
+
+Everything here is Apache-2.0 / MIT-ish — copy, remix, ship. Credit the hackathon in your README
+if the boilerplate ends up in your winning entry.
+
+Site source: https://midnightprompts.lovable.app
+Community skills registry (companion project): https://midskills.sevryn.xyz
+`,
+  },
+];
