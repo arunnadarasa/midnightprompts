@@ -4,7 +4,7 @@ import { SiteShell } from "@/components/site-shell";
 import { CopyButton } from "@/components/copy-button";
 import { QuantumChip } from "@/components/quantum-chip";
 import { getIdea, getTheme, getHook, IDEAS_BY_THEME, type NetworkVariant } from "@/data/ideas";
-import { buildVariant } from "@/lib/mega-prompt-variants";
+import { buildVariant, OS_LABELS, type OSTarget } from "@/lib/mega-prompt-variants";
 import { getPlainProposition } from "@/lib/plain-language";
 
 
