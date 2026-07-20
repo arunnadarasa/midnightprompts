@@ -224,7 +224,147 @@ const BODY_BY_HOOK: Record<string, BodyPair> = {
   "private-witness": { contract: compactWitness, body: bodyPrivateWitness },
 };
 
-const WALLET_BOILERPLATE = "\n\n--- BEGIN: Connect-Lace boilerplate (self-contained, DApp Connector v4) ---\n\nAdd a working \"Connect Lace\" button to the primary page of the app. This\nsection is self-contained \u2014 do NOT install any @midnight-ntwrk/* package for\nthe connect step; the Lace browser extension injects everything you need at\n`window.midnight`. Follow the DApp Connector API v4 exactly as written below.\n\nHARD RULES\n- Do NOT call `enable()` or `state()` \u2014 DApp Connector v4.0 removed them.\n- Do NOT read `window.midnight` at module scope or during SSR \u2014 only inside\n  `useEffect`. Gate the panel render until after hydration.\n- Do NOT hardcode the network \u2014 try Preview, Preprod, and Mainnet in order\n  and use whichever `connect(networkId)` accepts.\n- Reading a shielded address is a permission-only handshake \u2014 no signing,\n  no funds moved.\n\nCREATE FILE: src/lib/use-midnight-wallet.ts\n```ts\nimport { useCallback, useEffect, useState } from \"react\";\n\nexport type WalletStatus =\n  | \"idle\" | \"detecting\" | \"ready\" | \"connecting\" | \"connected\" | \"error\";\n\ntype Connector = {\n  apiVersion: string;\n  name?: string;\n  connect: (networkId: string) => Promise<ConnectedApi>;\n  isEnabled?: () => Promise<boolean>;\n};\n\ntype ConnectedApi = {\n  getShieldedAddresses?: () => Promise<string[] | Record<string, string>>;\n  getUnshieldedAddress?: () => Promise<string>;\n  getDustAddress?: () => Promise<string>;\n  getConfiguration?: () => Promise<{\n    indexerUri?: string; indexerWsUri?: string; proverServerUri?: string;\n  }>;\n};\n\nfunction pickConnector(): Connector | null {\n  if (typeof window === \"undefined\") return null;\n  const m = (window as unknown as { midnight?: Record<string, Connector> }).midnight;\n  if (!m) return null;\n  for (const v of Object.values(m)) {\n    if (v && typeof v === \"object\" && \"apiVersion\" in v && /^4\\\\./.test(String(v.apiVersion))) {\n      return v as Connector;\n    }\n  }\n  const first = Object.values(m)[0];\n  return first && \"apiVersion\" in first ? (first as Connector) : null;\n}\n\nfunction inferNetwork(addr: string): string {\n  const m = addr.match(/^mn_(?:shield-)?addr_([a-z0-9]+?)1/i);\n  if (!m) return \"unknown\";\n  const s = m[1].toLowerCase();\n  if (s === \"test\") return \"preprod\";\n  if (s === \"undeployed\") return \"preview\";\n  return s;\n}\n\nexport function useMidnightWallet() {\n  const [status, setStatus] = useState<WalletStatus>(\"idle\");\n  const [address, setAddress] = useState<string | null>(null);\n  const [apiVersion, setApiVersion] = useState<string | null>(null);\n  const [network, setNetwork] = useState<string | null>(null);\n  const [error, setError] = useState<string | null>(null);\n  const [tick, setTick] = useState(0);\n\n  useEffect(() => {\n    if (typeof window === \"undefined\") return;\n    setStatus((p) => (p === \"connected\" ? p : \"detecting\"));\n    setError(null);\n    const t0 = Date.now();\n    const iv = window.setInterval(() => {\n      const c = pickConnector();\n      if (c) {\n        window.clearInterval(iv);\n        setApiVersion(c.apiVersion);\n        setStatus((p) => (p === \"connected\" ? p : \"ready\"));\n        if (!/^4\\\\./.test(c.apiVersion)) {\n          setStatus(\"error\");\n          setError(`Lace connector ${c.apiVersion} is not compatible. Update Lace.`);\n        }\n      } else if (Date.now() - t0 > 5000) {\n        window.clearInterval(iv);\n        setStatus(\"error\");\n        setError(\"No Midnight wallet detected. Install Lace from lace.io.\");\n      }\n    }, 100);\n    return () => window.clearInterval(iv);\n  }, [tick]);\n\n  const connect = useCallback(async () => {\n    try {\n      setError(null);\n      setStatus(\"connecting\");\n      const c = pickConnector();\n      if (!c) throw new Error(\"No Midnight wallet detected.\");\n      const preferred = (import.meta.env.VITE_NETWORK_ID as string) || \"preprod\";\n      const candidates = Array.from(new Set([preferred, \"preview\", \"preprod\", \"mainnet\"]));\n      let api: ConnectedApi | null = null;\n      let used: string | null = null;\n      let mismatch: unknown = null;\n      for (const n of candidates) {\n        try { api = await c.connect(n); used = n; break; }\n        catch (e) {\n          const msg = e instanceof Error ? e.message : String(e);\n          if (/network|mismatch/i.test(msg)) { mismatch = e; continue; }\n          throw e;\n        }\n      }\n      if (!api || !used) {\n        throw new Error(\n          mismatch\n            ? \"Lace is on a different network than this app supports. Switch Lace to Preview or Preprod and retry.\"\n            : \"Failed to connect to Lace.\",\n        );\n      }\n      let addr: string | null = null;\n      if (typeof api.getShieldedAddresses === \"function\") {\n        try {\n          const s = await api.getShieldedAddresses();\n          if (Array.isArray(s)) addr = s[0] ?? null;\n          else if (s && typeof s === \"object\") addr = Object.values(s)[0] ?? null;\n        } catch {}\n      }\n      if (!addr && typeof api.getUnshieldedAddress === \"function\") {\n        try { addr = await api.getUnshieldedAddress(); } catch {}\n      }\n      if (!addr) throw new Error(\"Connected but couldn't read an address. Update Lace.\");\n      setAddress(addr);\n      setNetwork(used ?? inferNetwork(addr));\n      setApiVersion(c.apiVersion);\n      setStatus(\"connected\");\n    } catch (e) {\n      setError(e instanceof Error ? e.message : String(e));\n      setStatus(\"error\");\n    }\n  }, []);\n\n  return {\n    status, address, apiVersion, network, error,\n    connect,\n    disconnect: () => { setAddress(null); setNetwork(null); setStatus(\"ready\"); setError(null); },\n    redetect: () => setTick((n) => n + 1),\n  };\n}\n```\n\nCREATE FILE: src/components/WalletConnectPanel.tsx\n```tsx\nimport { useEffect, useState } from \"react\";\nimport { useMidnightWallet } from \"@/lib/use-midnight-wallet\";\n\nfunction truncate(a: string, h = 12, t = 8) {\n  return a.length <= h + t + 1 ? a : `${a.slice(0, h)}\u2026${a.slice(-t)}`;\n}\n\nexport function WalletConnectPanel({ expectedNetwork = \"preprod\" }: { expectedNetwork?: string }) {\n  const [hydrated, setHydrated] = useState(false);\n  useEffect(() => setHydrated(true), []);\n  const w = useMidnightWallet();\n  const [copied, setCopied] = useState(false);\n  useEffect(() => {\n    if (!copied) return;\n    const t = setTimeout(() => setCopied(false), 1400);\n    return () => clearTimeout(t);\n  }, [copied]);\n\n  if (!hydrated) {\n    return (\n      <div className=\"p-5 border rounded-md\">\n        <div className=\"text-xs uppercase tracking-widest\">connect lace</div>\n        <div className=\"mt-3 h-10 bg-muted animate-pulse rounded\" />\n      </div>\n    );\n  }\n\n  const wrong = w.status === \"connected\" && w.network && w.network !== \"unknown\" && w.network !== expectedNetwork;\n\n  return (\n    <div className=\"p-5 border rounded-md space-y-3\">\n      <div className=\"flex items-center justify-between gap-3\">\n        <span className=\"text-xs uppercase tracking-widest\">connect lace</span>\n        {w.apiVersion && <span className=\"text-[10px] font-mono opacity-60\">connector v{w.apiVersion}</span>}\n      </div>\n\n      {w.status === \"detecting\" && <p className=\"text-sm opacity-70\">Detecting Midnight wallet\u2026</p>}\n\n      {w.status === \"ready\" && (\n        <div className=\"flex items-center gap-3 flex-wrap\">\n          <button onClick={() => void w.connect()}\n            className=\"px-4 py-2 bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider rounded\">\n            Connect wallet\n          </button>\n          <span className=\"text-xs opacity-70\">Reads your shielded address \u2014 no signing, no funds moved.</span>\n        </div>\n      )}\n\n      {w.status === \"connecting\" && <p className=\"text-sm opacity-70\">Approve the connection in Lace\u2026</p>}\n\n      {w.status === \"connected\" && w.address && (\n        <div className=\"space-y-2\">\n          <div className=\"text-[10px] uppercase tracking-widest opacity-60\">shielded address</div>\n          <div className=\"flex items-center gap-2 flex-wrap\">\n            <code className=\"font-mono text-xs break-all\">{truncate(w.address, 16, 12)}</code>\n            <button onClick={() => { void navigator.clipboard.writeText(w.address ?? \"\"); setCopied(true); }}\n              className=\"text-[10px] uppercase tracking-widest text-primary\">\n              {copied ? \"copied\" : \"copy\"}\n            </button>\n          </div>\n          <div className=\"flex items-center gap-4 text-[11px] flex-wrap\">\n            <span>network \u00b7 <span className=\"font-mono\">{w.network}</span></span>\n            <button onClick={w.disconnect} className=\"text-[10px] uppercase tracking-widest opacity-60\">disconnect</button>\n          </div>\n          {wrong && (\n            <p className=\"text-[12px] opacity-80\">\n              Lace is on <span className=\"font-mono\">{w.network}</span> but this app expects{\" \"}\n              <span className=\"font-mono\">{expectedNetwork}</span>. Switch networks inside Lace.\n            </p>\n          )}\n        </div>\n      )}\n\n      {w.status === \"error\" && (\n        <div className=\"space-y-2\">\n          <p className=\"text-sm opacity-80\">{w.error ?? \"Something went wrong.\"}</p>\n          <div className=\"flex gap-3 flex-wrap\">\n            <button onClick={w.redetect} className=\"px-3 py-2 border text-[10px] uppercase tracking-widest rounded\">Retry</button>\n            <a href=\"https://www.lace.io/\" target=\"_blank\" rel=\"noreferrer\"\n              className=\"px-3 py-2 border text-[10px] uppercase tracking-widest rounded\">Install Lace \u2197</a>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n```\n\nMOUNT on the primary page (e.g. src/routes/index.tsx or wherever the main\ndemo lives):\n```tsx\nimport { WalletConnectPanel } from \"@/components/WalletConnectPanel\";\n\n// Inside your JSX:\n<WalletConnectPanel expectedNetwork={import.meta.env.VITE_NETWORK_ID || \"preprod\"} />\n```\n\nPREREQUISITES to tell the end user in your UI copy:\n1. Install Lace from https://www.lace.io/ (desktop browser extension).\n2. Switch Lace to Midnight Preview or Preprod.\n3. Get tNIGHT from the matching faucet, then click \"Generate tDUST\" in Lace\n   to delegate \u2014 deploys and shielded writes spend tDUST, not tNIGHT.\n\n--- END: Connect-Lace boilerplate ---\n";
+const WALLET_BOILERPLATE = "\n\n--- BEGIN: Connect-Lace boilerplate (self-contained, DApp Connector v4) ---\n\nAdd a working \"Connect Lace\" button to the primary page of the app. This\nsection is self-contained \u2014 do NOT install any @midnight-ntwrk/* package for\nthe connect step; the Lace browser extension injects everything you need at\n`window.midnight`. Follow the DApp Connector API v4 exactly as written below.\n\nHARD RULES\n- Do NOT call `enable()` or `state()` \u2014 DApp Connector v4.0 removed them.\n- Do NOT read `window.midnight` at module scope or during SSR \u2014 only inside\n  `useEffect`. Gate the panel render until after hydration.\n- Do NOT hardcode the network \u2014 try Preview, Preprod, and Mainnet in order\n  and use whichever `connect(networkId)` accepts.\n- Reading a shielded address is a permission-only handshake \u2014 no signing,\n  no funds moved.\n\nCREATE FILE: src/lib/use-midnight-wallet.ts\n```ts\nimport { useCallback, useEffect, useState } from \"react\";\n\nexport type WalletStatus =\n  | \"idle\" | \"detecting\" | \"ready\" | \"connecting\" | \"connected\" | \"error\";\n\ntype Connector = {\n  apiVersion: string;\n  name?: string;\n  connect: (networkId: string) => Promise<ConnectedApi>;\n  isEnabled?: () => Promise<boolean>;\n};\n\ntype ConnectedApi = {\n  getShieldedAddresses?: () => Promise<string[] | Record<string, string>>;\n  getUnshieldedAddress?: () => Promise<string>;\n  getDustAddress?: () => Promise<string>;\n  getConfiguration?: () => Promise<{\n    indexerUri?: string; indexerWsUri?: string; proverServerUri?: string;\n  }>;\n};\n\nfunction pickConnector(): Connector | null {\n  if (typeof window === \"undefined\") return null;\n  const m = (window as unknown as { midnight?: Record<string, Connector> }).midnight;\n  if (!m) return null;\n  for (const v of Object.values(m)) {\n    if (v && typeof v === \"object\" && \"apiVersion\" in v && /^4\\\\./.test(String(v.apiVersion))) {\n      return v as Connector;\n    }\n  }\n  const first = Object.values(m)[0];\n  return first && \"apiVersion\" in first ? (first as Connector) : null;\n}\n\nexport function useMidnightWallet() {\n  const [status, setStatus] = useState<WalletStatus>(\"idle\");\n  const [address, setAddress] = useState<string | null>(null);\n  const [apiVersion, setApiVersion] = useState<string | null>(null);\n  const [network, setNetwork] = useState<string | null>(null);\n  const [error, setError] = useState<string | null>(null);\n  const [tick, setTick] = useState(0);\n\n  useEffect(() => {\n    if (typeof window === \"undefined\") return;\n    setStatus((p) => (p === \"connected\" ? p : \"detecting\"));\n    setError(null);\n    const t0 = Date.now();\n    const iv = window.setInterval(() => {\n      const c = pickConnector();\n      if (c) {\n        window.clearInterval(iv);\n        setApiVersion(c.apiVersion);\n        setStatus((p) => (p === \"connected\" ? p : \"ready\"));\n      } else if (Date.now() - t0 > 5000) {\n        window.clearInterval(iv);\n        setStatus(\"error\");\n        setError(\"No Midnight wallet detected. Install Lace from lace.io.\");\n      }\n    }, 100);\n    return () => window.clearInterval(iv);\n  }, [tick]);\n\n  const connect = useCallback(async () => {\n    try {\n      setError(null);\n      setStatus(\"connecting\");\n      const c = pickConnector();\n      if (!c) throw new Error(\"No Midnight wallet detected.\");\n      const preferred = (import.meta.env.VITE_NETWORK_ID as string) || \"preprod\";\n      const candidates = Array.from(new Set([preferred, \"preview\", \"preprod\", \"undeployed\", \"mainnet\"]));\n      let api: ConnectedApi | null = null;\n      let used: string | null = null;\n      for (const n of candidates) {\n        try { api = await c.connect(n); used = n; break; } catch {}\n      }\n      if (!api || !used) throw new Error(\"Failed to connect to Lace.\");\n      let addr: string | null = null;\n      if (typeof api.getShieldedAddresses === \"function\") {\n        try {\n          const s = await api.getShieldedAddresses();\n          if (Array.isArray(s)) addr = s[0] ?? null;\n          else if (s && typeof s === \"object\") addr = Object.values(s)[0] ?? null;\n        } catch {}\n      }\n      if (!addr && typeof api.getUnshieldedAddress === \"function\") {\n        try { addr = await api.getUnshieldedAddress(); } catch {}\n      }\n      if (!addr) throw new Error(\"Connected but couldn't read an address.\");\n      setAddress(addr);\n      setNetwork(used);\n      setStatus(\"connected\");\n    } catch (e) {\n      setError(e instanceof Error ? e.message : String(e));\n      setStatus(\"error\");\n    }\n  }, []);\n\n  return { status, address, apiVersion, network, error, connect,\n    disconnect: () => { setAddress(null); setNetwork(null); setStatus(\"ready\"); setError(null); },\n    redetect: () => setTick((n) => n + 1) };\n}\n```\n\nMOUNT on the primary page and gate render until hydrated. See\nhttps://midnightprompts.lovable.app for the full component reference.\n\n--- END: Connect-Lace boilerplate ---\n";
+
+
+
+const SCRIPTS_FOLDER = `SCRIPTS FOLDER — MANDATORY (all variants):
+
+Every generated app MUST contain a real \`scripts/\` folder. Do NOT reference
+any script from README.md that does not exist on disk — regenerate the README
+from the actual \`scripts/\` contents at the end.
+
+CREATE FILE: scripts/deploy-midnight.mjs
+\`\`\`js
+// Local Node ESM deploy script. Runs on the developer's machine, NOT in the
+// browser and NOT in a Cloudflare Worker. Requires a running proof server.
+//
+//   VITE_NETWORK_ID=preview  bun scripts/deploy-midnight.mjs
+//
+// Writes src/data/midnight-contract.<network>.json so the app hydrates.
+import fs from 'node:fs';
+import path from 'node:path';
+import { setNetworkId } from '@midnight-ntwrk/midnight-js-network-id';
+import { deployContract } from '@midnight-ntwrk/midnight-js-contracts';
+
+const NET = process.env.VITE_NETWORK_ID ?? 'preview';
+setNetworkId(NET);
+
+const contractName = process.env.MIDNIGHT_CONTRACT ?? 'timestamp-log';
+const managed = path.resolve(\`contracts/managed/\${contractName}\`);
+if (!fs.existsSync(managed)) {
+  console.error(\`Missing \${managed}. Run: compact compile contracts/<Name>.compact \${managed}\`);
+  process.exit(1);
+}
+
+// Load compiled contract module + zk assets, wire providers, call
+// deployContract(...) with your witnesses, then persist the result:
+const out = {
+  network: NET,
+  address: '<hex printed by deployContract>',
+  deployTx: '<hex tx hash>',
+  deployedAt: new Date().toISOString(),
+};
+const outPath = \`src/data/midnight-contract.\${NET}.json\`;
+fs.mkdirSync(path.dirname(outPath), { recursive: true });
+fs.writeFileSync(outPath, JSON.stringify(out, null, 2));
+console.log(\`✓ wrote \${outPath}\`);
+console.log(\`  address: \${out.address}\`);
+console.log(\`  paste into VITE_DEFAULT_CONTRACT\`);
+\`\`\`
+
+CREATE FILE: scripts/README.md — list every script, its inputs, and when to
+run it. If you add or remove a script, update this file in the same commit.
+
+DEPENDENCIES the deploy script needs (bun add BEFORE first run — Node ESM
+scripts are NOT bundled by Vite; every import must be a real dep):
+  bun add @midnight-ntwrk/midnight-js-contracts@4.1.1 \\
+          @midnight-ntwrk/midnight-js-network-id@4.1.1 \\
+          @midnight-ntwrk/midnight-js-types@4.1.1 \\
+          @midnight-ntwrk/zswap bip39
+
+For the Undeployed variant ALSO create scripts/midnight-standalone.mjs — a
+thin wrapper around \`docker compose\` that writes
+\`.midnight/standalone.docker-compose.yml\`, brings up node + indexer +
+proof-server, and polls readiness. See
+https://midnightprompts.lovable.app/undeployed for a reference implementation
+that can be copied verbatim.`;
+
+const UNDEPLOYED_FUND_LACE = `FUND LACE ON UNDEPLOYED (local devnet only):
+
+The local standalone stack mints unlimited tDUST to a well-known genesis
+wallet. There is no faucet click; you either use the genesis wallet or
+transfer from it once.
+
+Option A — use the genesis wallet directly (fastest, dev-only):
+1. In Lace, create a NEW account labelled "midnight-local-dev" and import
+   the genesis mnemonic published in midnightntwrk/midnight-local-dev
+   (repo README → "genesis wallet"). NEVER reuse this mnemonic on
+   Preview/Preprod/Mainnet — it is public.
+2. Lace → Settings → Network → Custom → RPC = ws://localhost:9944 →
+   Save → Switch. tDUST balance appears immediately after sync.
+
+Option B — keep your own Lace account, transfer once from genesis:
+1. Copy your own Lace unshielded address (mn_addr_undeployed1...).
+2. From the midnight-local-dev repo, run its fund-wallet helper
+   (or: midnight-cli transfer --to <your-addr> --amount 1000000000 from
+   the genesis account) against ws://localhost:9944.
+3. Refresh Lace — tDUST balance shows non-zero. Only now can you deploy.
+
+Verify:
+- bun scripts/midnight-standalone.mjs status → all three services green.
+- Open /undeployed-preflight in this app → four green pills.
+- If tDUST is still zero after 60s, restart Lace and re-check network is
+  ws://localhost:9944 (Lace may label it "Preview" — that is expected;
+  the address prefix "undeployed" confirms the network).
+
+References (embed as links in the in-app setup panel):
+- https://docs.midnight.network/llms-full.txt (search: "undeployed", "genesis")
+- https://github.com/midnightntwrk/midnight-local-dev`;
+
+function inAppSetupPanel(network: NetworkVariant): string {
+  const previewPreprod = `1. Install the Lace wallet → https://www.lace.io/
+2. Switch Lace to Midnight ${network === "preview" ? "Preview" : "Preprod"}
+3. Get tNIGHT from the faucet, then click Generate tDUST in Lace
+   → https://midnight-tmnight-${network}.nethermind.dev/
+4. Start the proof server:
+   docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v
+5. Deploy the contract:
+   VITE_NETWORK_ID=${network} bun scripts/deploy-midnight.mjs
+6. Paste the printed hex address into VITE_DEFAULT_CONTRACT and reload.`;
+
+  const undeployed = `1. Install Docker Desktop (macOS/Windows) or Docker Engine (Linux).
+2. Start the local Midnight stack:
+   bun scripts/midnight-standalone.mjs up
+3. Point Lace at ws://localhost:9944 (Settings → Network → Custom).
+4. Fund your Lace wallet — see FUND LACE ON UNDEPLOYED above:
+   import the genesis mnemonic OR transfer from genesis with
+   midnight-cli / the fund-wallet helper in midnightntwrk/midnight-local-dev.
+5. Deploy the contract:
+   VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs
+6. Reload this page. Preflight:
+   https://midnightprompts.lovable.app/undeployed-preflight`;
+
+  const steps = network === "undeployed" ? undeployed : previewPreprod;
+
+  return `IN-APP SETUP PANEL — MANDATORY (render on the primary page):
+
+Create a <SetupInstructions /> React component and mount it ABOVE the demo
+and ABOVE the Connect-Lace panel. It must:
+- Be collapsible; persist dismissed state under localStorage key
+  "setup-dismissed-${network}".
+- Render the numbered steps below verbatim (copy-paste-friendly code blocks
+  with a copy button on each shell command).
+- Show a small "show setup again" link in the page footer so users can
+  reopen it after dismissing.
+- Copy is prescriptive — do not ship an empty stub or a TODO placeholder.
+
+${steps}
+
+Also add a one-line "powered by" reference in the footer linking to
+https://midnightprompts.lovable.app so end users can browse the full
+network variants + preflight tools.`;
+}
 
 export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant): string {
   const { title, pitch, subDiscipline: sub } = idea;
@@ -240,6 +380,7 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant):
   const netLabel = NETWORK_LABELS[network] ?? network;
   const netSecrets = NETWORK_SECRETS[network] ?? NETWORK_SECRETS.preview;
   const localBlock = network === "undeployed" ? `\n\n${LOCAL_STACK_SETUP}\n` : "";
+  const undeployedFundBlock = network === "undeployed" ? `\n${UNDEPLOYED_FUND_LACE}\n` : "";
 
   return `Build "${title}" in ONE Lovable message. Single-page Midnight ZK demo.
 
@@ -264,12 +405,16 @@ STACK
 ${PACKAGES}
 
 ${TOOLCHAIN}
-${localBlock}
+${localBlock}${undeployedFundBlock}
+${SCRIPTS_FOLDER}
+
 ${VITE_CONFIG}
 
 ${MIDNIGHTJS_BOOT}
 
 ${body}
+
+${inAppSetupPanel(network)}
 
 ${REDFLAGS}
 

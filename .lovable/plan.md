@@ -1,49 +1,76 @@
-## Scope
+## Goal
 
-Mobile UX pass on `src/routes/ideas.$id.tsx` only — the "The build prompt." section in the screenshot. No copy changes, no logic changes.
+Fix three gaps in the generated hackathon apps (example: `arunnadarasa/choreokits` shipped without a `scripts/` folder even though the README referenced one):
 
-## Problems visible in the screenshot
+1. Every generated app must include a real `scripts/` folder with `deploy-midnight.mjs` and (for Undeployed) `midnight-standalone.mjs`.
+2. Every generated app's frontend must render an explicit "One-time local setup" panel so end users see the required terminal steps in-app, not only in the mega-prompt.
+3. The Undeployed variant must document how to fund Lace on a local devnet (genesis wallet, `ws://localhost:9944`, no faucet — but with the exact Lace steps and the fallback path for a non-genesis wallet).
 
-1. **Copy button dominates the mobile row.** It sits in the header's right-hand `flex` slot, wraps below the H2, and stretches to feel like a full-width primary CTA even though the real primary action is "Open in Lovable" further down.
-2. **Variant tabs wrap awkwardly.** `inline-flex flex-wrap` with three pills of uneven width produces "Preview | Preprod" on row 1 and "Undeployed (Local)" alone on row 2 with a visible empty gap to the right of the second row (the `bg-border` shows through). Looks broken.
-3. **Prompt `<pre>` uses `break-all`**, which chops words mid-character on narrow screens and hurts readability. `break-words` / `overflow-wrap: anywhere` (already partly set inline) is enough.
-4. Minor: the "budget · 1 message" chip is already hidden on mobile — keep that.
-
-## Changes
-
-### Variant tabs → full-width segmented control on mobile
-
-Replace the wrapping inline pill row with a 3-column grid on mobile that promotes to inline-flex at `sm:`. Each button gets `text-center` and slightly tighter padding + tracking so "Undeployed (Local)" fits on one line at 360px. Same visual language (gold active, border separators), just no ragged wrap.
-
-```tsx
-<div className="grid grid-cols-3 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
-  {/* buttons: px-2 py-2 text-[10px] tracking-[0.18em] sm:px-4 sm:text-[11px] sm:tracking-[0.24em] text-center */}
-</div>
-```
-
-### Copy button → move next to the tabs, secondary styling on mobile
-
-Remove `<CopyButton>` from the H2 header row. Put it on the same row as the segmented control: tabs take the available width, copy button sits to the right on `sm:` and drops under the tabs on mobile as a right-aligned, auto-width secondary button (not a full-width slab). The header row then only holds the eyebrow + H2, which is what the desktop layout already implies.
-
-### Prompt block wrapping
-
-On the `<pre>`: swap `break-all` for `break-words`; keep the inline `wordBreak: "break-word"` / `overflowWrap: "anywhere"`. Also drop `sm:p-8` to `sm:p-6` — 8 is fine on desktop but the mobile `p-4` already looks right; only real change is the word-break class.
-
-### Action buttons row
-
-`.flex flex-wrap gap-3` already wraps, but on 360px "Open in Lovable · Undeployed (Local) ↗" overflows the button horizontally because of `px-6`. Add `w-full sm:w-auto justify-center` to each action anchor/Link in that row so they stack as full-width buttons on mobile and stay inline from `sm:` up. This matches the pattern used elsewhere in the site (e.g. `undeployed.tsx` action row is fine, this one is the outlier).
+Because the JSON files no longer store prompts (they are built at render time by `buildVariant`), a single edit to `src/lib/mega-prompt-variants.ts` updates all 996 ideas × 3 networks. `scripts/rewrite_mega_prompts.py` is edited only to keep the two sources in sync — no JSON regeneration is required.
 
 ## Files touched
 
-- `src/routes/ideas.$id.tsx` — only the "Appendix · Mega-prompt" section (roughly lines 139–232) and the `<pre>` className.
+- `src/lib/mega-prompt-variants.ts` — add three new blocks and inject them into `buildVariant`.
+- `scripts/rewrite_mega_prompts.py` — mirror the same three blocks so the Python source stays canonical.
+- `src/routes/ideas.$id.tsx` — extend the small "wallet boilerplate" callout to also mention the scripts + setup-panel additions, so users glancing at the idea page know what changed.
 
-## Not doing
+No other routes, no JSON, no data model changes.
 
-- No changes to prompt content, variant logic, `buildVariant`, or `CopyButton` internals.
-- No changes to other routes, nav, or the DanceProof toast visible in the screenshot (that's the Lovable IDE, not the app).
-- No new components.
+## New block 1 — `SCRIPTS_FOLDER` (all three variants)
+
+Instructs Lovable to create `scripts/deploy-midnight.mjs` in every generated app, mirroring this project's script. Includes:
+
+- Full contents of a minimal `deploy-midnight.mjs` (reads `VITE_NETWORK_ID`, loads `contracts/managed/<name>/`, calls `deployContract`, prints the hex address, writes `src/data/midnight-contract.<network>.json`).
+- A `scripts/README.md` stub that explains when to run it.
+- Explicit rule: `README.md` MUST NOT reference a script that does not exist on disk — regenerate the README from the actual `scripts/` contents.
+- For the Undeployed variant only, also include `scripts/midnight-standalone.mjs` (thin wrapper — bring-up / status / down for the local Docker stack, matching this project's script).
+
+## New block 2 — `IN_APP_SETUP_PANEL` (all three variants)
+
+Instructs Lovable to render a `<SetupInstructions />` component on the primary page, above the demo. Content is variant-aware:
+
+- **Preview / Preprod:** Install Lace → switch network → faucet URL → `docker run -p 6300:6300 midnightntwrk/proof-server:latest` → `VITE_NETWORK_ID=<network> bun scripts/deploy-midnight.mjs` → paste address into `VITE_DEFAULT_CONTRACT`.
+- **Undeployed:** Docker prerequisite per OS → `bun scripts/midnight-standalone.mjs up` → point Lace at `ws://localhost:9944` → deploy → link to `/undeployed-preflight` in *this* project as a reference walkthrough.
+
+The panel must be collapsible, persist "dismissed" state in `localStorage`, and expose a "show setup again" link in the footer. Copy is prescriptive so the generated app doesn't ship an empty stub.
+
+## New block 3 — `UNDEPLOYED_FUND_LACE` (Undeployed variant only)
+
+Adds a "Fund your Lace wallet on Undeployed" section, sourced from `docs.midnight.network/llms-full.txt` and `github.com/midnightntwrk/midnight-local-dev`:
+
+- Default path: the standalone stack mints unlimited tDUST to the genesis wallet; import the genesis mnemonic into Lace as a *dev-only* account. Include the standard warning that the mnemonic is public and must never be reused on Preview / Preprod / Mainnet.
+- Alternative path: keep your own Lace account and transfer tDUST from genesis using `midnight-cli` (or the local-dev repo's helper) — one command, exact syntax.
+- Verify: refresh Lace, DUST balance shows non-zero; if it doesn't, run `bun scripts/midnight-standalone.mjs status` and check `/undeployed-preflight`.
+
+## Wiring in `buildVariant`
+
+Insert order inside the returned prompt:
+
+```text
+STACK
+PACKAGES
+TOOLCHAIN
+{LOCAL_STACK_SETUP if undeployed}
+{UNDEPLOYED_FUND_LACE if undeployed}
+SCRIPTS_FOLDER                 ← new, all variants
+VITE_CONFIG
+MIDNIGHTJS_BOOT
+{body}
+IN_APP_SETUP_PANEL             ← new, all variants (variant-aware text)
+RED FLAGS
+{netSecrets}
+FURTHER REFERENCE
+CREDIT
++ WALLET_BOILERPLATE (unchanged)
+```
 
 ## Verification
 
-- Reload `/ideas/<id>` at 360px width: tabs render as one row of three equal cells, copy button is a compact secondary control, prompt wraps on word boundaries, action buttons stack full-width.
-- At `sm:` (≥640px) the layout matches today's desktop: inline tabs, inline copy button, inline action row.
+- Load `/ideas/<any-id>` in the preview, switch between the three network tabs, confirm each variant now contains the `SCRIPTS_FOLDER` and `IN_APP_SETUP_PANEL` sections, and that only the Undeployed tab contains `UNDEPLOYED_FUND_LACE`.
+- Character-count check: the added blocks are ~4 KB total; well under the Lovable single-message ceiling that the existing prompts already sit inside.
+- No JSON regeneration and no build config changes are required — the runtime builder covers all 2,988 variants.
+
+## Not doing
+
+- No changes to the JSON idea files, no new npm packages, no changes to `/undeployed`, `/undeployed-preflight`, or the showcase pages.
+- No changes to the wallet-connect boilerplate itself — it already works; the new blocks sit alongside it.
