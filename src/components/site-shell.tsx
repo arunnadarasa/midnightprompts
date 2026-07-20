@@ -77,12 +77,12 @@ function SiteHeader() {
           >
             <Menu className="h-5 w-5" />
           </SheetTrigger>
-          <SheetContent side="right" className="w-80 bg-background border-l border-border p-0">
+          <SheetContent side="right" className="w-80 bg-background border-l border-border p-0 flex flex-col">
             <SheetTitle className="sr-only">Navigation</SheetTitle>
-            <div className="flex items-center justify-between px-6 py-5 border-b border-border">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-border shrink-0">
               <span className="font-display text-xl">Creative <span className="italic text-primary">Midnight</span></span>
             </div>
-            <nav className="flex flex-col p-4 gap-1 text-base">
+            <nav className="flex flex-col p-4 gap-1 text-base overflow-y-auto flex-1 pb-6">
               <MobileLink to="/themes" onClick={close}>Themes</MobileLink>
               <MobileLink to="/showcase" onClick={close}>Showcase</MobileLink>
               <MobileLink to="/wallet" onClick={close}>Wallet</MobileLink>
@@ -98,7 +98,7 @@ function SiteHeader() {
                 target="_blank"
                 rel="noreferrer"
                 onClick={close}
-                className="mt-3 px-4 py-3 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+                className="mt-2 px-4 py-2.5 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
               >
                 Midnight Docs ↗
               </a>
@@ -107,7 +107,7 @@ function SiteHeader() {
                 target="_blank"
                 rel="noreferrer"
                 onClick={close}
-                className="mt-2 px-4 py-3 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+                className="mt-1 px-4 py-2.5 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
               >
                 Midskills ↗
               </a>
@@ -116,7 +116,7 @@ function SiteHeader() {
                 target="_blank"
                 rel="noreferrer"
                 onClick={close}
-                className="mt-2 px-4 py-3 bg-primary text-primary-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+                className="mt-1 px-4 py-2.5 bg-primary text-primary-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
               >
                 Explorer ↗
               </a>
@@ -125,7 +125,7 @@ function SiteHeader() {
                 target="_blank"
                 rel="noreferrer"
                 onClick={close}
-                className="mt-3 px-4 py-3 border border-primary text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+                className="mt-1 px-4 py-2.5 border border-primary text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
               >
                 Hackathon ↗
               </a>
