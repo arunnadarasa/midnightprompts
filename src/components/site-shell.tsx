@@ -32,6 +32,7 @@ function SiteHeader() {
           <NavLink to="/proof-server">Proof</NavLink>
           <NavLink to="/strategy">Strategy</NavLink>
           <NavLink to="/quantum-primer">Primer</NavLink>
+          <NavLink to="/llms">LLM Docs</NavLink>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/known-issues">Known Issues</NavLink>
           <NavLink to="/undeployed">Undeployed</NavLink>
