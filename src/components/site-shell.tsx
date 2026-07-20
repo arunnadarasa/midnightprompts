@@ -83,31 +83,31 @@ function SiteHeader() {
               <span className="font-display text-xl">Creative <span className="italic text-primary">Midnight</span></span>
             </div>
             <nav className="flex flex-col p-4 gap-1 text-base">
-              <MobileLink to="/themes" onClick={close}>Themes</MobileLink>
-              <MobileLink to="/showcase" onClick={close}>Showcase</MobileLink>
-              <MobileLink to="/wallet" onClick={close}>Wallet</MobileLink>
-              <MobileLink to="/proof-server" onClick={close}>Proof Server</MobileLink>
-              <MobileLink to="/strategy" onClick={close}>Strategy</MobileLink>
-              <MobileLink to="/quantum-primer" onClick={close}>Primer</MobileLink>
-              <MobileLink to="/about" onClick={close}>About</MobileLink>
-              <MobileLink to="/known-issues" onClick={close}>Known Issues</MobileLink>
-              <MobileLink to="/undeployed" onClick={close}>Undeployed</MobileLink>
-              <MobileLink to="/undeployed-preflight" onClick={close}>Preflight</MobileLink>
               <a
                 href="https://creativequantum.lovable.app/"
                 target="_blank"
                 rel="noreferrer"
                 onClick={close}
-                className="mt-3 px-4 py-3 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+                className="px-4 py-3 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
               >
                 Hackathon ↗
               </a>
+              <MobileLink to="/themes" onClick={close}>Themes</MobileLink>
+              <MobileLink to="/showcase" onClick={close}>Showcase</MobileLink>
+              <MobileLink to="/wallet" onClick={close}>Wallet</MobileLink>
+              <MobileLink to="/proof-server" onClick={close}>Proof Server</MobileLink>
+              <MobileLink to="/undeployed" onClick={close}>Undeployed</MobileLink>
+              <MobileLink to="/undeployed-preflight" onClick={close}>Preflight</MobileLink>
+              <MobileLink to="/strategy" onClick={close}>Strategy</MobileLink>
+              <MobileLink to="/quantum-primer" onClick={close}>Primer</MobileLink>
+              <MobileLink to="/known-issues" onClick={close}>Known Issues</MobileLink>
+              <MobileLink to="/about" onClick={close}>About</MobileLink>
               <a
                 href="https://docs.midnight.network/"
                 target="_blank"
                 rel="noreferrer"
                 onClick={close}
-                className="mt-2 px-4 py-3 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+                className="mt-3 px-4 py-3 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
               >
                 Midnight Docs ↗
               </a>
