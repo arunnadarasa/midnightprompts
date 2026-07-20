@@ -1,33 +1,61 @@
-Fix the mobile burger menu so the full list of links is reachable on small screens.
+## Goal
+Generate a downloadable `llms-full.txt` containing **our site's** knowledge — reference guides plus every mega-prompt in every network × OS combination — so hackathon participants can feed it to their LLM.
 
-## Current state
+## Approach
 
-- The mobile menu is rendered in a shadcn `Sheet` that slides in from the right and fills the full viewport height.
-- Inside the sheet there is a header ("Creative Midnight") and a single `<nav>` column containing 10 internal links + 4 external CTA buttons (14 items total).
-- The `<nav>` has no `overflow-y-auto` or constrained height, so on short viewports the bottom items (Explorer, Hackathon) are pushed off-screen and cannot be reached.
+### 1. Build script: `scripts/build-llms-full.mjs`
+Node ESM script that assembles a single plain-text file at `public/llms-full.txt` (served as `/llms-full.txt`).
 
-## Plan
+Structure, with `# H1` / `## H2` markers and a top-of-file table of contents:
 
-1. Make the mobile menu scrollable
-   - Wrap the `<nav>` in a flex column with `flex-1` and `overflow-y-auto` so the link list scrolls independently while the header stays fixed.
-   - Add bottom padding (`pb-6` plus `pb-safe` if the project uses a Tailwind safe-area plugin) so the last item is not hidden behind the device home bar or Lovable preview chrome.
+1. **Header** — site name, purpose, generation timestamp, upstream Midnight docs link.
+2. **Reference guides** (plain markdown, extracted into a new `src/data/llms-content.ts` so the script and site share one source):
+   - Wallet setup (`/wallet`, all networks + faucet notes)
+   - Proof Server (`/proof-server`)
+   - Undeployed quick-start (`/undeployed`) + preflight (`/undeployed-preflight`)
+   - Docker setup — macOS, Windows, Linux panels + cheat-sheet + common errors (from `DockerSetupGuide.tsx`)
+   - Known Issues (`/known-issues`)
+   - Showcase demos: proof-server demo, programmatic DUST, move-board, choreo-ledger-local
+   - Strategy, Primer, About
+3. **Mega-prompts** — for each of the 1,000 ideas in `src/data/ideas.ts`, emit all **9 variants**: 3 networks (Preview, Preproduction, Undeployed) × 3 OSes (macOS, Windows, Linux), built via `buildMegaPrompt({ network, os })` from `src/lib/mega-prompt-variants.ts`. Each idea gets a `## <id> — <title>` section with 9 clearly-labelled fenced blocks (`### Preview · macOS`, `### Preview · Windows`, …).
+4. **Meta footer** — generated-at timestamp + byte size.
 
-2. Reduce visual weight of the CTA buttons so they fit better
-   - Keep the 4 external buttons (Midnight Docs, Midskills, Explorer, Hackathon) but change their vertical spacing from `mt-3` / `mt-2` to a consistent `mt-1` or use a single `gap-1` on the nav.
-   - Slightly reduce the external CTA button padding on very small screens (`py-2.5` instead of `py-3`) so the menu does not require excessive scrolling.
+Also write `public/llms-full.meta.json` = `{ generatedAt, byteSize, ideaCount, variantCount }`.
 
-3. Verify on the actual preview
-   - Open the preview at a mobile viewport (e.g., 384x681 CSS px matching the user's screenshot).
-   - Open the burger menu and scroll to confirm the bottom "Hackathon ↗" button is fully visible and tappable.
-   - Check that no horizontal overflow or clipping occurs on the link text.
+Size estimate: 1,000 × 9 × ~4 KB ≈ 36 MB. Big but fine as a static download. To keep the tool useful for smaller context windows, the script also emits:
+- `public/llms-core.txt` — guides only, no prompts (~200 KB).
+- `public/llms-prompts-<network>-<os>.txt` — 9 slimmer per-combo files (~4 MB each).
 
-## Files to change
+### 2. Route: `/llms`
+`src/routes/llms.tsx`:
+- Head metadata (title/description/og).
+- Explainer of what's inside and how big each file is.
+- Primary **Download full** button → `/llms-full.txt` + secondary **Download core (guides only)** → `/llms-core.txt`.
+- OS + network selector that reveals the matching per-combo download link.
+- "Copy raw URL" for each file.
+- "Last generated" timestamp + sizes from `llms-full.meta.json`.
+- Usage snippets for Cursor ("Add doc"), Claude Projects, ChatGPT custom GPTs, and Lovable ("paste as context").
+- Link to upstream `https://docs.midnight.network/llms-full.txt` for Midnight's own docs.
+- Wrapped in `<SiteShell>`.
 
-- `src/components/site-shell.tsx` — update the mobile `<SheetContent>` nav layout and styling.
-- No new dependencies or routes required.
+### 3. Navigation
+Add **LLM Docs** to desktop nav and to the mobile burger menu inside the "Deep Dives" cluster (after Primer, before Known Issues), preserving user-journey ordering.
+
+### 4. Mega-prompt hint
+In `src/lib/mega-prompt-variants.ts`, add one line to the "Reference material" block pointing Lovable/the model at `https://midnightprompts.lovable.app/llms-full.txt`. No stored-data change (prompts render dynamically).
+
+### 5. Regeneration workflow
+- Add npm script: `"llms": "node scripts/build-llms-full.mjs"`.
+- Commit generated files under `public/` so the Cloudflare build ships them without running Node at build time (the Worker can't handle a 36 MB build step anyway).
+- Document the one-liner in README.
+
+## Technical notes
+- Script runs in Node — no Worker limits.
+- `buildMegaPrompt` is already a pure function importable from the script.
+- Static text/plain files are served directly by TanStack Start's static asset pipeline.
+- Route/component files stay JSX; only extracted narrative text moves to `llms-content.ts` (no UI regression).
 
 ## Out of scope
-
-- Reordering or removing menu items; the last change already moved Hackathon to the bottom, and we will keep that order.
-- Desktop nav changes; this only affects the `lg:hidden` mobile sheet.
-- Adding collapsible sections unless the simple scroll fix proves insufficient during verification.
+- Auto-regeneration on a schedule.
+- Per-idea individual downloads.
+- Translations.
