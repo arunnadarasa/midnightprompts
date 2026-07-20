@@ -450,9 +450,33 @@ export function DockerSetupGuide({
           {os === "windows" && <WindowsPanel />}
           {os === "linux" && <LinuxPanel />}
 
-          <p className="mt-6 pt-4 text-[11px] text-muted-foreground border-t border-border">
-            Once <code>docker info</code> and <code>git --version</code> both work in a fresh terminal, continue with the Midnight proof server and local stack.
-          </p>
+          <DockerCheatSheetPanel />
+          <CommonErrorsPanel />
+
+          <div className="mt-6 pt-4 border-t border-border text-[11px] text-muted-foreground space-y-2">
+            <p>
+              Once <code>docker info</code> and <code>git --version</code> both work in a fresh terminal, continue with the Midnight proof server and local stack.
+            </p>
+            <p>
+              Further reading from the official Docker docs:{" "}
+              <a href="https://docs.docker.com/get-started/" target="_blank" rel="noreferrer" className="text-primary underline">
+                Get started
+              </a>
+              ,{" "}
+              <a href="https://docs.docker.com/get-started/get-docker/" target="_blank" rel="noreferrer" className="text-primary underline">
+                Get Docker
+              </a>
+              ,{" "}
+              <a href="https://docs.docker.com/guides/" target="_blank" rel="noreferrer" className="text-primary underline">
+                Guides
+              </a>
+              , and the LLM-friendly index{" "}
+              <a href="https://docs.docker.com/llms.txt" target="_blank" rel="noreferrer" className="text-primary underline">
+                docs.docker.com/llms.txt
+              </a>
+              .
+            </p>
+          </div>
         </div>
       )}
     </section>
