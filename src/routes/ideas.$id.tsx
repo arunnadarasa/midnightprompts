@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { CopyButton } from "@/components/copy-button";
 import { QuantumChip } from "@/components/quantum-chip";
 import { getIdea, getTheme, getHook, IDEAS_BY_THEME, type NetworkVariant } from "@/data/ideas";
-import { buildVariant } from "@/lib/mega-prompt-variants";
+import { buildVariant, OS_LABELS, type OSTarget } from "@/lib/mega-prompt-variants";
 import { getPlainProposition } from "@/lib/plain-language";
 
 
@@ -14,6 +14,15 @@ const VARIANT_META: Record<NetworkVariant, { label: string; caption: string; exp
   undeployed: { label: "Undeployed (local)",  caption: "Run the standalone stack on your own machine. No faucet, unlimited tDUST. DevRel-advised.", explorer: null },
 };
 const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed"];
+const OS_KEYS: OSTarget[] = ["macos", "windows", "linux"];
+
+function detectOS(): OSTarget {
+  if (typeof navigator === "undefined") return "macos";
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes("win")) return "windows";
+  if (ua.includes("linux") && !ua.includes("android")) return "linux";
+  return "macos";
+}
 
 
 export const Route = createFileRoute("/ideas/$id")({
@@ -57,7 +66,9 @@ function IdeaPage() {
     .slice(0, 4);
 
   const [variant, setVariant] = useState<NetworkVariant>("preview");
-  const activePrompt = useMemo(() => buildVariant(idea, theme, variant), [idea, theme, variant]);
+  const [os, setOs] = useState<OSTarget>("macos");
+  useEffect(() => { setOs(detectOS()); }, []);
+  const activePrompt = useMemo(() => buildVariant(idea, theme, variant, os), [idea, theme, variant, os]);
   const activeMeta = VARIANT_META[variant];
 
 
@@ -168,8 +179,36 @@ function IdeaPage() {
               <span className="hidden sm:inline-flex items-center gap-1 px-3 py-2 border border-primary/40 eyebrow text-primary">
                 budget · 1 message
               </span>
-              <CopyButton text={activePrompt} label={`Copy · ${activeMeta.label}`} />
+              <CopyButton text={activePrompt} label={`Copy · ${activeMeta.label} · ${OS_LABELS[os]}`} />
             </div>
+          </div>
+
+          <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <span className="eyebrow text-muted-foreground">Your machine</span>
+            <div className="grid grid-cols-3 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
+              {OS_KEYS.map((k) => {
+                const active = k === os;
+                return (
+                  <button
+                    key={k}
+                    type="button"
+                    onClick={() => setOs(k)}
+                    className={
+                      "px-2 py-2 text-[10px] tracking-[0.18em] uppercase text-center transition-colors sm:px-4 sm:text-[11px] sm:tracking-[0.24em] " +
+                      (active
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-card text-foreground/70 hover:text-primary hover:bg-background")
+                    }
+                    aria-pressed={active}
+                  >
+                    {OS_LABELS[k]}
+                  </button>
+                );
+              })}
+            </div>
+            <span className="text-xs text-muted-foreground font-light">
+              Swaps the Docker + prerequisites block in the prompt.
+            </span>
           </div>
 
           <p className="mt-3 text-xs text-muted-foreground font-light leading-relaxed max-w-3xl">

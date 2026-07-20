@@ -4,13 +4,26 @@
 
 import type { Idea, Theme, NetworkVariant } from "@/data/ideas";
 
+export type OSTarget = "macos" | "windows" | "linux";
+export const OS_LABELS: Record<OSTarget, string> = {
+  macos: "macOS",
+  windows: "Windows",
+  linux: "Linux",
+};
+
 const CREDIT = "Built during the Creative AI & Quantum Hackathon organised by StreetKode Fam during Indian Krump Festival 14";
 
 const BUDGET = "5-CREDIT BUDGET (HARD LIMIT):\n- ONE single-page Vite + React app. No router, no Lovable Cloud, no database, no server-side auth.\n- ONE Compact contract, \u226480 lines, deployed to Midnight preview testnet.\n- Lace wallet is the auth + tx layer. `window.midnight` is polled; the shielded address is the identity.\n- A locally-run proof server (Docker port 6300) is REQUIRED for any tx submit; the UI must show a\n  \"Proving\u2026 this can take 30\u2013120s\" state and stay usable while proofs generate.\n- Pinata / IPFS only if the idea genuinely stores a file or artefact \u2014 then the CID is committed on-chain.\n- At most ONE AI call per user action (Lovable AI Gateway with LOVABLE_API_KEY if AI is part of the idea).\n- Skip tests, skip CI, skip docs pages. Ship the demo, nothing else.";
 
 const PACKAGES = "PACKAGES (all pinned to the versions Midnight ships together):\n- @midnight-ntwrk/dapp-connector-api@4.0.1\n- @midnight-ntwrk/midnight-js-contracts@4.1.1\n- @midnight-ntwrk/midnight-js-types@4.1.1\n- @midnight-ntwrk/midnight-js-protocol@4.1.1\n- @midnight-ntwrk/midnight-js-network-id@4.1.1\n- @midnight-ntwrk/midnight-js-fetch-zk-config-provider@4.1.1\n- @midnight-ntwrk/midnight-js-http-client-proof-provider@4.1.1\n- @midnight-ntwrk/midnight-js-indexer-public-data-provider@4.1.1\n- @midnight-ntwrk/midnight-js-utils@4.1.1\n- @midnight-ntwrk/compact-runtime@0.16.0\n- rxjs fp-ts semver buffer pino\n- vite-plugin-wasm  vite-plugin-top-level-await  (dev)";
 
-const TOOLCHAIN = "COMPACT TOOLCHAIN (one-time setup \u2014 the human runs this in a terminal, not Lovable):\n```bash\ncurl --proto '=https' --tlsv1.2 -LsSf \\\n  https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh\nsource ~/.bashrc && compact update\ncompact compile contracts/YourContract.compact contracts/managed/your-contract\ncp -r contracts/managed/your-contract/keys public/keys\ncp -r contracts/managed/your-contract/zkir public/zkir\ndocker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v\n```\n\nOn Windows? Before `docker run` you'll need BIOS virtualization enabled, `wsl --update`\nsucceeding, and Node.js LTS on PATH. Full walkthrough with copy buttons:\nhttps://midnightprompts.lovable.app/proof-server#docker-setup";
+const TOOLCHAIN_COMMON = "COMPACT TOOLCHAIN (one-time setup \u2014 the human runs this in a terminal, not Lovable):\n```bash\ncurl --proto '=https' --tlsv1.2 -LsSf \\\n  https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh\nsource ~/.bashrc && compact update\ncompact compile contracts/YourContract.compact contracts/managed/your-contract\ncp -r contracts/managed/your-contract/keys public/keys\ncp -r contracts/managed/your-contract/zkir public/zkir\ndocker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v\n```";
+
+const TOOLCHAIN_BY_OS: Record<OSTarget, string> = {
+  macos: `${TOOLCHAIN_COMMON}\n\nmacOS prerequisites (run BEFORE the block above):\n\`\`\`bash\n# Docker Desktop (Apple Silicon or Intel):\nbrew install --cask docker    # or download from docker.com/products/docker-desktop\nopen -a Docker                # wait for the whale icon in the menu bar to go steady\n# Node.js LTS (for bun scripts + npx):\nbrew install node             # or nvm install --lts\n\`\`\`\nApple Silicon note: proof-server image is multi-arch \u2014 no --platform flag needed. If Docker\nDesktop stalls at "Starting", quit + reopen; if that fails, reset to factory defaults from\nthe Troubleshoot menu. Copy-button walkthrough: https://midnightprompts.lovable.app/proof-server#docker-setup`,
+  windows: `${TOOLCHAIN_COMMON}\n\nWindows prerequisites \u2014 three real blockers people actually hit; do these BEFORE the block above:\n\n  (1) Enable Virtualization in BIOS/UEFI.\n      Task Manager \u2192 Performance \u2192 CPU must show "Virtualization: Enabled". If Disabled,\n      shut down, tap Esc/F10 (HP) or F2/Del at boot, enable SVM Mode / AMD-V / Intel VT-x /\n      Virtualization Technology, save & exit. Without this, Docker Desktop's WSL2 backend cannot start.\n\n  (2) Enable Windows features + update WSL.\n      Win+R \u2192 \`optionalfeatures\` \u2192 tick Windows Subsystem for Linux, Virtual Machine Platform,\n      Windows Hypervisor Platform \u2192 OK \u2192 reboot. Then in PowerShell (Admin):\n      \`\`\`powershell\n      wsl --update\n      wsl --install\n      \`\`\`\n\n  (3) Install Node.js LTS + fix PowerShell execution policy.\n      Download Windows x64 LTS .msi from https://nodejs.org/download (keep "Add to PATH").\n      If \`npm install\` errors with "running scripts is disabled":\n      \`\`\`powershell\n      Set-ExecutionPolicy RemoteSigned -Scope CurrentUser\n      \`\`\`\n\nAfter those three: install Docker Desktop with "Use the WSL 2 based engine" + Ubuntu integration,\nthen run the toolchain commands ABOVE from INSIDE the WSL2 Ubuntu shell (not PowerShell) so\nlocalhost:6300 port forwarding to Windows browsers works. Full walkthrough with copy buttons:\nhttps://midnightprompts.lovable.app/proof-server#docker-setup`,
+  linux: `${TOOLCHAIN_COMMON}\n\nLinux prerequisites (Ubuntu/Debian shown; adapt for your distro):\n\`\`\`bash\nsudo apt update\nsudo apt install -y docker.io docker-compose-plugin curl nodejs npm\nsudo systemctl enable --now docker\nsudo usermod -aG docker "$USER" && newgrp docker\n\`\`\`\nFedora: \`sudo dnf install docker docker-compose-plugin nodejs\`.\nArch:   \`sudo pacman -S docker docker-compose nodejs npm\`.\nVerify: \`docker run --rm hello-world\` should print the welcome banner without sudo.\nCopy-button walkthrough: https://midnightprompts.lovable.app/proof-server#docker-setup`,
+};
 
 const VITE_CONFIG = "VITE CONFIG (vite.config.ts) \u2014 WASM + top-level await are MANDATORY for MidnightJS:\n```ts\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport wasm from 'vite-plugin-wasm';\nimport topLevelAwait from 'vite-plugin-top-level-await';\nexport default defineConfig({\n  build: { target: 'esnext', commonjsOptions: { transformMixedEsModules: true, extensions: ['.js','.cjs'] } },\n  plugins: [react(), wasm(), topLevelAwait()],\n  optimizeDeps: {\n    esbuildOptions: { target: 'esnext', supported: { 'top-level-await': true } },\n    include: ['@midnight-ntwrk/compact-runtime'],\n    exclude: ['@midnight-ntwrk/onchain-runtime-v3',\n              '@midnight-ntwrk/onchain-runtime-v3/midnight_onchain_runtime_wasm_bg.wasm'],\n  },\n});\n```\n\nSSR RULE: never import a `@midnight-ntwrk/*` package at module scope of a route file \u2014 it uses\nNode Buffer + browser globals + WASM top-level await and crashes SSR. Load providers behind\n`useEffect` or a dynamic `import()` inside a `<ClientOnly>` boundary.";
 
@@ -18,7 +31,19 @@ const MIDNIGHTJS_BOOT = "WALLET DETECT (src/lib/lace.ts) \u2014 poll window.midn
 
 const REDFLAGS = "RED FLAGS \u2014 DO NOT ATTEMPT:\n- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.\n- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.\n- No sub-second finality UX. Proofs for k=14 circuits take 30\u2013120s \u2014 build for that latency.\n- No recursion in Compact. Loops must be bounded by compile-time constants.\n- No SSR. MidnightJS uses browser globals + WASM + top-level-await; ClientOnly is mandatory.";
 
-const LOCAL_STACK_SETUP = "LOCAL STACK SETUP (Undeployed variant only \u2014 humans run this in a terminal, NOT Lovable):\n\nThe `undeployed` target expects a full Midnight standalone stack (node + indexer + proof server)\nrunning on your own machine. All three services are Docker containers.\n\n--- One-command bring-up (all OSes, after Docker is running) ---\n```bash\nbun scripts/midnight-standalone.mjs up      # pull + start + wait for ready\nbun scripts/midnight-standalone.mjs status  # check health\nbun scripts/midnight-standalone.mjs down    # stop\n```\nThe `up` command writes `.midnight/standalone.docker-compose.yml`, pulls pinned node / indexer /\nproof-server images, starts the three services, and polls readiness on ws://localhost:9944,\nhttp://localhost:8088/api/v4/graphql, and http://localhost:6300/health. First run pulls ~1 GB\nand takes 2-5 min; later boots are seconds.\n\nThen verify in the browser: navigate to `/undeployed-preflight` in the app. Four green pills = ready.\n\nFor a human-readable walkthrough with copy buttons, also see:\nhttps://midnightprompts.lovable.app/undeployed\n\n--- Docker prerequisites per OS ---\n\nmacOS:\n```bash\nbrew install --cask docker      # or download from docker.com/products/docker-desktop\nopen -a Docker                  # wait for whale icon in menu bar\n```\n\nWindows (WSL2) \u2014 three real blockers people actually hit; do these BEFORE `wsl --install`:\n\n  (1) Enable Virtualization in BIOS/UEFI.\n      Task Manager \u2192 Performance \u2192 CPU must show \"Virtualization: Enabled\". If it says\n      Disabled, fully shut down, tap Esc/F10 (HP) or F2/Del at boot, find SVM Mode / AMD-V /\n      Intel VT-x / Virtualization Technology, set Enabled, save & exit. Without this, Docker\n      Desktop's WSL2 backend cannot start.\n\n  (2) Enable the three Windows features + update WSL.\n      Win+R \u2192 `optionalfeatures` \u2192 tick: Windows Subsystem for Linux, Virtual Machine\n      Platform, Windows Hypervisor Platform \u2192 OK \u2192 reboot. Then in PowerShell (Admin):\n      ```powershell\n      wsl --update\n      wsl --install\n      ```\n      If `wsl --update` errors with 0x8024001e or 0x80070002, redo the features step and\n      reboot before retrying. Docker Desktop's \"WSL needs updating\" banner disappears once\n      this succeeds.\n\n  (3) Install Node.js LTS + fix PowerShell execution policy.\n      Download the Windows x64 LTS .msi from https://nodejs.org/download (keep \"Add to PATH\"\n      checked). Then, if `npm install` errors with \"running scripts is disabled on this\n      system\", open PowerShell as Administrator and run:\n      ```powershell\n      Set-ExecutionPolicy RemoteSigned -Scope CurrentUser\n      ```\n      Answer Y, close the window, reopen a NON-admin terminal, verify with `node -v` and\n      `npm -v`, then continue.\n\nAfter those three, install Docker Desktop with \"Use the WSL 2 based engine\" + Ubuntu\nintegration, and run `bun scripts/midnight-standalone.mjs up` from INSIDE the WSL2 Ubuntu\nshell so localhost port forwarding to the browser works. A copy-button version of these\nsteps lives at https://midnightprompts.lovable.app/proof-server#docker-setup.\n\nLinux (Ubuntu/Debian):\n```bash\nsudo apt update\nsudo apt install -y docker.io docker-compose-plugin\nsudo systemctl enable --now docker\nsudo usermod -aG docker \"$USER\" && newgrp docker\n```\nFor Fedora/Arch swap `apt install` for `dnf install docker docker-compose-plugin` or\n`pacman -S docker docker-compose`.\n\n--- Point Lace at the local node (all OSes) ---\nLace -> Settings -> Network -> Custom -> RPC = `ws://localhost:9944` -> Save -> Switch.\nThe genesis wallet is pre-funded with unlimited tDUST -- no faucet click, no delegation step.\n\n--- Deploy the Compact contract (all OSes) ---\n```bash\n# after `compact compile` produced contracts/managed/<name>/\nVITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs\n# -> prints contract hex address; paste into VITE_DEFAULT_CONTRACT\n```\n\nFull troubleshooting: see the `midnight-environment-setup` skill\n(https://midnight-skills.netlify.app/skills/midnight-environment-setup) -- it covers\nDocker Desktop failing to start, port 6300 conflicts, WSL2 clock drift, and Lace network\nswitching. Windows-specific setup blockers (BIOS virtualization, wsl --update failures,\nPowerShell execution policy): https://midnightprompts.lovable.app/proof-server#docker-setup";
+const LOCAL_STACK_INTRO = "LOCAL STACK SETUP (Undeployed variant only \u2014 humans run this in a terminal, NOT Lovable):\n\nThe `undeployed` target expects a full Midnight standalone stack (node + indexer + proof server)\nrunning on your own machine. All three services are Docker containers.\n\n--- One-command bring-up (after Docker is running) ---\n```bash\nbun scripts/midnight-standalone.mjs up      # pull + start + wait for ready\nbun scripts/midnight-standalone.mjs status  # check health\nbun scripts/midnight-standalone.mjs down    # stop\n```\nThe `up` command writes `.midnight/standalone.docker-compose.yml`, pulls pinned node / indexer /\nproof-server images, starts the three services, and polls readiness on ws://localhost:9944,\nhttp://localhost:8088/api/v4/graphql, and http://localhost:6300/health. First run pulls ~1 GB\nand takes 2-5 min; later boots are seconds.\n\nThen verify in the browser: navigate to `/undeployed-preflight` in the app. Four green pills = ready.\n\nFor a human-readable walkthrough with copy buttons, also see:\nhttps://midnightprompts.lovable.app/undeployed";
+
+const LOCAL_STACK_DOCKER_BY_OS: Record<OSTarget, string> = {
+  macos: "--- Docker prerequisites (macOS) ---\n```bash\nbrew install --cask docker      # or download from docker.com/products/docker-desktop\nopen -a Docker                  # wait for whale icon in menu bar to go steady\n```\nApple Silicon: proof-server image is multi-arch, no --platform flag needed.",
+  windows: "--- Docker prerequisites (Windows / WSL2) ---\nThree real blockers people actually hit; do these BEFORE `wsl --install`:\n\n  (1) Enable Virtualization in BIOS/UEFI.\n      Task Manager \u2192 Performance \u2192 CPU must show \"Virtualization: Enabled\". If Disabled,\n      shut down, tap Esc/F10 (HP) or F2/Del at boot, enable SVM Mode / AMD-V / Intel VT-x /\n      Virtualization Technology, save & exit. Without this, Docker Desktop's WSL2 backend cannot start.\n\n  (2) Enable Windows features + update WSL.\n      Win+R \u2192 `optionalfeatures` \u2192 tick Windows Subsystem for Linux, Virtual Machine Platform,\n      Windows Hypervisor Platform \u2192 OK \u2192 reboot. Then in PowerShell (Admin):\n      ```powershell\n      wsl --update\n      wsl --install\n      ```\n      If `wsl --update` errors with 0x8024001e / 0x80070002, redo (2) and reboot before retrying.\n\n  (3) Install Node.js LTS + fix PowerShell execution policy.\n      Download Windows x64 LTS .msi from https://nodejs.org/download (keep \"Add to PATH\").\n      If `npm install` errors with \"running scripts is disabled\":\n      ```powershell\n      Set-ExecutionPolicy RemoteSigned -Scope CurrentUser\n      ```\n\nAfter those three: install Docker Desktop with \"Use the WSL 2 based engine\" + Ubuntu integration,\nand run `bun scripts/midnight-standalone.mjs up` from INSIDE the WSL2 Ubuntu shell (not PowerShell)\nso localhost port forwarding to the Windows browser works.\nCopy-button version: https://midnightprompts.lovable.app/proof-server#docker-setup",
+  linux: "--- Docker prerequisites (Linux) ---\n```bash\nsudo apt update\nsudo apt install -y docker.io docker-compose-plugin\nsudo systemctl enable --now docker\nsudo usermod -aG docker \"$USER\" && newgrp docker\n```\nFedora: `sudo dnf install docker docker-compose-plugin`.\nArch:   `sudo pacman -S docker docker-compose`.\nVerify: `docker run --rm hello-world` should print the welcome banner without sudo.",
+};
+
+const LOCAL_STACK_OUTRO = "--- Point Lace at the local node ---\nLace \u2192 Settings \u2192 Network \u2192 Custom \u2192 RPC = `ws://localhost:9944` \u2192 Save \u2192 Switch.\nThe genesis wallet is pre-funded with unlimited tDUST \u2014 no faucet click, no delegation step.\n\n--- Deploy the Compact contract ---\n```bash\n# after `compact compile` produced contracts/managed/<name>/\nVITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs\n# \u2192 prints contract hex address; paste into VITE_DEFAULT_CONTRACT\n```\n\nFull troubleshooting: see the `midnight-environment-setup` skill\n(https://midnight-skills.netlify.app/skills/midnight-environment-setup) \u2014 it covers\nDocker Desktop failing to start, port 6300 conflicts, WSL2 clock drift, and Lace network switching.";
+
+function localStackSetup(os: OSTarget): string {
+  return `${LOCAL_STACK_INTRO}\n\n${LOCAL_STACK_DOCKER_BY_OS[os]}\n\n${LOCAL_STACK_OUTRO}`;
+}
 
 const NETWORK_LABELS: Record<NetworkVariant, string> = {"preview": "Preview testnet", "preprod": "Preprod testnet (closer to mainnet)", "undeployed": "Undeployed / local standalone stack (no faucet needed)"};
 
@@ -322,7 +347,12 @@ References (embed as links in the in-app setup panel):
 - https://docs.midnight.network/llms-full.txt (search: "undeployed", "genesis")
 - https://github.com/midnightntwrk/midnight-local-dev`;
 
-function inAppSetupPanel(network: NetworkVariant): string {
+function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
+  const dockerInstall: Record<OSTarget, string> = {
+    macos: "Install Docker Desktop for Mac (`brew install --cask docker`, then `open -a Docker`).",
+    windows: "Install Docker Desktop for Windows with WSL2 backend. Prereqs: BIOS virtualization ON, `wsl --update`, Node.js LTS on PATH. See https://midnightprompts.lovable.app/proof-server#docker-setup",
+    linux: "Install Docker Engine (`sudo apt install docker.io docker-compose-plugin`, then `sudo usermod -aG docker $USER`).",
+  };
   const previewPreprod = `1. Install the Lace wallet → https://www.lace.io/
 2. Switch Lace to Midnight ${network === "preview" ? "Preview" : "Preprod"}
 3. Get tNIGHT from the faucet, then click Generate tDUST in Lace
@@ -333,7 +363,7 @@ function inAppSetupPanel(network: NetworkVariant): string {
    VITE_NETWORK_ID=${network} bun scripts/deploy-midnight.mjs
 6. Paste the printed hex address into VITE_DEFAULT_CONTRACT and reload.`;
 
-  const undeployed = `1. Install Docker Desktop (macOS/Windows) or Docker Engine (Linux).
+  const undeployed = `1. ${dockerInstall[os]}
 2. Start the local Midnight stack:
    bun scripts/midnight-standalone.mjs up
 3. Point Lace at ws://localhost:9944 (Settings → Network → Custom).
@@ -366,7 +396,7 @@ https://midnightprompts.lovable.app so end users can browse the full
 network variants + preflight tools.`;
 }
 
-export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant): string {
+export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, os: OSTarget = "macos"): string {
   const { title, pitch, subDiscipline: sub } = idea;
   const hid = idea.quantumHookId || "compact-deploy";
   const hook = HOOKS[hid] ?? HOOKS["compact-deploy"];
@@ -379,7 +409,7 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant):
 
   const netLabel = NETWORK_LABELS[network] ?? network;
   const netSecrets = NETWORK_SECRETS[network] ?? NETWORK_SECRETS.preview;
-  const localBlock = network === "undeployed" ? `\n\n${LOCAL_STACK_SETUP}\n` : "";
+  const localBlock = network === "undeployed" ? `\n\n${localStackSetup(os)}\n` : "";
   const undeployedFundBlock = network === "undeployed" ? `\n${UNDEPLOYED_FUND_LACE}\n` : "";
 
   return `Build "${title}" in ONE Lovable message. Single-page Midnight ZK demo.
@@ -404,7 +434,7 @@ STACK
 
 ${PACKAGES}
 
-${TOOLCHAIN}
+${TOOLCHAIN_BY_OS[os]}
 ${localBlock}${undeployedFundBlock}
 ${SCRIPTS_FOLDER}
 
@@ -414,7 +444,7 @@ ${MIDNIGHTJS_BOOT}
 
 ${body}
 
-${inAppSetupPanel(network)}
+${inAppSetupPanel(network, os)}
 
 ${REDFLAGS}
 
