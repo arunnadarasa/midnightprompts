@@ -293,12 +293,48 @@ function Wallet() {
       <section className="max-w-3xl mx-auto px-5 pb-10">
         <span className="eyebrow">lace · switch network</span>
         <h2 className="font-display text-3xl sm:text-4xl font-bold mt-2 text-foreground">
-          Point Lace at <span className="italic text-primary">Preview or Preprod.</span>
+          Point Lace at <span className="italic text-primary">Preview, Preprod, or Undeployed.</span>
         </h2>
         <p className="mt-3 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
-          Make sure Lace is on the same Midnight network as the faucet you used. Open Settings from
-          the cogwheel on the bottom bar, choose Network, and confirm.
+          Make sure Lace is on the same Midnight network as the faucet or local stack you used. Open
+          Settings from the cogwheel on the bottom bar, choose Network, and confirm. If you are
+          running the DApp locally on{" "}
+          <code className="font-mono text-foreground">localhost</code>, select the Undeployed
+          network and point the RPC at{" "}
+          <code className="font-mono text-foreground">ws://localhost:9944</code>.
         </p>
+
+        <div className="mt-4 p-4 border border-primary/40 bg-card text-[12px] text-foreground/90 leading-relaxed">
+          <strong className="text-primary">Local DApp checklist:</strong>
+          <ul className="mt-2 list-disc pl-5 space-y-1 text-muted-foreground">
+            <li>
+              Lace → Settings → Network → Custom → RPC{" "}
+              <code className="font-mono text-foreground">ws://localhost:9944</code>.
+            </li>
+            <li>
+              Start the local stack: <code className="font-mono text-foreground">bun scripts/midnight-standalone.mjs up</code>.
+            </li>
+            <li>
+              Run the{" "}
+              <Link to="/undeployed-preflight" className="text-primary underline">
+                preflight checks
+              </Link>{" "}
+              to confirm all four endpoints are green.
+            </li>
+            <li>
+              Need funds? Use the local{" "}
+              <a
+                href="https://docs.midnight.network/guides/midnight-local-network"
+                target="_blank"
+                rel="noreferrer"
+                className="text-primary underline"
+              >
+                Midnight local network
+              </a>{" "}
+              tool to fund your Lace wallet.
+            </li>
+          </ul>
+        </div>
 
         <div className="mt-4 p-4 border border-primary/40 bg-card text-[12px] text-foreground/90 leading-relaxed">
           <strong className="text-primary">Heads up — Lace UI bug:</strong> on small laptop
