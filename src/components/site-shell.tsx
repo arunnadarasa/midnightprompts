@@ -112,6 +112,15 @@ function SiteHeader() {
                 Midskills ↗
               </a>
               <a
+                href="https://kuiralabs.github.io/kuira-sdk-android/"
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+                className="mt-1 px-4 py-2.5 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+              >
+                Mobile SDK ↗
+              </a>
+              <a
                 href="https://preview.midnightexplorer.com/"
                 target="_blank"
                 rel="noreferrer"
