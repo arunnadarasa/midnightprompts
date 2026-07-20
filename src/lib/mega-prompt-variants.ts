@@ -444,7 +444,7 @@ ${MIDNIGHTJS_BOOT}
 
 ${body}
 
-${inAppSetupPanel(network)}
+${inAppSetupPanel(network, os)}
 
 ${REDFLAGS}
 
