@@ -1,0 +1,28 @@
+{
+  "generatedAt": "2026-07-20T12:33:57.913Z",
+  "ideaCount": 996,
+  "networks": [
+    "preview",
+    "preprod",
+    "undeployed"
+  ],
+  "oses": [
+    "macos",
+    "windows",
+    "linux"
+  ],
+  "variantCount": 8964,
+  "sizes": {
+    "core": 13219,
+    "preview-macos": 20876804,
+    "preview-windows": 21592930,
+    "preview-linux": 20756288,
+    "preprod-macos": 21004298,
+    "preprod-windows": 21720424,
+    "preprod-linux": 20883782,
+    "undeployed-macos": 24877739,
+    "undeployed-windows": 26810977,
+    "undeployed-linux": 24884711,
+    "full": 201636132
+  }
+}
