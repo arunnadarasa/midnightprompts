@@ -455,6 +455,15 @@ function Wallet() {
                 unless you're running your own Midnight node. This is the RPC Lace uses to read
                 state and submit txs.
               </p>
+              <p className="mt-2 text-foreground/90">
+                For a local Undeployed stack, point this to{" "}
+                <code className="font-mono">ws://localhost:9944</code> — the WebSocket RPC of the
+                local Midnight node. Lace treats it as a Custom network, and it must be green in the{" "}
+                <Link to="/undeployed-preflight" className="text-primary underline">
+                  preflight checks
+                </Link>{" "}
+                before it will connect.
+              </p>
             </div>
             <p className="text-[11px] text-muted-foreground font-light">
               Click <strong className="text-foreground">Save configuration</strong> after any
