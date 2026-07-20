@@ -218,12 +218,13 @@ function Wallet() {
           Fund the wallet <span className="italic text-primary">from the faucet.</span>
         </h2>
         <p className="mt-3 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
-          Two faucets, one per network. Paste the unshielded address you just copied, solve the
-          Cloudflare check, and click <em>Request tokens</em>. You can pick the network from the
-          switcher at the top-right of the faucet page too.
+          Two public faucets for the testnets, and one local funding path for the Undeployed network.
+          Paste the unshielded address you just copied, solve the Cloudflare check, and click{" "}
+          <em>Request tokens</em>. For a local Undeployed stack, skip the public faucet and use the
+          local funding tool instead.
         </p>
 
-        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-[11px]">
           <a
             href="https://midnight-tmnight-preview.nethermind.dev/"
             target="_blank"
@@ -242,6 +243,30 @@ function Wallet() {
             <span className="eyebrow text-primary">preprod faucet ↗</span>
             <span className="font-mono text-muted-foreground break-all">midnight-tmnight-preprod.nethermind.dev</span>
           </a>
+          <div className="p-4 border border-primary/40 bg-card flex flex-col gap-2">
+            <span className="eyebrow text-primary">undeployed / local</span>
+            <span className="font-display text-foreground text-sm">No public faucet needed</span>
+            <p className="text-[11px] text-muted-foreground font-light leading-relaxed">
+              The local node mints unlimited tDUST to the genesis wallet. To fund your own Lace wallet, use the local Midnight network tool:
+            </p>
+            <ul className="list-disc pl-4 text-[11px] text-muted-foreground font-light leading-relaxed space-y-1">
+              <li>Fund from a config file (mnemonics) via the <code className="font-mono text-foreground">npm start</code> interactive menu.</li>
+              <li>Fund by public key (unshielded Bech32 addresses) — 50,000 tNIGHT per address, then register for DUST in Lace.</li>
+            </ul>
+            <div className="flex flex-wrap gap-3 mt-1">
+              <Link to="/undeployed" className="text-[10px] uppercase tracking-[0.2em] text-primary hover:underline">
+                Local quick start →
+              </Link>
+              <a
+                href="https://docs.midnight.network/guides/midnight-local-network"
+                target="_blank"
+                rel="noreferrer"
+                className="text-[10px] uppercase tracking-[0.2em] text-primary hover:underline"
+              >
+                Midnight docs ↗
+              </a>
+            </div>
+          </div>
         </div>
 
         <ol className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
