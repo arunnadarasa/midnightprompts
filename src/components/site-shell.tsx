@@ -83,15 +83,6 @@ function SiteHeader() {
               <span className="font-display text-xl">Creative <span className="italic text-primary">Midnight</span></span>
             </div>
             <nav className="flex flex-col p-4 gap-1 text-base">
-              <a
-                href="https://creativequantum.lovable.app/"
-                target="_blank"
-                rel="noreferrer"
-                onClick={close}
-                className="px-4 py-3 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
-              >
-                Hackathon ↗
-              </a>
               <MobileLink to="/themes" onClick={close}>Themes</MobileLink>
               <MobileLink to="/showcase" onClick={close}>Showcase</MobileLink>
               <MobileLink to="/wallet" onClick={close}>Wallet</MobileLink>
@@ -128,6 +119,15 @@ function SiteHeader() {
                 className="mt-2 px-4 py-3 bg-primary text-primary-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
               >
                 Explorer ↗
+              </a>
+              <a
+                href="https://creativequantum.lovable.app/"
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+                className="mt-3 px-4 py-3 border border-primary text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+              >
+                Hackathon ↗
               </a>
             </nav>
           </SheetContent>
