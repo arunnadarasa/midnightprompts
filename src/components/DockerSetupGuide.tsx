@@ -275,6 +275,13 @@ function LinuxPanel() {
           <li>
             Verify: <CodeBlock>docker --version{"\n"}docker compose version</CodeBlock>
           </li>
+          <li>
+            For post-install permissions and rootless options, see Docker's{" "}
+            <a href="https://docs.docker.com/engine/install/linux-postinstall/" target="_blank" rel="noreferrer" className="text-primary underline">
+              Linux post-install guide
+            </a>
+            .
+          </li>
         </ol>
       </Step>
       <Step n={2} title="Install Git">
