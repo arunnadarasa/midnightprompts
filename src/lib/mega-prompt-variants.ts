@@ -4,6 +4,13 @@
 
 import type { Idea, Theme, NetworkVariant } from "@/data/ideas";
 
+export type OSTarget = "macos" | "windows" | "linux";
+export const OS_LABELS: Record<OSTarget, string> = {
+  macos: "macOS",
+  windows: "Windows",
+  linux: "Linux",
+};
+
 const CREDIT = "Built during the Creative AI & Quantum Hackathon organised by StreetKode Fam during Indian Krump Festival 14";
 
 const BUDGET = "5-CREDIT BUDGET (HARD LIMIT):\n- ONE single-page Vite + React app. No router, no Lovable Cloud, no database, no server-side auth.\n- ONE Compact contract, \u226480 lines, deployed to Midnight preview testnet.\n- Lace wallet is the auth + tx layer. `window.midnight` is polled; the shielded address is the identity.\n- A locally-run proof server (Docker port 6300) is REQUIRED for any tx submit; the UI must show a\n  \"Proving\u2026 this can take 30\u2013120s\" state and stay usable while proofs generate.\n- Pinata / IPFS only if the idea genuinely stores a file or artefact \u2014 then the CID is committed on-chain.\n- At most ONE AI call per user action (Lovable AI Gateway with LOVABLE_API_KEY if AI is part of the idea).\n- Skip tests, skip CI, skip docs pages. Ship the demo, nothing else.";
