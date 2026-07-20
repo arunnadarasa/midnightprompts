@@ -66,7 +66,9 @@ function IdeaPage() {
     .slice(0, 4);
 
   const [variant, setVariant] = useState<NetworkVariant>("preview");
-  const activePrompt = useMemo(() => buildVariant(idea, theme, variant), [idea, theme, variant]);
+  const [os, setOs] = useState<OSTarget>("macos");
+  useEffect(() => { setOs(detectOS()); }, []);
+  const activePrompt = useMemo(() => buildVariant(idea, theme, variant, os), [idea, theme, variant, os]);
   const activeMeta = VARIANT_META[variant];
 
 
