@@ -1,28 +1,53 @@
-## Add Windows setup troubleshooting for Docker / Proof Server
+## Goal
 
-Document the real Windows blockers you hit so other hackathon participants can unblock themselves without needing Perplexity.
+Turn the existing Windows-only setup guide into a full cross-platform Docker + Git install guide (macOS, Windows, Linux), keeping the Windows-specific blockers you hit and adding the OpenClaw-style install steps for the other two OSes.
 
-### 1. New reusable component: `src/components/WindowsSetupGuide.tsx`
-A collapsible "Windows prerequisites" panel with three ordered blockers:
+## Changes
 
-1. **Enable Virtualization in BIOS/UEFI** (HP: Esc / F10 → SVM Mode / AMD-V / Intel VT-x → Enabled → save & reboot). Verify via Task Manager → Performance → CPU → "Virtualization: Enabled".
-2. **Update WSL** — Docker Desktop shows "WSL needs updating". Fix: PowerShell (Admin) → `wsl --update`. If it fails with `0x8024001e` / `0x80070002`, enable Windows features via `optionalfeatures`: Windows Subsystem for Linux, Virtual Machine Platform, Windows Hypervisor Platform → reboot → retry.
-3. **Install Node.js LTS (x64)** from nodejs.org/download, keep "Add to PATH" checked. If `npm install` errors with "running scripts is disabled", open PowerShell as Admin and run `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`, answer `Y`, reopen terminal, retry.
+### 1. Rename + refactor `src/components/WindowsSetupGuide.tsx` → `src/components/DockerSetupGuide.tsx`
 
-Includes copy buttons for each command and a note that macOS/Linux users can skip the section.
+- Add an OS tab switcher (macOS / Windows / Linux), auto-selecting the detected platform via `navigator.userAgent`.
+- Keep the collapsible card shell and existing `autoOpen` prop behavior.
+- Sections per OS:
 
-### 2. Wire into existing docs pages
-Render `<WindowsSetupGuide />` at the top of the Docker/local-stack instructions on:
-- `src/routes/proof-server.tsx` — above the `docker run` block
-- `src/routes/undeployed.tsx` — in the quick-start checklist
-- `src/routes/undeployed-preflight.tsx` — as a "Stack won't start?" card
-- `src/routes/showcase.choreo-ledger-local.tsx` — under the "up" command
-- `src/routes/known-issues.tsx` — new "Windows setup blockers" section linking to the guide
+  **macOS tab**
+  - Install Docker Desktop (Apple Silicon vs Intel), verify with `docker --version` / `docker info`.
+  - Install Git: git-scm download or `brew install git`, verify with `git --version`.
 
-### 3. Include in generated mega-prompts
-Update `src/lib/mega-prompt-variants.ts` so the Undeployed variant's setup instructions call out the same three Windows blockers with the exact fix commands, and link to `/proof-server#windows-setup`. Preview/Preprod variants get a shorter one-liner ("On Windows? See /proof-server#windows-setup before running Docker.") since they also use the proof server.
+  **Windows tab** (keeps everything already there, adds the missing pre-steps from the OpenClaw doc)
+  - Step 0: check version with `winver` (need Win10 build 19041+ or Win11).
+  - Step 1: `wsl --install` from PowerShell as Administrator (elevation warning), restart.
+  - Step 2: Docker Desktop install, enable WSL 2 when prompted, verify.
+  - Existing blockers preserved: BIOS virtualization (HP + generic), `wsl --update` fix, Node.js LTS + PowerShell `Set-ExecutionPolicy RemoteSigned`.
+  - Install Git for Windows, verify.
 
-### Technical notes
-- Pure presentation change — no backend, no data model change.
-- Component is client-safe (no browser APIs at module scope).
-- No prompt-JSON regeneration needed since prompts are built at render time via `buildVariant`.
+  **Linux tab**
+  - Docker Engine install link, `docker-compose-plugin`, `sudo usermod -aG docker $USER` + relog, verify `docker compose version`.
+  - Note: no Docker Desktop needed.
+  - Install Git via distro package manager, verify.
+
+- Skip the OpenClaw-specific "NHS personal laptop" callout and any OpenClaw-app steps — this guide stays scoped to Docker + Git prerequisites for the Midnight proof server / undeployed stack.
+
+### 2. Update all consumers of the old component
+
+Replace `WindowsSetupGuide` imports/usages with `DockerSetupGuide` in:
+- `src/routes/proof-server.tsx` (keep `autoOpen` on Windows detection; also auto-open on any non-detected OS)
+- `src/routes/undeployed.tsx`
+- `src/routes/undeployed-preflight.tsx`
+- `src/routes/showcase.choreo-ledger-local.tsx`
+- `src/routes/known-issues.tsx` (rename the "Windows setup blockers" heading to "Docker + Git setup (Windows / macOS / Linux)"; keep the anchor link working via an `id`)
+
+### 3. Mega-prompt builder (`src/lib/mega-prompt-variants.ts`)
+
+- Rename the "Windows setup" block to "Docker + Git prerequisites" and include a 3-line summary per OS plus the Windows blockers (BIOS virt, `wsl --update`, PowerShell execution policy).
+- Applies to all three variants (Preview / Preprod / Undeployed), since Docker is needed for the proof server on every network.
+
+### 4. Leave unchanged
+
+- The `WalletConnectPanel`, contract demos, ideas dataset generation, and skills wiring — this is a docs-only change.
+
+## Verification
+
+- `tsgo` typecheck on renamed component + updated route imports.
+- Visit `/proof-server`, `/undeployed`, `/undeployed-preflight`, `/showcase/choreo-ledger-local`, `/known-issues` in the preview; confirm tabs render, default to the correct OS, and the Windows tab still contains the BIOS / WSL / Node / PowerShell blockers.
+- Regenerate one mega-prompt and confirm the new prerequisites block appears in each network variant.
