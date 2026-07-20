@@ -128,7 +128,7 @@ function Step({ n, title, children }: { n: number | string; title: string; child
   );
 }
 
-function CodeBlock({ children }: { children: string }) {
+function CodeBlock({ children }: { children: React.ReactNode }) {
   return (
     <pre className="mt-1 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto whitespace-pre-wrap break-all">
       {children}
