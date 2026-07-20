@@ -299,6 +299,83 @@ function LinuxPanel() {
   );
 }
 
+function DockerCheatSheetPanel() {
+  return (
+    <div className="mt-6 pt-6 border-t border-border space-y-4">
+      <span className="eyebrow text-primary">docker cli · cheat sheet for midnight</span>
+      <p className="text-[12px] text-muted-foreground font-light">
+        The commands you will run most often once Docker is installed. The proof server and Undeployed stack both rely on these.
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+        <div className="p-3 border border-border bg-background">
+          <div className="font-display text-foreground text-sm">Start the proof server</div>
+          <CodeBlock>{`docker run -d --name midnight-proof-server \\
+  -p 6300:6300 \\
+  midnightntwrk/proof-server:latest \\
+  midnight-proof-server -v`}</CodeBlock>
+        </div>
+        <div className="p-3 border border-border bg-background">
+          <div className="font-display text-foreground text-sm">Check it is running</div>
+          <CodeBlock>{`docker ps
+curl http://localhost:6300/health`}</CodeBlock>
+        </div>
+        <div className="p-3 border border-border bg-background">
+          <div className="font-display text-foreground text-sm">Watch live logs</div>
+          <CodeBlock>{`docker logs -f midnight-proof-server`}</CodeBlock>
+        </div>
+        <div className="p-3 border border-border bg-background">
+          <div className="font-display text-foreground text-sm">Stop / start / remove</div>
+          <CodeBlock>{`docker stop midnight-proof-server
+docker start midnight-proof-server
+docker rm midnight-proof-server`}</CodeBlock>
+        </div>
+      </div>
+      <p className="text-[11px] text-muted-foreground">
+        For the full Undeployed stack, use{" "}
+        <code className="font-mono text-foreground">bun scripts/midnight-standalone.mjs up</code> — it wraps the three Docker containers for you.
+      </p>
+    </div>
+  );
+}
+
+function CommonErrorsPanel() {
+  return (
+    <div className="mt-6 pt-6 border-t border-border space-y-4">
+      <span className="eyebrow text-primary">common docker errors</span>
+      <ul className="space-y-3 text-[12px] text-muted-foreground leading-relaxed">
+        <li>
+          <strong className="text-foreground">"The system cannot find the file specified"</strong> on Windows — Docker Desktop is not running or WSL 2 is not installed. Open Docker Desktop and wait for the engine light to turn green.
+        </li>
+        <li>
+          <strong className="text-foreground">"WSL needs updating"</strong> — run{" "}
+          <code className="font-mono text-foreground">wsl --update</code> in PowerShell as Administrator, then reboot. If it fails, enable Windows Subsystem for Linux, Virtual Machine Platform, and Windows Hypervisor Platform from <code className="font-mono text-foreground">optionalfeatures</code> first.
+        </li>
+        <li>
+          <strong className="text-foreground">Port 6300 already in use</strong> — another proof server or process is bound to the port. Use{" "}
+          <code className="font-mono text-foreground">docker ps</code> to find it, then{" "}
+          <code className="font-mono text-foreground">docker stop &lt;name&gt;</code> or map to a different host port with{" "}
+          <code className="font-mono text-foreground">-p 6301:6300</code>.
+        </li>
+        <li>
+          <strong className="text-foreground">Permission denied</strong> on Linux — your user is not in the <code className="font-mono text-foreground">docker</code> group. Run{" "}
+          <code className="font-mono text-foreground">sudo usermod -aG docker $USER</code>, then log out and back in.
+        </li>
+      </ul>
+      <p className="text-[11px] text-muted-foreground">
+        Docker's official troubleshooting guides are the best next step: see{" "}
+        <a href="https://docs.docker.com/desktop/troubleshoot/" target="_blank" rel="noreferrer" className="text-primary underline">
+          Docker Desktop Troubleshoot
+        </a>{" "}
+        and{" "}
+        <a href="https://docs.docker.com/engine/install/troubleshoot/" target="_blank" rel="noreferrer" className="text-primary underline">
+          Engine install troubleshooting
+        </a>
+        .
+      </p>
+    </div>
+  );
+}
+
 const TABS: { id: OS; label: string }[] = [
   { id: "macos", label: "macOS" },
   { id: "windows", label: "Windows" },
