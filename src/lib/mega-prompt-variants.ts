@@ -434,7 +434,7 @@ STACK
 
 ${PACKAGES}
 
-${TOOLCHAIN}
+${TOOLCHAIN_BY_OS[os]}
 ${localBlock}${undeployedFundBlock}
 ${SCRIPTS_FOLDER}
 
