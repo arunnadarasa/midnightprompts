@@ -14,6 +14,15 @@ const VARIANT_META: Record<NetworkVariant, { label: string; caption: string; exp
   undeployed: { label: "Undeployed (local)",  caption: "Run the standalone stack on your own machine. No faucet, unlimited tDUST. DevRel-advised.", explorer: null },
 };
 const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed"];
+const OS_KEYS: OSTarget[] = ["macos", "windows", "linux"];
+
+function detectOS(): OSTarget {
+  if (typeof navigator === "undefined") return "macos";
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes("win")) return "windows";
+  if (ua.includes("linux") && !ua.includes("android")) return "linux";
+  return "macos";
+}
 
 
 export const Route = createFileRoute("/ideas/$id")({
