@@ -1,53 +1,46 @@
 ## Goal
 
-Turn the existing Windows-only setup guide into a full cross-platform Docker + Git install guide (macOS, Windows, Linux), keeping the Windows-specific blockers you hit and adding the OpenClaw-style install steps for the other two OSes.
+Add an **OS selector** (macOS / Windows / Linux) on the idea prompt page, alongside the existing Network variant tabs. Picking an OS swaps the Docker + prerequisites block inside the generated mega-prompt so participants only see the setup commands relevant to their machine.
 
-## Changes
+## UI changes — `src/routes/ideas.$id.tsx`
 
-### 1. Rename + refactor `src/components/WindowsSetupGuide.tsx` → `src/components/DockerSetupGuide.tsx`
+- Add `const [os, setOs] = useState<OS>("macos")` next to the existing `variant` state. Auto-detect from `navigator.userAgent` in a `useEffect` (same helper used by `DockerSetupGuide`).
+- Extend `buildVariant` call: `buildVariant(idea, theme, variant, os)`.
+- Add a second row of 3 pill-tabs (macOS / Windows / Linux) directly under the Network tabs, same visual treatment. Label: "Your machine".
+- Keep the existing "Copy · <variant>" button; label becomes `Copy · <variant> · <os>` so users can tell copied prompts apart.
 
-- Add an OS tab switcher (macOS / Windows / Linux), auto-selecting the detected platform via `navigator.userAgent`.
-- Keep the collapsible card shell and existing `autoOpen` prop behavior.
-- Sections per OS:
+## Prompt content changes — `src/lib/mega-prompt-variants.ts`
 
-  **macOS tab**
-  - Install Docker Desktop (Apple Silicon vs Intel), verify with `docker --version` / `docker info`.
-  - Install Git: git-scm download or `brew install git`, verify with `git --version`.
+Add:
 
-  **Windows tab** (keeps everything already there, adds the missing pre-steps from the OpenClaw doc)
-  - Step 0: check version with `winver` (need Win10 build 19041+ or Win11).
-  - Step 1: `wsl --install` from PowerShell as Administrator (elevation warning), restart.
-  - Step 2: Docker Desktop install, enable WSL 2 when prompted, verify.
-  - Existing blockers preserved: BIOS virtualization (HP + generic), `wsl --update` fix, Node.js LTS + PowerShell `Set-ExecutionPolicy RemoteSigned`.
-  - Install Git for Windows, verify.
+```ts
+export type OSTarget = "macos" | "windows" | "linux";
+```
 
-  **Linux tab**
-  - Docker Engine install link, `docker-compose-plugin`, `sudo usermod -aG docker $USER` + relog, verify `docker compose version`.
-  - Note: no Docker Desktop needed.
-  - Install Git via distro package manager, verify.
+Replace the current mixed-OS Docker prose with per-OS blocks:
 
-- Skip the OpenClaw-specific "NHS personal laptop" callout and any OpenClaw-app steps — this guide stays scoped to Docker + Git prerequisites for the Midnight proof server / undeployed stack.
+- **`TOOLCHAIN_BY_OS[os]`** — replaces the current `TOOLCHAIN` constant. Same Compact installer + proof-server `docker run` command in all three, but:
+  - macOS: `brew install --cask docker` hint + Apple Silicon note.
+  - Windows: `wsl --install`, `wsl --update`, BIOS virtualization callout, PowerShell execution-policy fix, and pointer to `/proof-server#docker-setup`. Recommend running commands inside the WSL2 Ubuntu shell.
+  - Linux: `sudo apt install docker.io docker-compose-plugin` + `usermod -aG docker`.
 
-### 2. Update all consumers of the old component
+- **`LOCAL_STACK_SETUP_BY_OS[os]`** — replaces the current multi-OS `LOCAL_STACK_SETUP`. Only the "Docker prerequisites" section changes per OS; the "One-command bring-up", Lace RPC, and deploy sections stay shared and are appended after the OS-specific block.
 
-Replace `WindowsSetupGuide` imports/usages with `DockerSetupGuide` in:
-- `src/routes/proof-server.tsx` (keep `autoOpen` on Windows detection; also auto-open on any non-detected OS)
-- `src/routes/undeployed.tsx`
-- `src/routes/undeployed-preflight.tsx`
-- `src/routes/showcase.choreo-ledger-local.tsx`
-- `src/routes/known-issues.tsx` (rename the "Windows setup blockers" heading to "Docker + Git setup (Windows / macOS / Linux)"; keep the anchor link working via an `id`)
+- **`inAppSetupPanel(network, os)`** — pass `os` through so the numbered steps reference the right install command (Docker Desktop vs Docker Engine) in step 1.
 
-### 3. Mega-prompt builder (`src/lib/mega-prompt-variants.ts`)
+`buildVariant(idea, theme, network, os = "macos")` selects the right per-OS strings and interpolates them into the template. Default arg keeps existing callers compiling.
 
-- Rename the "Windows setup" block to "Docker + Git prerequisites" and include a 3-line summary per OS plus the Windows blockers (BIOS virt, `wsl --update`, PowerShell execution policy).
-- Applies to all three variants (Preview / Preprod / Undeployed), since Docker is needed for the proof server on every network.
+## Keep unchanged
 
-### 4. Leave unchanged
-
-- The `WalletConnectPanel`, contract demos, ideas dataset generation, and skills wiring — this is a docs-only change.
+- The existing prebuilt JSON dump (if any) still uses the default `macos` — no data regeneration required. Idea data / hooks / contract bodies are OS-agnostic and untouched.
+- `scripts/rewrite_mega_prompts.py` — not on the runtime path any more; leave as-is or update in a follow-up. The runtime `buildVariant` is what the idea page renders.
+- Network variant tabs, faucet / secrets copy, and all showcase pages.
 
 ## Verification
 
-- `tsgo` typecheck on renamed component + updated route imports.
-- Visit `/proof-server`, `/undeployed`, `/undeployed-preflight`, `/showcase/choreo-ledger-local`, `/known-issues` in the preview; confirm tabs render, default to the correct OS, and the Windows tab still contains the BIOS / WSL / Node / PowerShell blockers.
-- Regenerate one mega-prompt and confirm the new prerequisites block appears in each network variant.
+- Typecheck the two edited files.
+- In the preview open one idea page: switch across all 3×3 combinations (network × OS) and confirm:
+  - The Docker install block visibly changes per OS.
+  - The Copy button label reflects the current selection.
+  - The Undeployed local-stack block adapts its "Docker prerequisites" section per OS.
+- Confirm no runtime error when `os` defaults on other callers of `buildVariant` (grep for callers).
