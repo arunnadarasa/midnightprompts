@@ -142,9 +142,13 @@ function MacOSPanel() {
       <Step n={1} title="Install Docker Desktop">
         <ol className="list-decimal pl-5 space-y-1">
           <li>
-            Download from{" "}
+            Download from the official{" "}
+            <a href="https://docs.docker.com/get-started/get-docker/" target="_blank" rel="noreferrer" className="text-primary underline">
+              Docker Get Docker page
+            </a>{" "}
+            or the macOS install guide at{" "}
             <a href="https://docs.docker.com/desktop/setup/install/mac-install/" target="_blank" rel="noreferrer" className="text-primary underline">
-              docs.docker.com
+              docs.docker.com/desktop/setup/install/mac-install
             </a>{" "}
             — pick the <strong>Apple Silicon</strong> or <strong>Intel</strong> build to match your Mac.
           </li>
@@ -152,6 +156,9 @@ function MacOSPanel() {
           <li>Wait until the menu-bar whale says "Docker Desktop is running".</li>
           <li>
             Verify in Terminal: <CodeBlock>docker --version{"\n"}docker info</CodeBlock>
+          </li>
+          <li>
+            Stuck at <em>Starting</em>? Quit and reopen Docker Desktop; if it still hangs, reset to factory defaults from the <strong>Troubleshoot</strong> menu.
           </li>
         </ol>
       </Step>
@@ -179,7 +186,11 @@ function WindowsPanel() {
     <div className="space-y-6">
       <Step n={0} title="Check your Windows version">
         <p>
-          Press <code>Win + R</code>, type <code>winver</code>. You need <strong>Windows 10 build 19041+</strong> or <strong>Windows 11</strong>.
+          Press <code>Win + R</code>, type <code>winver</code>. You need <strong>Windows 10 build 19041+</strong> or <strong>Windows 11</strong>. See{" "}
+          <a href="https://docs.docker.com/desktop/setup/install/windows-install/" target="_blank" rel="noreferrer" className="text-primary underline">
+            Docker's Windows install guide
+          </a>{" "}
+          for full requirements.
         </p>
       </Step>
       <Step n={1} title="Install WSL 2">
@@ -188,19 +199,27 @@ function WindowsPanel() {
         </p>
         <CodeBlock>wsl --install</CodeBlock>
         <p>
-          Restart your PC when prompted. If it says "requires elevation", the PowerShell window isn't running as admin.
+          Restart your PC when prompted. If it says "requires elevation", the PowerShell window isn't running as admin. Docker's{" "}
+          <a href="https://docs.docker.com/desktop/features/wsl/" target="_blank" rel="noreferrer" className="text-primary underline">
+            WSL 2 backend guide
+          </a>{" "}
+          has the latest troubleshooting steps.
         </p>
       </Step>
       <Step n={2} title="Install Docker Desktop">
         <ol className="list-decimal pl-5 space-y-1">
           <li>
-            Download from{" "}
-            <a href="https://www.docker.com/products/docker-desktop/" target="_blank" rel="noreferrer" className="text-primary underline">
-              docker.com
+            Download from the official{" "}
+            <a href="https://docs.docker.com/get-started/get-docker/" target="_blank" rel="noreferrer" className="text-primary underline">
+              Docker Get Docker page
+            </a>{" "}
+            or the{" "}
+            <a href="https://docs.docker.com/desktop/setup/install/windows-install/" target="_blank" rel="noreferrer" className="text-primary underline">
+              Windows install guide
             </a>
             .
           </li>
-          <li>Run the installer; enable WSL 2 when prompted.</li>
+          <li>Run the installer and make sure <strong>Use the WSL 2 based engine</strong> is selected.</li>
           <li>Wait until Docker Desktop is running (system-tray whale icon).</li>
           <li>
             Verify in a fresh terminal: <CodeBlock>docker --version{"\n"}docker info</CodeBlock>
@@ -225,7 +244,7 @@ function WindowsPanel() {
       <div className="pt-4 border-t border-border">
         <p className="eyebrow text-primary">Blockers we actually hit on Windows</p>
         <p className="mt-1 text-[12px] text-muted-foreground">
-          If Docker Desktop won't start or npm scripts fail, work through these three.
+          If Docker Desktop won't start or npm scripts fail, work through these three. They are the same blockers referenced in the hackathon prompts.
         </p>
       </div>
       <BlockerList items={WINDOWS_BLOCKERS} />
@@ -256,6 +275,13 @@ function LinuxPanel() {
           <li>
             Verify: <CodeBlock>docker --version{"\n"}docker compose version</CodeBlock>
           </li>
+          <li>
+            For post-install permissions and rootless options, see Docker's{" "}
+            <a href="https://docs.docker.com/engine/install/linux-postinstall/" target="_blank" rel="noreferrer" className="text-primary underline">
+              Linux post-install guide
+            </a>
+            .
+          </li>
         </ol>
       </Step>
       <Step n={2} title="Install Git">
@@ -269,6 +295,83 @@ function LinuxPanel() {
           </li>
         </ol>
       </Step>
+    </div>
+  );
+}
+
+function DockerCheatSheetPanel() {
+  return (
+    <div className="mt-6 pt-6 border-t border-border space-y-4">
+      <span className="eyebrow text-primary">docker cli · cheat sheet for midnight</span>
+      <p className="text-[12px] text-muted-foreground font-light">
+        The commands you will run most often once Docker is installed. The proof server and Undeployed stack both rely on these.
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+        <div className="p-3 border border-border bg-background">
+          <div className="font-display text-foreground text-sm">Start the proof server</div>
+          <CodeBlock>{`docker run -d --name midnight-proof-server \\
+  -p 6300:6300 \\
+  midnightntwrk/proof-server:latest \\
+  midnight-proof-server -v`}</CodeBlock>
+        </div>
+        <div className="p-3 border border-border bg-background">
+          <div className="font-display text-foreground text-sm">Check it is running</div>
+          <CodeBlock>{`docker ps
+curl http://localhost:6300/health`}</CodeBlock>
+        </div>
+        <div className="p-3 border border-border bg-background">
+          <div className="font-display text-foreground text-sm">Watch live logs</div>
+          <CodeBlock>{`docker logs -f midnight-proof-server`}</CodeBlock>
+        </div>
+        <div className="p-3 border border-border bg-background">
+          <div className="font-display text-foreground text-sm">Stop / start / remove</div>
+          <CodeBlock>{`docker stop midnight-proof-server
+docker start midnight-proof-server
+docker rm midnight-proof-server`}</CodeBlock>
+        </div>
+      </div>
+      <p className="text-[11px] text-muted-foreground">
+        For the full Undeployed stack, use{" "}
+        <code className="font-mono text-foreground">bun scripts/midnight-standalone.mjs up</code> — it wraps the three Docker containers for you.
+      </p>
+    </div>
+  );
+}
+
+function CommonErrorsPanel() {
+  return (
+    <div className="mt-6 pt-6 border-t border-border space-y-4">
+      <span className="eyebrow text-primary">common docker errors</span>
+      <ul className="space-y-3 text-[12px] text-muted-foreground leading-relaxed">
+        <li>
+          <strong className="text-foreground">"The system cannot find the file specified"</strong> on Windows — Docker Desktop is not running or WSL 2 is not installed. Open Docker Desktop and wait for the engine light to turn green.
+        </li>
+        <li>
+          <strong className="text-foreground">"WSL needs updating"</strong> — run{" "}
+          <code className="font-mono text-foreground">wsl --update</code> in PowerShell as Administrator, then reboot. If it fails, enable Windows Subsystem for Linux, Virtual Machine Platform, and Windows Hypervisor Platform from <code className="font-mono text-foreground">optionalfeatures</code> first.
+        </li>
+        <li>
+          <strong className="text-foreground">Port 6300 already in use</strong> — another proof server or process is bound to the port. Use{" "}
+          <code className="font-mono text-foreground">docker ps</code> to find it, then{" "}
+          <code className="font-mono text-foreground">docker stop &lt;name&gt;</code> or map to a different host port with{" "}
+          <code className="font-mono text-foreground">-p 6301:6300</code>.
+        </li>
+        <li>
+          <strong className="text-foreground">Permission denied</strong> on Linux — your user is not in the <code className="font-mono text-foreground">docker</code> group. Run{" "}
+          <code className="font-mono text-foreground">sudo usermod -aG docker $USER</code>, then log out and back in.
+        </li>
+      </ul>
+      <p className="text-[11px] text-muted-foreground">
+        Docker's official troubleshooting guides are the best next step: see{" "}
+        <a href="https://docs.docker.com/desktop/troubleshoot/" target="_blank" rel="noreferrer" className="text-primary underline">
+          Docker Desktop Troubleshoot
+        </a>{" "}
+        and{" "}
+        <a href="https://docs.docker.com/engine/install/troubleshoot/" target="_blank" rel="noreferrer" className="text-primary underline">
+          Engine install troubleshooting
+        </a>
+        .
+      </p>
     </div>
   );
 }
@@ -347,9 +450,33 @@ export function DockerSetupGuide({
           {os === "windows" && <WindowsPanel />}
           {os === "linux" && <LinuxPanel />}
 
-          <p className="mt-6 pt-4 text-[11px] text-muted-foreground border-t border-border">
-            Once <code>docker info</code> and <code>git --version</code> both work in a fresh terminal, continue with the Midnight proof server and local stack.
-          </p>
+          <DockerCheatSheetPanel />
+          <CommonErrorsPanel />
+
+          <div className="mt-6 pt-4 border-t border-border text-[11px] text-muted-foreground space-y-2">
+            <p>
+              Once <code>docker info</code> and <code>git --version</code> both work in a fresh terminal, continue with the Midnight proof server and local stack.
+            </p>
+            <p>
+              Further reading from the official Docker docs:{" "}
+              <a href="https://docs.docker.com/get-started/" target="_blank" rel="noreferrer" className="text-primary underline">
+                Get started
+              </a>
+              ,{" "}
+              <a href="https://docs.docker.com/get-started/get-docker/" target="_blank" rel="noreferrer" className="text-primary underline">
+                Get Docker
+              </a>
+              ,{" "}
+              <a href="https://docs.docker.com/guides/" target="_blank" rel="noreferrer" className="text-primary underline">
+                Guides
+              </a>
+              , and the LLM-friendly index{" "}
+              <a href="https://docs.docker.com/llms.txt" target="_blank" rel="noreferrer" className="text-primary underline">
+                docs.docker.com/llms.txt
+              </a>
+              .
+            </p>
+          </div>
         </div>
       )}
     </section>
