@@ -347,7 +347,12 @@ References (embed as links in the in-app setup panel):
 - https://docs.midnight.network/llms-full.txt (search: "undeployed", "genesis")
 - https://github.com/midnightntwrk/midnight-local-dev`;
 
-function inAppSetupPanel(network: NetworkVariant): string {
+function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
+  const dockerInstall: Record<OSTarget, string> = {
+    macos: "Install Docker Desktop for Mac (`brew install --cask docker`, then `open -a Docker`).",
+    windows: "Install Docker Desktop for Windows with WSL2 backend. Prereqs: BIOS virtualization ON, `wsl --update`, Node.js LTS on PATH. See https://midnightprompts.lovable.app/proof-server#docker-setup",
+    linux: "Install Docker Engine (`sudo apt install docker.io docker-compose-plugin`, then `sudo usermod -aG docker $USER`).",
+  };
   const previewPreprod = `1. Install the Lace wallet → https://www.lace.io/
 2. Switch Lace to Midnight ${network === "preview" ? "Preview" : "Preprod"}
 3. Get tNIGHT from the faucet, then click Generate tDUST in Lace
