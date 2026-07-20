@@ -377,12 +377,12 @@ function KnownIssuesPage() {
         </p>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6" id="docker-setup-anchor">
         <DockerSetupGuide />
         <p className="mt-2 text-[11px] text-muted-foreground">
-          These were the real blockers hit setting up Docker on a Windows 11 HP laptop before the
-          Midnight stack would even start. Not Midnight-specific, but bites every Windows
-          participant.
+          Docker + Git setup for macOS, Windows, and Linux. The Windows tab keeps the real blockers
+          hit on a Windows 11 HP laptop before the Midnight stack would even start — BIOS
+          virtualization, WSL update, Node.js + PowerShell execution policy.
         </p>
       </div>
 

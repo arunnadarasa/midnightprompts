@@ -127,7 +127,7 @@ function ProofServer() {
         </div>
 
         <div className="mt-2">
-          <DockerSetupGuide defaultOpen={platform === "windows"} />
+          <DockerSetupGuide defaultOpen defaultOs={platform === "windows" ? "windows" : undefined} />
         </div>
 
         <div>
