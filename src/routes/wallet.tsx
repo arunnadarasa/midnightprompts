@@ -66,10 +66,10 @@ const FAUCET_STEPS = [
 
 const NETWORK_STEPS = [
   { img: net01, tag: "01 · settings", title: "Open Settings → Network", caption: "Back in Lace, tap the cogwheel on the bottom bar to open Settings, then choose Network." },
-  { img: net02, tag: "02 · pick testnet", title: "Testnet → Preprod / Preview", caption: "Select Testnet. Cardano offers Preprod or Preview — pick the one that matches the Midnight network you want." },
+  { img: net02, tag: "02 · pick testnet", title: "Testnet → Preprod / Preview / Custom", caption: "Select Testnet. Cardano offers Preprod or Preview — pick the one that matches the Midnight network you want. For a local Undeployed stack, choose Custom and enter ws://localhost:9944." },
   { img: net03, tag: "03 · small-screen bug", title: "Modal can truncate", caption: "Heads up: on a small laptop screen the Network modal cuts off before the Midnight section. If you only see Cardano and Bitcoin, resize the window." },
-  { img: net04, tag: "04 · midnight options", title: "Full modal — 3 Midnight options", caption: "On a larger viewport the modal scrolls to reveal Midnight has 3 options: Undeployed, Preview, Preprod. Pick one and Confirm." },
-  { img: net05, tag: "05 · top-bar switch", title: "Quick switch from the top bar", caption: "Once configured, the Network pill in the top-right lets you flip between Preview and Preprod without reopening Settings." },
+  { img: net04, tag: "04 · midnight options", title: "Full modal — 3 Midnight options", caption: "On a larger viewport the modal scrolls to reveal Midnight has 3 options: Undeployed, Preview, Preprod. Pick the one that matches the network you are building on. For local development, choose Undeployed." },
+  { img: net05, tag: "05 · top-bar switch", title: "Quick switch from the top bar", caption: "Once configured, the Network pill in the top-right lets you flip between Preview and Preprod without reopening Settings. The Custom/Undeployed entry will also be available if you added it." },
 ];
 
 
@@ -218,12 +218,13 @@ function Wallet() {
           Fund the wallet <span className="italic text-primary">from the faucet.</span>
         </h2>
         <p className="mt-3 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
-          Two faucets, one per network. Paste the unshielded address you just copied, solve the
-          Cloudflare check, and click <em>Request tokens</em>. You can pick the network from the
-          switcher at the top-right of the faucet page too.
+          Two public faucets for the testnets, and one local funding path for the Undeployed network.
+          Paste the unshielded address you just copied, solve the Cloudflare check, and click{" "}
+          <em>Request tokens</em>. For a local Undeployed stack, skip the public faucet and use the
+          local funding tool instead.
         </p>
 
-        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-[11px]">
           <a
             href="https://midnight-tmnight-preview.nethermind.dev/"
             target="_blank"
@@ -242,6 +243,30 @@ function Wallet() {
             <span className="eyebrow text-primary">preprod faucet ↗</span>
             <span className="font-mono text-muted-foreground break-all">midnight-tmnight-preprod.nethermind.dev</span>
           </a>
+          <div className="p-4 border border-primary/40 bg-card flex flex-col gap-2">
+            <span className="eyebrow text-primary">undeployed / local</span>
+            <span className="font-display text-foreground text-sm">No public faucet needed</span>
+            <p className="text-[11px] text-muted-foreground font-light leading-relaxed">
+              The local node mints unlimited tDUST to the genesis wallet. To fund your own Lace wallet, use the local Midnight network tool:
+            </p>
+            <ul className="list-disc pl-4 text-[11px] text-muted-foreground font-light leading-relaxed space-y-1">
+              <li>Fund from a config file (mnemonics) via the <code className="font-mono text-foreground">npm start</code> interactive menu.</li>
+              <li>Fund by public key (unshielded Bech32 addresses) — 50,000 tNIGHT per address, then register for DUST in Lace.</li>
+            </ul>
+            <div className="flex flex-wrap gap-3 mt-1">
+              <Link to="/undeployed" className="text-[10px] uppercase tracking-[0.2em] text-primary hover:underline">
+                Local quick start →
+              </Link>
+              <a
+                href="https://docs.midnight.network/guides/midnight-local-network"
+                target="_blank"
+                rel="noreferrer"
+                className="text-[10px] uppercase tracking-[0.2em] text-primary hover:underline"
+              >
+                Midnight docs ↗
+              </a>
+            </div>
+          </div>
         </div>
 
         <ol className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -268,12 +293,48 @@ function Wallet() {
       <section className="max-w-3xl mx-auto px-5 pb-10">
         <span className="eyebrow">lace · switch network</span>
         <h2 className="font-display text-3xl sm:text-4xl font-bold mt-2 text-foreground">
-          Point Lace at <span className="italic text-primary">Preview or Preprod.</span>
+          Point Lace at <span className="italic text-primary">Preview, Preprod, or Undeployed.</span>
         </h2>
         <p className="mt-3 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
-          Make sure Lace is on the same Midnight network as the faucet you used. Open Settings from
-          the cogwheel on the bottom bar, choose Network, and confirm.
+          Make sure Lace is on the same Midnight network as the faucet or local stack you used. Open
+          Settings from the cogwheel on the bottom bar, choose Network, and confirm. If you are
+          running the DApp locally on{" "}
+          <code className="font-mono text-foreground">localhost</code>, select the Undeployed
+          network and point the RPC at{" "}
+          <code className="font-mono text-foreground">ws://localhost:9944</code>.
         </p>
+
+        <div className="mt-4 p-4 border border-primary/40 bg-card text-[12px] text-foreground/90 leading-relaxed">
+          <strong className="text-primary">Local DApp checklist:</strong>
+          <ul className="mt-2 list-disc pl-5 space-y-1 text-muted-foreground">
+            <li>
+              Lace → Settings → Network → Custom → RPC{" "}
+              <code className="font-mono text-foreground">ws://localhost:9944</code>.
+            </li>
+            <li>
+              Start the local stack: <code className="font-mono text-foreground">bun scripts/midnight-standalone.mjs up</code>.
+            </li>
+            <li>
+              Run the{" "}
+              <Link to="/undeployed-preflight" className="text-primary underline">
+                preflight checks
+              </Link>{" "}
+              to confirm all four endpoints are green.
+            </li>
+            <li>
+              Need funds? Use the local{" "}
+              <a
+                href="https://docs.midnight.network/guides/midnight-local-network"
+                target="_blank"
+                rel="noreferrer"
+                className="text-primary underline"
+              >
+                Midnight local network
+              </a>{" "}
+              tool to fund your Lace wallet.
+            </li>
+          </ul>
+        </div>
 
         <div className="mt-4 p-4 border border-primary/40 bg-card text-[12px] text-foreground/90 leading-relaxed">
           <strong className="text-primary">Heads up — Lace UI bug:</strong> on small laptop
@@ -393,6 +454,15 @@ function Wallet() {
                 <code className="font-mono">https://rpc.&lt;network&gt;.midnight.network</code>{" "}
                 unless you're running your own Midnight node. This is the RPC Lace uses to read
                 state and submit txs.
+              </p>
+              <p className="mt-2 text-foreground/90">
+                For a local Undeployed stack, point this to{" "}
+                <code className="font-mono">ws://localhost:9944</code> — the WebSocket RPC of the
+                local Midnight node. Lace treats it as a Custom network, and it must be green in the{" "}
+                <Link to="/undeployed-preflight" className="text-primary underline">
+                  preflight checks
+                </Link>{" "}
+                before it will connect.
               </p>
             </div>
             <p className="text-[11px] text-muted-foreground font-light">
