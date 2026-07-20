@@ -66,10 +66,10 @@ const FAUCET_STEPS = [
 
 const NETWORK_STEPS = [
   { img: net01, tag: "01 · settings", title: "Open Settings → Network", caption: "Back in Lace, tap the cogwheel on the bottom bar to open Settings, then choose Network." },
-  { img: net02, tag: "02 · pick testnet", title: "Testnet → Preprod / Preview", caption: "Select Testnet. Cardano offers Preprod or Preview — pick the one that matches the Midnight network you want." },
+  { img: net02, tag: "02 · pick testnet", title: "Testnet → Preprod / Preview / Custom", caption: "Select Testnet. Cardano offers Preprod or Preview — pick the one that matches the Midnight network you want. For a local Undeployed stack, choose Custom and enter ws://localhost:9944." },
   { img: net03, tag: "03 · small-screen bug", title: "Modal can truncate", caption: "Heads up: on a small laptop screen the Network modal cuts off before the Midnight section. If you only see Cardano and Bitcoin, resize the window." },
-  { img: net04, tag: "04 · midnight options", title: "Full modal — 3 Midnight options", caption: "On a larger viewport the modal scrolls to reveal Midnight has 3 options: Undeployed, Preview, Preprod. Pick one and Confirm." },
-  { img: net05, tag: "05 · top-bar switch", title: "Quick switch from the top bar", caption: "Once configured, the Network pill in the top-right lets you flip between Preview and Preprod without reopening Settings." },
+  { img: net04, tag: "04 · midnight options", title: "Full modal — 3 Midnight options", caption: "On a larger viewport the modal scrolls to reveal Midnight has 3 options: Undeployed, Preview, Preprod. Pick the one that matches the network you are building on. For local development, choose Undeployed." },
+  { img: net05, tag: "05 · top-bar switch", title: "Quick switch from the top bar", caption: "Once configured, the Network pill in the top-right lets you flip between Preview and Preprod without reopening Settings. The Custom/Undeployed entry will also be available if you added it." },
 ];
 
 
