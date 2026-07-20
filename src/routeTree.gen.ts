@@ -17,6 +17,7 @@ import { Route as StrategyRouteImport } from './routes/strategy'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
 import { Route as QuantumPrimerRouteImport } from './routes/quantum-primer'
 import { Route as ProofServerRouteImport } from './routes/proof-server'
+import { Route as LlmsRouteImport } from './routes/llms'
 import { Route as KnownIssuesRouteImport } from './routes/known-issues'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -67,6 +68,11 @@ const QuantumPrimerRoute = QuantumPrimerRouteImport.update({
 const ProofServerRoute = ProofServerRouteImport.update({
   id: '/proof-server',
   path: '/proof-server',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsRoute = LlmsRouteImport.update({
+  id: '/llms',
+  path: '/llms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KnownIssuesRoute = KnownIssuesRouteImport.update({
@@ -131,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/known-issues': typeof KnownIssuesRoute
+  '/llms': typeof LlmsRoute
   '/proof-server': typeof ProofServerRoute
   '/quantum-primer': typeof QuantumPrimerRoute
   '/showcase': typeof ShowcaseRouteWithChildren
@@ -152,6 +159,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/known-issues': typeof KnownIssuesRoute
+  '/llms': typeof LlmsRoute
   '/proof-server': typeof ProofServerRoute
   '/quantum-primer': typeof QuantumPrimerRoute
   '/strategy': typeof StrategyRoute
@@ -172,6 +180,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/known-issues': typeof KnownIssuesRoute
+  '/llms': typeof LlmsRoute
   '/proof-server': typeof ProofServerRoute
   '/quantum-primer': typeof QuantumPrimerRoute
   '/showcase': typeof ShowcaseRouteWithChildren
@@ -195,6 +204,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/known-issues'
+    | '/llms'
     | '/proof-server'
     | '/quantum-primer'
     | '/showcase'
@@ -216,6 +226,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/known-issues'
+    | '/llms'
     | '/proof-server'
     | '/quantum-primer'
     | '/strategy'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/known-issues'
+    | '/llms'
     | '/proof-server'
     | '/quantum-primer'
     | '/showcase'
@@ -257,6 +269,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   KnownIssuesRoute: typeof KnownIssuesRoute
+  LlmsRoute: typeof LlmsRoute
   ProofServerRoute: typeof ProofServerRoute
   QuantumPrimerRoute: typeof QuantumPrimerRoute
   ShowcaseRoute: typeof ShowcaseRouteWithChildren
@@ -324,6 +337,13 @@ declare module '@tanstack/react-router' {
       path: '/proof-server'
       fullPath: '/proof-server'
       preLoaderRoute: typeof ProofServerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms': {
+      id: '/llms'
+      path: '/llms'
+      fullPath: '/llms'
+      preLoaderRoute: typeof LlmsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/known-issues': {
@@ -443,6 +463,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   KnownIssuesRoute: KnownIssuesRoute,
+  LlmsRoute: LlmsRoute,
   ProofServerRoute: ProofServerRoute,
   QuantumPrimerRoute: QuantumPrimerRoute,
   ShowcaseRoute: ShowcaseRouteWithChildren,

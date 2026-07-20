@@ -32,6 +32,7 @@ function SiteHeader() {
           <NavLink to="/proof-server">Proof</NavLink>
           <NavLink to="/strategy">Strategy</NavLink>
           <NavLink to="/quantum-primer">Primer</NavLink>
+          <NavLink to="/llms">LLM Docs</NavLink>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/known-issues">Known Issues</NavLink>
           <NavLink to="/undeployed">Undeployed</NavLink>
@@ -91,6 +92,7 @@ function SiteHeader() {
               <MobileLink to="/undeployed-preflight" onClick={close}>Preflight</MobileLink>
               <MobileLink to="/strategy" onClick={close}>Strategy</MobileLink>
               <MobileLink to="/quantum-primer" onClick={close}>Primer</MobileLink>
+              <MobileLink to="/llms" onClick={close}>LLM Docs</MobileLink>
               <MobileLink to="/known-issues" onClick={close}>Known Issues</MobileLink>
               <MobileLink to="/about" onClick={close}>About</MobileLink>
               <a
