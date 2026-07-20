@@ -100,20 +100,21 @@ function ProofServer() {
 
         <div>
           <span className="eyebrow text-primary">step 01</span>
-          <h2 className="font-display text-2xl mt-2 text-foreground">Install Docker Desktop</h2>
+          <h2 className="font-display text-2xl mt-2 text-foreground">Install Docker</h2>
           <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">
             The proof server ships only as a Docker image (<span className="text-foreground">midnightntwrk/proof-server</span>).
             No native binary, npm package, or WASM build exists as of Ledger v8. Install Docker
-            Desktop on macOS / Windows, or the Docker Engine on Linux.
+            Desktop on macOS / Windows, or the Docker Engine on Linux. The official Docker docs are linked
+            in the expanded guide below.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             <a
-              href="https://www.docker.com/products/docker-desktop/"
+              href="https://docs.docker.com/get-started/get-docker/"
               target="_blank"
               rel="noreferrer"
               className="px-3 py-2 border border-border text-foreground text-[10px] tracking-[0.28em] uppercase font-semibold hover:border-primary/60 hover:text-primary transition"
             >
-              Docker Desktop ↗
+              Get Docker ↗
             </a>
             <a
               href="https://hub.docker.com/r/midnightntwrk/proof-server"
