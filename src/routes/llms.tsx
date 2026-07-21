@@ -82,6 +82,48 @@ function LlmsPage() {
           </p>
         </header>
 
+        {/* Lovable skill */}
+        <section id="skills" className="space-y-4">
+          <div className="space-y-1">
+            <h2 className="font-display text-2xl">Lovable skills</h2>
+            <p className="text-sm text-muted-foreground">
+              Drop-in rules for your own Lovable account. Import once, then every new project you build gets the
+              pinned Docker tags, deploy-script gotchas, and Midnight architecture guardrails baked in.
+            </p>
+          </div>
+          <Card className="p-6 space-y-3">
+            <div className="flex items-baseline justify-between gap-3">
+              <h3 className="font-display text-lg">lovable-midnight</h3>
+              <span className="text-xs text-muted-foreground">~16 KB · SKILL.md</span>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Non-negotiables for shipping a Midnight dApp on Lovable: pinned <code>proof-server:8.0.3</code> /{" "}
+              <code>midnight-node:0.22.5</code> / <code>indexer-standalone:4.0.2</code>, the nine-rule deploy-script
+              checklist, network-id mapping, and the failure modes ranked by frequency.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Button asChild size="sm">
+                <a href="/skills/lovable-midnight/SKILL.md" download="lovable-midnight.SKILL.md">
+                  <Download className="h-4 w-4 mr-2" /> Download SKILL.md
+                </a>
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => copy("/skills/lovable-midnight/SKILL.md")}>
+                <Copy className="h-4 w-4 mr-2" /> Copy URL
+              </Button>
+              <Button asChild size="sm" variant="outline">
+                <a href="https://midskills.sevryn.xyz/" target="_blank" rel="noreferrer">
+                  Midskills gallery <ExternalLink className="h-4 w-4 ml-2" />
+                </a>
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground pt-1">
+              In your Lovable project → Settings → Skills → <em>New skill</em> → paste the contents of SKILL.md.
+              The skill activates on any turn that touches Midnight / Compact / Lace.
+            </p>
+          </Card>
+        </section>
+
+
         {/* Full + core */}
         <section className="grid gap-4 md:grid-cols-2">
           <Card className="p-6 space-y-3">
