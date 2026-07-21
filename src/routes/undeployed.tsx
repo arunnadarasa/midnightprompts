@@ -24,21 +24,25 @@ export const Route = createFileRoute("/undeployed")({
 });
 
 const STACK_CMD = "bun scripts/midnight-standalone.mjs up";
+const DEPLOY_CMD = "VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs";
 const ENV_SNIPPET = `VITE_NETWORK_ID=undeployed
-VITE_INDEXER_URL=http://localhost:8088/api/v4/graphql
-VITE_INDEXER_WS_URL=ws://localhost:8088/api/v4/graphql/ws
+VITE_INDEXER_URL=http://localhost:8088/api/v1/graphql
+VITE_INDEXER_WS_URL=ws://localhost:8088/api/v1/graphql/ws
 VITE_NODE_RPC=ws://localhost:9944
 VITE_PROOF_SERVER_URL=http://localhost:6300`;
 
+const PRE_CLASS =
+  "mt-2 p-2 sm:p-3 bg-background border border-border font-mono text-[10px] sm:text-[11px] leading-relaxed whitespace-pre-wrap break-all";
+
 function Step({ n, title, body }: { n: number; title: string; body: React.ReactNode }) {
   return (
-    <li className="flex gap-4">
-      <div className="shrink-0 w-8 h-8 border border-primary flex items-center justify-center text-primary font-display text-lg">
+    <li className="flex gap-3 sm:gap-4">
+      <div className="shrink-0 w-7 h-7 sm:w-8 sm:h-8 border border-primary flex items-center justify-center text-primary font-display text-base sm:text-lg">
         {n}
       </div>
-      <div className="flex-1">
-        <h3 className="font-display text-xl text-foreground">{title}</h3>
-        <div className="mt-2 text-sm text-muted-foreground leading-relaxed">{body}</div>
+      <div className="flex-1 min-w-0">
+        <h3 className="font-display text-lg sm:text-xl text-foreground">{title}</h3>
+        <div className="mt-2 text-sm text-muted-foreground leading-relaxed break-words">{body}</div>
       </div>
     </li>
   );
@@ -59,14 +63,24 @@ function UndeployedPage() {
           chain. No faucet, no DUST sync stalls, no Preprod quirks.
         </p>
 
-        <div className="mt-8 p-4 border border-primary/30 bg-card">
+        <div className="mt-8 p-4 border border-primary/30 bg-card overflow-hidden">
           <span className="eyebrow text-primary">one command</span>
-          <pre className="mt-3 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto">
-            {STACK_CMD}
-          </pre>
+          <pre className={PRE_CLASS}>{STACK_CMD}</pre>
           <p className="mt-3 text-xs text-muted-foreground">
             Requires Docker Desktop (macOS/Windows) or Docker Engine (Linux). First run pulls ~1&nbsp;GB
             and takes 2–5 minutes; later boots are seconds.
+          </p>
+        </div>
+
+        <div className="mt-4 p-4 border border-border bg-card overflow-hidden">
+          <span className="eyebrow text-primary">pinned versions</span>
+          <div className="mt-2 font-mono text-[10px] sm:text-[11px] text-muted-foreground break-all leading-relaxed">
+            proof-server:8.0.3 · midnight-node:0.22.5 · indexer-standalone:4.0.2
+          </div>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Do not use <code>:latest</code> — the <code>midnight-node</code> latest tag frequently 404s, and
+            mismatched versions cause ZKIR <code>/check 400</code> errors. This triple is the current
+            known-good combination.
           </p>
         </div>
 
@@ -92,9 +106,7 @@ function UndeployedPage() {
             body={
               <>
                 In your project root run:
-                <pre className="mt-2 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto">
-                  {STACK_CMD}
-                </pre>
+                <pre className={PRE_CLASS}>{STACK_CMD}</pre>
                 The script writes <code>.midnight/standalone.docker-compose.yml</code>, pulls the pinned
                 images, boots the three containers, and polls until the endpoints are ready.
               </>
@@ -119,8 +131,12 @@ function UndeployedPage() {
             title="Point Lace at localhost"
             body={
               <>
-                In Lace: Settings → Network → Custom → RPC = <code className="text-foreground">ws://localhost:9944</code>.
-                The genesis wallet is pre-funded with unlimited tDUST, so there is no faucet step.
+                In Lace: Settings → Network → Custom → RPC ={" "}
+                <code className="text-foreground break-all">ws://localhost:9944</code>. Lace will label the
+                network "Preview" — that's cosmetic; the address prefix{" "}
+                <code className="text-foreground break-all">mn_addr_undeployed1…</code> is the truth.
+                No tNIGHT → tDUST dance here — that trap is Preview / Preprod only. The genesis wallet is
+                pre-funded with unlimited tDUST.
               </>
             }
           />
@@ -129,55 +145,75 @@ function UndeployedPage() {
             title="Deploy the contract"
             body={
               <>
-                <pre className="mt-2 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto">
-                  VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs
-                </pre>
-                Paste the printed hex address into <code className="text-foreground">VITE_DEFAULT_CONTRACT</code> in your Lovable secrets.
+                <pre className={PRE_CLASS}>{DEPLOY_CMD}</pre>
+                The deploy script builds a headless wallet from the genesis seed{" "}
+                <code className="text-foreground break-all">0x000…0002</code> directly — Lace isn't
+                required for the deploy itself. Paste the printed hex address into{" "}
+                <code className="text-foreground break-all">VITE_DEFAULT_CONTRACT</code> in your Lovable
+                secrets.{" "}
+                <Link to="/llms" hash="skills" className="text-primary underline">
+                  Grab the lovable-midnight skill →
+                </Link>{" "}
+                to bake all nine deploy-script rules into your own Lovable account.
+              </>
+            }
+          />
+          <Step
+            n={6}
+            title="Wire the wallet UI (optional)"
+            body={
+              <>
+                For the Connect-Lace button, RPC-mode toggle, and shielded/unshielded address readout, copy
+                the boilerplate from{" "}
+                <Link to="/wallet" className="text-primary underline">
+                  /wallet
+                </Link>
+                . It handles the DApp Connector v4 handshake and enumerates wallets by <code>apiVersion</code>.
               </>
             }
           />
         </ol>
 
-        <div className="mt-10 grid sm:grid-cols-2 gap-3 text-[11px]">
-          <div className="p-4 border border-border bg-card">
-            <div className="flex items-center justify-between">
+        <div className="mt-10 grid gap-3 sm:grid-cols-2 text-[11px]">
+          <div className="p-4 border border-border bg-card min-w-0 overflow-hidden">
+            <div className="flex items-center justify-between gap-2">
               <div className="eyebrow text-primary">Lovable secrets</div>
               <CopyButton text={ENV_SNIPPET} />
             </div>
-            <pre className="mt-2 font-mono text-[10px] text-muted-foreground whitespace-pre-wrap break-all">
+            <pre className="mt-2 font-mono text-[10px] text-muted-foreground whitespace-pre-wrap break-all leading-relaxed">
               {ENV_SNIPPET}
             </pre>
           </div>
-          <div className="p-4 border border-border bg-card">
+          <div className="p-4 border border-border bg-card min-w-0 overflow-hidden">
             <div className="eyebrow text-primary">local endpoints</div>
-            <div className="mt-2 font-mono text-[10px] text-muted-foreground break-all">
+            <div className="mt-2 font-mono text-[10px] text-muted-foreground break-all leading-relaxed">
               node · ws://localhost:9944
             </div>
-            <div className="mt-1 font-mono text-[10px] text-muted-foreground break-all">
-              indexer · http://localhost:8088/api/v4/graphql
+            <div className="mt-1 font-mono text-[10px] text-muted-foreground break-all leading-relaxed">
+              indexer · http://localhost:8088/api/v1/graphql
             </div>
-            <div className="mt-1 font-mono text-[10px] text-muted-foreground break-all">
+            <div className="mt-1 font-mono text-[10px] text-muted-foreground break-all leading-relaxed">
               proof · http://localhost:6300
             </div>
           </div>
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.28em]">
+        <div className="mt-8 grid grid-cols-1 sm:flex sm:flex-wrap gap-3 text-[10px] uppercase tracking-[0.28em]">
           <Link
             to="/undeployed-preflight"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold hover:bg-foreground transition-colors duration-500"
+            className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold hover:bg-foreground transition-colors duration-500"
           >
             Open preflight →
           </Link>
           <Link
             to="/showcase/choreo-ledger-local"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground hover:border-primary/60 transition-colors duration-500"
+            className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground hover:border-primary/60 transition-colors duration-500"
           >
             Choreo Ledger (Local) →
           </Link>
           <Link
             to="/known-issues"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground hover:border-primary/60 transition-colors duration-500"
+            className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground hover:border-primary/60 transition-colors duration-500"
           >
             Known issues →
           </Link>
@@ -185,7 +221,7 @@ function UndeployedPage() {
             href="https://midnightntwrk.github.io/servicedesk/"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground hover:border-primary/60 transition-colors duration-500"
+            className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground hover:border-primary/60 transition-colors duration-500"
           >
             Service Desk ↗
           </a>
@@ -206,7 +242,7 @@ function CopyButton({ text }: { text: string }) {
           setTimeout(() => setCopied(false), 1500);
         });
       }}
-      className="text-[10px] uppercase tracking-[0.24em] text-primary hover:text-foreground transition-colors"
+      className="text-[10px] uppercase tracking-[0.24em] text-primary hover:text-foreground transition-colors shrink-0"
     >
       {copied ? "copied" : "copy"}
     </button>
