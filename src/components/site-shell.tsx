@@ -35,23 +35,25 @@ function SiteHeader() {
           <NavLink to="/themes">Themes</NavLink>
           <NavLink to="/showcase">Showcase</NavLink>
           <NavLink to="/wallet">Wallet</NavLink>
-          <NavLink to="/proof-server">Proof</NavLink>
-          <NavLink to="/strategy">Strategy</NavLink>
-          <NavLink to="/quantum-primer">Primer</NavLink>
-          <NavLink to="/llms">LLM Docs</NavLink>
-          <NavLink to="/about">About</NavLink>
-          <NavLink to="/known-issues">Known Issues</NavLink>
-          <NavLink to="/undeployed">Undeployed</NavLink>
-          <NavLink to="/undeployed-preflight">Preflight</NavLink>
+          <NavGroup
+            label="Build"
+            items={[
+              { to: "/proof-server", label: "Proof Server" },
+              { to: "/undeployed", label: "Undeployed" },
+              { to: "/undeployed-preflight", label: "Preflight" },
+              { to: "/known-issues", label: "Known Issues" },
+            ]}
+          />
+          <NavGroup
+            label="Learn"
+            items={[
+              { to: "/strategy", label: "Strategy" },
+              { to: "/quantum-primer", label: "Primer" },
+              { to: "/llms", label: "LLM Docs" },
+              { to: "/about", label: "About" },
+            ]}
+          />
           <span className="mx-2 h-5 w-px bg-border" aria-hidden />
-          <a
-            href="https://creativequantum.lovable.app/"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden xl:inline-block px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
-          >
-            Hackathon ↗
-          </a>
           <a
             href="https://docs.midnight.network/"
             target="_blank"
@@ -67,6 +69,14 @@ function SiteHeader() {
             className="px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
           >
             Midskills ↗
+          </a>
+          <a
+            href="https://creativequantum.lovable.app/"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden xl:inline-block px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
+          >
+            Hackathon ↗
           </a>
           <a
             href="https://preview.midnightexplorer.com/"
