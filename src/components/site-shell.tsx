@@ -176,6 +176,34 @@ function NavLink({ to, children }: { to: string; children: ReactNode }) {
   );
 }
 
+function NavGroup({ label, items }: { label: string; items: { to: string; label: string }[] }) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const active = items.some((i) => pathname === i.to || pathname.startsWith(i.to + "/"));
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        className={`inline-flex items-center gap-1 px-2.5 py-1.5 text-[11px] tracking-[0.22em] uppercase font-medium whitespace-nowrap transition-colors duration-500 outline-none hover:text-primary ${active ? "text-primary" : "text-muted-foreground"}`}
+      >
+        {label}
+        <ChevronDown className="h-3 w-3 opacity-70" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="min-w-[12rem] bg-background/95 backdrop-blur border-border">
+        {items.map((item) => (
+          <DropdownMenuItem key={item.to} asChild>
+            <Link
+              to={item.to}
+              className="px-3 py-2 text-[11px] tracking-[0.22em] uppercase font-medium text-muted-foreground hover:text-primary cursor-pointer"
+              activeProps={{ className: "px-3 py-2 text-[11px] tracking-[0.22em] uppercase font-medium text-primary cursor-pointer" }}
+            >
+              {item.label}
+            </Link>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
 function MobileLink({ to, onClick, children }: { to: string; onClick: () => void; children: ReactNode }) {
   return (
     <Link
