@@ -1,7 +1,13 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
-import { Menu } from "lucide-react";
+import { Menu, ChevronDown } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function SiteShell({ children }: { children: ReactNode }) {
   return (
@@ -29,23 +35,25 @@ function SiteHeader() {
           <NavLink to="/themes">Themes</NavLink>
           <NavLink to="/showcase">Showcase</NavLink>
           <NavLink to="/wallet">Wallet</NavLink>
-          <NavLink to="/proof-server">Proof</NavLink>
-          <NavLink to="/strategy">Strategy</NavLink>
-          <NavLink to="/quantum-primer">Primer</NavLink>
-          <NavLink to="/llms">LLM Docs</NavLink>
-          <NavLink to="/about">About</NavLink>
-          <NavLink to="/known-issues">Known Issues</NavLink>
-          <NavLink to="/undeployed">Undeployed</NavLink>
-          <NavLink to="/undeployed-preflight">Preflight</NavLink>
+          <NavGroup
+            label="Build"
+            items={[
+              { to: "/proof-server", label: "Proof Server" },
+              { to: "/undeployed", label: "Undeployed" },
+              { to: "/undeployed-preflight", label: "Preflight" },
+              { to: "/known-issues", label: "Known Issues" },
+            ]}
+          />
+          <NavGroup
+            label="Learn"
+            items={[
+              { to: "/strategy", label: "Strategy" },
+              { to: "/quantum-primer", label: "Primer" },
+              { to: "/llms", label: "LLM Docs" },
+              { to: "/about", label: "About" },
+            ]}
+          />
           <span className="mx-2 h-5 w-px bg-border" aria-hidden />
-          <a
-            href="https://creativequantum.lovable.app/"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden xl:inline-block px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
-          >
-            Hackathon ↗
-          </a>
           <a
             href="https://docs.midnight.network/"
             target="_blank"
@@ -61,6 +69,14 @@ function SiteHeader() {
             className="px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
           >
             Midskills ↗
+          </a>
+          <a
+            href="https://creativequantum.lovable.app/"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden xl:inline-block px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
+          >
+            Hackathon ↗
           </a>
           <a
             href="https://preview.midnightexplorer.com/"
@@ -157,6 +173,34 @@ function NavLink({ to, children }: { to: string; children: ReactNode }) {
     >
       {children}
     </Link>
+  );
+}
+
+function NavGroup({ label, items }: { label: string; items: { to: string; label: string }[] }) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const active = items.some((i) => pathname === i.to || pathname.startsWith(i.to + "/"));
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        className={`inline-flex items-center gap-1 px-2.5 py-1.5 text-[11px] tracking-[0.22em] uppercase font-medium whitespace-nowrap transition-colors duration-500 outline-none hover:text-primary ${active ? "text-primary" : "text-muted-foreground"}`}
+      >
+        {label}
+        <ChevronDown className="h-3 w-3 opacity-70" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="min-w-[12rem] bg-background/95 backdrop-blur border-border">
+        {items.map((item) => (
+          <DropdownMenuItem key={item.to} asChild>
+            <Link
+              to={item.to}
+              className="px-3 py-2 text-[11px] tracking-[0.22em] uppercase font-medium text-muted-foreground hover:text-primary cursor-pointer"
+              activeProps={{ className: "px-3 py-2 text-[11px] tracking-[0.22em] uppercase font-medium text-primary cursor-pointer" }}
+            >
+              {item.label}
+            </Link>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
