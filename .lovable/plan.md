@@ -1,28 +1,60 @@
-# Update `/undeployed` for the new pinned-versions story + fix mobile UX
+## Goal
 
-The Undeployed page still ships the old `api/v4/graphql` indexer path and doesn't mention the genesis seed `…0002`, pinned Docker tags, or the tNIGHT/tDUST rule the rest of the site now teaches. The mobile screenshot also shows every `<pre>` overflowing horizontally (URLs and `VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs` slide off-screen).
+Every mega-prompt (~10k variants) already covers Midnight/Compact/Docker/Lace deeply, but the **frontend + Lovable-agent** side is thin. Fold the latest Lovable skill learnings into `src/lib/mega-prompt-variants.ts` so every generated brief tells Lovable how to build the UI to current standards, then regenerate `public/llms-*.txt`.
 
-## Content updates (`src/routes/undeployed.tsx`)
+Scope is prompt content only. No route or UI changes.
 
-1. **Indexer path** — swap all `api/v4/graphql` on this page to `api/v1/graphql` (standalone indexer). Update both the `ENV_SNIPPET` block and the "local endpoints" card.
-2. **Pinned versions callout** — under the "one command" box, add a small `PINNED VERSIONS` note listing `proof-server:8.0.3 · midnight-node:0.22.5 · indexer-standalone:4.0.2` with a one-liner explaining why (avoids ZKIR mismatch + `latest` tag 404s).
-3. **Step 4 (Lace)** — clarify that Lace labels the network "Preview" even when RPC is `ws://localhost:9944`, and that the address prefix `mn_addr_undeployed1…` is the truth. Note "no tNIGHT→tDUST dance here — that trap is Preview/Preprod only".
-4. **Step 5 (deploy)** — mention the deploy script uses genesis seed `0x000…0002` directly, so nothing needs to be in Lace for a headless deploy. Link to the download button for `lovable-midnight` SKILL on `/llms#skills`.
-5. **New Step 6** — "Wire the wallet UI (optional)" — one-line pointer to `/wallet` for the Connect-Lace boilerplate.
+## What to add to every variant
 
-## Mobile UX fixes
+New constant block `FRONTEND_STANDARDS` injected between `MIDNIGHTJS_BOOT` and the per-hook body:
 
-Applies to every `<pre>` and endpoint card on the page:
+1. **Design system (hard rule)**
+   - Semantic tokens only. All colors/gradients/shadows in `src/index.css` under `:root` / `.dark` + `@layer base`. Extend via `tailwind.config.ts` `theme.extend.colors`.
+   - Ban hardcoded utilities in components: `text-white`, `bg-black`, `bg-[#...]`, inline hex. Use `text-foreground`, `bg-background`, `bg-primary`, etc.
+   - Reject generic AI aesthetics: no default Inter/Poppins body + purple/indigo gradient on white unless the idea explicitly calls for it. Commit to one distinctive direction per idea (typography pair + accent) that matches the theme (Music / Dance / Film / etc.).
+   - Dark-mode-first (Midnight brand). Provide a light-mode token set anyway so `next-themes` works.
 
-- Replace `overflow-x-auto` on `<pre>` with `whitespace-pre-wrap break-all` (matches the pattern the Lovable-secrets card already uses). Long commands wrap instead of scrolling under the viewport edge.
-- Tighten `<pre>` padding on `<sm` (`p-2 sm:p-3`) and drop font size to `text-[10px] sm:text-[11px]` so wrapped commands don't dominate.
-- Give the "one command" and "Lovable secrets / local endpoints" cards `overflow-hidden` + `min-w-0` on the flex parents so the `<pre>` inside can actually shrink.
-- Bottom CTA row: on mobile, stack the four buttons full-width (`w-full sm:w-auto` + `justify-center`) — right now they wrap awkwardly at ~380px.
-- Step numbers: shrink from `w-8 h-8` to `w-7 h-7 sm:w-8 sm:h-8` and tighten `gap-4` to `gap-3 sm:gap-4` so the body has more room on narrow screens.
-- Wrap the two-card grid at `sm:grid-cols-2` (already correct) but add `gap-3` and ensure each card uses `min-w-0`.
+2. **shadcn/ui usage**
+   - Use `@/components/ui/*` primitives (Button, Card, Dialog, Tabs, Toast). Customize via variants, never by overriding with hardcoded classes.
+   - New reusable pieces live in `src/components/`; hooks in `src/hooks/`. Files stay small and focused.
+
+3. **State + async UX**
+   - Proving state (30–120s) must show a determinate label, keep the page interactive, and stream status: `Proving → Balancing → Submitting → Confirmed` with a Midnight explorer link on success and a copy-able error on failure.
+   - Empty, loading, and error states are required for every async view — no bare spinners, no unhandled rejections.
+   - Toasts via `useToast` for wallet/deploy/tx events; never `alert()`.
+
+4. **SEO + head metadata**
+   - `<title>` <60 chars with the idea keyword, `<meta name="description">` <160 chars, single `<h1>`, semantic HTML (`<main>`, `<section>`, `<article>`, `<nav>`), `alt` on every image, JSON-LD `WebApplication` block, canonical tag, responsive viewport.
+   - `og:title`, `og:description`, `og:type=website`, `twitter:card=summary_large_image`. Skip `og:image` unless the idea produces a real cover image.
+
+5. **Accessibility + responsive**
+   - Keyboard-reachable controls, visible focus rings (via token), `aria-live` on the proving/status region.
+   - Mobile-first Tailwind: test at 375px. Wrap long addresses/CIDs with `break-all` inside `min-w-0` flex children.
+
+6. **Lovable-agent workflow hints** (short block Lovable will read)
+   - Prefer search-replace edits over rewrites. Keep components small. Only change what the user asked for. Verify with build output before claiming done.
+   - Storage: default to `localStorage` for the 32-byte witness secret; never send it to any server. No Lovable Cloud in the 5-credit budget.
+
+## Files touched
+
+- `src/lib/mega-prompt-variants.ts` — add `FRONTEND_STANDARDS` const and reference it from `buildVariant`. One-line insert in the returned template.
+
+## Regenerate bundles
+
+Run `bun scripts/build-llms-full.mjs` to rewrite:
+- `public/llms-core.txt`
+- `public/llms-prompts-{preview|preprod|undeployed}-{macos|windows|linux}.txt` (9 files, externalized via `lovable-assets`)
+- `public/llms-full.txt` (externalized)
+- `public/llms-full.meta.json`
 
 ## Out of scope
 
-- The `/undeployed-preflight` page (separate route; unchanged).
-- The `DockerSetupGuide` component (already responsive).
-- Regenerating LLM bundles — this is a UI/content change on one route.
+- No changes to `/ideas/$id` UI (it already reads `buildVariant` at render time, so new content flows through automatically).
+- No changes to routes, wallet code, or Compact contracts.
+- No new pages.
+
+## Verification
+
+- Typecheck passes.
+- Spot-check one rendered prompt on `/ideas/<any>` — confirm the new `FRONTEND STANDARDS` block appears once, above the per-hook body, in each of the 9 tabs.
+- Confirm `llms-full.meta.json` sizes update.
