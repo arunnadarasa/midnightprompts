@@ -249,7 +249,75 @@ const BODY_BY_HOOK: Record<string, BodyPair> = {
   "private-witness": { contract: compactWitness, body: bodyPrivateWitness },
 };
 
-const WALLET_BOILERPLATE = "\n\n--- BEGIN: Connect-Lace boilerplate (self-contained, DApp Connector v4) ---\n\nAdd a working \"Connect Lace\" button to the primary page of the app. This\nsection is self-contained \u2014 do NOT install any @midnight-ntwrk/* package for\nthe connect step; the Lace browser extension injects everything you need at\n`window.midnight`. Follow the DApp Connector API v4 exactly as written below.\n\nHARD RULES\n- Do NOT call `enable()` or `state()` \u2014 DApp Connector v4.0 removed them.\n- Do NOT read `window.midnight` at module scope or during SSR \u2014 only inside\n  `useEffect`. Gate the panel render until after hydration.\n- Do NOT hardcode the network \u2014 try Preview, Preprod, and Mainnet in order\n  and use whichever `connect(networkId)` accepts.\n- Reading a shielded address is a permission-only handshake \u2014 no signing,\n  no funds moved.\n\nCREATE FILE: src/lib/use-midnight-wallet.ts\n```ts\nimport { useCallback, useEffect, useState } from \"react\";\n\nexport type WalletStatus =\n  | \"idle\" | \"detecting\" | \"ready\" | \"connecting\" | \"connected\" | \"error\";\n\ntype Connector = {\n  apiVersion: string;\n  name?: string;\n  connect: (networkId: string) => Promise<ConnectedApi>;\n  isEnabled?: () => Promise<boolean>;\n};\n\ntype ConnectedApi = {\n  getShieldedAddresses?: () => Promise<string[] | Record<string, string>>;\n  getUnshieldedAddress?: () => Promise<string>;\n  getDustAddress?: () => Promise<string>;\n  getConfiguration?: () => Promise<{\n    indexerUri?: string; indexerWsUri?: string; proverServerUri?: string;\n  }>;\n};\n\nfunction pickConnector(): Connector | null {\n  if (typeof window === \"undefined\") return null;\n  const m = (window as unknown as { midnight?: Record<string, Connector> }).midnight;\n  if (!m) return null;\n  for (const v of Object.values(m)) {\n    if (v && typeof v === \"object\" && \"apiVersion\" in v && /^4\\\\./.test(String(v.apiVersion))) {\n      return v as Connector;\n    }\n  }\n  const first = Object.values(m)[0];\n  return first && \"apiVersion\" in first ? (first as Connector) : null;\n}\n\nexport function useMidnightWallet() {\n  const [status, setStatus] = useState<WalletStatus>(\"idle\");\n  const [address, setAddress] = useState<string | null>(null);\n  const [apiVersion, setApiVersion] = useState<string | null>(null);\n  const [network, setNetwork] = useState<string | null>(null);\n  const [error, setError] = useState<string | null>(null);\n  const [tick, setTick] = useState(0);\n\n  useEffect(() => {\n    if (typeof window === \"undefined\") return;\n    setStatus((p) => (p === \"connected\" ? p : \"detecting\"));\n    setError(null);\n    const t0 = Date.now();\n    const iv = window.setInterval(() => {\n      const c = pickConnector();\n      if (c) {\n        window.clearInterval(iv);\n        setApiVersion(c.apiVersion);\n        setStatus((p) => (p === \"connected\" ? p : \"ready\"));\n      } else if (Date.now() - t0 > 5000) {\n        window.clearInterval(iv);\n        setStatus(\"error\");\n        setError(\"No Midnight wallet detected. Install Lace from lace.io.\");\n      }\n    }, 100);\n    return () => window.clearInterval(iv);\n  }, [tick]);\n\n  const connect = useCallback(async () => {\n    try {\n      setError(null);\n      setStatus(\"connecting\");\n      const c = pickConnector();\n      if (!c) throw new Error(\"No Midnight wallet detected.\");\n      const preferred = (import.meta.env.VITE_NETWORK_ID as string) || \"preprod\";\n      const candidates = Array.from(new Set([preferred, \"preview\", \"preprod\", \"undeployed\", \"mainnet\"]));\n      let api: ConnectedApi | null = null;\n      let used: string | null = null;\n      for (const n of candidates) {\n        try { api = await c.connect(n); used = n; break; } catch {}\n      }\n      if (!api || !used) throw new Error(\"Failed to connect to Lace.\");\n      let addr: string | null = null;\n      if (typeof api.getShieldedAddresses === \"function\") {\n        try {\n          const s = await api.getShieldedAddresses();\n          if (Array.isArray(s)) addr = s[0] ?? null;\n          else if (s && typeof s === \"object\") addr = Object.values(s)[0] ?? null;\n        } catch {}\n      }\n      if (!addr && typeof api.getUnshieldedAddress === \"function\") {\n        try { addr = await api.getUnshieldedAddress(); } catch {}\n      }\n      if (!addr) throw new Error(\"Connected but couldn't read an address.\");\n      setAddress(addr);\n      setNetwork(used);\n      setStatus(\"connected\");\n    } catch (e) {\n      setError(e instanceof Error ? e.message : String(e));\n      setStatus(\"error\");\n    }\n  }, []);\n\n  return { status, address, apiVersion, network, error, connect,\n    disconnect: () => { setAddress(null); setNetwork(null); setStatus(\"ready\"); setError(null); },\n    redetect: () => setTick((n) => n + 1) };\n}\n```\n\nMOUNT on the primary page and gate render until hydrated. See\nhttps://midnightprompts.lovable.app for the full component reference.\n\n--- END: Connect-Lace boilerplate ---\n";
+const FRONTEND_STANDARDS = `FRONTEND STANDARDS (Lovable-agent rules — non-negotiable, apply BEFORE writing any component):
+
+1. DESIGN SYSTEM — semantic tokens only, no hardcoded colors in components.
+   - Define ALL colors, gradients, shadows, radii as HSL CSS variables in \\\`src/index.css\\\`
+     under \\\`:root\\\` and \\\`.dark\\\`, then map them in \\\`tailwind.config.ts\\\` under
+     \\\`theme.extend.colors\\\` (\\\`background\\\`, \\\`foreground\\\`, \\\`primary\\\`, \\\`accent\\\`,
+     \\\`muted\\\`, \\\`card\\\`, \\\`border\\\`, \\\`ring\\\`, plus idea-specific accents).
+   - BANNED in components: \\\`text-white\\\`, \\\`text-black\\\`, \\\`bg-black\\\`, \\\`bg-white\\\`,
+     \\\`bg-[#...]\\\`, arbitrary hex, inline \\\`style={{ color: '#...' }}\\\`. Use
+     \\\`text-foreground\\\`, \\\`bg-background\\\`, \\\`bg-primary text-primary-foreground\\\`,
+     \\\`border-border\\\`, etc. Custom gradients belong in \\\`@layer utilities\\\`.
+   - Reject generic AI aesthetics: no default Inter/Poppins body paired with a
+     purple/indigo gradient on white unless the idea explicitly asks for it.
+     Commit to ONE distinctive direction that matches the theme (Music / Dance /
+     Film / Fashion / Writing / etc.) — pick a typography pair (heading + body)
+     from Google Fonts loaded in \\\`index.html\\\`, and one accent hue. Dark-mode-first
+     (Midnight brand), but ship a working light-mode token set too.
+
+2. SHADCN/UI PRIMITIVES — use \\\`@/components/ui/*\\\` for Button, Card, Dialog, Tabs,
+   Toast, Input, Badge. Customize via \\\`cva\\\` variants in the primitive file, never
+   by slapping hardcoded utility classes on the call site. Small, focused
+   components live in \\\`src/components/\\\`; hooks in \\\`src/hooks/\\\`. No file over
+   ~200 lines — split.
+
+3. ASYNC UX — proving takes 30–120 s; the UI must stay alive.
+   - Stream a status pill: \\\`Proving → Balancing → Submitting → Confirmed\\\` (or
+     \\\`Error\\\`), with a determinate label AND an \\\`aria-live="polite"\\\` region.
+     Never a bare spinner.
+   - On success, render the Midnight explorer link + a Copy-address button.
+   - On failure, render the exact error text with a Copy-error button — no
+     silent \\\`console.error\\\`. Toasts via \\\`useToast\\\` from \\\`@/components/ui/use-toast\\\`.
+     Never \\\`alert()\\\`.
+   - Every async view has loading + empty + error branches. No unhandled promise
+     rejections. Every \\\`await\\\` is wrapped in try/catch OR surfaced through an
+     error boundary.
+
+4. SEO + HEAD METADATA — set real values in \\\`index.html\\\`, not "Lovable App".
+   - \\\`<title>\\\` ≤60 chars, keyword-first. \\\`<meta name="description">\\\` ≤160 chars.
+   - Exactly ONE \\\`<h1>\\\`. Use \\\`<main>\\\`, \\\`<section>\\\`, \\\`<article>\\\`, \\\`<nav>\\\`, \\\`<footer>\\\`.
+   - \\\`alt\\\` on every image. \\\`loading="lazy"\\\` on below-the-fold images.
+   - JSON-LD \\\`WebApplication\\\` block in \\\`<head>\\\`, canonical tag, responsive
+     \\\`<meta name="viewport">\\\`.
+   - OpenGraph: \\\`og:title\\\`, \\\`og:description\\\`, \\\`og:type=website\\\`,
+     \\\`twitter:card=summary_large_image\\\`. Skip \\\`og:image\\\` unless the demo
+     produces a real cover.
+
+5. ACCESSIBILITY + RESPONSIVE — mobile-first.
+   - Every interactive element is keyboard-reachable with a visible focus ring
+     (via the \\\`ring\\\` token). Buttons have \\\`aria-label\\\` when icon-only.
+   - Test at 375 px first. Wrap long hashes, addresses, and CIDs with
+     \\\`break-all\\\` inside a \\\`min-w-0\\\` flex child so nothing horizontally scrolls.
+   - Stack CTA buttons full-width on mobile; row on \\\`sm:\\\` and up.
+
+6. STATE + STORAGE — the 5-credit budget forbids Lovable Cloud.
+   - The 32-byte witness secret lives in \\\`localStorage\\\` base64-encoded. NEVER
+     POST it anywhere. Warn the user in-app that clearing storage revokes proofs.
+   - Contract address + deploy tx hash cached in \\\`localStorage\\\` under a
+     namespaced key so the app boots straight into the last deployment.
+   - React Query is fine for Indexer reads. No Redux / Zustand / Jotai.
+
+7. LOVABLE-AGENT WORKFLOW (rules for the coding assistant, not the end user).
+   - Prefer search-replace over full-file rewrites. Only change what was asked.
+   - Verify with build output before claiming done — no "should work" hand-waves.
+   - When the user reports a bug, reproduce first: read console logs, network
+     requests, and DOM state before proposing a fix.
+   - Do NOT introduce new deps for anything the current stack already solves.
+`;
+
+const WALLET_BOILERPLATE = "\n\n--- BEGIN: Connect-Lace boilerplate (self-contained, DApp Connector v4) ---\n\nAdd a working \"Connect Lace\" button to the primary page of the app. This\nsection is self-contained \u2014 do NOT install any @midnight-ntwrk/* package for\nthe connect step; the Lace browser extension injects everything you need at\n`window.midnight`. Follow the DApp Connector API v4 exactly as written below.\n\nHARD RULES\n- Do NOT call `enable()` or `state()` \u2014 DApp Connector v4.0 removed them.\n- Do NOT read `window.midnight` at module scope or during SSR \u2014 only inside\n  `useEffect`. Gate the panel render until after hydration.\n- Do NOT hardcode the network \u2014 try Preview, Preprod, and Mainnet in order\n  and use whichever `connect(networkId)` accepts.\n- Reading a shielded address is a permission-only handshake \u2014 no signing,\n  no funds moved.\n- Style the button with shadcn \\`Button\\` + semantic tokens (\\`bg-primary\\`,\n  \\`text-primary-foreground\\`) \u2014 no hardcoded colors, see FRONTEND STANDARDS \u00a71.\n\nCREATE FILE: src/lib/use-midnight-wallet.ts\n```ts\nimport { useCallback, useEffect, useState } from \"react\";\n\nexport type WalletStatus =\n  | \"idle\" | \"detecting\" | \"ready\" | \"connecting\" | \"connected\" | \"error\";\n\ntype Connector = {\n  apiVersion: string;\n  name?: string;\n  connect: (networkId: string) => Promise<ConnectedApi>;\n  isEnabled?: () => Promise<boolean>;\n};\n\ntype ConnectedApi = {\n  getShieldedAddresses?: () => Promise<string[] | Record<string, string>>;\n  getUnshieldedAddress?: () => Promise<string>;\n  getDustAddress?: () => Promise<string>;\n  getConfiguration?: () => Promise<{\n    indexerUri?: string; indexerWsUri?: string; proverServerUri?: string;\n  }>;\n};\n\nfunction pickConnector(): Connector | null {\n  if (typeof window === \"undefined\") return null;\n  const m = (window as unknown as { midnight?: Record<string, Connector> }).midnight;\n  if (!m) return null;\n  for (const v of Object.values(m)) {\n    if (v && typeof v === \"object\" && \"apiVersion\" in v && /^4\\\\./.test(String(v.apiVersion))) {\n      return v as Connector;\n    }\n  }\n  const first = Object.values(m)[0];\n  return first && \"apiVersion\" in first ? (first as Connector) : null;\n}\n\nexport function useMidnightWallet() {\n  const [status, setStatus] = useState<WalletStatus>(\"idle\");\n  const [address, setAddress] = useState<string | null>(null);\n  const [apiVersion, setApiVersion] = useState<string | null>(null);\n  const [network, setNetwork] = useState<string | null>(null);\n  const [error, setError] = useState<string | null>(null);\n  const [tick, setTick] = useState(0);\n\n  useEffect(() => {\n    if (typeof window === \"undefined\") return;\n    setStatus((p) => (p === \"connected\" ? p : \"detecting\"));\n    setError(null);\n    const t0 = Date.now();\n    const iv = window.setInterval(() => {\n      const c = pickConnector();\n      if (c) {\n        window.clearInterval(iv);\n        setApiVersion(c.apiVersion);\n        setStatus((p) => (p === \"connected\" ? p : \"ready\"));\n      } else if (Date.now() - t0 > 5000) {\n        window.clearInterval(iv);\n        setStatus(\"error\");\n        setError(\"No Midnight wallet detected. Install Lace from lace.io.\");\n      }\n    }, 100);\n    return () => window.clearInterval(iv);\n  }, [tick]);\n\n  const connect = useCallback(async () => {\n    try {\n      setError(null);\n      setStatus(\"connecting\");\n      const c = pickConnector();\n      if (!c) throw new Error(\"No Midnight wallet detected.\");\n      const preferred = (import.meta.env.VITE_NETWORK_ID as string) || \"preprod\";\n      const candidates = Array.from(new Set([preferred, \"preview\", \"preprod\", \"undeployed\", \"mainnet\"]));\n      let api: ConnectedApi | null = null;\n      let used: string | null = null;\n      for (const n of candidates) {\n        try { api = await c.connect(n); used = n; break; } catch {}\n      }\n      if (!api || !used) throw new Error(\"Failed to connect to Lace.\");\n      let addr: string | null = null;\n      if (typeof api.getShieldedAddresses === \"function\") {\n        try {\n          const s = await api.getShieldedAddresses();\n          if (Array.isArray(s)) addr = s[0] ?? null;\n          else if (s && typeof s === \"object\") addr = Object.values(s)[0] ?? null;\n        } catch {}\n      }\n      if (!addr && typeof api.getUnshieldedAddress === \"function\") {\n        try { addr = await api.getUnshieldedAddress(); } catch {}\n      }\n      if (!addr) throw new Error(\"Connected but couldn't read an address.\");\n      setAddress(addr);\n      setNetwork(used);\n      setStatus(\"connected\");\n    } catch (e) {\n      setError(e instanceof Error ? e.message : String(e));\n      setStatus(\"error\");\n    }\n  }, []);\n\n  return { status, address, apiVersion, network, error, connect,\n    disconnect: () => { setAddress(null); setNetwork(null); setStatus(\"ready\"); setError(null); },\n    redetect: () => setTick((n) => n + 1) };\n}\n```\n\nMOUNT on the primary page and gate render until hydrated. See\nhttps://midnightprompts.lovable.app for the full component reference.\n\n--- END: Connect-Lace boilerplate ---\n";
 
 
 
