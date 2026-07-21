@@ -655,6 +655,8 @@ ${VITE_CONFIG}
 
 ${MIDNIGHTJS_BOOT}
 
+${FRONTEND_STANDARDS}
+
 ${body}
 
 ${inAppSetupPanel(network, os)}
