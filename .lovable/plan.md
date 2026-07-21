@@ -1,61 +1,29 @@
-## Goal
-Generate a downloadable `llms-full.txt` containing **our site's** knowledge — reference guides plus every mega-prompt in every network × OS combination — so hackathon participants can feed it to their LLM.
+## Problem
 
-## Approach
+The desktop header (screenshot at 990px CSS width, and still tight up to ~1400px) tries to fit 11 nav links + 4 external buttons in a single row. Result: "Hackathon ↗" clips to "HAC…" and the row feels cramped even on wide screens. Mobile burger (< lg) is unaffected.
 
-### 1. Build script: `scripts/build-llms-full.mjs`
-Node ESM script that assembles a single plain-text file at `public/llms-full.txt` (served as `/llms-full.txt`).
+## Fix
 
-Structure, with `# H1` / `## H2` markers and a top-of-file table of contents:
+Collapse the flat nav into 3 primary links + 2 grouped dropdowns + a tight external cluster. Keep every destination reachable; only the visual grouping changes.
 
-1. **Header** — site name, purpose, generation timestamp, upstream Midnight docs link.
-2. **Reference guides** (plain markdown, extracted into a new `src/data/llms-content.ts` so the script and site share one source):
-   - Wallet setup (`/wallet`, all networks + faucet notes)
-   - Proof Server (`/proof-server`)
-   - Undeployed quick-start (`/undeployed`) + preflight (`/undeployed-preflight`)
-   - Docker setup — macOS, Windows, Linux panels + cheat-sheet + common errors (from `DockerSetupGuide.tsx`)
-   - Known Issues (`/known-issues`)
-   - Showcase demos: proof-server demo, programmatic DUST, move-board, choreo-ledger-local
-   - Strategy, Primer, About
-3. **Mega-prompts** — for each of the 1,000 ideas in `src/data/ideas.ts`, emit all **9 variants**: 3 networks (Preview, Preproduction, Undeployed) × 3 OSes (macOS, Windows, Linux), built via `buildMegaPrompt({ network, os })` from `src/lib/mega-prompt-variants.ts`. Each idea gets a `## <id> — <title>` section with 9 clearly-labelled fenced blocks (`### Preview · macOS`, `### Preview · Windows`, …).
-4. **Meta footer** — generated-at timestamp + byte size.
+### New desktop layout (left → right)
 
-Also write `public/llms-full.meta.json` = `{ generatedAt, byteSize, ideaCount, variantCount }`.
+```text
+[Logo]   Themes  Showcase  Wallet   Build ▾   Learn ▾   |   Docs↗  Midskills↗  Explorer↗
+```
 
-Size estimate: 1,000 × 9 × ~4 KB ≈ 36 MB. Big but fine as a static download. To keep the tool useful for smaller context windows, the script also emits:
-- `public/llms-core.txt` — guides only, no prompts (~200 KB).
-- `public/llms-prompts-<network>-<os>.txt` — 9 slimmer per-combo files (~4 MB each).
+- **Build ▾** (dropdown): Proof Server, Undeployed, Preflight, Known Issues
+- **Learn ▾** (dropdown): Strategy, Primer, LLM Docs, About
+- **External cluster** (right of divider): Docs ↗, Midskills ↗, Explorer ↗ (primary button). Hackathon ↗ moves into the Build/Learn header area of each dropdown as a highlighted footer link, and stays in the mobile sheet as today.
 
-### 2. Route: `/llms`
-`src/routes/llms.tsx`:
-- Head metadata (title/description/og).
-- Explainer of what's inside and how big each file is.
-- Primary **Download full** button → `/llms-full.txt` + secondary **Download core (guides only)** → `/llms-core.txt`.
-- OS + network selector that reveals the matching per-combo download link.
-- "Copy raw URL" for each file.
-- "Last generated" timestamp + sizes from `llms-full.meta.json`.
-- Usage snippets for Cursor ("Add doc"), Claude Projects, ChatGPT custom GPTs, and Lovable ("paste as context").
-- Link to upstream `https://docs.midnight.network/llms-full.txt` for Midnight's own docs.
-- Wrapped in `<SiteShell>`.
+### Technical notes
 
-### 3. Navigation
-Add **LLM Docs** to desktop nav and to the mobile burger menu inside the "Deep Dives" cluster (after Primer, before Known Issues), preserving user-journey ordering.
+- Use existing `@/components/ui/dropdown-menu` (shadcn, already in project) for the two menus. Trigger styled to match `NavLink` (same uppercase 11px tracking); add a small chevron.
+- Keep the `lg:` breakpoint for burger swap — no changes to mobile sheet.
+- `NavLink` component stays; add a `NavMenu` trigger variant in the same file.
+- Active-state: dropdown trigger gets `text-primary` when any child route matches (check `useRouterState().location.pathname` against the group's paths).
+- No route, data, or copy changes outside `src/components/site-shell.tsx`.
 
-### 4. Mega-prompt hint
-In `src/lib/mega-prompt-variants.ts`, add one line to the "Reference material" block pointing Lovable/the model at `https://midnightprompts.lovable.app/llms-full.txt`. No stored-data change (prompts render dynamically).
+### Out of scope
 
-### 5. Regeneration workflow
-- Add npm script: `"llms": "node scripts/build-llms-full.mjs"`.
-- Commit generated files under `public/` so the Cloudflare build ships them without running Node at build time (the Worker can't handle a 36 MB build step anyway).
-- Document the one-liner in README.
-
-## Technical notes
-- Script runs in Node — no Worker limits.
-- `buildMegaPrompt` is already a pure function importable from the script.
-- Static text/plain files are served directly by TanStack Start's static asset pipeline.
-- Route/component files stay JSX; only extracted narrative text moves to `llms-content.ts` (no UI regression).
-
-## Out of scope
-- Auto-regeneration on a schedule.
-- Per-idea individual downloads.
-- Translations.
+Mobile menu, footer, and route content stay as-is.
