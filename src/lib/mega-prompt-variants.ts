@@ -259,44 +259,158 @@ Every generated app MUST contain a real \`scripts/\` folder. Do NOT reference
 any script from README.md that does not exist on disk — regenerate the README
 from the actual \`scripts/\` contents at the end.
 
-CREATE FILE: scripts/deploy-midnight.mjs
+CREATE FILE: scripts/deploy-midnight.mjs — every gotcha baked in. Nine rules,
+memorize them:
+
+  ① Force \`ttlOneHour()\` in BOTH \`walletProvider.balanceTx\` AND
+    \`midnightProvider.balanceTx\`. The contracts SDK calls balanceTx without a
+    TTL; the dust wallet then crashes with
+    \`undefined is not an object (evaluating 'arg0.getTime')\`.
+  ② \`ZK_CONFIG_PATH = path.resolve(__dirname, '..', 'contracts/managed/<name>')\`.
+    Missing \`..\` → ENOENT on \`scripts/contracts/managed/…\`.
+  ③ Standalone genesis funds seed \`0x000…0002\` (SECOND slot, not the first).
+    Wrong seed → \`Insufficient Funds: could not balance dust\`.
+  ④ Password for privateStoragePasswordProvider needs ≥3 of
+    {upper, lower, digit, symbol}. \`Choreo-Kits-Local-2026!\` passes; a
+    lowercase-only password fails with "Found: 2".
+  ⑤ \`await new Promise(r => setTimeout(r, 15000))\` after \`wallet.start()\` so
+    the wallet sees the genesis balance before you deploy.
+  ⑥ Adapter must inject TTL — contracts SDK calls \`balanceTx\` with no TTL.
+  ⑦ Provide an explicit witness object \`{ localSecretKey: (ctx) => [ctx, key] }\`
+    on the \`Contract\` instance. \`withVacantWitnesses\` does NOT satisfy a
+    contract that declares any witnesses.
+  ⑧ Retry \`deployContract\` up to 8× with a 10 s backoff AND a FRESH
+    \`privateStateId\` per attempt — the wallet-sync race is real.
+  ⑨ \`initialPrivateState: { localSecretKey: <32-byte Uint8Array> }\` is
+    REQUIRED or the constructor throws
+    \`does not contain a function-valued field named localSecretKey\`.
+
 \`\`\`js
-// Local Node ESM deploy script. Runs on the developer's machine, NOT in the
-// browser and NOT in a Cloudflare Worker. Requires a running proof server.
+// Local Node ESM deploy script. Runs on the developer's machine — never in
+// the browser or a Cloudflare Worker. Requires the local proof server + a
+// running node + indexer (Undeployed) OR a funded Lace on preview/preprod.
 //
-//   VITE_NETWORK_ID=preview  bun scripts/deploy-midnight.mjs
+//   VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs
+//   VITE_NETWORK_ID=preprod    bun scripts/deploy-midnight.mjs
 //
 // Writes src/data/midnight-contract.<network>.json so the app hydrates.
 import fs from 'node:fs';
 import path from 'node:path';
-import { setNetworkId } from '@midnight-ntwrk/midnight-js-network-id';
+import { fileURLToPath } from 'node:url';
+import { setNetworkId, NetworkId } from '@midnight-ntwrk/midnight-js-network-id';
 import { deployContract } from '@midnight-ntwrk/midnight-js-contracts';
+import { httpClientProofProvider } from '@midnight-ntwrk/midnight-js-http-client-proof-provider';
+import { indexerPublicDataProvider } from '@midnight-ntwrk/midnight-js-indexer-public-data-provider';
+import { NodeZkConfigProvider } from '@midnight-ntwrk/midnight-js-node-zk-config-provider';
+import { levelPrivateStateProvider } from '@midnight-ntwrk/midnight-js-level-private-state-provider';
+import { ttlOneHour } from '@midnight-ntwrk/midnight-js-utils';   // ← ①
+import { WalletBuilder } from '@midnight-ntwrk/wallet';
+import { Contract } from '../public/contract/contract/index.cjs';
 
-const NET = process.env.VITE_NETWORK_ID ?? 'preview';
-setNetworkId(NET);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const NET = process.env.VITE_NETWORK_ID ?? 'undeployed';
+
+// Map VITE_NETWORK_ID → NetworkId. Preview reuses Undeployed. Use ONE across encoders.
+const NETWORK_ID = ({
+  undeployed: NetworkId.Undeployed,
+  preview:    NetworkId.Undeployed,
+  preprod:    NetworkId.TestNet,
+  mainnet:    NetworkId.MainNet,
+})[NET];
+setNetworkId(NETWORK_ID);
 
 const contractName = process.env.MIDNIGHT_CONTRACT ?? 'timestamp-log';
-const managed = path.resolve(\`contracts/managed/\${contractName}\`);
-if (!fs.existsSync(managed)) {
-  console.error(\`Missing \${managed}. Run: compact compile contracts/<Name>.compact \${managed}\`);
+// ② Resolve ZK config from PROJECT ROOT, not scripts/
+const ZK_CONFIG_PATH = path.resolve(__dirname, '..', 'contracts', 'managed', contractName);
+if (!fs.existsSync(ZK_CONFIG_PATH)) {
+  console.error(\`Missing \${ZK_CONFIG_PATH}. Run: bun run midnight:compile\`);
   process.exit(1);
 }
 
-// Load compiled contract module + zk assets, wire providers, call
-// deployContract(...) with your witnesses, then persist the result:
+// ③ Genesis-funded seed on Undeployed (…0002, NOT …0001). On preview/preprod
+//    the human uses their Lace wallet — swap this for a headless wallet seed
+//    provided via MIDNIGHT_WALLET_SEED shell env (never in code).
+const SEED = NET === 'undeployed'
+  ? '0000000000000000000000000000000000000000000000000000000000000002'
+  : process.env.MIDNIGHT_WALLET_SEED;
+if (!SEED) { console.error('Set MIDNIGHT_WALLET_SEED for non-undeployed deploys'); process.exit(1); }
+
+// ④ ≥3 character classes
+const PRIVATE_STORAGE_PASSWORD = 'Midnight-Local-Dev-2026!';
+
+const deployerSecret = crypto.getRandomValues(new Uint8Array(32));
+
+const wallet = await WalletBuilder.buildFromSeed(
+  process.env.VITE_INDEXER_URL,
+  process.env.VITE_INDEXER_WS_URL,
+  process.env.VITE_PROOF_SERVER_URL,
+  process.env.VITE_NODE_WS ?? 'ws://localhost:9944',
+  SEED,
+  NETWORK_ID,
+);
+wallet.start();
+await new Promise(r => setTimeout(r, 15000));   // ⑤
+
+const baseProviders = {
+  privateStateProvider: levelPrivateStateProvider({ privateStateStoreName: 'midnight-priv' }),
+  publicDataProvider:   indexerPublicDataProvider(process.env.VITE_INDEXER_URL, process.env.VITE_INDEXER_WS_URL),
+  zkConfigProvider:     new NodeZkConfigProvider(ZK_CONFIG_PATH),
+  proofProvider:        httpClientProofProvider(process.env.VITE_PROOF_SERVER_URL),
+  privateStoragePasswordProvider: { get: async () => PRIVATE_STORAGE_PASSWORD },
+  walletProvider: {
+    coinPublicKey: wallet.state().coinPublicKey,
+    // ⑥ TTL injected here — contracts SDK calls this without one
+    balanceTx: (tx, newCoins) => wallet.balanceTransaction(tx, newCoins, ttlOneHour()),
+  },
+  midnightProvider: {
+    submitTx: (tx) => wallet.submitTransaction(tx),
+    balanceTx: (tx, newCoins) => wallet.balanceTransaction(tx, newCoins, ttlOneHour()),
+  },
+};
+
+// ⑦ Explicit witness — do NOT use withVacantWitnesses when the contract declares any
+const contractInstance = new Contract({
+  localSecretKey: (ctx) => [ctx, deployerSecret],
+});
+
+// ⑧ Retry loop with a fresh privateStateId every attempt
+let deployed;
+for (let i = 0; i < 8; i++) {
+  try {
+    deployed = await deployContract(
+      { ...baseProviders, privateStateId: \`deploy-\${Date.now()}-\${i}\` },
+      {
+        contract: contractInstance,
+        initialPrivateState: { localSecretKey: deployerSecret }, // ⑨
+      },
+    );
+    break;
+  } catch (e) {
+    if (i === 7) throw e;
+    console.warn(\`Deploy attempt \${i + 1} failed: \${e.message}. Retrying in 10s…\`);
+    await new Promise(r => setTimeout(r, 10000));
+  }
+}
+
+const address = deployed.deployTxData.public.contractAddress;
 const out = {
   network: NET,
-  address: '<hex printed by deployContract>',
-  deployTx: '<hex tx hash>',
+  address,
+  deployTx: deployed.deployTxData.public.txHash,
   deployedAt: new Date().toISOString(),
 };
 const outPath = \`src/data/midnight-contract.\${NET}.json\`;
 fs.mkdirSync(path.dirname(outPath), { recursive: true });
 fs.writeFileSync(outPath, JSON.stringify(out, null, 2));
 console.log(\`✓ wrote \${outPath}\`);
-console.log(\`  address: \${out.address}\`);
+console.log(\`  address: \${address}\`);
 console.log(\`  paste into VITE_DEFAULT_CONTRACT\`);
+process.exit(0);
 \`\`\`
+
+CREATE FILE: scripts/check-midnight-wallet.mjs — a "wallet doctor" that reads
+\`MIDNIGHT_WALLET_SEED\` from the shell env (NEVER accept a seed phrase in chat)
+and prints ONLY public addresses + tDUST balance. Refuse to log the seed.
 
 CREATE FILE: scripts/README.md — list every script, its inputs, and when to
 run it. If you add or remove a script, update this file in the same commit.
@@ -306,14 +420,33 @@ scripts are NOT bundled by Vite; every import must be a real dep):
   bun add @midnight-ntwrk/midnight-js-contracts@4.1.1 \\
           @midnight-ntwrk/midnight-js-network-id@4.1.1 \\
           @midnight-ntwrk/midnight-js-types@4.1.1 \\
+          @midnight-ntwrk/midnight-js-http-client-proof-provider@4.1.1 \\
+          @midnight-ntwrk/midnight-js-indexer-public-data-provider@4.1.1 \\
+          @midnight-ntwrk/midnight-js-node-zk-config-provider@4.1.1 \\
+          @midnight-ntwrk/midnight-js-level-private-state-provider@4.1.1 \\
+          @midnight-ntwrk/midnight-js-utils@4.1.1 \\
+          @midnight-ntwrk/wallet@4.0.0 \\
+          @midnight-ntwrk/wallet-sdk-hd@3.1.0-beta.1 \\
           @midnight-ntwrk/zswap bip39
+
+Add a \`compile\` script to package.json that CHAINS compile → artefact copy →
+docker up → deploy so the human runs a single command:
+
+  "scripts": {
+    "midnight:compile":   "compact compile contracts/YourContract.compact contracts/managed/your-contract",
+    "midnight:artefacts": "rm -rf public/contract && mkdir -p public/contract && cp -r contracts/managed/your-contract/keys contracts/managed/your-contract/zkir contracts/managed/your-contract/contract public/contract/",
+    "midnight:up":        "bun scripts/midnight-standalone.mjs up",
+    "midnight:deploy":    "bun scripts/deploy-midnight.mjs",
+    "compile":            "bun midnight:compile && bun midnight:artefacts && bun midnight:up && bun midnight:deploy"
+  }
 
 For the Undeployed variant ALSO create scripts/midnight-standalone.mjs — a
 thin wrapper around \`docker compose\` that writes
-\`.midnight/standalone.docker-compose.yml\`, brings up node + indexer +
-proof-server, and polls readiness. See
-https://midnightprompts.lovable.app/undeployed for a reference implementation
-that can be copied verbatim.`;
+\`.midnight/standalone.docker-compose.yml\` (see the canonical yaml in the
+LOCAL STACK SETUP block above, tagged proof-server:8.0.3, midnight-node:0.22.5,
+indexer-standalone:4.0.2), brings up node + indexer + proof-server, and polls
+readiness. See https://midnightprompts.lovable.app/undeployed for a reference
+implementation that can be copied verbatim.`;
 
 const UNDEPLOYED_FUND_LACE = `FUND LACE ON UNDEPLOYED (local devnet only):
 
