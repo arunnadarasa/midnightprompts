@@ -450,11 +450,17 @@ implementation that can be copied verbatim.`;
 
 const UNDEPLOYED_FUND_LACE = `FUND LACE ON UNDEPLOYED (local devnet only):
 
-The local standalone stack mints unlimited tDUST to a well-known genesis
-wallet. There is no faucet click; you either use the genesis wallet or
-transfer from it once.
+The local standalone stack mints unlimited tDUST to a well-known GENESIS SEED
+(\`0x000…0002\` — the SECOND 32-byte slot; seed \`…0001\` is empty). There is no
+faucet click. Three options depending on what the demo actually needs:
 
-Option A — use the genesis wallet directly (fastest, dev-only):
+Option A — headless deploy from the genesis seed (RECOMMENDED, no Lace needed):
+- \`scripts/deploy-midnight.mjs\` (see SCRIPTS FOLDER above) builds a
+  \`WalletBuilder.buildFromSeed(...)\` wallet directly from seed \`…0002\` and
+  deploys from there. Nothing to configure in Lace. This is the fastest
+  hackathon path.
+
+Option B — use Lace against the local node with the genesis mnemonic:
 1. In Lace, create a NEW account labelled "midnight-local-dev" and import
    the genesis mnemonic published in midnightntwrk/midnight-local-dev
    (repo README → "genesis wallet"). NEVER reuse this mnemonic on
@@ -462,12 +468,13 @@ Option A — use the genesis wallet directly (fastest, dev-only):
 2. Lace → Settings → Network → Custom → RPC = ws://localhost:9944 →
    Save → Switch. tDUST balance appears immediately after sync.
 
-Option B — keep your own Lace account, transfer once from genesis:
+Option C — keep your own Lace account, transfer once from genesis:
 1. Copy your own Lace unshielded address (mn_addr_undeployed1...).
-2. From the midnight-local-dev repo, run its fund-wallet helper
-   (or: midnight-cli transfer --to <your-addr> --amount 1000000000 from
-   the genesis account) against ws://localhost:9944.
-3. Refresh Lace — tDUST balance shows non-zero. Only now can you deploy.
+2. Run \`scripts/deploy-midnight.mjs\` once (Option A) to prove the chain works,
+   then run a one-shot transfer helper (or \`midnight-cli transfer --to <addr>
+   --amount 1000000000\`) against ws://localhost:9944 from the genesis seed.
+3. Refresh Lace — tDUST balance shows non-zero. Only now can you deploy from
+   your own account.
 
 Verify:
 - bun scripts/midnight-standalone.mjs status → all three services green.
@@ -475,6 +482,11 @@ Verify:
 - If tDUST is still zero after 60s, restart Lace and re-check network is
   ws://localhost:9944 (Lace may label it "Preview" — that is expected;
   the address prefix "undeployed" confirms the network).
+
+SAFETY: never accept a user's recovery phrase in chat. If the human needs to
+sanity-check their wallet, ship \`scripts/check-midnight-wallet.mjs\` that
+reads \`MIDNIGHT_WALLET_SEED\` from their shell env and prints only public
+addresses + tDUST balance.
 
 References (embed as links in the in-app setup panel):
 - https://docs.midnight.network/llms-full.txt (search: "undeployed", "genesis")
