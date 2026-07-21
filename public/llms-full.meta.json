@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-20T12:33:57.913Z",
+  "generatedAt": "2026-07-21T07:33:26.043Z",
   "ideaCount": 996,
   "networks": [
     "preview",
@@ -14,15 +14,15 @@
   "variantCount": 8964,
   "sizes": {
     "core": 13219,
-    "preview-macos": 20876804,
-    "preview-windows": 21592930,
-    "preview-linux": 20756288,
-    "preprod-macos": 21004298,
-    "preprod-windows": 21720424,
-    "preprod-linux": 20883782,
-    "undeployed-macos": 24877739,
-    "undeployed-windows": 26810977,
-    "undeployed-linux": 24884711,
-    "full": 201636132
+    "preview-macos": 29708336,
+    "preview-windows": 30424462,
+    "preview-linux": 29587820,
+    "preprod-macos": 29659538,
+    "preprod-windows": 30375664,
+    "preprod-linux": 29539022,
+    "undeployed-macos": 36430343,
+    "undeployed-windows": 38363581,
+    "undeployed-linux": 36437315,
+    "full": 288754260
   }
 }

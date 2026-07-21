@@ -1,29 +1,54 @@
-## Problem
+# Update all ~10,000 mega-prompts with fresh skill learnings
 
-The desktop header (screenshot at 990px CSS width, and still tight up to ~1400px) tries to fit 11 nav links + 4 external buttons in a single row. Result: "Hackathon ↗" clips to "HAC…" and the row feels cramped even on wide screens. Mobile burger (< lg) is unaffected.
+All prompts are generated at render time from a single builder in `src/lib/mega-prompt-variants.ts` (and the same builder is used by `scripts/build-llms-full.mjs` to emit the 9 `.txt` bundles). Editing the shared blocks there updates every idea × network × OS combination — the `/ideas/:id` page, the "Open in Lovable" link, and the downloadable `llms-full.txt` bundles all pick it up automatically. No JSON re-generation needed.
 
-## Fix
+## What gets added / rewritten
 
-Collapse the flat nav into 3 primary links + 2 grouped dropdowns + a tight external cluster. Keep every destination reachable; only the visual grouping changes.
+Targeted edits inside `src/lib/mega-prompt-variants.ts` — each existing block stays in place; content is upgraded, not restructured.
 
-### New desktop layout (left → right)
+1. **Docker block (`TOOLCHAIN_BY_OS` + `LOCAL_STACK_DOCKER_BY_OS`)**
+   - Fold in the Docker LLM-doc cheatsheet already used on `/proof-server` (image lifecycle, `docker system prune`, port 6300 conflict fix, WSL clock drift, Apple Silicon multi-arch note).
+   - Explicit "Docker Desktop must be RUNNING first" gate + the exact `unix:///var/run/docker.sock` error signature from the `lovable-midnight` skill.
+   - `docker ps` / `docker logs -f midnight-proof-server` / `docker stop|start` lifecycle commands.
 
-```text
-[Logo]   Themes  Showcase  Wallet   Build ▾   Learn ▾   |   Docs↗  Midskills↗  Explorer↗
-```
+2. **Undeployed block (`LOCAL_STACK_INTRO`, `LOCAL_STACK_OUTRO`, `UNDEPLOYED_FUND_LACE`)**
+   - Anchor everything to `bun scripts/midnight-standalone.mjs up|status|down` (the wrapper already shipping on `/undeployed`).
+   - Ports table: node `ws://localhost:9944`, indexer `http://localhost:8088/api/v4/graphql`, proof `http://localhost:6300/health`.
+   - Genesis-mnemonic option A / transfer option B (already there) — tightened, plus the "address prefix `undeployed` confirms the network" tell.
+   - Link out to `/undeployed-preflight` for four-green-pill verification.
 
-- **Build ▾** (dropdown): Proof Server, Undeployed, Preflight, Known Issues
-- **Learn ▾** (dropdown): Strategy, Primer, LLM Docs, About
-- **External cluster** (right of divider): Docs ↗, Midskills ↗, Explorer ↗ (primary button). Hackathon ↗ moves into the Build/Learn header area of each dropdown as a highlighted footer link, and stays in the mobile sheet as today.
+3. **Frontend block (`VITE_CONFIG` + `MIDNIGHTJS_BOOT`)**
+   - Reinforce "no SSR, no module-scope `@midnight-ntwrk/*` imports" — call out TanStack Start's `<ClientOnly>` boundary explicitly (not just Vite SPA).
+   - Buffer polyfill must be the very first line of `src/main.tsx` **or** a client-only entry.
+   - `optimizeDeps.exclude` for `onchain-runtime-v3` WASM stays (fixes the top-level-await crash).
+   - Add the "circuits are bounded — no recursion, no dynamic loops, no I/O, no oracles" line from `lovable-midnight` into `REDFLAGS`.
 
-### Technical notes
+4. **Wallet block (`WALLET_BOILERPLATE`)**
+   - Keep the v4 connector logic (no `.enable()` / no `.state()`).
+   - Enumerate `window.midnight` by UUID (per `react-wallet-connector` skill) instead of relying on the first entry.
+   - Add the `'undeployed'` network id to the candidate list explicitly.
+   - Show tDUST balance strip snippet (`balanceAndProofOfBalance()`).
 
-- Use existing `@/components/ui/dropdown-menu` (shadcn, already in project) for the two menus. Trigger styled to match `NavLink` (same uppercase 11px tracking); add a small chevron.
-- Keep the `lg:` breakpoint for burger swap — no changes to mobile sheet.
-- `NavLink` component stays; add a `NavMenu` trigger variant in the same file.
-- Active-state: dropdown trigger gets `text-primary` when any child route matches (check `useRouterState().location.pathname` against the group's paths).
-- No route, data, or copy changes outside `src/components/site-shell.tsx`.
+5. **Deploy script (`SCRIPTS_FOLDER`)**
+   - Flesh out `scripts/deploy-midnight.mjs` with a real body (load compiled artefacts, wire providers, call `deployContract`, persist `src/data/midnight-contract.<network>.json`) rather than the current `<hex printed by deployContract>` placeholder.
+   - Add `scripts/check-midnight-wallet.mjs` reference (already in the repo) so generated apps get a wallet doctor out of the box.
+   - Pin `@midnight-ntwrk/*@4.1.1` versions consistently.
 
-### Out of scope
+6. **Funding block (Preview / Preprod)**
+   - Explicit "tNIGHT ≠ tDUST" callout from `lovable-midnight` — the #1 support question — with the 4-step delegate flow.
 
-Mobile menu, footer, and route content stay as-is.
+7. **Housekeeping**
+   - Bump the `SITE_HEADER` / references list in `src/data/llms-content.ts` if any URL / version drifted.
+   - Re-run `bun run scripts/build-llms-full.mjs` at the end so the 9 downloadable `.txt` bundles are regenerated; the `.asset.json` pointers pick up the new blobs automatically.
+
+## Not changing
+
+- No changes to idea JSONs, themes, hooks, or per-idea copy — those are already correct.
+- No route / component / navigation changes.
+- No new dependencies.
+
+## Verification
+
+- Typecheck (`tsgo`) — the build touches only string constants.
+- Open `/ideas/dance-001` (or any idea), flip Preview / Preprod / Undeployed × macOS / Windows / Linux, spot-check the six variants.
+- Run the LLM bundle script and confirm `public/llms-full.meta.json` sizes update.

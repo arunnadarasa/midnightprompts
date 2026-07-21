@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "78bc37c6-85cc-4471-b664-684bfe5bf42b",
+  "asset_id": "8ac7518d-6ff9-4734-ac48-cc8e85f9ffbb",
   "project_id": "71d463f1-0973-4f3e-85ba-7f4fa6a73783",
-  "url": "/__l5e/assets-v1/78bc37c6-85cc-4471-b664-684bfe5bf42b/llms-prompts-preprod-linux.txt",
-  "r2_key": "a/v1/71d463f1-0973-4f3e-85ba-7f4fa6a73783/78bc37c6-85cc-4471-b664-684bfe5bf42b/llms-prompts-preprod-linux.txt",
+  "url": "/__l5e/assets-v1/8ac7518d-6ff9-4734-ac48-cc8e85f9ffbb/llms-prompts-preprod-linux.txt",
+  "r2_key": "a/v1/71d463f1-0973-4f3e-85ba-7f4fa6a73783/8ac7518d-6ff9-4734-ac48-cc8e85f9ffbb/llms-prompts-preprod-linux.txt",
   "original_filename": "llms-prompts-preprod-linux.txt",
-  "size": 20883782,
+  "size": 29539022,
   "content_type": "text/plain",
-  "created_at": "2026-07-20T12:34:22Z"
+  "created_at": "2026-07-21T07:34:08Z"
 }
