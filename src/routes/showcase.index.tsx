@@ -13,7 +13,9 @@ const FILTERS: { key: NetworkFilter; label: string }[] = [
 ];
 
 interface DemoCard {
-  to: string;
+  key: string;
+  to?: string;
+  href?: string;
   tag: string;
   badge: string;
   networks: NetworkFilter[];
@@ -23,6 +25,7 @@ interface DemoCard {
 
 const DEMOS: DemoCard[] = [
   {
+    key: "midnight-ledger",
     to: "/showcase/midnight-ledger",
     tag: "Dance · Compact ZK Contract",
     badge: "Preview / Preprod",
@@ -37,46 +40,18 @@ const DEMOS: DemoCard[] = [
     ),
   },
   {
-    to: "/showcase/programmatic-dust",
-    tag: "Preprod only · Wallet SDK",
-    badge: "Preprod",
-    networks: ["preprod"],
-    title: "Programmatic DUST",
+    key: "choreokits",
+    href: "https://choreokits.lovable.app/",
+    tag: "Hackathon starter · Live build",
+    badge: "Preview / Preprod / Undeployed",
+    networks: ["preview", "preprod", "undeployed"],
+    title: "Tokenized Choreo Kits",
     body: (
       <>
-        Create a wallet, print all three addresses, fund the unshielded address with tNIGHT, then
-        explicitly register NIGHT UTXOs for DUST generation. The docs' end-to-end flow, mirrored
-        locally with <code>bun scripts/dust-demo-preprod.mjs</code>.
-      </>
-    ),
-  },
-  {
-    to: "/showcase/choreo-ledger-local",
-    tag: "Local dev · advised by Midnight DevRel",
-    badge: "Undeployed",
-    networks: ["undeployed"],
-    title: "Choreo Ledger (Local)",
-    body: (
-      <>
-        The Demo 01 Compact contract, run against a <strong>local standalone stack</strong>{" "}
-        (<code>NetworkId.Undeployed</code>: node + indexer + proof-server on{" "}
-        <code>localhost</code>). Zero faucet, unlimited tDUST, no Preprod sync bugs — the
-        path Midnight DevRel currently recommends while Preprod stabilises.
-      </>
-    ),
-  },
-  {
-    to: "/showcase/move-board",
-    tag: "Bboard pattern · call an existing contract",
-    badge: "Preview / Preprod",
-    networks: ["preview", "preprod"],
-    title: "Move Board",
-    body: (
-      <>
-        Post a dance move against an <strong>already-deployed</strong> contract — no fresh deploy per visitor.
-        Skips the DUST-heavy deploy step (helpful while the Preprod DUST sync bug is around) and only pays the
-        small <code>callTx</code> fee. Contract pattern from{" "}
-        <code>midnightntwrk/example-bboard</code>.
+        A working end-to-end reference generated from the prompt library: deploy a local Compact
+        contract, fund Lace on the Undeployed devnet, and submit ZK transactions. Includes the
+        deploy script and the Lace-funding helper. Source code on{" "}
+        <a href="https://github.com/arunnadarasa/choreokits" target="_blank" rel="noreferrer" className="underline hover:text-primary">GitHub</a>.
       </>
     ),
   },
