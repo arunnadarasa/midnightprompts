@@ -10,14 +10,15 @@ export const Route = createFileRoute("/undeployed")({
       {
         name: "description",
         content:
-          "Connect a Lovable app to a local Midnight Undeployed stack: one command starts the node, indexer, and proof server on your machine. No faucet, no Preprod DUST sync bugs.",
+          "Connect a Lovable app to a local Midnight Undeployed stack: one command starts the node, indexer, and proof server. Optional Fly.io recipe for hosting the same stack as a public demo.",
       },
       { property: "og:title", content: "Undeployed Quick Start — Local Midnight Stack" },
       {
         property: "og:description",
         content:
-          "Run Midnight locally with Docker, then connect your Lovable app and Lace wallet on localhost.",
+          "Run Midnight locally with Docker or host the same stack on Fly.io as a public demo — recipe, gotchas, and current open blockers.",
       },
+
     ],
   }),
   component: UndeployedPage,
@@ -226,7 +227,213 @@ function UndeployedPage() {
             Service Desk ↗
           </a>
         </div>
+
+        <section id="fly" className="mt-20 pt-10 border-t border-border scroll-mt-24">
+          <span className="eyebrow text-primary">optional · public demo · fly.io</span>
+          <h2 className="font-display text-3xl sm:text-4xl mt-3 leading-[1.1]">
+            Host the same stack <span className="italic text-primary">on Fly.io</span>
+          </h2>
+          <p className="mt-4 text-muted-foreground leading-relaxed max-w-2xl">
+            Local Docker is perfect for solo dev. But when a judge or teammate needs to hit your dApp
+            with Lace from their own laptop, you need the Undeployed stack on public infra. Here's the
+            recipe distilled from the{" "}
+            <a
+              href="https://choreokits.lovable.app/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-primary underline break-words"
+            >
+              Tokenized Choreo Kits
+            </a>{" "}
+            build — including the blocker that's still open.
+          </p>
+
+          {/* 1. Topology */}
+          <div className="mt-8 p-5 border border-border bg-card">
+            <div className="eyebrow text-primary">1 · four-app topology</div>
+            <ul className="mt-3 space-y-2 text-sm text-muted-foreground leading-relaxed">
+              <li>
+                <code className="text-foreground">choreo-node</code> — Midnight standalone node,{" "}
+                <strong>6PN-internal only</strong>, reached as{" "}
+                <code className="text-foreground break-all">ws://choreo-node.internal:9944</code>. No
+                public HTTP.
+              </li>
+              <li>
+                <code className="text-foreground">choreo-indexer</code> — public HTTPS + WSS on{" "}
+                <code className="text-foreground break-all">/api/v4/graphql</code>.
+              </li>
+              <li>
+                <code className="text-foreground">choreo-proof</code> — public HTTPS proof server.
+              </li>
+              <li>
+                <code className="text-foreground">choreo-faucet</code> — public HTTPS{" "}
+                <code className="text-foreground">/grant</code> endpoint, in-memory rate limit,
+                pre-funded once from the genesis seed.
+              </li>
+            </ul>
+            <p className="mt-3 text-xs text-muted-foreground">
+              Bootstrap shape:{" "}
+              <code className="text-foreground break-all">scripts/fly-bootstrap.sh</code> creates all
+              four apps + a 1&nbsp;GB volume for the node, sets{" "}
+              <code className="text-foreground">FAUCET_SEED</code>, and deploys.
+            </p>
+          </div>
+
+          {/* 2. Gotchas */}
+          <div className="mt-4 p-5 border border-border bg-card">
+            <div className="eyebrow text-primary">2 · non-obvious gotchas</div>
+            <ul className="mt-3 space-y-2.5 text-sm text-muted-foreground leading-relaxed">
+              <li>
+                Proof server needs <code className="text-foreground">memory = "2gb"</code> — the k=13
+                proving key OOMs on 1&nbsp;GB mid-mint.
+              </li>
+              <li>
+                <code className="text-foreground">auto_stop_machines = false</code> on proof + node.
+                Cold start is ~4 min of user-visible "Proving…".
+              </li>
+              <li>
+                Proof-server binary is IPv4-only. Fine as-is via the public{" "}
+                <code className="text-foreground break-all">https://…fly.dev</code> URL (fly-proxy
+                enters over IPv4). If you ever need 6PN access, add a{" "}
+                <code className="text-foreground">socat</code> sidecar binding{" "}
+                <code className="text-foreground">[::]</code> → <code className="text-foreground">127.0.0.1</code>.
+              </li>
+              <li>
+                Node RPC must bind IPv6 or the indexer/faucet can't reach it via{" "}
+                <code className="text-foreground">.internal</code>:
+                <pre className={PRE_CLASS}>{`[processes]
+app = "--experimental-rpc-endpoint \\"listen-addr=[::]:9944,methods=unsafe\\""`}</pre>
+              </li>
+              <li>
+                Never scale <code className="text-foreground">choreo-node</code> above 1 machine —
+                two machines = two participants = forked chain. Run{" "}
+                <code className="text-foreground">flyctl scale count 1</code> after every deploy.
+              </li>
+              <li>
+                No <code className="text-foreground">[http_service]</code> on the node — expose port
+                9944 via <code className="text-foreground">[[services]]</code> only, so it stays
+                6PN-internal.
+              </li>
+              <li>
+                Pin <code className="text-foreground">midnight-node:0.22.5</code>. Do{" "}
+                <strong>not</strong> bump to 2.x — those are Partner Chain builds that need Cardano{" "}
+                <code className="text-foreground">db-sync</code> and crash-loop on standalone.
+              </li>
+              <li>
+                Persistent <code className="text-foreground">chain_data</code> volume (1&nbsp;GB) on the
+                node — wipe it and every previously-deployed contract address becomes invalid.
+              </li>
+              <li>
+                Faucet wallet has to be pre-funded once from the genesis seed{" "}
+                <code className="text-foreground">…0002</code> before <code className="text-foreground">/grant</code>{" "}
+                works. Hit <code className="text-foreground">/health</code> to see the balance while it
+                syncs.
+              </li>
+            </ul>
+          </div>
+
+          {/* 3. Open blocker */}
+          <div className="mt-4 p-5 border border-amber-500/40 bg-amber-500/5">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[10px] uppercase tracking-[0.28em] text-amber-500 font-semibold">
+                ⚠ open blocker
+              </span>
+              <span className="text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+                standalone node stuck at block #0
+              </span>
+            </div>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+              On Fly, <code className="text-foreground">midnight-node:0.22.5</code> with{" "}
+              <code className="text-foreground">CFG_PRESET=dev</code> +{" "}
+              <code className="text-foreground break-all">SIDECHAIN_BLOCK_BENEFICIARY=&lt;hex&gt;</code>{" "}
+              boots in <strong>partner-chain mode</strong>, not standalone sealer mode. Logs show{" "}
+              <code className="text-foreground">Idle (0 peers)</code> forever and one line:{" "}
+              <code className="text-foreground break-all">Failed to trigger bootstrap: No known peers</code>.
+            </p>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+              Downstream effect: the faucet wallet (<code className="text-foreground">buildFromSeed</code>)
+              never finishes sync, <code className="text-foreground">getUnshieldedAddress()</code>{" "}
+              returns <code className="text-foreground">null</code>, and{" "}
+              <code className="text-foreground">/grant</code> returns 503{" "}
+              <code className="text-foreground">faucet warming up</code>. Proof and indexer are
+              healthy in this state (<code className="text-foreground">/version</code> →{" "}
+              <code className="text-foreground">8.0.3</code>; GraphQL{" "}
+              <code className="text-foreground">{"{ __typename }"}</code> responds on{" "}
+              <code className="text-foreground break-all">/api/v4/graphql</code>) — the blocker is
+              block <em>authoring</em>, not plumbing.
+            </p>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+              Working theory: <code className="text-foreground">SIDECHAIN_BLOCK_BENEFICIARY</code> alone
+              flips the image into partner-chain expectations. A standalone <code className="text-foreground">--dev</code>{" "}
+              sealer needs a different env combination, or the entrypoint expects a flag that{" "}
+              <code className="text-foreground">[processes]</code> in{" "}
+              <code className="text-foreground break-all">fly/node/fly.toml</code> is currently
+              overriding.
+            </p>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+              Next probe: <code className="text-foreground break-all">flyctl ssh console -a choreo-node</code>,
+              dump <code className="text-foreground">/entrypoint.sh</code> and the image's supported env
+              vars, then diff against{" "}
+              <a
+                href="https://github.com/midnightntwrk/midnight-local-dev/blob/main/standalone.yml"
+                target="_blank"
+                rel="noreferrer"
+                className="text-primary underline break-all"
+              >
+                midnight-local-dev/standalone.yml
+              </a>
+              , which authors blocks fine locally with the same tag.
+            </p>
+            <p className="mt-3 text-sm text-foreground leading-relaxed">
+              <strong>Workaround while unresolved:</strong> use the local Docker stack above for
+              Undeployed. Fly hosting only unlocks once the standalone sealer boots.
+            </p>
+          </div>
+
+          {/* 4. Deploy flow */}
+          <div className="mt-4 p-5 border border-border bg-card">
+            <div className="eyebrow text-primary">3 · deploy flow (once the blocker clears)</div>
+            <ol className="mt-3 space-y-2 text-sm text-muted-foreground leading-relaxed list-decimal pl-5">
+              <li>
+                <code className="text-foreground break-all">scripts/fly-bootstrap.sh</code> — creates
+                the 4 apps + volume + secrets, deploys all four.
+              </li>
+              <li>
+                Fund the faucet once by sending tDUST from the genesis deployer wallet (seed{" "}
+                <code className="text-foreground">…0002</code>) to the address shown by{" "}
+                <code className="text-foreground">/health</code>.
+              </li>
+              <li>
+                <code className="text-foreground break-all">scripts/fly-deploy-contract.sh</code> runs
+                on a Fly Machine (so it reaches{" "}
+                <code className="text-foreground break-all">choreo-node.internal</code> over 6PN) and
+                prints the contract address.
+              </li>
+              <li>
+                Paste that hex into your app's{" "}
+                <code className="text-foreground">VITE_DEFAULT_CONTRACT</code> env var and republish.
+              </li>
+            </ol>
+          </div>
+
+          {/* 5. When to reach for it */}
+          <div className="mt-4 p-5 border border-border bg-card">
+            <div className="eyebrow text-primary">4 · when to reach for fly vs local docker</div>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+              <strong>Local Docker</strong> for offline dev, preflight, and iteration. <strong>Fly</strong>{" "}
+              when you need a publicly demoable dApp that any judge with Lace can hit from their own
+              laptop.
+            </p>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+              <strong className="text-amber-500">⚠ Fly is public infra.</strong> Treat{" "}
+              <code className="text-foreground">FAUCET_SEED</code> like a real key, keep the{" "}
+              <code className="text-foreground">/grant</code> rate limit on, and never point Lace at
+              the hosted node from a Mainnet account.
+            </p>
+          </div>
+        </section>
       </article>
+
     </SiteShell>
   );
 }
