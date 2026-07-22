@@ -50,9 +50,11 @@ const DEMOS: DemoCard[] = [
       <>
         A working end-to-end reference generated from the prompt library: deploy a local Compact
         contract, fund Lace on the Undeployed devnet, and submit ZK transactions. Includes the
-        deploy script and the Lace-funding helper. Source code on{" "}
+        deploy script and the Lace-funding helper. Live on Fly.io — see the{" "}
+        <Link to="/undeployed" hash="fly" className="underline hover:text-primary">hosting recipe & open blocker</Link>. Source on{" "}
         <a href="https://github.com/arunnadarasa/choreokits" target="_blank" rel="noreferrer" className="underline hover:text-primary">GitHub</a>.
       </>
+
     ),
   },
 ];
