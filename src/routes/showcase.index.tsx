@@ -67,13 +67,14 @@ function ShowcaseIndex() {
 
   return (
     <div className="max-w-5xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
-      <span className="eyebrow">Showcase · Vol. 01</span>
+      <span className="eyebrow">Showcase · Curated builds</span>
       <h1 className="font-display text-4xl sm:text-6xl mt-4 leading-[1.05]">
         Working <span className="italic text-primary">ZK demos</span>.
       </h1>
       <p className="mt-6 text-muted-foreground max-w-2xl leading-relaxed">
-        Reference builds from the prompt library. Some demos run on public Midnight testnets; others
-        run on a local Undeployed stack. Pick a network to see what currently works best.
+        Two reference builds from the prompt library: a Compact-contract ledger and a hackathon-ready
+        token kit. Both include deploy scripts, Lace wallet steps, and are tested on public testnets and
+        the local Undeployed stack.
       </p>
 
       <DualDeployStatus
