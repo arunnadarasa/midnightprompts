@@ -633,9 +633,17 @@ function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
 2. Start the local Midnight stack:
    bun scripts/midnight-standalone.mjs up
 3. Point Lace at ws://localhost:9944 (Settings → Network → Custom).
-4. Fund your Lace wallet — see FUND LACE ON UNDEPLOYED above:
-   import the genesis mnemonic OR transfer from genesis with
-   midnight-cli / the fund-wallet helper in midnightntwrk/midnight-local-dev.
+   Lace may label the network "Preview" — that's cosmetic; the
+   mn_addr_undeployed1… prefix confirms it's the local chain.
+4. Fund your Lace wallet with tDUST (SKIP if the demo only reads or if the
+   deploy script is the only writer — see PATH A in FUND LACE ON UNDEPLOYED):
+     bun run midnight:fund
+   → the CLI opens; choose menu option 2 ("Fund accounts by public key")
+   → paste your Lace UNSHIELDED address (mn_addr_undeployed1…)
+   → 50,000 tNIGHT arrives → back in Lace tap "Generate tDUST" → wait one block
+   → the tDUST chip in this app flips from "empty" to a live number.
+   If midnight-local-dev tries to bring up its own node/indexer/proof-server
+   on the same ports, run \`docker compose down\` in this project first.
 5. Deploy the contract:
    VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs
 6. Reload this page. Preflight:
