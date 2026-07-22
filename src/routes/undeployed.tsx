@@ -10,14 +10,15 @@ export const Route = createFileRoute("/undeployed")({
       {
         name: "description",
         content:
-          "Connect a Lovable app to a local Midnight Undeployed stack: one command starts the node, indexer, and proof server on your machine. No faucet, no Preprod DUST sync bugs.",
+          "Connect a Lovable app to a local Midnight Undeployed stack: one command starts the node, indexer, and proof server. Optional Fly.io recipe for hosting the same stack as a public demo.",
       },
       { property: "og:title", content: "Undeployed Quick Start — Local Midnight Stack" },
       {
         property: "og:description",
         content:
-          "Run Midnight locally with Docker, then connect your Lovable app and Lace wallet on localhost.",
+          "Run Midnight locally with Docker or host the same stack on Fly.io as a public demo — recipe, gotchas, and current open blockers.",
       },
+
     ],
   }),
   component: UndeployedPage,
