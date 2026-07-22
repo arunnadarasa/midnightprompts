@@ -480,8 +480,19 @@ CREATE FILE: scripts/check-midnight-wallet.mjs — a "wallet doctor" that reads
 \`MIDNIGHT_WALLET_SEED\` from the shell env (NEVER accept a seed phrase in chat)
 and prints ONLY public addresses + tDUST balance. Refuse to log the seed.
 
-CREATE FILE: scripts/README.md — list every script, its inputs, and when to
-run it. If you add or remove a script, update this file in the same commit.
+CREATE FILE (Undeployed variants only): scripts/fund-lace.sh — one-shot Lace
+funder that clones midnightntwrk/midnight-local-dev and launches its
+interactive faucet CLI. See FUND LACE ON UNDEPLOYED below for the exact
+contents and menu-option-2 walkthrough. Wire it up as \`bun run midnight:fund\`.
+
+CREATE FILE: scripts/README.md — list every script (\`deploy-midnight.mjs\`,
+\`check-midnight-wallet.mjs\`, \`midnight-standalone.mjs\`, and for Undeployed
+also \`fund-lace.sh\`), its inputs, and when to run it. The Undeployed section
+of README.md MUST spell out the funding flow verbatim: run \`bun run midnight:fund\`,
+choose menu option 2 ("Fund accounts by public key"), paste the Lace UNSHIELDED
+address (\`mn_addr_undeployed1…\`), receive 50,000 tNIGHT, tap "Generate tDUST"
+in Lace, wait one block. If you add or remove a script, update this file in
+the same commit.
 
 DEPENDENCIES the deploy script needs (bun add BEFORE first run — Node ESM
 scripts are NOT bundled by Vite; every import must be a real dep):
@@ -504,9 +515,11 @@ docker up → deploy so the human runs a single command:
     "midnight:compile":   "compact compile contracts/YourContract.compact contracts/managed/your-contract",
     "midnight:artefacts": "rm -rf public/contract && mkdir -p public/contract && cp -r contracts/managed/your-contract/keys contracts/managed/your-contract/zkir contracts/managed/your-contract/contract public/contract/",
     "midnight:up":        "bun scripts/midnight-standalone.mjs up",
+    "midnight:fund":      "bash scripts/fund-lace.sh",
     "midnight:deploy":    "bun scripts/deploy-midnight.mjs",
     "compile":            "bun midnight:compile && bun midnight:artefacts && bun midnight:up && bun midnight:deploy"
   }
+
 
 For the Undeployed variant ALSO create scripts/midnight-standalone.mjs — a
 thin wrapper around \`docker compose\` that writes
