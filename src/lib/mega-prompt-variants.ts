@@ -480,8 +480,19 @@ CREATE FILE: scripts/check-midnight-wallet.mjs — a "wallet doctor" that reads
 \`MIDNIGHT_WALLET_SEED\` from the shell env (NEVER accept a seed phrase in chat)
 and prints ONLY public addresses + tDUST balance. Refuse to log the seed.
 
-CREATE FILE: scripts/README.md — list every script, its inputs, and when to
-run it. If you add or remove a script, update this file in the same commit.
+CREATE FILE (Undeployed variants only): scripts/fund-lace.sh — one-shot Lace
+funder that clones midnightntwrk/midnight-local-dev and launches its
+interactive faucet CLI. See FUND LACE ON UNDEPLOYED below for the exact
+contents and menu-option-2 walkthrough. Wire it up as \`bun run midnight:fund\`.
+
+CREATE FILE: scripts/README.md — list every script (\`deploy-midnight.mjs\`,
+\`check-midnight-wallet.mjs\`, \`midnight-standalone.mjs\`, and for Undeployed
+also \`fund-lace.sh\`), its inputs, and when to run it. The Undeployed section
+of README.md MUST spell out the funding flow verbatim: run \`bun run midnight:fund\`,
+choose menu option 2 ("Fund accounts by public key"), paste the Lace UNSHIELDED
+address (\`mn_addr_undeployed1…\`), receive 50,000 tNIGHT, tap "Generate tDUST"
+in Lace, wait one block. If you add or remove a script, update this file in
+the same commit.
 
 DEPENDENCIES the deploy script needs (bun add BEFORE first run — Node ESM
 scripts are NOT bundled by Vite; every import must be a real dep):
@@ -504,9 +515,11 @@ docker up → deploy so the human runs a single command:
     "midnight:compile":   "compact compile contracts/YourContract.compact contracts/managed/your-contract",
     "midnight:artefacts": "rm -rf public/contract && mkdir -p public/contract && cp -r contracts/managed/your-contract/keys contracts/managed/your-contract/zkir contracts/managed/your-contract/contract public/contract/",
     "midnight:up":        "bun scripts/midnight-standalone.mjs up",
+    "midnight:fund":      "bash scripts/fund-lace.sh",
     "midnight:deploy":    "bun scripts/deploy-midnight.mjs",
     "compile":            "bun midnight:compile && bun midnight:artefacts && bun midnight:up && bun midnight:deploy"
   }
+
 
 For the Undeployed variant ALSO create scripts/midnight-standalone.mjs — a
 thin wrapper around \`docker compose\` that writes
@@ -516,49 +529,102 @@ indexer-standalone:4.0.2), brings up node + indexer + proof-server, and polls
 readiness. See https://midnightprompts.lovable.app/undeployed for a reference
 implementation that can be copied verbatim.`;
 
-const UNDEPLOYED_FUND_LACE = `FUND LACE ON UNDEPLOYED (local devnet only):
+const UNDEPLOYED_FUND_LACE = `FUND LACE ON UNDEPLOYED — the hidden gotcha (READ THIS, it saves hours):
 
-The local standalone stack mints unlimited tDUST to a well-known GENESIS SEED
-(\`0x000…0002\` — the SECOND 32-byte slot; seed \`…0001\` is empty). There is no
-faucet click. Three options depending on what the demo actually needs:
+The genesis-funded seed \`0x000…0002\` (SECOND slot; seed \`…0001\` is empty) funds
+ONLY the deployer wallet used inside \`scripts/deploy-midnight.mjs\`. It does NOT
+fund the Lace browser extension a demo user connects with. A fresh Lace on
+\`undeployed\` starts at 0 / 250,000 tDUST, and every write (mint, prove, append)
+pays fees in tDUST — so the first click after connect fails with a cryptic
+"Unexpected error submitting scoped transaction" or an insufficient-balance
+error unless Lace has been funded first.
 
-Option A — headless deploy from the genesis seed (RECOMMENDED, no Lace needed):
-- \`scripts/deploy-midnight.mjs\` (see SCRIPTS FOLDER above) builds a
-  \`WalletBuilder.buildFromSeed(...)\` wallet directly from seed \`…0002\` and
-  deploys from there. Nothing to configure in Lace. This is the fastest
-  hackathon path.
+Two paths — pick ONE based on what the demo actually needs:
 
-Option B — use Lace against the local node with the genesis mnemonic:
-1. In Lace, create a NEW account labelled "midnight-local-dev" and import
-   the genesis mnemonic published in midnightntwrk/midnight-local-dev
-   (repo README → "genesis wallet"). NEVER reuse this mnemonic on
-   Preview/Preprod/Mainnet — it is public.
-2. Lace → Settings → Network → Custom → RPC = ws://localhost:9944 →
-   Save → Switch. tDUST balance appears immediately after sync.
+PATH A — headless deploy only, no Lace tDUST needed (fastest, RECOMMENDED for
+non-interactive demos). \`scripts/deploy-midnight.mjs\` uses \`WalletBuilder\`
+against seed \`…0002\` directly. Reads are free through the Indexer. Skip PATH B.
 
-Option C — keep your own Lace account, transfer once from genesis:
-1. Copy your own Lace unshielded address (mn_addr_undeployed1...).
-2. Run \`scripts/deploy-midnight.mjs\` once (Option A) to prove the chain works,
-   then run a one-shot transfer helper (or \`midnight-cli transfer --to <addr>
-   --amount 1000000000\`) against ws://localhost:9944 from the genesis seed.
-3. Refresh Lace — tDUST balance shows non-zero. Only now can you deploy from
-   your own account.
+PATH B — the demo needs a connected Lace wallet writing txs. Ship a real funder
+script — the one below is the ONE that works. Do NOT invent a "midnight-cli
+transfer" incantation; that tool does not ship with Midnight.
 
-Verify:
-- bun scripts/midnight-standalone.mjs status → all three services green.
-- Open /undeployed-preflight in this app → four green pills.
-- If tDUST is still zero after 60s, restart Lace and re-check network is
-  ws://localhost:9944 (Lace may label it "Preview" — that is expected;
-  the address prefix "undeployed" confirms the network).
+CREATE FILE: scripts/fund-lace.sh
+\`\`\`bash
+#!/usr/bin/env bash
+# One-shot funder for the Lace wallet on the local Undeployed Midnight stack.
+# Uses the official midnightntwrk/midnight-local-dev CLI which ships an
+# interactive faucet (menu option 2: "Fund accounts by public key").
+#
+# What this script does:
+#   1. Clones midnight-local-dev into /tmp (if not already there)
+#   2. npm-installs its deps
+#   3. Starts its interactive CLI
+#
+# What YOU do next (in the CLI window):
+#   - In Lace, copy your UNSHIELDED address (starts with mn_addr_undeployed1…)
+#   - In the CLI, select option 2 ("Fund accounts by public key")
+#   - Paste the unshielded address → you receive 50,000 tNIGHT
+#   - Back in Lace, tap "Generate tDUST" on the tNIGHT balance
+#   - Wait one block; the tDUST chip in this app flips from "empty" to a live number
+#
+# Port collision note: midnight-local-dev may want to run its OWN node + indexer +
+# proof-server on 9944/8088/6300. If it prompts to bring them up, run
+# \\\`docker compose down\\\` in this project FIRST (or reuse midnight-local-dev's
+# stack entirely and skip \\\`bun scripts/midnight-standalone.mjs up\\\`).
+# That collision is the #1 silent failure — same ports, different containers,
+# tDUST never arrives.
+set -euo pipefail
+REPO_DIR="\${MIDNIGHT_LOCAL_DEV_DIR:-/tmp/midnight-local-dev}"
+if [ ! -d "$REPO_DIR" ]; then
+  echo "→ cloning midnight-local-dev into $REPO_DIR"
+  git clone https://github.com/midnightntwrk/midnight-local-dev.git "$REPO_DIR"
+fi
+cd "$REPO_DIR"
+if [ ! -d node_modules ]; then
+  echo "→ installing midnight-local-dev deps"
+  npm install
+fi
+echo
+echo "→ starting midnight-local-dev CLI"
+echo "   choose menu option 2 ('Fund accounts by public key')"
+echo "   paste your Lace UNSHIELDED address (mn_addr_undeployed1…)"
+echo
+exec npm start
+\`\`\`
 
-SAFETY: never accept a user's recovery phrase in chat. If the human needs to
-sanity-check their wallet, ship \`scripts/check-midnight-wallet.mjs\` that
-reads \`MIDNIGHT_WALLET_SEED\` from their shell env and prints only public
-addresses + tDUST balance.
+Wire it into package.json so the human runs one command:
+\`\`\`json
+"scripts": {
+  "midnight:fund": "bash scripts/fund-lace.sh"
+}
+\`\`\`
 
-References (embed as links in the in-app setup panel):
+UI guard — MANDATORY. Read the Lace dust balance via the connected API and
+disable the write button when it is zero. Show it prominently near the CTA:
+\`\`\`ts
+const dust = await api.getDustBalance?.();
+// dust is typically { balance: bigint, ... } — render "71 / 250,000 tDUST"
+// and gate the mint/prove/append button on balance > 0n.
+\`\`\`
+If the balance is zero, render an inline hint: "Fund your Lace wallet with tDUST
+first: run \`bun run midnight:fund\` in your terminal, choose menu option 2, and
+paste your unshielded address." This single guard prevents the cryptic proof-
+submission error path entirely.
+
+VERIFY (green before you demo):
+- \`bun scripts/midnight-standalone.mjs status\` → all three services green
+- \`/undeployed-preflight\` in this app → four green pills
+- Lace tDUST chip in the app UI → non-zero after ~1 block post-\`Generate tDUST\`
+
+SAFETY: never accept a user's recovery phrase in chat. If the human wants to
+sanity-check their wallet, ship \`scripts/check-midnight-wallet.mjs\` that reads
+\`MIDNIGHT_WALLET_SEED\` from the shell env and prints only public addresses.
+
+References:
 - https://docs.midnight.network/llms-full.txt (search: "undeployed", "genesis")
 - https://github.com/midnightntwrk/midnight-local-dev`;
+
 
 function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
   const dockerInstall: Record<OSTarget, string> = {
@@ -580,9 +646,17 @@ function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
 2. Start the local Midnight stack:
    bun scripts/midnight-standalone.mjs up
 3. Point Lace at ws://localhost:9944 (Settings → Network → Custom).
-4. Fund your Lace wallet — see FUND LACE ON UNDEPLOYED above:
-   import the genesis mnemonic OR transfer from genesis with
-   midnight-cli / the fund-wallet helper in midnightntwrk/midnight-local-dev.
+   Lace may label the network "Preview" — that's cosmetic; the
+   mn_addr_undeployed1… prefix confirms it's the local chain.
+4. Fund your Lace wallet with tDUST (SKIP if the demo only reads or if the
+   deploy script is the only writer — see PATH A in FUND LACE ON UNDEPLOYED):
+     bun run midnight:fund
+   → the CLI opens; choose menu option 2 ("Fund accounts by public key")
+   → paste your Lace UNSHIELDED address (mn_addr_undeployed1…)
+   → 50,000 tNIGHT arrives → back in Lace tap "Generate tDUST" → wait one block
+   → the tDUST chip in this app flips from "empty" to a live number.
+   If midnight-local-dev tries to bring up its own node/indexer/proof-server
+   on the same ports, run \`docker compose down\` in this project first.
 5. Deploy the contract:
    VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs
 6. Reload this page. Preflight:
