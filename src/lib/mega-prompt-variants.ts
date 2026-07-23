@@ -214,12 +214,41 @@ function localStackSetup(os: OSTarget): string {
   return `${LOCAL_STACK_INTRO}\n\n${LOCAL_STACK_DOCKER_BY_OS[os]}\n\n${LOCAL_STACK_OUTRO}`;
 }
 
-const NETWORK_LABELS: Record<NetworkVariant, string> = {"preview": "Preview testnet", "preprod": "Preprod testnet (closer to mainnet)", "undeployed": "Undeployed / local standalone stack (no faucet needed)"};
+const NETWORK_LABELS: Record<NetworkVariant, string> = {"preview": "Preview testnet", "preprod": "Preprod testnet (closer to mainnet)", "undeployed": "Undeployed / local standalone stack (no faucet needed)", "mainnet": "Mainnet (REAL VALUE — experimental / vibe-coded, use at your own risk)"};
 
 const NETWORK_SECRETS: Record<NetworkVariant, string> = {
   preview: "REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **PREVIEW** target:\n- VITE_NETWORK_ID           preview\n- VITE_INDEXER_URL          https://indexer.preview.midnight.network/api/v4/graphql\n- VITE_INDEXER_WS_URL       wss://indexer.preview.midnight.network/api/v4/graphql/ws\n- VITE_PROOF_SERVER_URL     http://localhost:6300   (run the matrix proof server: `docker run -p 6300:6300 midnightntwrk/proof-server:8.1.0 midnight-proof-server -v`)\n- VITE_DEFAULT_CONTRACT     hex address printed by your first deploy \u2014 paste it here so users skip the deploy step\n\ntNIGHT \u2260 tDUST \u2014 the #1 support question. Faucet dispenses tNIGHT; deploys spend tDUST. Every user hits this once:\n  1. Copy your UNSHIELDED address (`mn_addr_undeployed1\u2026` on Preview; Lace labels the network \"Preview\").\n  2. Paste into https://midnight-tmnight-preview.nethermind.dev/ \u2192 Request \u2192 tNIGHT arrives.\n  3. In Lace, click \"Generate tDUST\" to delegate tNIGHT \u2192 tDUST appears after a block.\n  4. Only NOW can you deploy \u2014 the deploy script errors with `Insufficient Funds: could not balance dust` otherwise.\nExplorer: https://preview.midnightexplorer.com/\nNotes:    Preview is the fastest network to demo on but resets frequently. Best for iterative dev + hackathon judges.\n          If you don't want to babysit the faucet, use the **Undeployed** variant of this prompt instead.",
   preprod: "REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **PREPROD** target:\n- VITE_NETWORK_ID           preprod\n- VITE_INDEXER_URL          https://indexer.preprod.midnight.network/api/v4/graphql\n- VITE_INDEXER_WS_URL       wss://indexer.preprod.midnight.network/api/v4/graphql/ws\n- VITE_PROOF_SERVER_URL     http://localhost:6300   (run the matrix proof server: `docker run -p 6300:6300 midnightntwrk/proof-server:8.1.0 midnight-proof-server -v`)\n- VITE_DEFAULT_CONTRACT     hex address printed by your first deploy \u2014 paste it here so users skip the deploy step\n\ntNIGHT \u2260 tDUST \u2014 same trap as Preview. On Preprod the unshielded address prefix is `mn_addr_test1\u2026`\n(NetworkId.TestNet, NOT NetworkId.Undeployed \u2014 use the right one in the deploy script).\n  1. Copy your UNSHIELDED address (`mn_addr_test1\u2026`).\n  2. Paste into https://midnight-tmnight-preprod.nethermind.dev/ \u2192 Request \u2192 tNIGHT arrives.\n  3. In Lace, click \"Generate tDUST\" to delegate \u2192 tDUST appears after a block.\n  4. Only NOW can you deploy.\nExplorer: https://preprod.midnightexplorer.com/\nNotes:    Preprod is closer to mainnet parameters but has known DUST-sync and ZKIR 0.31 quirks. If your\n          demo stalls at \"Balancing\u2026\", switch to the Undeployed local stack variant of this prompt.",
   undeployed: "REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **UNDEPLOYED / LOCAL** target:\n- VITE_NETWORK_ID           undeployed\n- VITE_INDEXER_URL          http://localhost:8088/api/v4/graphql   (standalone indexer uses v4, like the hosted indexers)\n- VITE_INDEXER_WS_URL       ws://localhost:8088/api/v4/graphql/ws\n- VITE_PROOF_SERVER_URL     http://localhost:6300   (local-dev image: `midnightntwrk/proof-server:8.0.3`)\n- VITE_NODE_WS              ws://localhost:9944\n- VITE_DEFAULT_CONTRACT     hex address printed by your local deploy (written to src/data/midnight-contract.undeployed.json)\n\nNo faucet needed \u2014 the local standalone chain mints unlimited tDUST to the genesis seed\n`0x000\u20260002` (yes, the SECOND slot \u2014 seed `\u20260001` is empty). The deploy script uses that seed\ndirectly via `WalletBuilder.buildFromSeed(..., NetworkId.Undeployed)`.\nExplorer: not applicable (chain is local); browse state via the local Indexer GraphQL at\n          http://localhost:8088/api/v4/graphql \u2014 the app's `/undeployed-preflight` page hits it too.\nNotes:    This is the **DevRel-advised** path for hackathon work. It bypasses every Preprod\n          tDUST-sync + `/check 400` ZKIR issue by pinning the SDK and node to the same version.",
+  mainnet: `REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **MAINNET** target (\u26a0\ufe0f REAL VALUE):
+- VITE_NETWORK_ID           mainnet
+- VITE_INDEXER_URL          https://indexer.mainnet.midnight.network/api/v4/graphql
+- VITE_INDEXER_WS_URL       wss://indexer.mainnet.midnight.network/api/v4/graphql/ws
+- VITE_PROOF_SERVER_URL     http://localhost:6300   (matrix proof server: \`docker run -p 6300:6300 midnightntwrk/proof-server:${MIDNIGHT_MATRIX.proofServer} midnight-proof-server -v\`)
+- VITE_DEFAULT_CONTRACT     hex address printed by your first mainnet deploy
+
+Address prefixes are unsuffixed on Mainnet: unshielded \`mn_addr1\u2026\`, shielded \`mn_shield-addr1\u2026\`.
+Use \`NetworkId.MainNet\` in the deploy script. Mismatched network ids produce a wrong bech32
+prefix \u2014 abort before writing \`.env\` when the prefix disagrees.
+
+ACQUIRING NIGHT (real asset, no faucet):
+NIGHT is a real on-chain asset. There is no mainnet faucet. Acquire NIGHT from an official
+exchange partner listed at https://midnight.network/night?tag=exchange. Withdraw to your Lace
+UNSHIELDED address (\`mn_addr1\u2026\`). Then, inside Lace, click "Generate DUST" to delegate NIGHT
+\u2192 DUST \u2014 DUST is what pays circuit-proof fees. Only THEN can you deploy or mint.
+
+Explorer: https://midnightexplorer.com/  (Node ${MIDNIGHT_MATRIX.node.mainnet})
+
+DO NOT ship Mainnet without:
+- The persistent red MAINNET risk banner (see EXPERIMENTAL DAPP DISCLAIMER block).
+- The README disclaimer at the top of \`README.md\` (verbatim, see below).
+- A clear "no audit" chip near every write button.
+- A dry-run on Undeployed + Preprod BEFORE touching Mainnet.
+
+NEVER:
+- Ask the user for a recovery phrase / seed / private key. Signing is Lace-only on Mainnet.
+- Route Mainnet writes through a server \`/api/mint\`. There is no genesis wallet on Mainnet.
+- Auto-deposit user funds. Every write must be explicitly initiated by the user in Lace.`,
 };
 
 type Hook = { id: string; name: string; tag: string; kernel: string; ui: string };
