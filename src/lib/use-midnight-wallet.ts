@@ -20,7 +20,7 @@ export type MidnightWalletState = {
   apiVersion: string | null;
   network: string | null;
   error: string | null;
-  connect: () => Promise<void>;
+  connect: (preferredNetwork?: string) => Promise<void>;
   disconnect: () => void;
   redetect: () => void;
 };
