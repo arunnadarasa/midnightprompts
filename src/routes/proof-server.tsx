@@ -9,6 +9,7 @@ import {
 import { NetworkToggle } from "@/components/NetworkToggle";
 import { DualDeployStatus } from "@/components/DeployStatusPanel";
 import { DockerSetupGuide } from "@/components/DockerSetupGuide";
+import { MIDNIGHT_MATRIX, SUPPORT_MATRIX_URL } from "@/lib/midnight-matrix";
 
 export const Route = createFileRoute("/proof-server")({
   head: () => ({
@@ -138,11 +139,15 @@ function ProofServer() {
             One command. It listens on <span className="text-foreground">http://localhost:6300</span>{" "}
             — the default the Midnight SDK expects. The same container handles both preview and
             preprod proofs; only your <span className="font-mono">VITE_NETWORK_ID</span> changes.
+            Pin the exact tag from the{" "}
+            <a href={SUPPORT_MATRIX_URL} className="text-primary hover:underline" target="_blank" rel="noreferrer">Midnight Support Matrix</a>{" "}
+            (currently <span className="font-mono text-foreground">{MIDNIGHT_MATRIX.proofServer}</span> for public networks; local Undeployed uses{" "}
+            <span className="font-mono text-foreground">{MIDNIGHT_MATRIX.localStack.proofServer}</span>).
           </p>
           <div className="mt-3">
             <Code>{`docker run -d --name midnight-proof-server \\
   -p 6300:6300 \\
-  midnightntwrk/proof-server:latest \\
+  midnightntwrk/proof-server:${MIDNIGHT_MATRIX.proofServer} \\
   midnight-proof-server -v`}</Code>
           </div>
           {platform === "windows" && (
@@ -176,7 +181,7 @@ function ProofServer() {
               <span className="font-mono text-foreground">midnight-proof-server</span> (id{" "}
               <span className="font-mono text-foreground">265c73234164</span>) live on port{" "}
               <span className="font-mono text-foreground">6300:6300</span>, image{" "}
-              <span className="font-mono text-foreground">midnightntwrk/proof-server:latest</span>{" "}
+              <span className="font-mono text-foreground">midnightntwrk/proof-server:{MIDNIGHT_MATRIX.proofServer}</span>{" "}
               (sha256 <span className="font-mono text-foreground">801bbc0340…4d531</span>). Health
               endpoint returned <span className="font-mono text-foreground">status: ok</span>.
             </p>

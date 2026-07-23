@@ -16,7 +16,7 @@
  *     → exits: "Fund this address, then re-run"
  *
  * PHASE 2 (after tDUST lands, ~30s post-faucet):
- *   docker run -d -p 6300:6300 midnightntwrk/proof-server:latest \
+ *   docker run -d -p 6300:6300 midnightntwrk/proof-server:8.0.0 \
  *     midnight-proof-server -v
  *   bun scripts/deploy-midnight.mjs
  *     → syncs the wallet against the preprod Indexer, checks balance
@@ -32,6 +32,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { generateMnemonic } from "bip39";
+import { MIDNIGHT_MATRIX } from "../src/lib/midnight-matrix.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
@@ -611,9 +612,13 @@ async function main() {
 
   log("=== phase 2: deploy ===");
   if (!(await proofServerReachable())) {
+    const proofTag =
+      NETWORK_ID === "undeployed"
+        ? MIDNIGHT_MATRIX.localStack.proofServer
+        : MIDNIGHT_MATRIX.proofServer;
     die(
       `Proof server not reachable at ${PROOF_SERVER}. Start it with:\n` +
-        `  docker run -d -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`,
+        `  docker run -d -p 6300:6300 midnightntwrk/proof-server:${proofTag} midnight-proof-server -v`,
     );
   }
 

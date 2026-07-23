@@ -8,6 +8,7 @@ import {
 import { NetworkToggle } from "@/components/NetworkToggle";
 import { DualDeployStatus } from "@/components/DeployStatusPanel";
 import { WalletConnectPanel } from "@/components/WalletConnectPanel";
+import { MIDNIGHT_MATRIX } from "@/lib/midnight-matrix";
 
 export const Route = createFileRoute("/showcase/midnight-ledger")({
   head: () => ({
@@ -268,7 +269,7 @@ function MidnightLedgerDemo() {
             <code>.compact</code> file.
           </li>
           <li>
-            <code>docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v</code>
+            <code>docker run -p 6300:6300 midnightntwrk/proof-server:{MIDNIGHT_MATRIX.proofServer} midnight-proof-server -v</code>
           </li>
           <li>
             Paste any mega-prompt from this repo into Lovable — it wires Lace + the proof server

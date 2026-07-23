@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/site-shell";
 import { DockerSetupGuide } from "@/components/DockerSetupGuide";
+import { MIDNIGHT_MATRIX, SUPPORT_MATRIX_URL } from "@/lib/midnight-matrix";
 
 export const Route = createFileRoute("/undeployed")({
   head: () => ({
@@ -27,8 +28,8 @@ export const Route = createFileRoute("/undeployed")({
 const STACK_CMD = "bun scripts/midnight-standalone.mjs up";
 const DEPLOY_CMD = "VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs";
 const ENV_SNIPPET = `VITE_NETWORK_ID=undeployed
-VITE_INDEXER_URL=http://localhost:8088/api/v1/graphql
-VITE_INDEXER_WS_URL=ws://localhost:8088/api/v1/graphql/ws
+VITE_INDEXER_URL=http://localhost:8088/api/v4/graphql
+VITE_INDEXER_WS_URL=ws://localhost:8088/api/v4/graphql/ws
 VITE_NODE_RPC=ws://localhost:9944
 VITE_PROOF_SERVER_URL=http://localhost:6300`;
 
@@ -76,12 +77,13 @@ function UndeployedPage() {
         <div className="mt-4 p-4 border border-border bg-card overflow-hidden">
           <span className="eyebrow text-primary">pinned versions</span>
           <div className="mt-2 font-mono text-[10px] sm:text-[11px] text-muted-foreground break-all leading-relaxed">
-            proof-server:8.0.3 · midnight-node:0.22.5 · indexer-standalone:4.0.2
+            proof-server:{MIDNIGHT_MATRIX.localStack.proofServer} · midnight-node:{MIDNIGHT_MATRIX.localStack.node} · indexer-standalone:{MIDNIGHT_MATRIX.localStack.indexer}
           </div>
           <p className="mt-3 text-xs text-muted-foreground">
             Do not use <code>:latest</code> — the <code>midnight-node</code> latest tag frequently 404s, and
             mismatched versions cause ZKIR <code>/check 400</code> errors. This triple is the current
-            known-good combination.
+            local-dev combination from the{" "}
+            <a href={SUPPORT_MATRIX_URL} className="text-primary hover:underline" target="_blank" rel="noreferrer">Midnight Support Matrix</a>.
           </p>
         </div>
 
@@ -315,7 +317,7 @@ app = "--experimental-rpc-endpoint \\"listen-addr=[::]:9944,methods=unsafe\\""`}
                 6PN-internal.
               </li>
               <li>
-                Pin <code className="text-foreground">midnight-node:0.22.5</code>. Do{" "}
+                Pin <code className="text-foreground">midnight-node:{MIDNIGHT_MATRIX.localStack.node}</code>. Do{" "}
                 <strong>not</strong> bump to 2.x — those are Partner Chain builds that need Cardano{" "}
                 <code className="text-foreground">db-sync</code> and crash-loop on standalone.
               </li>
@@ -343,7 +345,7 @@ app = "--experimental-rpc-endpoint \\"listen-addr=[::]:9944,methods=unsafe\\""`}
               </span>
             </div>
             <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-              On Fly, <code className="text-foreground">midnight-node:0.22.5</code> with{" "}
+              On Fly, <code className="text-foreground">midnight-node:{MIDNIGHT_MATRIX.localStack.node}</code> with{" "}
               <code className="text-foreground">CFG_PRESET=dev</code> +{" "}
               <code className="text-foreground break-all">SIDECHAIN_BLOCK_BENEFICIARY=&lt;hex&gt;</code>{" "}
               boots in <strong>partner-chain mode</strong>, not standalone sealer mode. Logs show{" "}

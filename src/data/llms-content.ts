@@ -3,6 +3,8 @@
 // /llms to describe what participants get. Keep concise — this is what people
 // feed into ChatGPT / Claude / Cursor.
 
+import { MIDNIGHT_MATRIX, SUPPORT_MATRIX_URL } from "@/lib/midnight-matrix";
+
 export type GuideSection = { id: string; title: string; body: string };
 
 export const SITE_HEADER = `midnightprompts.lovable.app — Creative Midnight
@@ -51,8 +53,11 @@ DApp Connector v4 quick facts
     title: "Proof Server (local Docker on port 6300)",
     body: `Every Midnight transaction needs a ZK proof. Proving is heavy — 30–120 seconds per k=14 circuit — so it happens on your machine via a Docker container, never in the browser.
 
+Version source of truth: ${SUPPORT_MATRIX_URL}
+Snapshot: proof server ${MIDNIGHT_MATRIX.proofServer} for public networks; local Undeployed stack uses ${MIDNIGHT_MATRIX.localStack.proofServer}.
+
 Start the proof server (all OSes):
-    docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v
+    docker run -p 6300:6300 midnightntwrk/proof-server:${MIDNIGHT_MATRIX.proofServer} midnight-proof-server -v
 
 Health check: http://localhost:6300/health should return "ok".
 
@@ -126,13 +131,17 @@ Reference: https://docs.docker.com/llms.txt
     title: "Undeployed Local Stack",
     body: `Undeployed = a full Midnight standalone stack on your laptop: node + indexer + proof server. Use it when the community testnets are down, when you want deterministic replays, or when your judge has flaky Wi-Fi.
 
+Version source of truth: ${SUPPORT_MATRIX_URL}
+Local Undeployed stack pins: midnight-node:${MIDNIGHT_MATRIX.localStack.node}, indexer-standalone:${MIDNIGHT_MATRIX.localStack.indexer}, proof-server:${MIDNIGHT_MATRIX.localStack.proofServer}.
+
 Bring it up (macOS/Linux — Windows: run these inside WSL2):
     node scripts/midnight-standalone.mjs up
 This wraps docker-compose and pins matching versions of node + indexer + proof-server.
 
 Endpoints once healthy
 - Node RPC (WS):      ws://localhost:9944
-- Indexer GraphQL:    http://localhost:8088/graphql
+- Indexer GraphQL:    http://localhost:8088/api/v4/graphql
+- Indexer GraphQL WS: ws://localhost:8088/api/v4/graphql/ws
 - Proof Server:       http://localhost:6300
 
 Lace configuration
@@ -141,7 +150,7 @@ Lace configuration
 
 Preflight checks (/undeployed-preflight)
 - Node reachable?      WS handshake on 9944.
-- Indexer alive?       GraphQL introspection query.
+- Indexer alive?       GraphQL introspection query on /api/v4/graphql.
 - Proof server alive?  GET /health on 6300.
 - Lace on the right network? apiVersion 4.x + connected networkId === "undeployed".
 

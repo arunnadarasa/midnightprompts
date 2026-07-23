@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { HOOKS, ALL_IDEAS } from "@/data/ideas";
+import { MIDNIGHT_MATRIX } from "@/lib/midnight-matrix";
 
 export const Route = createFileRoute("/quantum-primer")({
   head: () => ({
@@ -58,7 +59,7 @@ function Primer() {
           <div className="mt-5 pt-4 border-t border-border text-[11px] text-muted-foreground/80 leading-relaxed font-light">
             <strong className="text-foreground">Terminal (one-time):</strong> install the Compact toolchain
             (<code>compact update</code>), run <code>compact compile</code>, then start the proof server:
-            <code className="block mt-2 font-mono text-[10.5px] break-all">docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v</code>
+            <code className="block mt-2 font-mono text-[10.5px] break-all">docker run -p 6300:6300 midnightntwrk/proof-server:{MIDNIGHT_MATRIX.proofServer} midnight-proof-server -v</code>
           </div>
         </div>
       </section>

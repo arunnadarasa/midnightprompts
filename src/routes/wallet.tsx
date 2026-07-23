@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
+import { MIDNIGHT_MATRIX } from "@/lib/midnight-matrix";
 import step01 from "@/assets/lace-setup-01-account-center.png.asset.json";
 import step02 from "@/assets/lace-setup-02-add-wallet.png.asset.json";
 import step03 from "@/assets/lace-setup-03-choose-midnight.png.asset.json";
@@ -444,7 +445,7 @@ function Wallet() {
                 uses. Start it with:
               </p>
               <pre className="mt-2 p-3 border border-border bg-background font-mono text-[11px] text-foreground overflow-x-auto whitespace-pre-wrap break-all">
-{`docker run -d -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v`}
+{`docker run -d -p 6300:6300 midnightntwrk/proof-server:${MIDNIGHT_MATRIX.proofServer} midnight-proof-server -v`}
               </pre>
             </div>
             <div className="p-4 border border-border bg-card">
