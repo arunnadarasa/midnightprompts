@@ -1,71 +1,58 @@
-## Refresh mega-prompts with updated Lovable Midnight skill
+# Add Mainnet variant + experimental-dapp safety banner
 
-Fold the Tokenized Choreo Kits hard-won lessons — already present in the injected `lovable-midnight` skill body — into `src/lib/mega-prompt-variants.ts` so every generated prompt carries them. All edits are additive; nothing removed.
+Extend the mega-prompt matrix from 3 networks × 3 OS = 9 variants to **4 × 3 = 12 variants** per idea (~1,000 ideas → ~12,000 total; ~3,000 new Mainnet prompts). Add a mandatory in-dapp safety banner across all networks.
 
-### 1. Expand `HOSTING_FLYIO` (src/lib/mega-prompt-variants.ts ~696–722)
+## 1. `src/lib/mega-prompt-variants.ts`
 
-Replace the condensed 8-bullet block with the full skill guidance, still Undeployed-only. Add:
+- Add `"mainnet"` to the `Network` union and to network branching (`NETWORK_BLOCK`, `SIGNING_STRATEGY`, endpoints, `NetworkId`).
+- New `MAINNET_BLOCK`:
+  - `VITE_NETWORK_ID=mainnet`, mainnet indexer/proof-server/node RPC (from `midnight-matrix.ts`).
+  - Address prefixes `mn_addr1…` / `mn_shield-addr1…` (no suffix).
+  - Signing: Lace on Mainnet only — no server-side genesis wallet exists.
+  - **Acquiring NIGHT**: NIGHT is a real asset. Direct users to the official exchange partners page: https://midnight.network/night?tag=exchange. Never ask the user to paste a seed. Fund the Lace unshielded address from an exchange withdrawal, then delegate NIGHT → DUST inside Lace to pay fees.
+  - Pin mainnet node/proof-server/indexer tags from `MIDNIGHT_MATRIX.node.mainnet` etc.
+- New `EXPERIMENTAL_DAPP_DISCLAIMER` block (injected on ALL 4 networks, prominent on Mainnet):
+  - README section: "⚠️ Experimental / vibe-coded — not audited. Hackathon artefact. Do not deposit funds you cannot afford to lose. Contract logic, key handling, and UI have not been reviewed. Use only as a bragging-right proof-of-deploy."
+  - Mandatory persistent in-app **top banner component** (`src/components/ExperimentalBanner.tsx`) mounted in `__root.tsx`, text varies by `VITE_NETWORK_ID`:
+    - Mainnet: red "MAINNET · vibe-coded experiment — funds at risk, no audit".
+    - Preview/Preprod: amber "Testnet · experimental hackathon build".
+    - Undeployed: neutral "Local dev chain · not real value".
+  - Non-dismissible on Mainnet; dismissible-per-session on others.
+- Extend `REDFLAGS`:
+  - Do NOT ship Mainnet without the red banner and README disclaimer.
+  - Do NOT prompt users for NIGHT recovery phrases; only send from an exchange to the Lace unshielded address.
+  - No server-side signing on Mainnet (no genesis seed exists).
 
-- **Node #0 blocker as the #1 gotcha** — must verify block imports past #0 before wasting time on indexer/faucet debugging (`flyctl logs -a choreo-node | grep "Imported #[1-9]"`).
-- **Never overwrite the image entrypoint with `[processes] app = "…"`** — Fly appends it as extra args to ENTRYPOINT; keep it short or omit; prefer env vars the entrypoint script reads.
-- **Proof-server: stock image only, no custom Dockerfile** — distroless base has no shell; `exec: 127` if wrapped. Use `[build] image = "midnightntwrk/proof-server:8.0.3"` + `[processes] app = "midnight-proof-server -v"`, memory ≥ 2 GB.
-- **Faucet binds `0.0.0.0`, NOT `::`** — Fly-proxy forwards over IPv4 loopback; IPv6-only listener never receives requests. Outbound to `.internal` still goes over IPv6.
-- **`FAUCET_SEED` must be exactly 64 hex chars** — `openssl rand -hex 32`, not base64.
-- **Faucet cannot import `NetworkId` from `@midnight-ntwrk/midnight-js-network-id` under Bun** — pass the numeric enum (`0` for Undeployed) directly.
-- **Faucet cold-boot 10–90s** — `/grant` returns `503 warming up`; UI retry loop required; never `min_machines_running=0` unless 90s first-request delay is acceptable.
-- **Faucet must be funded once** from genesis seed `…0002`; no auto-refill.
-- **CORS** header + OPTIONS handler on the faucet.
-- **Bootstrap order (do NOT skip step 1)**: prove node authors blocks → indexer → proof-server → faucet → fund faucet → run deploy from a 6PN Fly Machine (`scripts/fly-deploy-contract.sh`).
-- Idempotent one-shot recipe: `FAUCET_SEED=$(openssl rand -hex 32) ./scripts/fly-bootstrap.sh` + `./scripts/fly-deploy-contract.sh`.
-- Compact **failure-mode table** with the new rows (node stuck at `#0`, indexer TOML `"[::]"` parse crash, distroless `exec: 127`, `[processes]` misuse, macaroon 401, `InvalidSeed`, `NetworkId` ESM crash, faucet hang from `::` bind, mixed-content HTTPS).
-- Cost note (~$15–25/mo) so users know before promoting.
+## 2. `src/routes/ideas.$id.tsx`
 
-### 2. Add three new self-contained blocks (module-scope constants)
+- Add a 4th tab **"Mainnet"** to the network selector next to Preview / Preprod / Undeployed (2-column grid on mobile, 4-across on desktop).
+- Copy label: "Mainnet · real NIGHT · experimental".
+- Show a small inline warning under the tab row when Mainnet is selected, linking to https://midnight.network/night?tag=exchange.
 
-Interpolate them into the prompt body just after `MIDNIGHTJS_BOOT`, unconditional (all networks benefit):
+## 3. `scripts/build-llms-full.mjs`
 
-- **`SIGNING_STRATEGY`** — mini-table:
-  - Undeployed → **Lace cannot sign**. Route every write through a TanStack server route `/api/mint` that reuses the same `WalletBuilder` + genesis seed `…0002` as the deploy script; cache the wallet in a module-scope promise; skip Lace-connect and tDUST-balance guards on Undeployed. Add the Cloudflare SSR stub swap for `src/lib/mint.server.ts` → `src/lib/mint.ssr-stub.ts`.
-  - Preview / Preprod → Lace `publishKit`.
-  - Symptom on Undeployed if you use Lace: proof completes but Lace's "Prove transaction" spins forever or returns "Unexpected error submitting scoped transaction".
+- Add `"mainnet"` to the `NETWORKS` array and `NET_LABEL`.
+- Emits 3 new bundles: `llms-prompts-mainnet-{macos,windows,linux}.txt`.
+- `fullDoc()` now iterates 4 networks → total variants = ideas × 12.
+- Update meta JSON `variantCount`.
 
-- **`ASYNC_BUFFER_CLIENT_ENTRY`** — replace the module-scope `Buffer` polyfill with a custom `src/client.tsx`:
-  ```ts
-  import { hydrateRoot } from 'react-dom/client';
-  import { Buffer } from 'buffer';
-  async function start() {
-    (globalThis as any).Buffer = Buffer;
-    const { StartClient } = await import('@tanstack/react-start/client');
-    hydrateRoot(document, <StartClient />);
-  }
-  start();
-  ```
-  Wire via `vite.config.ts` → `tanstackStart: { client: { entry: 'client' } }`. Why: Vite dep pre-bundling crawls the Midnight WASM graph and hangs the client entry for minutes on `/.vite/deps/react.js` unless Buffer is polyfilled AFTER hydration path resolves.
+## 4. `src/routes/llms.tsx`
 
-- **`OPTIMIZE_DEPS_NO_DISCOVERY`** — the working `optimizeDeps` shape:
-  ```ts
-  optimizeDeps: {
-    noDiscovery: true,
-    include: ['react','react-dom','react-dom/client','react/jsx-runtime','react/jsx-dev-runtime','buffer','object-inspect','cross-fetch','@subsquid/scale-codec'],
-    exclude: [/* every @midnight-ntwrk/* package */],
-  }
-  ```
-  Do NOT include `@midnight-ntwrk/compact-runtime` in the include list — it re-triggers the WASM crawl. Update the existing `VITE_CONFIG` block accordingly, replacing the current `include` line.
+- Add the three new Mainnet download cards alongside existing per-combo downloads.
+- Add a short "Mainnet variants — read this first" note pointing to the disclaimer + exchange link.
 
-### 3. Add `KIT_FEED_PERSISTENCE` block (indexer exposes state, not tx IDs)
+## 5. Reference pages (light touch, keep UI edits minimal)
 
-Short paragraph + code sample: persist `txId` locally after `/api/mint` (Undeployed) or `publishKit` (Preview/Preprod) response, render `tx: {hash}` in feed with source labels (`chain` vs `local`), dedupe by `publishedAt` when the indexer catches up.
+- `src/routes/quantum-primer.tsx`: Mainnet column already exists in the comparison table; add one line "Acquire NIGHT via an official exchange partner → midnight.network/night?tag=exchange" and note the hackathon guidance ("only after Undeployed → Preprod dry runs").
+- `src/routes/llms.tsx` skill card: bump variant count copy from 9 to 12.
 
-### 4. Extend `REDFLAGS`
+## Not in scope
 
-Two extra bullets:
-- "Do NOT sign Undeployed writes with Lace — route them through a server `/api/mint`."
-- "Do NOT set `nitro: false` on TanStack Start to 'escape SSR' — Worker can't resolve split `assets/react-*.js` chunks. Keep nitro enabled and use the `midnightSsrStub()` swap."
+- No new showcase demo on Mainnet — too risky for a hackathon site.
+- No changes to deploy scripts targeting Mainnet (still local `bun` script; users configure `VITE_NETWORK_ID=mainnet` themselves).
+- No changes to Preview/Preprod/Undeployed prompt content beyond the shared disclaimer/banner block.
 
-### 5. Wire references
+## Technical notes
 
-Add the "Fly.io hosting" and "Signing strategy" reference bullets to the "FURTHER REFERENCE" list at the end of `buildVariant`.
-
-### Not in scope
-- No changes to route pages, LLM bundle regeneration, or matrix versions — this is a mega-prompt content refresh only. The published `llms-full.txt` regenerates from the same variants at next build.
-- No changes to Preview/Preprod-only prompts beyond the shared signing-strategy note.
+- Total generated files after this change: `llms-core.txt` + 12 per-combo bundles + `llms-full.txt` + meta = 15 assets. All externalized via `lovable-assets` as today.
+- Banner mounts in `__root.tsx` above `<Outlet />`; reads `import.meta.env.VITE_NETWORK_ID` client-side to pick variant — no SSR concerns.
