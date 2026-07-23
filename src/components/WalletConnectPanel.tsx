@@ -62,16 +62,19 @@ export function WalletConnectPanel({
       {w.status === "ready" && (
         <div className="mt-3 flex items-center gap-3 flex-wrap">
           <button
-            onClick={() => void w.connect()}
+            onClick={() => void w.connect(expectedNetwork)}
             className="px-4 py-2 bg-primary text-primary-foreground text-[11px] font-semibold tracking-[0.24em] uppercase hover:bg-foreground transition"
           >
-            Connect wallet
+            Connect wallet {isUndeployed && <span className="opacity-70">· undeployed</span>}
           </button>
           <span className="text-xs text-muted-foreground">
-            Reads your shielded address — no signing, no funds moved.
+            {isUndeployed
+              ? "Point Lace at your local Undeployed network first (RPC ws://localhost:9944)."
+              : "Reads your shielded address — no signing, no funds moved."}
           </span>
         </div>
       )}
+
 
       {w.status === "connecting" && (
         <p className="mt-3 text-sm text-muted-foreground">
