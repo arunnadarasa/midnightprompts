@@ -1135,6 +1135,7 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, 
   const localBlock = network === "undeployed" ? `\n\n${localStackSetup(os)}\n` : "";
   const undeployedFundBlock = network === "undeployed" ? `\n${UNDEPLOYED_FUND_LACE}\n` : "";
   const flyioBlock = network === "undeployed" ? `\n${HOSTING_FLYIO}\n` : "";
+  const mainnetBlock = network === "mainnet" ? `\n${MAINNET_ACQUIRE}\n` : "";
 
   return `${MATRIX_PREAMBLE}
 
