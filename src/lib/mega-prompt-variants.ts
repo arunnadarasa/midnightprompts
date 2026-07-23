@@ -776,30 +776,131 @@ and the failure modes are invisible in preview. Reference: https://midnightpromp
 const HOSTING_FLYIO = `HOSTING ON FLY.IO (optional public demo for the Undeployed variant):
 
 If you want a published Lovable demo that any visitor with Lace can test without running Docker,
-host the Undeployed stack on four Fly apps in one org/region:
+host the Undeployed stack on FOUR Fly apps in ONE org + region. Battle-tested topology from the
+Tokenized Choreo Kits project (~$15–25/mo, proof-server is the biggest at 2GB shared-cpu-2x):
+
 \`\`\`text
 choreo-node.internal:9944    # midnight-node:${MIDNIGHT_MATRIX.localStack.node}, 6PN-internal, 1× machine, 1GB volume
-choreo-indexer.fly.dev       # indexer-standalone:${MIDNIGHT_MATRIX.localStack.indexer} -> ws://choreo-node.internal:9944
+choreo-indexer.fly.dev       # indexer-standalone:${MIDNIGHT_MATRIX.localStack.indexer} → ws://choreo-node.internal:9944
 choreo-proof.fly.dev         # proof-server:${MIDNIGHT_MATRIX.localStack.proofServer}, memory=2gb, min_machines_running=1
 choreo-faucet.fly.dev        # Node.js @midnight-ntwrk/wallet, holds FAUCET_SEED, /grant endpoint
 \`\`\`
 
-Critical blockers from the Lovable Midnight skill:
-- \`midnight-node:${MIDNIGHT_MATRIX.localStack.node}\` on Fly does NOT self-author blocks with \`CFG_PRESET=dev\` alone.
-  Before promoting to Fly, \`flyctl ssh console -a choreo-node\` and read the image's \`/entrypoint.sh\` to find the env
-  combination that actually enables standalone sealing for the pinned tag. Verify with
-  \`flyctl logs -a choreo-node | grep -E "Prepared block|Imported #[1-9]"\`.
-- Single machine per app. \`flyctl scale count 1\` everywhere. Node and proof-server should have \`min_machines_running=1\`.
-- Node is never public. No \`[http_service]\` on the node; expose 9944 only via 6PN-internal services.
-- Indexer must bind to IPv6: \`APP__INFRA__API__ADDRESS = "::"\` (bare, no brackets).
-- Proof server uses the stock image directly; no custom Dockerfile (distroless, no shell).
-- Deploy from a 6PN Fly Machine, not the Lovable sandbox. The deploy script needs \`ws://choreo-node.internal:9944\`.
-- Faucet cannot run on Cloudflare Workers; host it as a fourth Fly app. Bind HTTP to \`0.0.0.0\` (not \`::\`).
-- \`FAUCET_SEED\` must be exactly 64 hex chars: \`openssl rand -hex 32\`.
-- Indexer path is always \`/api/v4/graphql\`; never \`/api/v1/graphql\`.
+NON-NEGOTIABLES (each one cost hours in Choreo Kits — do not skip):
 
-Bring-up order: prove node authors blocks → deploy indexer → deploy proof-server → deploy faucet → fund faucet → run deploy from 6PN.
-Full failure-mode table: https://midnightprompts.lovable.app/undeployed (Fly.io section).`;
+1. **Node #0 is the #1 blocker. Fix it FIRST.**
+   \`midnight-node:${MIDNIGHT_MATRIX.localStack.node}\` on Fly with only \`CFG_PRESET=dev\` boots as a
+   partner-chain follower without a Cardano source and sits at \`best: #0\` forever. Every downstream
+   service looks broken (empty indexer, faucet wallet never syncs, deploy times out with
+   \`Insufficient Funds\`). Before promoting: \`flyctl ssh console -a choreo-node\` and dump the image's
+   \`/entrypoint.sh\` (or \`docker inspect midnightntwrk/midnight-node:${MIDNIGHT_MATRIX.localStack.node}\`)
+   to learn which env combination enables standalone sealing FOR THAT TAG. Verify with
+   \`flyctl logs -a choreo-node | grep -E "Prepared block|Imported #[1-9]"\`. If you never see block
+   imports past #0, don't debug indexer/faucet — it is the node.
+
+2. **Never overwrite the image ENTRYPOINT with \`[processes] app = "..."\`.**
+   Fly appends \`[processes]\` as extra args to ENTRYPOINT. A long "command" here silently becomes
+   stray args and env is ignored. Keep \`[processes]\` short (or omit); prefer env vars the entrypoint
+   script actually reads. Small extras like \`--rpc-external\` are fine.
+
+3. **Single machine per app.** \`flyctl scale count 1\` on every app, \`--ha=false\` on the node app,
+   \`min_machines_running=1\` on node + proof-server, \`auto_stop_machines=false\` on the node. Two node
+   machines will diverge silently.
+
+4. **Node is never public.** No \`[http_service]\` on the node. Indexer and deploy script reach it
+   via the 6PN \`choreo-node.internal:9944\` DNS name over IPv6. Bind the RPC to \`[::]:9944\` inside
+   the node so 6PN can reach it.
+
+5. **Indexer must bind to IPv6.** Fly 6PN is IPv6-only.
+   \`APP__INFRA__API__ADDRESS = "::"\` — BARE, NOT \`"[::]"\`. TOML parses the bracketed form as a
+   sequence and the container crashes at boot.
+
+6. **Indexer path is \`/api/v4/graphql\`.** The \`indexer-standalone:${MIDNIGHT_MATRIX.localStack.indexer}\`
+   image exposes v4. \`/api/v1/graphql\` emits a 308 redirect loop on the public fly.dev URL.
+   Frontend env: \`VITE_INDEXER_URL=https://choreo-indexer.fly.dev/api/v4/graphql\`,
+   \`VITE_INDEXER_WS_URL=wss://choreo-indexer.fly.dev/api/v4/graphql/ws\`.
+
+7. **Proof-server: stock image, NO custom Dockerfile.**
+   The \`midnightntwrk/proof-server:${MIDNIGHT_MATRIX.localStack.proofServer}\` base is DISTROLESS —
+   no bash, no sleep, no chmod. Any wrapper script fails with \`exec: 127\`. Use:
+   \`\`\`toml
+   [build] image = "midnightntwrk/proof-server:${MIDNIGHT_MATRIX.localStack.proofServer}"
+   [processes] app = "midnight-proof-server -v"
+   [[vm]] memory = "2gb"    # 1GB OOMs during proving-key load
+   \`\`\`
+   Only accessed via the public \`https://choreo-proof.fly.dev\` (IPv4 through Fly edge) — no
+   socat/IPv6 wrapper needed. First mint after deploy is still ~4 min cold (proving key load).
+
+8. **Deploy from a 6PN Fly Machine, not the Lovable sandbox or your laptop.**
+   The deploy script needs \`ws://choreo-node.internal:9944\`, only reachable inside 6PN. Pattern:
+   \`flyctl deploy --build-only --push\` a tiny image containing \`scripts/deploy-midnight.mjs\` +
+   compiled artefacts, then \`flyctl machine run <image> -a choreo-node --rm ...\`. Attaching to any
+   app in the same org auto-joins 6PN. Contract address is tied to the node volume — destroying it
+   nukes every previously-deployed address.
+
+9. **Faucet: FOURTH app, not a Cloudflare Worker.**
+   \`@midnight-ntwrk/wallet\` uses WebSocket + WASM patterns workerd rejects. Small Node.js server
+   with \`http.createServer\`, \`/grant { address }\` endpoint, in-memory rate-limit, \`FAUCET_SEED\` as
+   a Fly secret. Rules:
+   - **Bind HTTP to \`"0.0.0.0"\`, NOT \`"::"\`.** Fly-proxy forwards inbound over IPv4 loopback; an
+     IPv6-only listener never receives requests and the app looks hung. The wallet's OUTBOUND
+     connections to \`choreo-node.internal\` still go over IPv6 — that is independent.
+   - **\`FAUCET_SEED\` = exactly 64 hex chars.** \`openssl rand -hex 32\`, NOT \`-base64\`. \`WalletBuilder.buildFromSeed\`
+     throws \`InvalidSeed\` on anything else.
+   - **Do NOT import \`NetworkId\` from \`@midnight-ntwrk/midnight-js-network-id\` at Bun runtime.**
+     The package's ESM entry crashes with an import-map error under Bun. Pass the numeric enum
+     value directly (\`0\` for Undeployed) or hard-code the network name string.
+   - **Cold-boot: 10–90s.** \`wallet.start()\` takes that long to sync a non-zero balance after
+     machine start. \`/grant\` must return \`503 warming up\` until \`/health\` shows the address; UI
+     must retry. Never set \`min_machines_running=0\` unless you accept a 90s first-request delay.
+     If the node is stuck at #0, cold-boot never ends — check node health FIRST.
+   - **Must be funded once.** Send tDUST from the genesis deployer wallet (seed \`…0002\`) to the
+     address the faucet prints on boot. Refill when dry — no auto-refill.
+   - **CORS.** \`Access-Control-Allow-Origin: *\` (or your Lovable domain) + \`OPTIONS\` handler, or
+     the browser POST from the wallet-connect panel fails silently with a network error.
+
+BRING-UP ORDER (do NOT skip step 1):
+
+\`\`\`bash
+export FLY_API_TOKEN=FlyV1...           # verbatim from source; a single flipped char kills the macaroon
+export FAUCET_SEED=$(openssl rand -hex 32)
+export FLY_ORG=personal
+./scripts/fly-bootstrap.sh              # creates 4 apps + volume, deploys, scales to 1 (409-tolerant)
+# 1. Prove the node authors blocks BEFORE deploying anything else:
+flyctl logs -a choreo-node | grep -E "Imported #[1-9]"   # must see non-zero within 2 min
+# 2. curl indexer:  curl -X POST https://choreo-indexer.fly.dev/api/v4/graphql \\
+#      -d '{"query":"{block(offset:{height:1}){height}}"}'   # non-null block
+# 3. curl proof:    curl https://choreo-proof.fly.dev/version   # ${MIDNIGHT_MATRIX.localStack.proofServer}
+# 4. curl faucet:   curl https://choreo-faucet.fly.dev/health   # {"ok":true,"address":"mn_addr_undeployed1..."}
+# 5. Fund the faucet address once from the genesis deployer (…0002).
+# 6. Deploy the contract from a 6PN machine:
+./scripts/fly-deploy-contract.sh        # ephemeral machine runs deploy-midnight.mjs
+# Paste printed contract address into VITE_DEFAULT_CONTRACT and republish.
+\`\`\`
+
+FAILURE-MODE TABLE (new rows from Choreo Kits, copy the fixes verbatim):
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| Node stays at \`best: #0\`, \`Failed to trigger bootstrap: No known peers\` | Partner-chain follower without Cardano source; \`CFG_PRESET=dev\` alone is not enough on Fly | \`flyctl ssh console -a choreo-node\`, read \`/entrypoint.sh\`, find the standalone-sealer env for the pinned tag |
+| Indexer container exits at boot with a TOML/env parse error | \`APP__INFRA__API__ADDRESS = "[::]"\` — brackets make it a TOML sequence | Change to bare \`"::"\` |
+| Indexer public URL returns a 308 chain | Using \`/api/v1/graphql\` on standalone 4.x | Use \`/api/v4/graphql\` everywhere (faucet, deploy, frontend) |
+| Proof-server custom Dockerfile fails with \`exec: 127\` / \`sleep not found\` | Distroless base has no shell/coreutils | Don't build a custom image; use stock image + \`[processes] app = "midnight-proof-server -v"\` |
+| Proof-server OOMs mid-mint, first mint after deploy fails | 1GB machine, proving key needs ~1.5GB | \`[[vm]] memory = "2gb"\`, redeploy |
+| Faucet HTTP requests hang / never reach the container | Server bound to \`::\` — Fly-proxy forwards over IPv4 loopback | \`http.createServer(...).listen(PORT, "0.0.0.0")\` |
+| Faucet crashes at boot with \`InvalidSeed\` | \`FAUCET_SEED\` not exactly 64 hex chars (base64 output is common cause) | \`flyctl secrets set FAUCET_SEED=$(openssl rand -hex 32) -a choreo-faucet\` |
+| Faucet crashes at boot importing \`NetworkId\` from \`@midnight-ntwrk/midnight-js-network-id\` | Package's ESM entry breaks under Bun runtime | Use the numeric enum directly (\`0\` for Undeployed) instead of importing the enum |
+| Faucet \`/health\` returns \`{"ok":false,"address":null}\` for >5 min | Almost always the node is stuck at #0, NOT a faucet bug | Check \`flyctl logs -a choreo-node\` FIRST |
+| Faucet returns 503 for 60+s after redeploy | Wallet still syncing — expected | UI retry loop + "faucet warming up" toast; don't \`min_machines_running=0\` |
+| Faucet returns 500 \`Insufficient Funds\` | Faucet wallet drained | Send more tDUST from genesis deployer (…0002) to the faucet address shown at \`/health\` |
+| Node running \`[processes] app = "some-long-command"\` behaves as if env is ignored | \`[processes]\` replaces CMD → gets appended to ENTRYPOINT as stray args | Keep \`[processes]\` short or omit; prefer env vars |
+| Two node machines materialise after a \`flyctl deploy\` | \`--ha=true\` (default) | \`--ha=false\` + \`flyctl scale count 1\` on the node app |
+| Deploy from Lovable sandbox: WebSocket to \`ws://choreo-node.internal:9944\` fails | Sandbox is not on 6PN | Use \`scripts/fly-deploy-contract.sh\` (ephemeral 6PN machine) |
+| Browser: \`Mixed content: HTTPS page requested http://\` | Env still points at \`http://...localhost:6300\` | Use \`https://choreo-proof.fly.dev\`; Fly terminates TLS |
+| \`flyctl logs\` returns \`401 Unauthorized\` mid-session | Corrupted / retyped \`FLY_ACCESS_TOKEN\` (one flipped char kills the whole macaroon) | Re-export the token verbatim from the source; never hand-retype |
+| \`flyctl apps create\` returns error even though app exists | Some flyctl versions exit 1 on 409 | Bootstrap script uses \`flyctl apps list --json\` grep first — do the same for any new create step |
+
+Full skill reference: https://midnightprompts.lovable.app/undeployed (Fly.io section).`;
 
 
 function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
