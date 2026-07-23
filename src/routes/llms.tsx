@@ -185,17 +185,22 @@ function LlmsPage() {
           <div className="space-y-1">
             <h2 className="font-display text-2xl">Prompts by network × OS</h2>
             <p className="text-sm text-muted-foreground">
-              Nine slimmer files, one per (network, host-OS) combination. Smaller context, same {meta.ideaCount.toLocaleString()} ideas.
+              Twelve slimmer files, one per (network, host-OS) combination. Smaller context, same {meta.ideaCount.toLocaleString()} ideas.
+            </p>
+            <p className="text-xs text-red-500/90">
+              ⚠️ Mainnet variants ship with a mandatory red risk banner + README disclaimer, and route users to
+              official exchange partners (<a href="https://midnight.network/night?tag=exchange" target="_blank" rel="noreferrer" className="underline">midnight.network/night?tag=exchange</a>) to acquire NIGHT. Use only as a bragging-right proof-of-deploy.
             </p>
           </div>
 
           <div className="space-y-4">
             <Tabs value={network} onValueChange={setNetwork}>
               <div className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Network</div>
-              <TabsList className="grid grid-cols-3 w-full">
+              <TabsList className="grid grid-cols-2 md:grid-cols-4 w-full h-auto">
                 <TabsTrigger value="preview">Preview</TabsTrigger>
                 <TabsTrigger value="preprod">Preproduction</TabsTrigger>
                 <TabsTrigger value="undeployed">Undeployed</TabsTrigger>
+                <TabsTrigger value="mainnet">Mainnet ⚠️</TabsTrigger>
               </TabsList>
               {Object.keys(PROMPTS).map((n) => (
                 <TabsContent key={n} value={n} />
