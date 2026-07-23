@@ -79,8 +79,9 @@ function LlmsPage() {
           <p className="text-muted-foreground max-w-2xl">
             The entire Creative Midnight site — guides, Docker setup for macOS · Windows · Linux, wallet flows,
             proof-server, Undeployed local stack, known issues, and all {meta.ideaCount.toLocaleString()} idea
-            mega-prompts in {meta.variantCount.toLocaleString()} variants (3 networks × 3 host OSes) — packaged as
-            plain-text files you can feed to Cursor, Claude Projects, ChatGPT custom GPTs, or paste back into Lovable.
+            mega-prompts in {meta.variantCount.toLocaleString()} variants (4 networks × 3 host OSes, including
+            an experimental Mainnet variant) — packaged as plain-text files you can feed to Cursor, Claude Projects,
+            ChatGPT custom GPTs, or paste back into Lovable.
           </p>
           <p className="text-xs text-muted-foreground">
             Last generated: {new Date(meta.generatedAt).toUTCString()}
