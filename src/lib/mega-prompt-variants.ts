@@ -198,7 +198,69 @@ Best practice from Choreo Kits:
 - Dedupe by \`publishedAt\` and prefer the local row that already has \`txId\` when the indexer
   catches up (usually a few seconds later).`;
 
-const REDFLAGS = "RED FLAGS \u2014 DO NOT ATTEMPT:\n- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.\n- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.\n- No recursion in Compact. Loops must be bounded by compile-time constants.\n- No sub-second finality UX. Proofs for k=14 circuits take 30\u2013120s \u2014 build for that latency.\n- No SSR for the write path. MidnightJS uses `window`, `Buffer`, and WASM top-level-await;\n  load every `@midnight-ntwrk/*` behind `<ClientOnly>` + `useEffect`. On TanStack Start, keep\n  nitro ENABLED and stub Midnight packages in the SSR pass (see `midnightSsrStub()`).\n- Do NOT set `nitro: false` on TanStack Start to 'escape SSR'. That splits the SSR output into\n  chunks (`assets/server-*.js` importing `assets/react-*.js`) that the Cloudflare Worker cannot\n  resolve at runtime \u2014 you get `Error: No such module \"assets/react\"` on every request. Keep\n  nitro on and use the `midnightSsrStub()` swap instead.\n- Do NOT sign Undeployed writes with Lace. Lace cannot balance/sign on the local `undeployed`\n  chain \u2014 the proof completes but submit fails silently. Route every write through a server\n  `/api/mint` route that reuses the genesis seed (see SIGNING STRATEGY block).\n- Do NOT ship `levelPrivateStateProvider` to the browser. Its `browser-level` \u2192 `abstract-level`\n  chain breaks under production Rollup with `Class extends value undefined is not a constructor or null`.\n  Use a `localStorage`-backed PrivateStateProvider in the browser; keep `levelPrivateStateProvider`\n  only in Node deploy scripts.\n- No deploying from a Cloudflare Worker / TanStack server function. Deploys are a local `bun`\n  script only \u2014 they need Docker, the proof server, and localhost.\n- Do NOT use `midnightntwrk/midnight-node:latest` (tag often missing) or the partner-chain 2.x\n  tags (need Cardano follower + Postgres). For public networks pin the matrix tags: proof-server:8.1.0,\n  midnight-node:1.0.1 (Preview), indexer:4.3.3. For local Undeployed use the local-dev triple:\n  proof-server:8.0.3, midnight-node:0.22.5, indexer-standalone:4.0.2.\n- Do NOT accept a user's recovery phrase in chat. Ship `scripts/check-midnight-wallet.mjs` that\n  reads `MIDNIGHT_WALLET_SEED` from their shell env and prints only PUBLIC addresses.\n- Do NOT derive shielded and unshielded addresses through different `NetworkId` values \u2014 use ONE\n  `NetworkId` across both encoders and validate the emitted bech32 prefix before writing `.env`";
+const REDFLAGS = "RED FLAGS \u2014 DO NOT ATTEMPT:\n- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.\n- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.\n- No recursion in Compact. Loops must be bounded by compile-time constants.\n- No sub-second finality UX. Proofs for k=14 circuits take 30\u2013120s \u2014 build for that latency.\n- No SSR for the write path. MidnightJS uses `window`, `Buffer`, and WASM top-level-await;\n  load every `@midnight-ntwrk/*` behind `<ClientOnly>` + `useEffect`. On TanStack Start, keep\n  nitro ENABLED and stub Midnight packages in the SSR pass (see `midnightSsrStub()`).\n- Do NOT set `nitro: false` on TanStack Start to 'escape SSR'. That splits the SSR output into\n  chunks (`assets/server-*.js` importing `assets/react-*.js`) that the Cloudflare Worker cannot\n  resolve at runtime \u2014 you get `Error: No such module \"assets/react\"` on every request. Keep\n  nitro on and use the `midnightSsrStub()` swap instead.\n- Do NOT sign Undeployed writes with Lace. Lace cannot balance/sign on the local `undeployed`\n  chain \u2014 the proof completes but submit fails silently. Route every write through a server\n  `/api/mint` route that reuses the genesis seed (see SIGNING STRATEGY block).\n- Do NOT ship Mainnet without the persistent red risk banner AND the README disclaimer at the top\n  of `README.md`. Mainnet handles REAL value \u2014 this codebase is vibe-coded / unaudited / hackathon-grade.\n- Do NOT route Mainnet writes through a server `/api/mint`. There is no genesis wallet on Mainnet;\n  signing MUST be Lace-only, initiated by the user.\n- Do NOT prompt users for NIGHT seed/recovery phrases. On Mainnet, funds arrive via a withdrawal from\n  an official exchange partner (https://midnight.network/night?tag=exchange) directly to the Lace\n  unshielded address. Never accept a phrase in chat, form, screenshot, or issue tracker.\n- Do NOT ship `levelPrivateStateProvider` to the browser. Its `browser-level` \u2192 `abstract-level`\n  chain breaks under production Rollup with `Class extends value undefined is not a constructor or null`.\n  Use a `localStorage`-backed PrivateStateProvider in the browser; keep `levelPrivateStateProvider`\n  only in Node deploy scripts.\n- No deploying from a Cloudflare Worker / TanStack server function. Deploys are a local `bun`\n  script only \u2014 they need Docker, the proof server, and localhost.\n- Do NOT use `midnightntwrk/midnight-node:latest` (tag often missing) or the partner-chain 2.x\n  tags (need Cardano follower + Postgres). For public networks pin the matrix tags: proof-server:8.1.0,\n  midnight-node:1.0.1 (Preview), indexer:4.3.3. For local Undeployed use the local-dev triple:\n  proof-server:8.0.3, midnight-node:0.22.5, indexer-standalone:4.0.2.\n- Do NOT accept a user's recovery phrase in chat. Ship `scripts/check-midnight-wallet.mjs` that\n  reads `MIDNIGHT_WALLET_SEED` from their shell env and prints only PUBLIC addresses.\n- Do NOT derive shielded and unshielded addresses through different `NetworkId` values \u2014 use ONE\n  `NetworkId` across both encoders and validate the emitted bech32 prefix before writing `.env`";
+
+const EXPERIMENTAL_DISCLAIMER = `EXPERIMENTAL DAPP DISCLAIMER (MANDATORY on ALL networks, non-negotiable on Mainnet):
+
+This dapp is a hackathon artefact \u2014 vibe-coded, not audited, not reviewed by security professionals.
+Every generated project MUST ship both of these UI + docs surfaces:
+
+1. README.md \u2014 top-of-file block, verbatim:
+
+\`\`\`markdown
+> \u26a0\ufe0f **Experimental / vibe-coded \u2014 not audited.**
+> This dapp was built in a hackathon sprint with AI assistance. Contract logic, key handling,
+> and UI have NOT been reviewed by security professionals. Do not deposit funds you cannot
+> afford to lose. On Mainnet, use only as a proof-of-deploy bragging right. Prefer the
+> Undeployed \u2192 Preprod \u2192 Preview dry-run path before touching Mainnet.
+\`\`\`
+
+2. Persistent in-app top banner \u2014 create \`src/components/ExperimentalBanner.tsx\` and mount it
+in the app root (above \`<Outlet />\` on TanStack Start, or at the top of the single page on plain Vite):
+
+\`\`\`tsx
+// src/components/ExperimentalBanner.tsx
+import { useEffect, useState } from 'react';
+
+const VARIANTS = {
+  mainnet:    { bg: 'bg-red-600',    fg: 'text-white',      msg: 'MAINNET \u00b7 vibe-coded experiment \u2014 funds at risk, no audit. Use only for bragging-right proof-of-deploy.', dismissible: false },
+  preview:    { bg: 'bg-amber-500',  fg: 'text-black',      msg: 'Testnet (Preview) \u00b7 experimental hackathon build. Not audited.', dismissible: true },
+  preprod:    { bg: 'bg-amber-500',  fg: 'text-black',      msg: 'Testnet (Preprod) \u00b7 experimental hackathon build. Not audited.', dismissible: true },
+  undeployed: { bg: 'bg-slate-700',  fg: 'text-slate-100',  msg: 'Local dev chain (Undeployed) \u00b7 not real value. Experimental build.', dismissible: true },
+} as const;
+
+export function ExperimentalBanner() {
+  const net = (import.meta.env.VITE_NETWORK_ID ?? 'preview') as keyof typeof VARIANTS;
+  const v = VARIANTS[net] ?? VARIANTS.preview;
+  const key = \`experimental-banner-dismissed-\${net}\`;
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    if (v.dismissible && sessionStorage.getItem(key) === '1') setHidden(true);
+  }, [key, v.dismissible]);
+  if (hidden) return null;
+  return (
+    <div role="alert" className={\`\${v.bg} \${v.fg} px-4 py-2 text-center text-sm font-semibold sticky top-0 z-50 flex items-center justify-center gap-3\`}>
+      <span>\u26a0\ufe0f {v.msg}</span>
+      {v.dismissible && (
+        <button
+          type="button"
+          className="underline opacity-80 hover:opacity-100"
+          onClick={() => { sessionStorage.setItem(key, '1'); setHidden(true); }}
+        >
+          dismiss
+        </button>
+      )}
+    </div>
+  );
+}
+\`\`\`
+
+Rules:
+- Mainnet banner is **NON-DISMISSIBLE**. Do not add an escape hatch.
+- Preview/Preprod/Undeployed banners dismiss per session (sessionStorage), not permanently.
+- Never remove the banner "because it looks better" \u2014 it is a safety surface, not a style choice.
+- On Mainnet, also render a "no audit \u00b7 experimental" chip next to every write button.`;
+
 
 const LOCAL_STACK_INTRO = "LOCAL STACK SETUP (Undeployed variant \u2014 humans run this in a terminal, NOT Lovable):\n\nThe `undeployed` target expects a full Midnight standalone stack (node + indexer + proof server)\nrunning on your own machine. All three services are Docker containers. This is the DevRel-advised\npath for hackathon work \u2014 it bypasses the tNIGHT\u2192tDUST faucet dance entirely and pins SDK + node\nto the same version so `/check 400` ZKIR mismatches don't happen.\n\n--- Canonical `docker-compose.yml` (write to project root; DO NOT use `:latest` tags) ---\n```yaml\nservices:\n  proof-server:\n    image: midnightntwrk/proof-server:8.0.3\n    command: [\"midnight-proof-server\", \"-v\"]\n    ports: [\"6300:6300\"]\n  node:\n    image: midnightntwrk/midnight-node:0.22.5\n    environment:\n      CFG_PRESET: dev            # standalone dev chain, no partner-chain follower\n    ports: [\"9944:9944\"]\n  indexer:\n    image: midnightntwrk/indexer-standalone:4.0.2\n    depends_on: [node]\n    environment:\n      APP__INFRA__NODE__URL: ws://node:9944\n    ports: [\"8088:8088\"]\n```\nStandalone indexer GraphQL path is `/api/v4/graphql` (same as hosted Preview/Preprod).\nDo NOT use `/api/v1/graphql` on the public fly.dev URL (it 308-redirect-loops). Do NOT use\n`midnight-node:latest` (tag often missing) or the partner-chain 2.x tags (they require a Cardano\nfollower + Postgres + a `mock_registrations_file` and will not run standalone).\n\n--- One-command bring-up (after Docker is running) ---\n```bash\nbun scripts/midnight-standalone.mjs up      # pull + start + wait for ready\nbun scripts/midnight-standalone.mjs status  # check health\nbun scripts/midnight-standalone.mjs down    # stop\n```\nThe `up` command writes `.midnight/standalone.docker-compose.yml` (same content as above),\npulls the pinned images, starts the three services, and polls readiness on\nws://localhost:9944, http://localhost:8088/api/v4/graphql, and http://localhost:6300/health.\nFirst run pulls ~1 GB and takes 2\u20135 min; later boots are seconds.\n\nProbe container health with `docker inspect --format '{{.State.Health.Status}}' <name>` BEFORE\nthe 15 s wallet sync wait \u2014 a crash-looping node otherwise hangs 15 s + 8\u00d710 s = 95 s before\nthe first useful error.\n\nThen verify in the browser: navigate to `/undeployed-preflight` in the app. Four green pills = ready.\nFor a human-readable walkthrough with copy buttons, also see:\nhttps://midnightprompts.lovable.app/undeployed";
 
