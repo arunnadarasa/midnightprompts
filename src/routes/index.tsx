@@ -231,6 +231,30 @@ function Index() {
       </section>
 
       <section className="max-w-7xl mx-auto px-5 sm:px-8 py-16 border-t border-border">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <span className="eyebrow block mb-3">Fireside Chat</span>
+            <h2 className="font-display text-3xl sm:text-4xl text-foreground italic leading-tight">
+              Watch the conversation that started it all.
+            </h2>
+            <p className="mt-4 text-sm text-muted-foreground leading-relaxed font-light max-w-md">
+              A relaxed walkthrough of why private-by-default ZK contracts matter for creative builders, and how Lovable and Midnight fit together.
+            </p>
+          </div>
+          <div className="w-full aspect-video border border-border bg-card overflow-hidden">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/F6JGQbgs9t8"
+              title="Fireside chat"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-16 border-t border-border">
         <div className="flex items-end justify-between mb-10 gap-6 flex-wrap">
           <div>
             <span className="eyebrow block mb-3">Chapter I · Disciplines</span>
