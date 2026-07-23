@@ -71,6 +71,14 @@ function SiteHeader() {
             Midskills ↗
           </a>
           <a
+            href="https://kuiralabs.github.io/kuira-sdk-android/"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden xl:inline-block px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
+          >
+            Mobile SDK ↗
+          </a>
+          <a
             href="https://creativequantum.lovable.app/"
             target="_blank"
             rel="noreferrer"
