@@ -46,11 +46,159 @@ const TOOLCHAIN_BY_OS: Record<OSTarget, string> = {
   linux: `${TOOLCHAIN_COMMON}\n\nLinux prerequisites (Ubuntu/Debian shown; adapt for your distro):\n\`\`\`bash\nsudo apt update\nsudo apt install -y docker.io docker-compose-plugin curl nodejs npm\nsudo systemctl enable --now docker\nsudo usermod -aG docker "$USER" && newgrp docker\n\`\`\`\nFedora: \`sudo dnf install docker docker-compose-plugin nodejs\`.\nArch:   \`sudo pacman -S docker docker-compose nodejs npm\`.\nVerify: \`docker run --rm hello-world\` should print the welcome banner without sudo.\nCopy-button walkthrough: https://midnightprompts.lovable.app/proof-server#docker-setup`,
 };
 
-const VITE_CONFIG = "VITE CONFIG (vite.config.ts) \u2014 WASM + top-level await are MANDATORY for MidnightJS:\n```ts\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport wasm from 'vite-plugin-wasm';\nimport topLevelAwait from 'vite-plugin-top-level-await';\nexport default defineConfig({\n  build: { target: 'esnext', commonjsOptions: { transformMixedEsModules: true, extensions: ['.js','.cjs'] } },\n  plugins: [react(), wasm(), topLevelAwait()],\n  optimizeDeps: {\n    esbuildOptions: { target: 'esnext', supported: { 'top-level-await': true } },\n    include: ['@midnight-ntwrk/compact-runtime'],\n    exclude: ['@midnight-ntwrk/onchain-runtime-v3',\n              '@midnight-ntwrk/onchain-runtime-v3/midnight_onchain_runtime_wasm_bg.wasm'],\n  },\n});\n```\n\nSSR RULE: never import a `@midnight-ntwrk/*` package at module scope of a route file \u2014 it uses\nNode Buffer + browser globals + WASM top-level await and crashes SSR. Load providers behind\n`useEffect` or a dynamic `import()` inside a `<ClientOnly>` boundary.";
+const VITE_CONFIG = `VITE CONFIG (vite.config.ts) — WASM + top-level await are MANDATORY for MidnightJS.
+Use the \`noDiscovery\` + explicit-include/exclude shape below. Do NOT put
+\`@midnight-ntwrk/compact-runtime\` in \`include\` — dep-pre-bundling then crawls the WASM graph
+and blocks the client entry for MINUTES on \`/.vite/deps/react.js\` (blank dev page).
+
+\`\`\`ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import wasm from 'vite-plugin-wasm';
+import topLevelAwait from 'vite-plugin-top-level-await';
+import type { Plugin } from 'vite';
+
+// On TanStack Start, restrict top-level-await to the CLIENT env — applied to the SSR
+// bundle it crashes workerd with "Identifier '__tla' has already been declared".
+function clientTopLevelAwait(): Plugin {
+  return { ...topLevelAwait(), applyToEnvironment: (env) => env.name === 'client' };
+}
+
+export default defineConfig({
+  build: { target: 'esnext', commonjsOptions: { transformMixedEsModules: true, defaultIsModuleExports: 'auto' } },
+  plugins: [react(), wasm(), clientTopLevelAwait()],
+  resolve: { conditions: ['browser', 'import', 'default'] },
+  ssr:     { resolve: { conditions: ['browser', 'node', 'import', 'default'] } },
+  optimizeDeps: {
+    noDiscovery: true,
+    esbuildOptions: { target: 'esnext', supported: { 'top-level-await': true } },
+    include: [
+      'react', 'react-dom', 'react-dom/client',
+      'react/jsx-runtime', 'react/jsx-dev-runtime',
+      'buffer', 'object-inspect', 'cross-fetch', '@subsquid/scale-codec',
+    ],
+    exclude: [
+      '@midnight-ntwrk/compact-runtime',
+      '@midnight-ntwrk/onchain-runtime-v3',
+      '@midnight-ntwrk/onchain-runtime-v3/midnight_onchain_runtime_wasm_bg.wasm',
+      '@midnight-ntwrk/midnight-js-contracts',
+      '@midnight-ntwrk/midnight-js-http-client-proof-provider',
+      '@midnight-ntwrk/midnight-js-indexer-public-data-provider',
+      '@midnight-ntwrk/midnight-js-node-zk-config-provider',
+      '@midnight-ntwrk/midnight-js-level-private-state-provider',
+      '@midnight-ntwrk/midnight-js-network-id',
+      '@midnight-ntwrk/midnight-js-utils',
+      '@midnight-ntwrk/wallet',
+      '@midnight-ntwrk/wallet-sdk-hd',
+    ],
+  },
+});
+\`\`\`
+
+SSR RULE: never import a \`@midnight-ntwrk/*\` package at module scope of a route file — it uses
+Node Buffer + browser globals + WASM top-level await and crashes SSR. Load providers behind
+\`useEffect\` or a dynamic \`import()\` inside a \`<ClientOnly>\` boundary.
+
+TANSTACK START SSR STUB (Cloudflare Worker target) — MANDATORY when publishing. Keep nitro
+ENABLED (do NOT set \`nitro: false\`; that splits SSR into chunks the Worker can't resolve).
+Add a Vite plugin that swaps every \`@midnight-ntwrk/*\` import AND your client contract module
+(e.g. \`src/lib/contract.ts\`) to inert stubs during the SSR pass — otherwise the SSR crawler
+still walks the WASM graph even for \`ssr: false\` routes and dies with \`MISSING_EXPORT\`.
+
+\`\`\`ts
+import path from 'node:path';
+function midnightSsrStub(): Plugin {
+  const wasmStub     = path.resolve('src/lib/midnight-ssr-stub.ts');
+  const contractStub = path.resolve('src/lib/contract.ssr-stub.ts');
+  const contractReal = path.resolve('src/lib/contract.ts');
+  return {
+    name: 'midnight-ssr-stub', enforce: 'pre',
+    async resolveId(id, importer, options) {
+      if (!options?.ssr) return;
+      if (id.startsWith('@midnight-ntwrk/')) return wasmStub;
+      const resolved = await this.resolve(id, importer, { ...options, skipSelf: true });
+      if (resolved && resolved.id === contractReal) return contractStub;
+      return resolved;
+    },
+  };
+}
+// Add to plugins BEFORE react(): [midnightSsrStub(), react(), wasm(), clientTopLevelAwait()]
+// Ship matching empty stubs: src/lib/midnight-ssr-stub.ts (\`export default {}\`) and
+// src/lib/contract.ssr-stub.ts that re-exports inert stand-ins for every symbol the
+// route imports (publishKit, decodeChainState, KitPayload, loadContractModule, etc.).
+\`\`\``;
 
 const MIDNIGHTJS_BOOT = "WALLET DETECT (src/lib/lace.ts) \u2014 poll window.midnight up to 5s:\n```ts\nimport type { InitialAPI } from '@midnight-ntwrk/dapp-connector-api';\nimport semver from 'semver';\nexport async function waitForLace(timeoutMs = 5000): Promise<InitialAPI> {\n  return new Promise((resolve, reject) => {\n    const start = Date.now();\n    const t = setInterval(() => {\n      const m = (window as any).midnight ?? {};\n      const w = Object.values(m).find((x: any) =>\n        x && typeof x === 'object' && 'apiVersion' in x &&\n        semver.satisfies(x.apiVersion, '4.x')) as InitialAPI | undefined;\n      if (w) { clearInterval(t); resolve(w); return; }\n      if (Date.now() - start > timeoutMs) { clearInterval(t);\n        reject(new Error('Lace Midnight wallet not found. Install it: https://www.lace.io/')); }\n    }, 100);\n  });\n}\n```\n\nBUFFER POLYFILL (src/main.tsx, MUST be the very first line):\n```ts\nimport { Buffer } from 'buffer'; (globalThis as any).Buffer = Buffer;\n```\n\nPROVIDERS (src/lib/providers.ts) \u2014 chain Lace + proof server + indexer:\n```ts\nimport { setNetworkId } from '@midnight-ntwrk/midnight-js-network-id';\nimport { FetchZkConfigProvider } from '@midnight-ntwrk/midnight-js-fetch-zk-config-provider';\nimport { httpClientProofProvider } from '@midnight-ntwrk/midnight-js-http-client-proof-provider';\nimport { indexerPublicDataProvider } from '@midnight-ntwrk/midnight-js-indexer-public-data-provider';\nimport { waitForLace } from './lace';\n\nexport async function initProviders() {\n  setNetworkId(import.meta.env.VITE_NETWORK_ID ?? 'preview');\n  const lace = await waitForLace();\n  const connectedAPI = await lace.connect(import.meta.env.VITE_NETWORK_ID ?? 'preview');\n  const cfg = await connectedAPI.getConfiguration();\n  const zk = new FetchZkConfigProvider(window.location.origin, fetch.bind(window));\n  return {\n    connectedAPI,\n    zkConfigProvider: zk,\n    proofProvider: httpClientProofProvider(cfg.proverServerUri ?? import.meta.env.VITE_PROOF_SERVER_URL, zk),\n    publicDataProvider: indexerPublicDataProvider(cfg.indexerUri, cfg.indexerWsUri),\n  };\n}\n```\n\nREAD-ONLY LEDGER FETCH (no wallet needed \u2014 great for public feeds):\n```ts\nconst INDEXER = import.meta.env.VITE_INDEXER_URL;\nexport async function readLedger(address: string) {\n  const r = await fetch(INDEXER, {\n    method: 'POST', headers: { 'Content-Type': 'application/json' },\n    body: JSON.stringify({\n      query: `query($a:HexEncoded!){ contractAction(address:$a){ state } }`,\n      variables: { address },\n    }),\n  });\n  return (await r.json()).data?.contractAction?.state as string | null;\n}\n```";
 
-const REDFLAGS = "RED FLAGS \u2014 DO NOT ATTEMPT:\n- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.\n- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.\n- No recursion in Compact. Loops must be bounded by compile-time constants.\n- No sub-second finality UX. Proofs for k=14 circuits take 30\u2013120s \u2014 build for that latency.\n- No SSR for the write path. MidnightJS uses `window`, `Buffer`, and WASM top-level-await;\n  load every `@midnight-ntwrk/*` behind `<ClientOnly>` + `useEffect`. On TanStack Start, keep\n  nitro ENABLED and stub Midnight packages in the SSR pass (see `midnightSsrStub()`).\n- No deploying from a Cloudflare Worker / TanStack server function. Deploys are a local `bun`\n  script only \u2014 they need Docker, the proof server, and localhost.\n- Do NOT use `midnightntwrk/midnight-node:latest` (tag often missing) or the partner-chain 2.x\n  tags (need Cardano follower + Postgres). For public networks pin the matrix tags: proof-server:8.1.0,\n  midnight-node:1.0.1 (Preview), indexer:4.3.3. For local Undeployed use the local-dev triple:\n  proof-server:8.0.3, midnight-node:0.22.5, indexer-standalone:4.0.2.\n- Do NOT accept a user's recovery phrase in chat. Ship `scripts/check-midnight-wallet.mjs` that\n  reads `MIDNIGHT_WALLET_SEED` from their shell env and prints only PUBLIC addresses.\n- Do NOT derive shielded and unshielded addresses through different `NetworkId` values \u2014 use ONE\n  `NetworkId` across both encoders and validate the emitted bech32 prefix before writing `.env`";
+const SIGNING_STRATEGY = `SIGNING STRATEGY — Undeployed vs Preview/Preprod (hard-won lesson from Choreo Kits):
+
+| Mode | Signing | UI wallet |
+| --- | --- | --- |
+| \`undeployed\` | **Server-side** Fluent wallet via \`/api/mint\` route | Lace optional / limited |
+| \`preview\` / \`preprod\` | Lace \`publishKit\` | Full Lace flow |
+
+**Lace CANNOT sign on Undeployed.** Per Midnight docs, Lace cannot balance/sign on the local
+\`undeployed\` chain (only Preview/Preprod). Symptom: ZK proof completes, Lace's "Prove transaction"
+dialog spins forever OR submit fails with \`Unexpected error submitting scoped transaction '<unnamed>': Error\`
+— even with tDUST funded.
+
+Fix on Undeployed: route every write through a TanStack server route (\`src/routes/api/mint.ts\`)
+that reuses the same \`WalletBuilder\` + genesis seed \`…0002\` as \`scripts/deploy-midnight.mjs\`.
+Cache the wallet in a module-scope promise so the first call warms it and subsequent calls are fast.
+Frontend detects \`import.meta.env.VITE_NETWORK_ID === "undeployed"\` and POSTs
+\`{ contractAddress, ...fields }\` to \`/api/mint\` instead of calling Lace. Skip the Lace-connect
+and tDUST-balance guards on Undeployed entirely.
+
+Cloudflare build: add \`src/lib/mint.server.ts\` → \`src/lib/mint.ssr-stub.ts\` to the
+\`midnightSsrStub()\` swap list, and gate the stub on \`command === "build"\` so dev SSR still loads
+real Midnight libs for the API route. The published Worker cannot reach the local Docker stack
+anyway; the stub just returns 500 with a clear "dev-only" message.`;
+
+const ASYNC_BUFFER_CLIENT_ENTRY = `ASYNC BUFFER CLIENT ENTRY (TanStack Start) — replaces the module-scope Buffer polyfill.
+
+Vite dep pre-bundling crawls the heavy Midnight WASM graph and can hang the client entry for
+minutes on \`/.vite/deps/react.js\` (blank dev page). Fix: a custom \`src/client.tsx\` that polyfills
+Buffer ASYNCHRONOUSLY, AFTER the lightweight hydrate path is resolved. Module-scope
+\`globalThis.Buffer = Buffer\` races hydration when the optimizer is still crawling.
+
+\`\`\`tsx
+// src/client.tsx
+import { hydrateRoot } from 'react-dom/client';
+import { Buffer } from 'buffer';
+
+async function start() {
+  (globalThis as any).Buffer = Buffer;
+  const { StartClient } = await import('@tanstack/react-start/client');
+  hydrateRoot(document, <StartClient />);
+}
+
+start();
+\`\`\`
+
+Wire it in \`vite.config.ts\`:
+\`\`\`ts
+tanstackStart: { client: { entry: 'client' } },
+\`\`\`
+
+Keep SSR ON the shell route so the header renders in <2s; gate only Midnight-heavy widgets
+(wallet, contract writes) behind \`<ClientOnly>\` and dynamic \`import()\` inside \`useEffect\`.`;
+
+const KIT_FEED_PERSISTENCE = `TX-HASH PERSISTENCE — the indexer exposes contract STATE, not a list of transaction IDs.
+If you want a feed showing tx hashes, persist them client-side after the mint.
+
+Best practice from Choreo Kits:
+- Define your payload type with an optional \`txId?: string\` from the start; keep the canonical
+  type in ONE browser-safe module and re-export it — do not redefine in multiple components.
+- Write feed entries to \`localStorage\` AFTER the mint succeeds, attaching the \`txId\` returned
+  by the mint path:
+  - Undeployed: \`txId\` comes from the \`/api/mint\` response body.
+  - Preview / Preprod: \`txId\` comes from Lace \`publishKit\`.
+- Render the full \`tx: {hash}\` in the feed; label sources (\`chain\` when read from the indexer,
+  \`local\` when read from localStorage).
+- Dedupe by \`publishedAt\` and prefer the local row that already has \`txId\` when the indexer
+  catches up (usually a few seconds later).`;
+
+const REDFLAGS = "RED FLAGS \u2014 DO NOT ATTEMPT:\n- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.\n- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.\n- No recursion in Compact. Loops must be bounded by compile-time constants.\n- No sub-second finality UX. Proofs for k=14 circuits take 30\u2013120s \u2014 build for that latency.\n- No SSR for the write path. MidnightJS uses `window`, `Buffer`, and WASM top-level-await;\n  load every `@midnight-ntwrk/*` behind `<ClientOnly>` + `useEffect`. On TanStack Start, keep\n  nitro ENABLED and stub Midnight packages in the SSR pass (see `midnightSsrStub()`).\n- Do NOT set `nitro: false` on TanStack Start to 'escape SSR'. That splits the SSR output into\n  chunks (`assets/server-*.js` importing `assets/react-*.js`) that the Cloudflare Worker cannot\n  resolve at runtime \u2014 you get `Error: No such module \"assets/react\"` on every request. Keep\n  nitro on and use the `midnightSsrStub()` swap instead.\n- Do NOT sign Undeployed writes with Lace. Lace cannot balance/sign on the local `undeployed`\n  chain \u2014 the proof completes but submit fails silently. Route every write through a server\n  `/api/mint` route that reuses the genesis seed (see SIGNING STRATEGY block).\n- Do NOT ship `levelPrivateStateProvider` to the browser. Its `browser-level` \u2192 `abstract-level`\n  chain breaks under production Rollup with `Class extends value undefined is not a constructor or null`.\n  Use a `localStorage`-backed PrivateStateProvider in the browser; keep `levelPrivateStateProvider`\n  only in Node deploy scripts.\n- No deploying from a Cloudflare Worker / TanStack server function. Deploys are a local `bun`\n  script only \u2014 they need Docker, the proof server, and localhost.\n- Do NOT use `midnightntwrk/midnight-node:latest` (tag often missing) or the partner-chain 2.x\n  tags (need Cardano follower + Postgres). For public networks pin the matrix tags: proof-server:8.1.0,\n  midnight-node:1.0.1 (Preview), indexer:4.3.3. For local Undeployed use the local-dev triple:\n  proof-server:8.0.3, midnight-node:0.22.5, indexer-standalone:4.0.2.\n- Do NOT accept a user's recovery phrase in chat. Ship `scripts/check-midnight-wallet.mjs` that\n  reads `MIDNIGHT_WALLET_SEED` from their shell env and prints only PUBLIC addresses.\n- Do NOT derive shielded and unshielded addresses through different `NetworkId` values \u2014 use ONE\n  `NetworkId` across both encoders and validate the emitted bech32 prefix before writing `.env`";
 
 const LOCAL_STACK_INTRO = "LOCAL STACK SETUP (Undeployed variant \u2014 humans run this in a terminal, NOT Lovable):\n\nThe `undeployed` target expects a full Midnight standalone stack (node + indexer + proof server)\nrunning on your own machine. All three services are Docker containers. This is the DevRel-advised\npath for hackathon work \u2014 it bypasses the tNIGHT\u2192tDUST faucet dance entirely and pins SDK + node\nto the same version so `/check 400` ZKIR mismatches don't happen.\n\n--- Canonical `docker-compose.yml` (write to project root; DO NOT use `:latest` tags) ---\n```yaml\nservices:\n  proof-server:\n    image: midnightntwrk/proof-server:8.0.3\n    command: [\"midnight-proof-server\", \"-v\"]\n    ports: [\"6300:6300\"]\n  node:\n    image: midnightntwrk/midnight-node:0.22.5\n    environment:\n      CFG_PRESET: dev            # standalone dev chain, no partner-chain follower\n    ports: [\"9944:9944\"]\n  indexer:\n    image: midnightntwrk/indexer-standalone:4.0.2\n    depends_on: [node]\n    environment:\n      APP__INFRA__NODE__URL: ws://node:9944\n    ports: [\"8088:8088\"]\n```\nStandalone indexer GraphQL path is `/api/v4/graphql` (same as hosted Preview/Preprod).\nDo NOT use `/api/v1/graphql` on the public fly.dev URL (it 308-redirect-loops). Do NOT use\n`midnight-node:latest` (tag often missing) or the partner-chain 2.x tags (they require a Cardano\nfollower + Postgres + a `mock_registrations_file` and will not run standalone).\n\n--- One-command bring-up (after Docker is running) ---\n```bash\nbun scripts/midnight-standalone.mjs up      # pull + start + wait for ready\nbun scripts/midnight-standalone.mjs status  # check health\nbun scripts/midnight-standalone.mjs down    # stop\n```\nThe `up` command writes `.midnight/standalone.docker-compose.yml` (same content as above),\npulls the pinned images, starts the three services, and polls readiness on\nws://localhost:9944, http://localhost:8088/api/v4/graphql, and http://localhost:6300/health.\nFirst run pulls ~1 GB and takes 2\u20135 min; later boots are seconds.\n\nProbe container health with `docker inspect --format '{{.State.Health.Status}}' <name>` BEFORE\nthe 15 s wallet sync wait \u2014 a crash-looping node otherwise hangs 15 s + 8\u00d710 s = 95 s before\nthe first useful error.\n\nThen verify in the browser: navigate to `/undeployed-preflight` in the app. Four green pills = ready.\nFor a human-readable walkthrough with copy buttons, also see:\nhttps://midnightprompts.lovable.app/undeployed";
 
@@ -696,30 +844,131 @@ and the failure modes are invisible in preview. Reference: https://midnightpromp
 const HOSTING_FLYIO = `HOSTING ON FLY.IO (optional public demo for the Undeployed variant):
 
 If you want a published Lovable demo that any visitor with Lace can test without running Docker,
-host the Undeployed stack on four Fly apps in one org/region:
+host the Undeployed stack on FOUR Fly apps in ONE org + region. Battle-tested topology from the
+Tokenized Choreo Kits project (~$15–25/mo, proof-server is the biggest at 2GB shared-cpu-2x):
+
 \`\`\`text
 choreo-node.internal:9944    # midnight-node:${MIDNIGHT_MATRIX.localStack.node}, 6PN-internal, 1× machine, 1GB volume
-choreo-indexer.fly.dev       # indexer-standalone:${MIDNIGHT_MATRIX.localStack.indexer} -> ws://choreo-node.internal:9944
+choreo-indexer.fly.dev       # indexer-standalone:${MIDNIGHT_MATRIX.localStack.indexer} → ws://choreo-node.internal:9944
 choreo-proof.fly.dev         # proof-server:${MIDNIGHT_MATRIX.localStack.proofServer}, memory=2gb, min_machines_running=1
 choreo-faucet.fly.dev        # Node.js @midnight-ntwrk/wallet, holds FAUCET_SEED, /grant endpoint
 \`\`\`
 
-Critical blockers from the Lovable Midnight skill:
-- \`midnight-node:${MIDNIGHT_MATRIX.localStack.node}\` on Fly does NOT self-author blocks with \`CFG_PRESET=dev\` alone.
-  Before promoting to Fly, \`flyctl ssh console -a choreo-node\` and read the image's \`/entrypoint.sh\` to find the env
-  combination that actually enables standalone sealing for the pinned tag. Verify with
-  \`flyctl logs -a choreo-node | grep -E "Prepared block|Imported #[1-9]"\`.
-- Single machine per app. \`flyctl scale count 1\` everywhere. Node and proof-server should have \`min_machines_running=1\`.
-- Node is never public. No \`[http_service]\` on the node; expose 9944 only via 6PN-internal services.
-- Indexer must bind to IPv6: \`APP__INFRA__API__ADDRESS = "::"\` (bare, no brackets).
-- Proof server uses the stock image directly; no custom Dockerfile (distroless, no shell).
-- Deploy from a 6PN Fly Machine, not the Lovable sandbox. The deploy script needs \`ws://choreo-node.internal:9944\`.
-- Faucet cannot run on Cloudflare Workers; host it as a fourth Fly app. Bind HTTP to \`0.0.0.0\` (not \`::\`).
-- \`FAUCET_SEED\` must be exactly 64 hex chars: \`openssl rand -hex 32\`.
-- Indexer path is always \`/api/v4/graphql\`; never \`/api/v1/graphql\`.
+NON-NEGOTIABLES (each one cost hours in Choreo Kits — do not skip):
 
-Bring-up order: prove node authors blocks → deploy indexer → deploy proof-server → deploy faucet → fund faucet → run deploy from 6PN.
-Full failure-mode table: https://midnightprompts.lovable.app/undeployed (Fly.io section).`;
+1. **Node #0 is the #1 blocker. Fix it FIRST.**
+   \`midnight-node:${MIDNIGHT_MATRIX.localStack.node}\` on Fly with only \`CFG_PRESET=dev\` boots as a
+   partner-chain follower without a Cardano source and sits at \`best: #0\` forever. Every downstream
+   service looks broken (empty indexer, faucet wallet never syncs, deploy times out with
+   \`Insufficient Funds\`). Before promoting: \`flyctl ssh console -a choreo-node\` and dump the image's
+   \`/entrypoint.sh\` (or \`docker inspect midnightntwrk/midnight-node:${MIDNIGHT_MATRIX.localStack.node}\`)
+   to learn which env combination enables standalone sealing FOR THAT TAG. Verify with
+   \`flyctl logs -a choreo-node | grep -E "Prepared block|Imported #[1-9]"\`. If you never see block
+   imports past #0, don't debug indexer/faucet — it is the node.
+
+2. **Never overwrite the image ENTRYPOINT with \`[processes] app = "..."\`.**
+   Fly appends \`[processes]\` as extra args to ENTRYPOINT. A long "command" here silently becomes
+   stray args and env is ignored. Keep \`[processes]\` short (or omit); prefer env vars the entrypoint
+   script actually reads. Small extras like \`--rpc-external\` are fine.
+
+3. **Single machine per app.** \`flyctl scale count 1\` on every app, \`--ha=false\` on the node app,
+   \`min_machines_running=1\` on node + proof-server, \`auto_stop_machines=false\` on the node. Two node
+   machines will diverge silently.
+
+4. **Node is never public.** No \`[http_service]\` on the node. Indexer and deploy script reach it
+   via the 6PN \`choreo-node.internal:9944\` DNS name over IPv6. Bind the RPC to \`[::]:9944\` inside
+   the node so 6PN can reach it.
+
+5. **Indexer must bind to IPv6.** Fly 6PN is IPv6-only.
+   \`APP__INFRA__API__ADDRESS = "::"\` — BARE, NOT \`"[::]"\`. TOML parses the bracketed form as a
+   sequence and the container crashes at boot.
+
+6. **Indexer path is \`/api/v4/graphql\`.** The \`indexer-standalone:${MIDNIGHT_MATRIX.localStack.indexer}\`
+   image exposes v4. \`/api/v1/graphql\` emits a 308 redirect loop on the public fly.dev URL.
+   Frontend env: \`VITE_INDEXER_URL=https://choreo-indexer.fly.dev/api/v4/graphql\`,
+   \`VITE_INDEXER_WS_URL=wss://choreo-indexer.fly.dev/api/v4/graphql/ws\`.
+
+7. **Proof-server: stock image, NO custom Dockerfile.**
+   The \`midnightntwrk/proof-server:${MIDNIGHT_MATRIX.localStack.proofServer}\` base is DISTROLESS —
+   no bash, no sleep, no chmod. Any wrapper script fails with \`exec: 127\`. Use:
+   \`\`\`toml
+   [build] image = "midnightntwrk/proof-server:${MIDNIGHT_MATRIX.localStack.proofServer}"
+   [processes] app = "midnight-proof-server -v"
+   [[vm]] memory = "2gb"    # 1GB OOMs during proving-key load
+   \`\`\`
+   Only accessed via the public \`https://choreo-proof.fly.dev\` (IPv4 through Fly edge) — no
+   socat/IPv6 wrapper needed. First mint after deploy is still ~4 min cold (proving key load).
+
+8. **Deploy from a 6PN Fly Machine, not the Lovable sandbox or your laptop.**
+   The deploy script needs \`ws://choreo-node.internal:9944\`, only reachable inside 6PN. Pattern:
+   \`flyctl deploy --build-only --push\` a tiny image containing \`scripts/deploy-midnight.mjs\` +
+   compiled artefacts, then \`flyctl machine run <image> -a choreo-node --rm ...\`. Attaching to any
+   app in the same org auto-joins 6PN. Contract address is tied to the node volume — destroying it
+   nukes every previously-deployed address.
+
+9. **Faucet: FOURTH app, not a Cloudflare Worker.**
+   \`@midnight-ntwrk/wallet\` uses WebSocket + WASM patterns workerd rejects. Small Node.js server
+   with \`http.createServer\`, \`/grant { address }\` endpoint, in-memory rate-limit, \`FAUCET_SEED\` as
+   a Fly secret. Rules:
+   - **Bind HTTP to \`"0.0.0.0"\`, NOT \`"::"\`.** Fly-proxy forwards inbound over IPv4 loopback; an
+     IPv6-only listener never receives requests and the app looks hung. The wallet's OUTBOUND
+     connections to \`choreo-node.internal\` still go over IPv6 — that is independent.
+   - **\`FAUCET_SEED\` = exactly 64 hex chars.** \`openssl rand -hex 32\`, NOT \`-base64\`. \`WalletBuilder.buildFromSeed\`
+     throws \`InvalidSeed\` on anything else.
+   - **Do NOT import \`NetworkId\` from \`@midnight-ntwrk/midnight-js-network-id\` at Bun runtime.**
+     The package's ESM entry crashes with an import-map error under Bun. Pass the numeric enum
+     value directly (\`0\` for Undeployed) or hard-code the network name string.
+   - **Cold-boot: 10–90s.** \`wallet.start()\` takes that long to sync a non-zero balance after
+     machine start. \`/grant\` must return \`503 warming up\` until \`/health\` shows the address; UI
+     must retry. Never set \`min_machines_running=0\` unless you accept a 90s first-request delay.
+     If the node is stuck at #0, cold-boot never ends — check node health FIRST.
+   - **Must be funded once.** Send tDUST from the genesis deployer wallet (seed \`…0002\`) to the
+     address the faucet prints on boot. Refill when dry — no auto-refill.
+   - **CORS.** \`Access-Control-Allow-Origin: *\` (or your Lovable domain) + \`OPTIONS\` handler, or
+     the browser POST from the wallet-connect panel fails silently with a network error.
+
+BRING-UP ORDER (do NOT skip step 1):
+
+\`\`\`bash
+export FLY_API_TOKEN=FlyV1...           # verbatim from source; a single flipped char kills the macaroon
+export FAUCET_SEED=$(openssl rand -hex 32)
+export FLY_ORG=personal
+./scripts/fly-bootstrap.sh              # creates 4 apps + volume, deploys, scales to 1 (409-tolerant)
+# 1. Prove the node authors blocks BEFORE deploying anything else:
+flyctl logs -a choreo-node | grep -E "Imported #[1-9]"   # must see non-zero within 2 min
+# 2. curl indexer:  curl -X POST https://choreo-indexer.fly.dev/api/v4/graphql \\
+#      -d '{"query":"{block(offset:{height:1}){height}}"}'   # non-null block
+# 3. curl proof:    curl https://choreo-proof.fly.dev/version   # ${MIDNIGHT_MATRIX.localStack.proofServer}
+# 4. curl faucet:   curl https://choreo-faucet.fly.dev/health   # {"ok":true,"address":"mn_addr_undeployed1..."}
+# 5. Fund the faucet address once from the genesis deployer (…0002).
+# 6. Deploy the contract from a 6PN machine:
+./scripts/fly-deploy-contract.sh        # ephemeral machine runs deploy-midnight.mjs
+# Paste printed contract address into VITE_DEFAULT_CONTRACT and republish.
+\`\`\`
+
+FAILURE-MODE TABLE (new rows from Choreo Kits, copy the fixes verbatim):
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| Node stays at \`best: #0\`, \`Failed to trigger bootstrap: No known peers\` | Partner-chain follower without Cardano source; \`CFG_PRESET=dev\` alone is not enough on Fly | \`flyctl ssh console -a choreo-node\`, read \`/entrypoint.sh\`, find the standalone-sealer env for the pinned tag |
+| Indexer container exits at boot with a TOML/env parse error | \`APP__INFRA__API__ADDRESS = "[::]"\` — brackets make it a TOML sequence | Change to bare \`"::"\` |
+| Indexer public URL returns a 308 chain | Using \`/api/v1/graphql\` on standalone 4.x | Use \`/api/v4/graphql\` everywhere (faucet, deploy, frontend) |
+| Proof-server custom Dockerfile fails with \`exec: 127\` / \`sleep not found\` | Distroless base has no shell/coreutils | Don't build a custom image; use stock image + \`[processes] app = "midnight-proof-server -v"\` |
+| Proof-server OOMs mid-mint, first mint after deploy fails | 1GB machine, proving key needs ~1.5GB | \`[[vm]] memory = "2gb"\`, redeploy |
+| Faucet HTTP requests hang / never reach the container | Server bound to \`::\` — Fly-proxy forwards over IPv4 loopback | \`http.createServer(...).listen(PORT, "0.0.0.0")\` |
+| Faucet crashes at boot with \`InvalidSeed\` | \`FAUCET_SEED\` not exactly 64 hex chars (base64 output is common cause) | \`flyctl secrets set FAUCET_SEED=$(openssl rand -hex 32) -a choreo-faucet\` |
+| Faucet crashes at boot importing \`NetworkId\` from \`@midnight-ntwrk/midnight-js-network-id\` | Package's ESM entry breaks under Bun runtime | Use the numeric enum directly (\`0\` for Undeployed) instead of importing the enum |
+| Faucet \`/health\` returns \`{"ok":false,"address":null}\` for >5 min | Almost always the node is stuck at #0, NOT a faucet bug | Check \`flyctl logs -a choreo-node\` FIRST |
+| Faucet returns 503 for 60+s after redeploy | Wallet still syncing — expected | UI retry loop + "faucet warming up" toast; don't \`min_machines_running=0\` |
+| Faucet returns 500 \`Insufficient Funds\` | Faucet wallet drained | Send more tDUST from genesis deployer (…0002) to the faucet address shown at \`/health\` |
+| Node running \`[processes] app = "some-long-command"\` behaves as if env is ignored | \`[processes]\` replaces CMD → gets appended to ENTRYPOINT as stray args | Keep \`[processes]\` short or omit; prefer env vars |
+| Two node machines materialise after a \`flyctl deploy\` | \`--ha=true\` (default) | \`--ha=false\` + \`flyctl scale count 1\` on the node app |
+| Deploy from Lovable sandbox: WebSocket to \`ws://choreo-node.internal:9944\` fails | Sandbox is not on 6PN | Use \`scripts/fly-deploy-contract.sh\` (ephemeral 6PN machine) |
+| Browser: \`Mixed content: HTTPS page requested http://\` | Env still points at \`http://...localhost:6300\` | Use \`https://choreo-proof.fly.dev\`; Fly terminates TLS |
+| \`flyctl logs\` returns \`401 Unauthorized\` mid-session | Corrupted / retyped \`FLY_ACCESS_TOKEN\` (one flipped char kills the whole macaroon) | Re-export the token verbatim from the source; never hand-retype |
+| \`flyctl apps create\` returns error even though app exists | Some flyctl versions exit 1 on 409 | Bootstrap script uses \`flyctl apps list --json\` grep first — do the same for any new create step |
+
+Full skill reference: https://midnightprompts.lovable.app/undeployed (Fly.io section).`;
 
 
 function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
@@ -828,6 +1077,12 @@ ${VITE_CONFIG}
 
 ${MIDNIGHTJS_BOOT}
 
+${ASYNC_BUFFER_CLIENT_ENTRY}
+
+${SIGNING_STRATEGY}
+
+${KIT_FEED_PERSISTENCE}
+
 ${FRONTEND_STANDARDS}
 
 ${PRIVATE_STATE_PROVIDER}
@@ -853,6 +1108,8 @@ FURTHER REFERENCE (community skills registry — browsable, per-primitive scaffo
 - \`indexer\`                    — public data provider + GraphQL patterns for read-only ledger views
 - \`example-locker-dapp\`        — timelock vault reference (blockTimeGte, receive/sendUnshielded)
 - \`example-counter\`            — smallest end-to-end Compact + MidnightJS reference
+- Fly.io hosting (four-app topology + failure-mode table): https://midnightprompts.lovable.app/undeployed#flyio
+- Signing strategy (Undeployed uses server /api/mint; Preview/Preprod uses Lace publishKit): see SIGNING STRATEGY block above
 If the target Lovable session is on this workspace, those six skills are already active. Otherwise, drop
 \`.agents/skills/<name>/SKILL.md\` into your project from the repo above and run \`skills--apply_draft\`.
 
