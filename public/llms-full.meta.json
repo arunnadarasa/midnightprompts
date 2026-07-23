@@ -1,28 +1,32 @@
 {
-  "generatedAt": "2026-07-22T00:56:16.882Z",
+  "generatedAt": "2026-07-23T08:30:19.395Z",
   "ideaCount": 996,
   "networks": [
     "preview",
     "preprod",
-    "undeployed"
+    "undeployed",
+    "mainnet"
   ],
   "oses": [
     "macos",
     "windows",
     "linux"
   ],
-  "variantCount": 8964,
+  "variantCount": 11952,
   "sizes": {
-    "core": 13219,
-    "preview-macos": 34947296,
-    "preview-windows": 35663422,
-    "preview-linux": 34826780,
-    "preprod-macos": 34898498,
-    "preprod-windows": 35614624,
-    "preprod-linux": 34777982,
-    "undeployed-macos": 44183207,
-    "undeployed-windows": 46116445,
-    "undeployed-linux": 44190179,
-    "full": 343446612
+    "core": 13646,
+    "preview-macos": 50630312,
+    "preview-windows": 51346438,
+    "preview-linux": 50509796,
+    "preprod-macos": 50581514,
+    "preprod-windows": 51297640,
+    "preprod-linux": 50460998,
+    "undeployed-macos": 69499535,
+    "undeployed-windows": 71432773,
+    "undeployed-linux": 69506507,
+    "mainnet-macos": 53597396,
+    "mainnet-windows": 54313522,
+    "mainnet-linux": 53476880,
+    "full": 674193592
   }
 }
