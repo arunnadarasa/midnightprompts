@@ -221,33 +221,61 @@ function MidnightLedgerDemo() {
               deploy has to run on your own machine — Docker + Midnight's proof server are
               required, and the Lovable sandbox has neither.
             </div>
-            <div>
-              <strong className="text-primary">Funding gotcha:</strong> the{" "}
-              <a href={cfg.faucet} target="_blank" rel="noreferrer" className="text-primary underline">
-                {network} faucet
-              </a>{" "}
-              only accepts an <em>unshielded</em> address ({cfg.unshieldedPrefix ?? "mn_addr_…"}).
-              Import the seed into{" "}
-              <a href="https://www.lace.io/" target="_blank" rel="noreferrer" className="text-primary underline">
-                Lace
-              </a>{" "}
-              on Midnight {network}, copy its unshielded address, request tNIGHT, then click{" "}
-              <em>Generate tDUST</em> in Lace to delegate. See{" "}
-              <a href="https://docs.midnight.network/guides/acquire-tokens" target="_blank" rel="noreferrer" className="text-primary underline">
-                acquire-tokens docs ↗
-              </a>.
-            </div>
-            <div>
-              Once tDUST lands, run{" "}
-              <code>
-                {network === "preview"
-                  ? "bun scripts/deploy-midnight.mjs"
-                  : "VITE_NETWORK_ID=preprod bun scripts/deploy-midnight.mjs"}
-              </code>
-              ; it writes the deployed address into{" "}
-              <code>src/data/midnight-contract.{network}.json</code> and this page hydrates from
-              the Indexer.
-            </div>
+            {network === "undeployed" ? (
+              <>
+                <div>
+                  <strong className="text-primary">Local flow · no faucet.</strong> Bring the
+                  standalone stack up (node + indexer + proof-server), then deploy from the
+                  genesis wallet — tDUST is minted locally.
+                </div>
+                <pre className="font-mono text-[11px] break-all whitespace-pre-wrap text-foreground">
+{`# 1. start the local stack
+bun scripts/midnight-standalone.mjs up
+
+# 2. deploy from the genesis wallet
+VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs`}
+                </pre>
+                <div>
+                  The deployed address is written into{" "}
+                  <code>src/data/midnight-contract.undeployed.json</code>; this page hydrates from
+                  the local Indexer at <code className="break-all">{cfg.indexerHttp}</code>.
+                </div>
+                <div className="text-xs">
+                  See <Link to="/undeployed" className="text-primary underline">the Undeployed guide</Link>{" "}
+                  and <Link to="/undeployed-preflight" className="text-primary underline">preflight checks</Link>.
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <strong className="text-primary">Funding gotcha:</strong> the{" "}
+                  <a href={cfg.faucet} target="_blank" rel="noreferrer" className="text-primary underline">
+                    {network} faucet
+                  </a>{" "}
+                  only accepts an <em>unshielded</em> address ({cfg.unshieldedPrefix ?? "mn_addr_…"}).
+                  Import the seed into{" "}
+                  <a href="https://www.lace.io/" target="_blank" rel="noreferrer" className="text-primary underline">
+                    Lace
+                  </a>{" "}
+                  on Midnight {network}, copy its unshielded address, request tNIGHT, then click{" "}
+                  <em>Generate tDUST</em> in Lace to delegate. See{" "}
+                  <a href="https://docs.midnight.network/guides/acquire-tokens" target="_blank" rel="noreferrer" className="text-primary underline">
+                    acquire-tokens docs ↗
+                  </a>.
+                </div>
+                <div>
+                  Once tDUST lands, run{" "}
+                  <code>
+                    {network === "preview"
+                      ? "bun scripts/deploy-midnight.mjs"
+                      : "VITE_NETWORK_ID=preprod bun scripts/deploy-midnight.mjs"}
+                  </code>
+                  ; it writes the deployed address into{" "}
+                  <code>src/data/midnight-contract.{network}.json</code> and this page hydrates from
+                  the Indexer.
+                </div>
+              </>
+            )}
           </div>
         )}
 
