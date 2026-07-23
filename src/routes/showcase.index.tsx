@@ -40,6 +40,22 @@ const DEMOS: DemoCard[] = [
     ),
   },
   {
+    key: "choreocrowd-fund",
+    href: "https://choreo-crow.lovable.app/",
+    tag: "Fireside live build · Undeployed",
+    badge: "Undeployed",
+    networks: ["undeployed"],
+    title: "ChoreoCrowd Fund",
+    body: (
+      <>
+        Private onchain crowdfunding for dance projects — built live during the Midnight Fireside
+        chat. Demonstrates the server-append pattern (UI → <code>/api/append-entry</code> → genesis
+        wallet) for local Undeployed writes, since Lace can't sign on the Undeployed chain. Source on{" "}
+        <a href="https://github.com/arunnadarasa/midnightfireside" target="_blank" rel="noreferrer" className="underline hover:text-primary">GitHub</a>.
+      </>
+    ),
+  },
+  {
     key: "choreokits",
     href: "https://choreokits.lovable.app/",
     tag: "Hackathon starter · Live build",
@@ -57,6 +73,7 @@ const DEMOS: DemoCard[] = [
 
     ),
   },
+
 ];
 
 export const Route = createFileRoute("/showcase/")({
