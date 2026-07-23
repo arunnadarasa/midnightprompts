@@ -14,8 +14,8 @@ export const Route = createFileRoute("/showcase/midnight-ledger")({
   head: () => ({
     meta: [
       { title: "Midnight Ledger — Showcase" },
-      { name: "description", content: "Timestamp choreography privately on Midnight ZK testnets (preview + preprod). Compact contract + private witness + public ledger via Indexer." },
-      { property: "og:title", content: "Midnight Ledger — Live on Midnight preview + preprod" },
+      { name: "description", content: "Timestamp choreography privately on Midnight ZK networks (preview · preprod · undeployed). Compact contract + private witness + public ledger via Indexer." },
+      { property: "og:title", content: "Midnight Ledger — Live on Midnight preview · preprod · undeployed" },
       { property: "og:description", content: "Timestamp choreography privately on Midnight. Private witnesses, public commitments." },
     ],
   }),
