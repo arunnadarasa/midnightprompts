@@ -161,23 +161,50 @@ function MidnightLedgerDemo() {
       </div>
 
       <div className="mt-6 grid sm:grid-cols-1 gap-3">
-        <div className="p-5 border border-primary/40 bg-card text-[11px]">
-          <div className="eyebrow text-primary">preview · address sanity check</div>
-          <pre className="font-mono mt-2 break-all whitespace-pre-wrap text-foreground">
+        {network !== "undeployed" ? (
+          <div className="p-5 border border-primary/40 bg-card text-[11px]">
+            <div className="eyebrow text-primary">{network} · address sanity check</div>
+            <pre className="font-mono mt-2 break-all whitespace-pre-wrap text-foreground">
 {`MIDNIGHT_WALLET_SEED="your words stay local" \
-  bun scripts/check-midnight-wallet.mjs --network=preview`}
-          </pre>
-          <p className="mt-3 text-muted-foreground text-xs leading-relaxed">
-            The <a href={CONTRACTS.preview.faucet} target="_blank" rel="noreferrer" className="text-primary underline">preview faucet</a>{" "}
-            only accepts an <em>unshielded</em> address (<code>mn_addr_preview…</code>).
-          </p>
-          <div className="mt-3">
-            <div className="eyebrow text-muted-foreground">expected preview prefixes</div>
-            <div className="font-mono mt-1 break-all text-muted-foreground">
-              mn_addr_preview1… · mn_shield-addr_preview1…
+  bun scripts/check-midnight-wallet.mjs --network=${network}`}
+            </pre>
+            <p className="mt-3 text-muted-foreground text-xs leading-relaxed">
+              The <a href={cfg.faucet} target="_blank" rel="noreferrer" className="text-primary underline">{network} faucet</a>{" "}
+              only accepts an <em>unshielded</em> address ({cfg.unshieldedPrefix ?? "mn_addr_…"}).
+            </p>
+            <div className="mt-3">
+              <div className="eyebrow text-muted-foreground">expected {network} prefixes</div>
+              <div className="font-mono mt-1 break-all text-muted-foreground">
+                {cfg.unshieldedPrefix}… · {cfg.addressPrefix}…
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="p-5 border border-primary/40 bg-card text-[11px]">
+            <div className="eyebrow text-primary">undeployed · local stack sanity check</div>
+            <p className="mt-2 text-muted-foreground text-xs leading-relaxed">
+              No faucet required — the genesis wallet in the standalone stack mints tDUST directly.
+              Bring the containers up, then confirm the node + indexer are healthy before deploying.
+            </p>
+            <pre className="font-mono mt-3 break-all whitespace-pre-wrap text-foreground">
+{`bun scripts/midnight-standalone.mjs up`}
+            </pre>
+            <div className="mt-3 grid gap-1 text-muted-foreground">
+              <div><span className="text-primary">RPC</span> · <span className="font-mono">{cfg.rpc}</span></div>
+              <div><span className="text-primary">Indexer</span> · <span className="font-mono break-all">{cfg.indexerHttp}</span></div>
+            </div>
+            <div className="mt-3">
+              <div className="eyebrow text-muted-foreground">expected undeployed prefixes</div>
+              <div className="font-mono mt-1 break-all text-muted-foreground">
+                {cfg.unshieldedPrefix}… · {cfg.addressPrefix}…
+              </div>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+              <Link to="/undeployed-preflight" className="text-primary underline">Run preflight →</Link>
+              <Link to="/undeployed" className="text-primary underline">Undeployed guide →</Link>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="mt-10 p-6 sm:p-8 border border-border bg-card">
