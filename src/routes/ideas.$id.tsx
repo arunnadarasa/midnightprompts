@@ -12,8 +12,9 @@ const VARIANT_META: Record<NetworkVariant, { label: string; caption: string; exp
   preview:    { label: "Preview",             caption: "Fastest to demo. Testnet resets often. Faucet: nethermind.dev preview.", explorer: "https://preview.midnightexplorer.com/" },
   preprod:    { label: "Preprod",             caption: "Closer to mainnet parameters. Stable but occasional DUST-sync quirks.", explorer: "https://preprod.midnightexplorer.com/" },
   undeployed: { label: "Undeployed (local)",  caption: "Run the standalone stack on your own machine. No faucet, unlimited tDUST. DevRel-advised.", explorer: null },
+  mainnet:    { label: "Mainnet ⚠️",           caption: "REAL VALUE. Buy NIGHT from an official exchange partner. Vibe-coded, no audit — bragging-right proof-of-deploy only.", explorer: "https://midnightexplorer.com/" },
 };
-const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed"];
+const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed", "mainnet"];
 const OS_KEYS: OSTarget[] = ["macos", "windows", "linux"];
 
 function detectOS(): OSTarget {
