@@ -14,8 +14,8 @@ export const Route = createFileRoute("/showcase/midnight-ledger")({
   head: () => ({
     meta: [
       { title: "Midnight Ledger — Showcase" },
-      { name: "description", content: "Timestamp choreography privately on Midnight ZK testnets (preview + preprod). Compact contract + private witness + public ledger via Indexer." },
-      { property: "og:title", content: "Midnight Ledger — Live on Midnight preview + preprod" },
+      { name: "description", content: "Timestamp choreography privately on Midnight ZK networks (preview · preprod · undeployed). Compact contract + private witness + public ledger via Indexer." },
+      { property: "og:title", content: "Midnight Ledger — Live on Midnight preview · preprod · undeployed" },
       { property: "og:description", content: "Timestamp choreography privately on Midnight. Private witnesses, public commitments." },
     ],
   }),
@@ -84,14 +84,15 @@ function MidnightLedgerDemo() {
 
   return (
     <div className="max-w-4xl mx-auto px-5 sm:px-8 py-12 sm:py-20">
-      <span className="eyebrow">Demo · Live on Midnight preview + preprod</span>
+      <span className="eyebrow">Demo · Live on Midnight preview · preprod · undeployed</span>
       <h1 className="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
         Midnight <span className="italic text-primary">Ledger</span>
       </h1>
       <p className="mt-5 text-muted-foreground max-w-2xl leading-relaxed">
         A Compact contract that logs choreography to the public ledger while the author's identity
         stays behind a private-witness ZK proof. Reading is public — writing needs the Lace wallet,
-        the local proof server, and a small amount of tDUST from the faucet.
+        the local proof server, and a small amount of tDUST from the faucet (or the genesis wallet
+        on <em>undeployed</em>).
       </p>
 
       <p className="mt-3 text-[12px] text-muted-foreground">
@@ -106,8 +107,8 @@ function MidnightLedgerDemo() {
       </div>
 
       <div className="mt-8">
-        <span className="eyebrow block mb-2">Deploy status · both networks</span>
-        <DualDeployStatus cfgs={[CONTRACTS.preview, CONTRACTS.preprod]} />
+        <span className="eyebrow block mb-2">Deploy status · all networks</span>
+        <DualDeployStatus cfgs={[CONTRACTS.preview, CONTRACTS.preprod, CONTRACTS.undeployed]} />
       </div>
 
       <div className="mt-10 flex items-center justify-between gap-4 flex-wrap">
@@ -160,23 +161,50 @@ function MidnightLedgerDemo() {
       </div>
 
       <div className="mt-6 grid sm:grid-cols-1 gap-3">
-        <div className="p-5 border border-primary/40 bg-card text-[11px]">
-          <div className="eyebrow text-primary">preview · address sanity check</div>
-          <pre className="font-mono mt-2 break-all whitespace-pre-wrap text-foreground">
+        {network !== "undeployed" ? (
+          <div className="p-5 border border-primary/40 bg-card text-[11px]">
+            <div className="eyebrow text-primary">{network} · address sanity check</div>
+            <pre className="font-mono mt-2 break-all whitespace-pre-wrap text-foreground">
 {`MIDNIGHT_WALLET_SEED="your words stay local" \
-  bun scripts/check-midnight-wallet.mjs --network=preview`}
-          </pre>
-          <p className="mt-3 text-muted-foreground text-xs leading-relaxed">
-            The <a href={CONTRACTS.preview.faucet} target="_blank" rel="noreferrer" className="text-primary underline">preview faucet</a>{" "}
-            only accepts an <em>unshielded</em> address (<code>mn_addr_preview…</code>).
-          </p>
-          <div className="mt-3">
-            <div className="eyebrow text-muted-foreground">expected preview prefixes</div>
-            <div className="font-mono mt-1 break-all text-muted-foreground">
-              mn_addr_preview1… · mn_shield-addr_preview1…
+  bun scripts/check-midnight-wallet.mjs --network=${network}`}
+            </pre>
+            <p className="mt-3 text-muted-foreground text-xs leading-relaxed">
+              The <a href={cfg.faucet} target="_blank" rel="noreferrer" className="text-primary underline">{network} faucet</a>{" "}
+              only accepts an <em>unshielded</em> address ({cfg.unshieldedPrefix ?? "mn_addr_…"}).
+            </p>
+            <div className="mt-3">
+              <div className="eyebrow text-muted-foreground">expected {network} prefixes</div>
+              <div className="font-mono mt-1 break-all text-muted-foreground">
+                {cfg.unshieldedPrefix}… · {cfg.addressPrefix}…
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="p-5 border border-primary/40 bg-card text-[11px]">
+            <div className="eyebrow text-primary">undeployed · local stack sanity check</div>
+            <p className="mt-2 text-muted-foreground text-xs leading-relaxed">
+              No faucet required — the genesis wallet in the standalone stack mints tDUST directly.
+              Bring the containers up, then confirm the node + indexer are healthy before deploying.
+            </p>
+            <pre className="font-mono mt-3 break-all whitespace-pre-wrap text-foreground">
+{`bun scripts/midnight-standalone.mjs up`}
+            </pre>
+            <div className="mt-3 grid gap-1 text-muted-foreground">
+              <div><span className="text-primary">RPC</span> · <span className="font-mono">{cfg.rpc}</span></div>
+              <div><span className="text-primary">Indexer</span> · <span className="font-mono break-all">{cfg.indexerHttp}</span></div>
+            </div>
+            <div className="mt-3">
+              <div className="eyebrow text-muted-foreground">expected undeployed prefixes</div>
+              <div className="font-mono mt-1 break-all text-muted-foreground">
+                {cfg.unshieldedPrefix}… · {cfg.addressPrefix}…
+              </div>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+              <Link to="/undeployed-preflight" className="text-primary underline">Run preflight →</Link>
+              <Link to="/undeployed" className="text-primary underline">Undeployed guide →</Link>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="mt-10 p-6 sm:p-8 border border-border bg-card">
@@ -193,33 +221,61 @@ function MidnightLedgerDemo() {
               deploy has to run on your own machine — Docker + Midnight's proof server are
               required, and the Lovable sandbox has neither.
             </div>
-            <div>
-              <strong className="text-primary">Funding gotcha:</strong> the{" "}
-              <a href={cfg.faucet} target="_blank" rel="noreferrer" className="text-primary underline">
-                {network} faucet
-              </a>{" "}
-              only accepts an <em>unshielded</em> address ({cfg.unshieldedPrefix ?? "mn_addr_…"}).
-              Import the seed into{" "}
-              <a href="https://www.lace.io/" target="_blank" rel="noreferrer" className="text-primary underline">
-                Lace
-              </a>{" "}
-              on Midnight {network}, copy its unshielded address, request tNIGHT, then click{" "}
-              <em>Generate tDUST</em> in Lace to delegate. See{" "}
-              <a href="https://docs.midnight.network/guides/acquire-tokens" target="_blank" rel="noreferrer" className="text-primary underline">
-                acquire-tokens docs ↗
-              </a>.
-            </div>
-            <div>
-              Once tDUST lands, run{" "}
-              <code>
-                {network === "preview"
-                  ? "bun scripts/deploy-midnight.mjs"
-                  : "VITE_NETWORK_ID=preprod bun scripts/deploy-midnight.mjs"}
-              </code>
-              ; it writes the deployed address into{" "}
-              <code>src/data/midnight-contract.{network}.json</code> and this page hydrates from
-              the Indexer.
-            </div>
+            {network === "undeployed" ? (
+              <>
+                <div>
+                  <strong className="text-primary">Local flow · no faucet.</strong> Bring the
+                  standalone stack up (node + indexer + proof-server), then deploy from the
+                  genesis wallet — tDUST is minted locally.
+                </div>
+                <pre className="font-mono text-[11px] break-all whitespace-pre-wrap text-foreground">
+{`# 1. start the local stack
+bun scripts/midnight-standalone.mjs up
+
+# 2. deploy from the genesis wallet
+VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs`}
+                </pre>
+                <div>
+                  The deployed address is written into{" "}
+                  <code>src/data/midnight-contract.undeployed.json</code>; this page hydrates from
+                  the local Indexer at <code className="break-all">{cfg.indexerHttp}</code>.
+                </div>
+                <div className="text-xs">
+                  See <Link to="/undeployed" className="text-primary underline">the Undeployed guide</Link>{" "}
+                  and <Link to="/undeployed-preflight" className="text-primary underline">preflight checks</Link>.
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <strong className="text-primary">Funding gotcha:</strong> the{" "}
+                  <a href={cfg.faucet} target="_blank" rel="noreferrer" className="text-primary underline">
+                    {network} faucet
+                  </a>{" "}
+                  only accepts an <em>unshielded</em> address ({cfg.unshieldedPrefix ?? "mn_addr_…"}).
+                  Import the seed into{" "}
+                  <a href="https://www.lace.io/" target="_blank" rel="noreferrer" className="text-primary underline">
+                    Lace
+                  </a>{" "}
+                  on Midnight {network}, copy its unshielded address, request tNIGHT, then click{" "}
+                  <em>Generate tDUST</em> in Lace to delegate. See{" "}
+                  <a href="https://docs.midnight.network/guides/acquire-tokens" target="_blank" rel="noreferrer" className="text-primary underline">
+                    acquire-tokens docs ↗
+                  </a>.
+                </div>
+                <div>
+                  Once tDUST lands, run{" "}
+                  <code>
+                    {network === "preview"
+                      ? "bun scripts/deploy-midnight.mjs"
+                      : "VITE_NETWORK_ID=preprod bun scripts/deploy-midnight.mjs"}
+                  </code>
+                  ; it writes the deployed address into{" "}
+                  <code>src/data/midnight-contract.{network}.json</code> and this page hydrates from
+                  the Indexer.
+                </div>
+              </>
+            )}
           </div>
         )}
 
@@ -263,13 +319,19 @@ function MidnightLedgerDemo() {
           full recipe from the strategy page and run it on your machine.
         </p>
         <ol className="mt-4 space-y-1.5 text-sm text-foreground/90 font-light list-decimal pl-5">
-          <li>Install Lace, switch it to <em>Midnight preview</em> or <em>preprod</em>, get tDUST from the matching faucet.</li>
+          <li>Install Lace, switch it to <em>Midnight preview</em>, <em>preprod</em>, or <em>undeployed</em> (local), then get tDUST from the matching faucet — or from the genesis wallet on undeployed.</li>
           <li>
             <code>compact update</code> → <code>compact compile</code> your{" "}
             <code>.compact</code> file.
           </li>
           <li>
             <code>docker run -p 6300:6300 midnightntwrk/proof-server:{MIDNIGHT_MATRIX.proofServer} midnight-proof-server -v</code>
+          </li>
+          <li>
+            <strong className="text-primary">Fastest path (undeployed):</strong>{" "}
+            <code>bun scripts/midnight-standalone.mjs up</code> then{" "}
+            <code>VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs</code> — no faucet,
+            Docker-only. See <Link to="/undeployed" className="text-primary underline">the guide</Link>.
           </li>
           <li>
             Paste any mega-prompt from this repo into Lovable — it wires Lace + the proof server
