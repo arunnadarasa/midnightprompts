@@ -130,7 +130,75 @@ function midnightSsrStub(): Plugin {
 
 const MIDNIGHTJS_BOOT = "WALLET DETECT (src/lib/lace.ts) \u2014 poll window.midnight up to 5s:\n```ts\nimport type { InitialAPI } from '@midnight-ntwrk/dapp-connector-api';\nimport semver from 'semver';\nexport async function waitForLace(timeoutMs = 5000): Promise<InitialAPI> {\n  return new Promise((resolve, reject) => {\n    const start = Date.now();\n    const t = setInterval(() => {\n      const m = (window as any).midnight ?? {};\n      const w = Object.values(m).find((x: any) =>\n        x && typeof x === 'object' && 'apiVersion' in x &&\n        semver.satisfies(x.apiVersion, '4.x')) as InitialAPI | undefined;\n      if (w) { clearInterval(t); resolve(w); return; }\n      if (Date.now() - start > timeoutMs) { clearInterval(t);\n        reject(new Error('Lace Midnight wallet not found. Install it: https://www.lace.io/')); }\n    }, 100);\n  });\n}\n```\n\nBUFFER POLYFILL (src/main.tsx, MUST be the very first line):\n```ts\nimport { Buffer } from 'buffer'; (globalThis as any).Buffer = Buffer;\n```\n\nPROVIDERS (src/lib/providers.ts) \u2014 chain Lace + proof server + indexer:\n```ts\nimport { setNetworkId } from '@midnight-ntwrk/midnight-js-network-id';\nimport { FetchZkConfigProvider } from '@midnight-ntwrk/midnight-js-fetch-zk-config-provider';\nimport { httpClientProofProvider } from '@midnight-ntwrk/midnight-js-http-client-proof-provider';\nimport { indexerPublicDataProvider } from '@midnight-ntwrk/midnight-js-indexer-public-data-provider';\nimport { waitForLace } from './lace';\n\nexport async function initProviders() {\n  setNetworkId(import.meta.env.VITE_NETWORK_ID ?? 'preview');\n  const lace = await waitForLace();\n  const connectedAPI = await lace.connect(import.meta.env.VITE_NETWORK_ID ?? 'preview');\n  const cfg = await connectedAPI.getConfiguration();\n  const zk = new FetchZkConfigProvider(window.location.origin, fetch.bind(window));\n  return {\n    connectedAPI,\n    zkConfigProvider: zk,\n    proofProvider: httpClientProofProvider(cfg.proverServerUri ?? import.meta.env.VITE_PROOF_SERVER_URL, zk),\n    publicDataProvider: indexerPublicDataProvider(cfg.indexerUri, cfg.indexerWsUri),\n  };\n}\n```\n\nREAD-ONLY LEDGER FETCH (no wallet needed \u2014 great for public feeds):\n```ts\nconst INDEXER = import.meta.env.VITE_INDEXER_URL;\nexport async function readLedger(address: string) {\n  const r = await fetch(INDEXER, {\n    method: 'POST', headers: { 'Content-Type': 'application/json' },\n    body: JSON.stringify({\n      query: `query($a:HexEncoded!){ contractAction(address:$a){ state } }`,\n      variables: { address },\n    }),\n  });\n  return (await r.json()).data?.contractAction?.state as string | null;\n}\n```";
 
-const REDFLAGS = "RED FLAGS \u2014 DO NOT ATTEMPT:\n- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.\n- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.\n- No recursion in Compact. Loops must be bounded by compile-time constants.\n- No sub-second finality UX. Proofs for k=14 circuits take 30\u2013120s \u2014 build for that latency.\n- No SSR for the write path. MidnightJS uses `window`, `Buffer`, and WASM top-level-await;\n  load every `@midnight-ntwrk/*` behind `<ClientOnly>` + `useEffect`. On TanStack Start, keep\n  nitro ENABLED and stub Midnight packages in the SSR pass (see `midnightSsrStub()`).\n- No deploying from a Cloudflare Worker / TanStack server function. Deploys are a local `bun`\n  script only \u2014 they need Docker, the proof server, and localhost.\n- Do NOT use `midnightntwrk/midnight-node:latest` (tag often missing) or the partner-chain 2.x\n  tags (need Cardano follower + Postgres). For public networks pin the matrix tags: proof-server:8.1.0,\n  midnight-node:1.0.1 (Preview), indexer:4.3.3. For local Undeployed use the local-dev triple:\n  proof-server:8.0.3, midnight-node:0.22.5, indexer-standalone:4.0.2.\n- Do NOT accept a user's recovery phrase in chat. Ship `scripts/check-midnight-wallet.mjs` that\n  reads `MIDNIGHT_WALLET_SEED` from their shell env and prints only PUBLIC addresses.\n- Do NOT derive shielded and unshielded addresses through different `NetworkId` values \u2014 use ONE\n  `NetworkId` across both encoders and validate the emitted bech32 prefix before writing `.env`";
+const SIGNING_STRATEGY = `SIGNING STRATEGY — Undeployed vs Preview/Preprod (hard-won lesson from Choreo Kits):
+
+| Mode | Signing | UI wallet |
+| --- | --- | --- |
+| \`undeployed\` | **Server-side** Fluent wallet via \`/api/mint\` route | Lace optional / limited |
+| \`preview\` / \`preprod\` | Lace \`publishKit\` | Full Lace flow |
+
+**Lace CANNOT sign on Undeployed.** Per Midnight docs, Lace cannot balance/sign on the local
+\`undeployed\` chain (only Preview/Preprod). Symptom: ZK proof completes, Lace's "Prove transaction"
+dialog spins forever OR submit fails with \`Unexpected error submitting scoped transaction '<unnamed>': Error\`
+— even with tDUST funded.
+
+Fix on Undeployed: route every write through a TanStack server route (\`src/routes/api/mint.ts\`)
+that reuses the same \`WalletBuilder\` + genesis seed \`…0002\` as \`scripts/deploy-midnight.mjs\`.
+Cache the wallet in a module-scope promise so the first call warms it and subsequent calls are fast.
+Frontend detects \`import.meta.env.VITE_NETWORK_ID === "undeployed"\` and POSTs
+\`{ contractAddress, ...fields }\` to \`/api/mint\` instead of calling Lace. Skip the Lace-connect
+and tDUST-balance guards on Undeployed entirely.
+
+Cloudflare build: add \`src/lib/mint.server.ts\` → \`src/lib/mint.ssr-stub.ts\` to the
+\`midnightSsrStub()\` swap list, and gate the stub on \`command === "build"\` so dev SSR still loads
+real Midnight libs for the API route. The published Worker cannot reach the local Docker stack
+anyway; the stub just returns 500 with a clear "dev-only" message.`;
+
+const ASYNC_BUFFER_CLIENT_ENTRY = `ASYNC BUFFER CLIENT ENTRY (TanStack Start) — replaces the module-scope Buffer polyfill.
+
+Vite dep pre-bundling crawls the heavy Midnight WASM graph and can hang the client entry for
+minutes on \`/.vite/deps/react.js\` (blank dev page). Fix: a custom \`src/client.tsx\` that polyfills
+Buffer ASYNCHRONOUSLY, AFTER the lightweight hydrate path is resolved. Module-scope
+\`globalThis.Buffer = Buffer\` races hydration when the optimizer is still crawling.
+
+\`\`\`tsx
+// src/client.tsx
+import { hydrateRoot } from 'react-dom/client';
+import { Buffer } from 'buffer';
+
+async function start() {
+  (globalThis as any).Buffer = Buffer;
+  const { StartClient } = await import('@tanstack/react-start/client');
+  hydrateRoot(document, <StartClient />);
+}
+
+start();
+\`\`\`
+
+Wire it in \`vite.config.ts\`:
+\`\`\`ts
+tanstackStart: { client: { entry: 'client' } },
+\`\`\`
+
+Keep SSR ON the shell route so the header renders in <2s; gate only Midnight-heavy widgets
+(wallet, contract writes) behind \`<ClientOnly>\` and dynamic \`import()\` inside \`useEffect\`.`;
+
+const KIT_FEED_PERSISTENCE = `TX-HASH PERSISTENCE — the indexer exposes contract STATE, not a list of transaction IDs.
+If you want a feed showing tx hashes, persist them client-side after the mint.
+
+Best practice from Choreo Kits:
+- Define your payload type with an optional \`txId?: string\` from the start; keep the canonical
+  type in ONE browser-safe module and re-export it — do not redefine in multiple components.
+- Write feed entries to \`localStorage\` AFTER the mint succeeds, attaching the \`txId\` returned
+  by the mint path:
+  - Undeployed: \`txId\` comes from the \`/api/mint\` response body.
+  - Preview / Preprod: \`txId\` comes from Lace \`publishKit\`.
+- Render the full \`tx: {hash}\` in the feed; label sources (\`chain\` when read from the indexer,
+  \`local\` when read from localStorage).
+- Dedupe by \`publishedAt\` and prefer the local row that already has \`txId\` when the indexer
+  catches up (usually a few seconds later).`;
+
+const REDFLAGS = "RED FLAGS \u2014 DO NOT ATTEMPT:\n- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.\n- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.\n- No recursion in Compact. Loops must be bounded by compile-time constants.\n- No sub-second finality UX. Proofs for k=14 circuits take 30\u2013120s \u2014 build for that latency.\n- No SSR for the write path. MidnightJS uses `window`, `Buffer`, and WASM top-level-await;\n  load every `@midnight-ntwrk/*` behind `<ClientOnly>` + `useEffect`. On TanStack Start, keep\n  nitro ENABLED and stub Midnight packages in the SSR pass (see `midnightSsrStub()`).\n- Do NOT set `nitro: false` on TanStack Start to 'escape SSR'. That splits the SSR output into\n  chunks (`assets/server-*.js` importing `assets/react-*.js`) that the Cloudflare Worker cannot\n  resolve at runtime \u2014 you get `Error: No such module \"assets/react\"` on every request. Keep\n  nitro on and use the `midnightSsrStub()` swap instead.\n- Do NOT sign Undeployed writes with Lace. Lace cannot balance/sign on the local `undeployed`\n  chain \u2014 the proof completes but submit fails silently. Route every write through a server\n  `/api/mint` route that reuses the genesis seed (see SIGNING STRATEGY block).\n- Do NOT ship `levelPrivateStateProvider` to the browser. Its `browser-level` \u2192 `abstract-level`\n  chain breaks under production Rollup with `Class extends value undefined is not a constructor or null`.\n  Use a `localStorage`-backed PrivateStateProvider in the browser; keep `levelPrivateStateProvider`\n  only in Node deploy scripts.\n- No deploying from a Cloudflare Worker / TanStack server function. Deploys are a local `bun`\n  script only \u2014 they need Docker, the proof server, and localhost.\n- Do NOT use `midnightntwrk/midnight-node:latest` (tag often missing) or the partner-chain 2.x\n  tags (need Cardano follower + Postgres). For public networks pin the matrix tags: proof-server:8.1.0,\n  midnight-node:1.0.1 (Preview), indexer:4.3.3. For local Undeployed use the local-dev triple:\n  proof-server:8.0.3, midnight-node:0.22.5, indexer-standalone:4.0.2.\n- Do NOT accept a user's recovery phrase in chat. Ship `scripts/check-midnight-wallet.mjs` that\n  reads `MIDNIGHT_WALLET_SEED` from their shell env and prints only PUBLIC addresses.\n- Do NOT derive shielded and unshielded addresses through different `NetworkId` values \u2014 use ONE\n  `NetworkId` across both encoders and validate the emitted bech32 prefix before writing `.env`";
 
 const LOCAL_STACK_INTRO = "LOCAL STACK SETUP (Undeployed variant \u2014 humans run this in a terminal, NOT Lovable):\n\nThe `undeployed` target expects a full Midnight standalone stack (node + indexer + proof server)\nrunning on your own machine. All three services are Docker containers. This is the DevRel-advised\npath for hackathon work \u2014 it bypasses the tNIGHT\u2192tDUST faucet dance entirely and pins SDK + node\nto the same version so `/check 400` ZKIR mismatches don't happen.\n\n--- Canonical `docker-compose.yml` (write to project root; DO NOT use `:latest` tags) ---\n```yaml\nservices:\n  proof-server:\n    image: midnightntwrk/proof-server:8.0.3\n    command: [\"midnight-proof-server\", \"-v\"]\n    ports: [\"6300:6300\"]\n  node:\n    image: midnightntwrk/midnight-node:0.22.5\n    environment:\n      CFG_PRESET: dev            # standalone dev chain, no partner-chain follower\n    ports: [\"9944:9944\"]\n  indexer:\n    image: midnightntwrk/indexer-standalone:4.0.2\n    depends_on: [node]\n    environment:\n      APP__INFRA__NODE__URL: ws://node:9944\n    ports: [\"8088:8088\"]\n```\nStandalone indexer GraphQL path is `/api/v4/graphql` (same as hosted Preview/Preprod).\nDo NOT use `/api/v1/graphql` on the public fly.dev URL (it 308-redirect-loops). Do NOT use\n`midnight-node:latest` (tag often missing) or the partner-chain 2.x tags (they require a Cardano\nfollower + Postgres + a `mock_registrations_file` and will not run standalone).\n\n--- One-command bring-up (after Docker is running) ---\n```bash\nbun scripts/midnight-standalone.mjs up      # pull + start + wait for ready\nbun scripts/midnight-standalone.mjs status  # check health\nbun scripts/midnight-standalone.mjs down    # stop\n```\nThe `up` command writes `.midnight/standalone.docker-compose.yml` (same content as above),\npulls the pinned images, starts the three services, and polls readiness on\nws://localhost:9944, http://localhost:8088/api/v4/graphql, and http://localhost:6300/health.\nFirst run pulls ~1 GB and takes 2\u20135 min; later boots are seconds.\n\nProbe container health with `docker inspect --format '{{.State.Health.Status}}' <name>` BEFORE\nthe 15 s wallet sync wait \u2014 a crash-looping node otherwise hangs 15 s + 8\u00d710 s = 95 s before\nthe first useful error.\n\nThen verify in the browser: navigate to `/undeployed-preflight` in the app. Four green pills = ready.\nFor a human-readable walkthrough with copy buttons, also see:\nhttps://midnightprompts.lovable.app/undeployed";
 
