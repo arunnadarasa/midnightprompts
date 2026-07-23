@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { CopyButton } from "@/components/copy-button";
+import { MIDNIGHT_MATRIX } from "@/lib/midnight-matrix";
 
 export const Route = createFileRoute("/strategy")({
   head: () => ({
@@ -57,7 +58,7 @@ cp -r contracts/managed/timestamp-log/keys ./public/keys
 cp -r contracts/managed/timestamp-log/zkir ./public/zkir
 
 # Start the local proof server (all tx submits go through this)
-docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v
+docker run -p 6300:6300 midnightntwrk/proof-server:${MIDNIGHT_MATRIX.proofServer} midnight-proof-server -v
 `;
 
 const PINATA_SNIPPET = `// src/lib/pinata.ts — pin a Blob to IPFS, then commit the CID via Compact
@@ -123,7 +124,7 @@ open https://midnight-tmnight-preprod.nethermind.dev/   # Preprod
 #    Then in Lace click "Generate tDUST" to delegate tNIGHT → tDUST.
 
 # 4. Start the local proof server (one terminal tab, leave running):
-docker run -p 6300:6300 midnightntwrk/proof-server:latest midnight-proof-server -v
+docker run -p 6300:6300 midnightntwrk/proof-server:${MIDNIGHT_MATRIX.proofServer} midnight-proof-server -v
 
 # 5. Copy a mega-prompt from this repo into Lovable. One paste:
 #    - scaffolds the React + Vite app with WASM + top-level-await plugins

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CopyButton } from "@/components/copy-button";
+import { MIDNIGHT_MATRIX, SUPPORT_MATRIX_URL } from "@/lib/midnight-matrix";
 
 type OS = "macos" | "windows" | "linux";
 
@@ -304,14 +305,17 @@ function DockerCheatSheetPanel() {
     <div className="mt-6 pt-6 border-t border-border space-y-4">
       <span className="eyebrow text-primary">docker cli · cheat sheet for midnight</span>
       <p className="text-[12px] text-muted-foreground font-light">
-        The commands you will run most often once Docker is installed. The proof server and Undeployed stack both rely on these.
+        The commands you will run most often once Docker is installed. The proof server and Undeployed stack both rely on these. Pin the exact tag from the{" "}
+        <a href={SUPPORT_MATRIX_URL} className="text-primary hover:underline" target="_blank" rel="noreferrer">Midnight Support Matrix</a>{" "}
+        (currently <span className="font-mono text-foreground">{MIDNIGHT_MATRIX.proofServer}</span> for public networks; local Undeployed uses{" "}
+        <span className="font-mono text-foreground">{MIDNIGHT_MATRIX.localStack.proofServer}</span>).
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
         <div className="p-3 border border-border bg-background">
           <div className="font-display text-foreground text-sm">Start the proof server</div>
           <CodeBlock>{`docker run -d --name midnight-proof-server \\
   -p 6300:6300 \\
-  midnightntwrk/proof-server:latest \\
+  midnightntwrk/proof-server:${MIDNIGHT_MATRIX.proofServer} \\
   midnight-proof-server -v`}</CodeBlock>
         </div>
         <div className="p-3 border border-border bg-background">

@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Copy, Download, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
+import { MIDNIGHT_MATRIX, SUPPORT_MATRIX_URL } from "@/lib/midnight-matrix";
 
 import meta from "../../public/llms-full.meta.json";
 import fullAsset from "../../public/llms-full.txt.asset.json";
@@ -97,9 +98,15 @@ function LlmsPage() {
               <span className="text-xs text-muted-foreground">~16 KB · SKILL.md</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Non-negotiables for shipping a Midnight dApp on Lovable: pinned <code>proof-server:8.0.3</code> /{" "}
-              <code>midnight-node:0.22.5</code> / <code>indexer-standalone:4.0.2</code>, the nine-rule deploy-script
-              checklist, network-id mapping, and the failure modes ranked by frequency.
+              Non-negotiables for shipping a Midnight dApp on Lovable: versions mirror the{" "}
+              <a href={SUPPORT_MATRIX_URL} className="text-primary hover:underline" target="_blank" rel="noreferrer">Midnight Support Matrix</a>{" "}
+              (currently <code>proof-server:{MIDNIGHT_MATRIX.proofServer}</code> /{" "}
+              <code>midnight-node:{MIDNIGHT_MATRIX.node.preview}</code> /{" "}
+              <code>indexer-standalone:{MIDNIGHT_MATRIX.indexer}</code>; local Undeployed stack stays on{" "}
+              <code>proof-server:{MIDNIGHT_MATRIX.localStack.proofServer}</code> /{" "}
+              <code>midnight-node:{MIDNIGHT_MATRIX.localStack.node}</code> /{" "}
+              <code>indexer-standalone:{MIDNIGHT_MATRIX.localStack.indexer}</code>). Includes the nine-rule
+              deploy-script checklist, network-id mapping, and the failure modes ranked by frequency.
             </p>
             <div className="flex flex-wrap gap-2">
               <Button asChild size="sm">

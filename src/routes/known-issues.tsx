@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { SiteShell } from "@/components/site-shell";
 import { DockerSetupGuide } from "@/components/DockerSetupGuide";
+import { MIDNIGHT_MATRIX } from "@/lib/midnight-matrix";
 
 
 export const Route = createFileRoute("/known-issues")({
@@ -105,7 +106,7 @@ const ISSUES: Issue[] = [
     symptom:
       "Repeated `Could not deserialize Ledger Event` during shielded / DUST sync. Wallet SDK ↔ ledger/indexer event-format mismatch on Preprod.",
     cause:
-      "Pinned ledger-v8 / wallet-sdk-dust-wallet combo can't decode current Preprod events (e.g. midnight-js 4.0.4 vs matrix 4.1.1, proof-server 8.0.3 vs newer rows).",
+      "Pinned ledger-v8 / wallet-sdk-dust-wallet combo can't decode current Preprod events (e.g. midnight-js 4.0.4 vs matrix 4.1.1, proof-server 8.0.3 vs matrix 8.1.0). If the matrix now shows a newer proof-server / ledger-v8 row, re-pin everything to that single row.",
     fix: (
       <ul className="list-disc pl-5 space-y-1">
         <li>Re-pin wallet + ledger + midnight-js + proof-server from the Preprod matrix in one pass.</li>
@@ -239,9 +240,10 @@ const ISSUES: Issue[] = [
             precise list of reworked ops to avoid on 8.0.3.
           </li>
           <li>
-            <strong>Matrix conflict.</strong> ledger-v8 8.0.3 (matrix) vs wallet-sdk-dust-wallet 4.1.0
-            needing 8.1.0's <code>Transaction.addIntent</code>. Ask for the coherent wallet-sdk set for the
-            8.0.3 row.
+            <strong>Matrix conflict.</strong> Align ledger-v8, wallet-sdk-dust-wallet, and proof-server to
+            the same support-matrix row. As of the current matrix, that means ledger-v8 {MIDNIGHT_MATRIX.ledgerV8},
+            proof-server {MIDNIGHT_MATRIX.proofServer}, and Wallet SDK {MIDNIGHT_MATRIX.walletSdk}. Ask for the
+            coherent wallet-sdk set if you see <code>Transaction.addIntent</code> mismatches.
           </li>
         </ol>
         <p className="mt-3">
@@ -266,13 +268,17 @@ const ISSUES: Issue[] = [
     cause: "Wallet SDK ships as three packages (facade, dust, shielded) — do NOT mix 4.x + 4.x + 3.x ad-hoc.",
     fix: (
       <ul className="list-disc pl-5 space-y-1 font-mono text-[12px]">
-        <li>ledger-v8: <span className="text-primary">8.0.3</span></li>
-        <li>proof-server: <span className="text-primary">8.0.3</span> (must match ledger tag exactly)</li>
-        <li>compact: 0.5.1 · toolchain 0.31.1</li>
-        <li>compact-runtime: 0.16.0 · compact-js: 2.5.1</li>
-        <li>midnight-js-*: 4.1.1</li>
-        <li>onchain-runtime-v3: 3.0.0</li>
-        <li>Wallet SDK: align facade / dust / shielded to the same matrix row.</li>
+        <li>Midnight Node: {MIDNIGHT_MATRIX.node.preview} (Preview) / {MIDNIGHT_MATRIX.node.preprod} (Preprod) / {MIDNIGHT_MATRIX.node.mainnet} (Mainnet)</li>
+        <li>Midnight Indexer: {MIDNIGHT_MATRIX.indexer}</li>
+        <li>proof-server: <span className="text-primary">{MIDNIGHT_MATRIX.proofServer}</span> (public networks; use {MIDNIGHT_MATRIX.localStack.proofServer} for local Undeployed)</li>
+        <li>ledger-v8: <span className="text-primary">{MIDNIGHT_MATRIX.ledgerV8}</span></li>
+        <li>compact: {MIDNIGHT_MATRIX.compact.devtools} · toolchain {MIDNIGHT_MATRIX.compact.toolchain}</li>
+        <li>compact-runtime: {MIDNIGHT_MATRIX.compact.runtime} · compact-js: {MIDNIGHT_MATRIX.compact.compactJs}</li>
+        <li>midnight-js-*: {MIDNIGHT_MATRIX.midnightJs}</li>
+        <li>testkit-js: {MIDNIGHT_MATRIX.testkitJs}</li>
+        <li>onchain-runtime-v3: {MIDNIGHT_MATRIX.compact.onchainRuntime}</li>
+        <li>Wallet SDK: {MIDNIGHT_MATRIX.walletSdk} (facade / dust / shielded must all match this row)</li>
+        <li>DApp Connector API: {MIDNIGHT_MATRIX.dappConnectorApi}</li>
       </ul>
     ),
     links: [{ label: "Support matrix ↗", href: SUPPORT_MATRIX }],
