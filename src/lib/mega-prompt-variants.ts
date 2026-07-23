@@ -1162,7 +1162,9 @@ STACK
 ${PACKAGES}
 
 ${TOOLCHAIN_BY_OS[os]}
-${localBlock}${undeployedFundBlock}${flyioBlock}
+${localBlock}${undeployedFundBlock}${flyioBlock}${mainnetBlock}
+${EXPERIMENTAL_DISCLAIMER}
+
 ${SCRIPTS_FOLDER}
 
 ${VITE_CONFIG}
