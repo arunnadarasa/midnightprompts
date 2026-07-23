@@ -163,6 +163,7 @@ function Primer() {
             <a href="https://docs.midnight.network/relnotes/network" target="_blank" rel="noreferrer" className="text-primary underline">Network endpoints ↗</a>
             <a href="https://docs.midnight.network/relnotes/overview" target="_blank" rel="noreferrer" className="text-primary underline">Release notes ↗</a>
             <a href="https://docs.midnight.network/guides/acquire-tokens" target="_blank" rel="noreferrer" className="text-primary underline">Acquire tokens ↗</a>
+            <Link to="/undeployed" className="text-primary underline">Undeployed setup →</Link>
           </div>
         </div>
       </section>
