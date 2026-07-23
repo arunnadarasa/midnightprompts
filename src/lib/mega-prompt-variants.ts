@@ -46,7 +46,87 @@ const TOOLCHAIN_BY_OS: Record<OSTarget, string> = {
   linux: `${TOOLCHAIN_COMMON}\n\nLinux prerequisites (Ubuntu/Debian shown; adapt for your distro):\n\`\`\`bash\nsudo apt update\nsudo apt install -y docker.io docker-compose-plugin curl nodejs npm\nsudo systemctl enable --now docker\nsudo usermod -aG docker "$USER" && newgrp docker\n\`\`\`\nFedora: \`sudo dnf install docker docker-compose-plugin nodejs\`.\nArch:   \`sudo pacman -S docker docker-compose nodejs npm\`.\nVerify: \`docker run --rm hello-world\` should print the welcome banner without sudo.\nCopy-button walkthrough: https://midnightprompts.lovable.app/proof-server#docker-setup`,
 };
 
-const VITE_CONFIG = "VITE CONFIG (vite.config.ts) \u2014 WASM + top-level await are MANDATORY for MidnightJS:\n```ts\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport wasm from 'vite-plugin-wasm';\nimport topLevelAwait from 'vite-plugin-top-level-await';\nexport default defineConfig({\n  build: { target: 'esnext', commonjsOptions: { transformMixedEsModules: true, extensions: ['.js','.cjs'] } },\n  plugins: [react(), wasm(), topLevelAwait()],\n  optimizeDeps: {\n    esbuildOptions: { target: 'esnext', supported: { 'top-level-await': true } },\n    include: ['@midnight-ntwrk/compact-runtime'],\n    exclude: ['@midnight-ntwrk/onchain-runtime-v3',\n              '@midnight-ntwrk/onchain-runtime-v3/midnight_onchain_runtime_wasm_bg.wasm'],\n  },\n});\n```\n\nSSR RULE: never import a `@midnight-ntwrk/*` package at module scope of a route file \u2014 it uses\nNode Buffer + browser globals + WASM top-level await and crashes SSR. Load providers behind\n`useEffect` or a dynamic `import()` inside a `<ClientOnly>` boundary.";
+const VITE_CONFIG = `VITE CONFIG (vite.config.ts) — WASM + top-level await are MANDATORY for MidnightJS.
+Use the \`noDiscovery\` + explicit-include/exclude shape below. Do NOT put
+\`@midnight-ntwrk/compact-runtime\` in \`include\` — dep-pre-bundling then crawls the WASM graph
+and blocks the client entry for MINUTES on \`/.vite/deps/react.js\` (blank dev page).
+
+\`\`\`ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import wasm from 'vite-plugin-wasm';
+import topLevelAwait from 'vite-plugin-top-level-await';
+import type { Plugin } from 'vite';
+
+// On TanStack Start, restrict top-level-await to the CLIENT env — applied to the SSR
+// bundle it crashes workerd with "Identifier '__tla' has already been declared".
+function clientTopLevelAwait(): Plugin {
+  return { ...topLevelAwait(), applyToEnvironment: (env) => env.name === 'client' };
+}
+
+export default defineConfig({
+  build: { target: 'esnext', commonjsOptions: { transformMixedEsModules: true, defaultIsModuleExports: 'auto' } },
+  plugins: [react(), wasm(), clientTopLevelAwait()],
+  resolve: { conditions: ['browser', 'import', 'default'] },
+  ssr:     { resolve: { conditions: ['browser', 'node', 'import', 'default'] } },
+  optimizeDeps: {
+    noDiscovery: true,
+    esbuildOptions: { target: 'esnext', supported: { 'top-level-await': true } },
+    include: [
+      'react', 'react-dom', 'react-dom/client',
+      'react/jsx-runtime', 'react/jsx-dev-runtime',
+      'buffer', 'object-inspect', 'cross-fetch', '@subsquid/scale-codec',
+    ],
+    exclude: [
+      '@midnight-ntwrk/compact-runtime',
+      '@midnight-ntwrk/onchain-runtime-v3',
+      '@midnight-ntwrk/onchain-runtime-v3/midnight_onchain_runtime_wasm_bg.wasm',
+      '@midnight-ntwrk/midnight-js-contracts',
+      '@midnight-ntwrk/midnight-js-http-client-proof-provider',
+      '@midnight-ntwrk/midnight-js-indexer-public-data-provider',
+      '@midnight-ntwrk/midnight-js-node-zk-config-provider',
+      '@midnight-ntwrk/midnight-js-level-private-state-provider',
+      '@midnight-ntwrk/midnight-js-network-id',
+      '@midnight-ntwrk/midnight-js-utils',
+      '@midnight-ntwrk/wallet',
+      '@midnight-ntwrk/wallet-sdk-hd',
+    ],
+  },
+});
+\`\`\`
+
+SSR RULE: never import a \`@midnight-ntwrk/*\` package at module scope of a route file — it uses
+Node Buffer + browser globals + WASM top-level await and crashes SSR. Load providers behind
+\`useEffect\` or a dynamic \`import()\` inside a \`<ClientOnly>\` boundary.
+
+TANSTACK START SSR STUB (Cloudflare Worker target) — MANDATORY when publishing. Keep nitro
+ENABLED (do NOT set \`nitro: false\`; that splits SSR into chunks the Worker can't resolve).
+Add a Vite plugin that swaps every \`@midnight-ntwrk/*\` import AND your client contract module
+(e.g. \`src/lib/contract.ts\`) to inert stubs during the SSR pass — otherwise the SSR crawler
+still walks the WASM graph even for \`ssr: false\` routes and dies with \`MISSING_EXPORT\`.
+
+\`\`\`ts
+import path from 'node:path';
+function midnightSsrStub(): Plugin {
+  const wasmStub     = path.resolve('src/lib/midnight-ssr-stub.ts');
+  const contractStub = path.resolve('src/lib/contract.ssr-stub.ts');
+  const contractReal = path.resolve('src/lib/contract.ts');
+  return {
+    name: 'midnight-ssr-stub', enforce: 'pre',
+    async resolveId(id, importer, options) {
+      if (!options?.ssr) return;
+      if (id.startsWith('@midnight-ntwrk/')) return wasmStub;
+      const resolved = await this.resolve(id, importer, { ...options, skipSelf: true });
+      if (resolved && resolved.id === contractReal) return contractStub;
+      return resolved;
+    },
+  };
+}
+// Add to plugins BEFORE react(): [midnightSsrStub(), react(), wasm(), clientTopLevelAwait()]
+// Ship matching empty stubs: src/lib/midnight-ssr-stub.ts (\`export default {}\`) and
+// src/lib/contract.ssr-stub.ts that re-exports inert stand-ins for every symbol the
+// route imports (publishKit, decodeChainState, KitPayload, loadContractModule, etc.).
+\`\`\``;
 
 const MIDNIGHTJS_BOOT = "WALLET DETECT (src/lib/lace.ts) \u2014 poll window.midnight up to 5s:\n```ts\nimport type { InitialAPI } from '@midnight-ntwrk/dapp-connector-api';\nimport semver from 'semver';\nexport async function waitForLace(timeoutMs = 5000): Promise<InitialAPI> {\n  return new Promise((resolve, reject) => {\n    const start = Date.now();\n    const t = setInterval(() => {\n      const m = (window as any).midnight ?? {};\n      const w = Object.values(m).find((x: any) =>\n        x && typeof x === 'object' && 'apiVersion' in x &&\n        semver.satisfies(x.apiVersion, '4.x')) as InitialAPI | undefined;\n      if (w) { clearInterval(t); resolve(w); return; }\n      if (Date.now() - start > timeoutMs) { clearInterval(t);\n        reject(new Error('Lace Midnight wallet not found. Install it: https://www.lace.io/')); }\n    }, 100);\n  });\n}\n```\n\nBUFFER POLYFILL (src/main.tsx, MUST be the very first line):\n```ts\nimport { Buffer } from 'buffer'; (globalThis as any).Buffer = Buffer;\n```\n\nPROVIDERS (src/lib/providers.ts) \u2014 chain Lace + proof server + indexer:\n```ts\nimport { setNetworkId } from '@midnight-ntwrk/midnight-js-network-id';\nimport { FetchZkConfigProvider } from '@midnight-ntwrk/midnight-js-fetch-zk-config-provider';\nimport { httpClientProofProvider } from '@midnight-ntwrk/midnight-js-http-client-proof-provider';\nimport { indexerPublicDataProvider } from '@midnight-ntwrk/midnight-js-indexer-public-data-provider';\nimport { waitForLace } from './lace';\n\nexport async function initProviders() {\n  setNetworkId(import.meta.env.VITE_NETWORK_ID ?? 'preview');\n  const lace = await waitForLace();\n  const connectedAPI = await lace.connect(import.meta.env.VITE_NETWORK_ID ?? 'preview');\n  const cfg = await connectedAPI.getConfiguration();\n  const zk = new FetchZkConfigProvider(window.location.origin, fetch.bind(window));\n  return {\n    connectedAPI,\n    zkConfigProvider: zk,\n    proofProvider: httpClientProofProvider(cfg.proverServerUri ?? import.meta.env.VITE_PROOF_SERVER_URL, zk),\n    publicDataProvider: indexerPublicDataProvider(cfg.indexerUri, cfg.indexerWsUri),\n  };\n}\n```\n\nREAD-ONLY LEDGER FETCH (no wallet needed \u2014 great for public feeds):\n```ts\nconst INDEXER = import.meta.env.VITE_INDEXER_URL;\nexport async function readLedger(address: string) {\n  const r = await fetch(INDEXER, {\n    method: 'POST', headers: { 'Content-Type': 'application/json' },\n    body: JSON.stringify({\n      query: `query($a:HexEncoded!){ contractAction(address:$a){ state } }`,\n      variables: { address },\n    }),\n  });\n  return (await r.json()).data?.contractAction?.state as string | null;\n}\n```";
 
