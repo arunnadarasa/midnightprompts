@@ -10,7 +10,7 @@ import theaterData from "./ideas/theater.json";
 import fashionData from "./ideas/fashion.json";
 import hooksData from "./ideas/hooks.json";
 
-export type NetworkVariant = "preview" | "preprod" | "undeployed";
+export type NetworkVariant = "preview" | "preprod" | "undeployed" | "mainnet";
 
 export type Idea = {
   id: string;

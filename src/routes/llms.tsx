@@ -19,14 +19,18 @@ import preprodLinux from "../../public/llms-prompts-preprod-linux.txt.asset.json
 import undeployedMacos from "../../public/llms-prompts-undeployed-macos.txt.asset.json";
 import undeployedWindows from "../../public/llms-prompts-undeployed-windows.txt.asset.json";
 import undeployedLinux from "../../public/llms-prompts-undeployed-linux.txt.asset.json";
+import mainnetMacos from "../../public/llms-prompts-mainnet-macos.txt.asset.json";
+import mainnetWindows from "../../public/llms-prompts-mainnet-windows.txt.asset.json";
+import mainnetLinux from "../../public/llms-prompts-mainnet-linux.txt.asset.json";
 
 const PROMPTS: Record<string, Record<string, { url: string; size: number }>> = {
   preview: { macos: previewMacos, windows: previewWindows, linux: previewLinux },
   preprod: { macos: preprodMacos, windows: preprodWindows, linux: preprodLinux },
   undeployed: { macos: undeployedMacos, windows: undeployedWindows, linux: undeployedLinux },
+  mainnet: { macos: mainnetMacos, windows: mainnetWindows, linux: mainnetLinux },
 };
 
-const NET_LABEL: Record<string, string> = { preview: "Preview", preprod: "Preproduction", undeployed: "Undeployed" };
+const NET_LABEL: Record<string, string> = { preview: "Preview", preprod: "Preproduction", undeployed: "Undeployed", mainnet: "Mainnet" };
 const OS_LABEL: Record<string, string> = { macos: "macOS", windows: "Windows", linux: "Linux" };
 
 function humanSize(bytes: number) {
@@ -75,8 +79,9 @@ function LlmsPage() {
           <p className="text-muted-foreground max-w-2xl">
             The entire Creative Midnight site — guides, Docker setup for macOS · Windows · Linux, wallet flows,
             proof-server, Undeployed local stack, known issues, and all {meta.ideaCount.toLocaleString()} idea
-            mega-prompts in {meta.variantCount.toLocaleString()} variants (3 networks × 3 host OSes) — packaged as
-            plain-text files you can feed to Cursor, Claude Projects, ChatGPT custom GPTs, or paste back into Lovable.
+            mega-prompts in {meta.variantCount.toLocaleString()} variants (4 networks × 3 host OSes, including
+            an experimental Mainnet variant) — packaged as plain-text files you can feed to Cursor, Claude Projects,
+            ChatGPT custom GPTs, or paste back into Lovable.
           </p>
           <p className="text-xs text-muted-foreground">
             Last generated: {new Date(meta.generatedAt).toUTCString()}
@@ -181,17 +186,22 @@ function LlmsPage() {
           <div className="space-y-1">
             <h2 className="font-display text-2xl">Prompts by network × OS</h2>
             <p className="text-sm text-muted-foreground">
-              Nine slimmer files, one per (network, host-OS) combination. Smaller context, same {meta.ideaCount.toLocaleString()} ideas.
+              Twelve slimmer files, one per (network, host-OS) combination. Smaller context, same {meta.ideaCount.toLocaleString()} ideas.
+            </p>
+            <p className="text-xs text-red-500/90">
+              ⚠️ Mainnet variants ship with a mandatory red risk banner + README disclaimer, and route users to
+              official exchange partners (<a href="https://midnight.network/night?tag=exchange" target="_blank" rel="noreferrer" className="underline">midnight.network/night?tag=exchange</a>) to acquire NIGHT. Use only as a bragging-right proof-of-deploy.
             </p>
           </div>
 
           <div className="space-y-4">
             <Tabs value={network} onValueChange={setNetwork}>
               <div className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Network</div>
-              <TabsList className="grid grid-cols-3 w-full">
+              <TabsList className="grid grid-cols-2 md:grid-cols-4 w-full h-auto">
                 <TabsTrigger value="preview">Preview</TabsTrigger>
                 <TabsTrigger value="preprod">Preproduction</TabsTrigger>
                 <TabsTrigger value="undeployed">Undeployed</TabsTrigger>
+                <TabsTrigger value="mainnet">Mainnet ⚠️</TabsTrigger>
               </TabsList>
               {Object.keys(PROMPTS).map((n) => (
                 <TabsContent key={n} value={n} />

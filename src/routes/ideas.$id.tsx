@@ -12,8 +12,9 @@ const VARIANT_META: Record<NetworkVariant, { label: string; caption: string; exp
   preview:    { label: "Preview",             caption: "Fastest to demo. Testnet resets often. Faucet: nethermind.dev preview.", explorer: "https://preview.midnightexplorer.com/" },
   preprod:    { label: "Preprod",             caption: "Closer to mainnet parameters. Stable but occasional DUST-sync quirks.", explorer: "https://preprod.midnightexplorer.com/" },
   undeployed: { label: "Undeployed (local)",  caption: "Run the standalone stack on your own machine. No faucet, unlimited tDUST. DevRel-advised.", explorer: null },
+  mainnet:    { label: "Mainnet ⚠️",           caption: "REAL VALUE. Buy NIGHT from an official exchange partner. Vibe-coded, no audit — bragging-right proof-of-deploy only.", explorer: "https://midnightexplorer.com/" },
 };
-const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed"];
+const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed", "mainnet"];
 const OS_KEYS: OSTarget[] = ["macos", "windows", "linux"];
 
 function detectOS(): OSTarget {
@@ -154,7 +155,7 @@ function IdeaPage() {
           </div>
 
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <div className="grid grid-cols-3 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
+            <div className="grid grid-cols-2 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
               {VARIANT_KEYS.map((k) => {
                 const active = k === variant;
                 return (
@@ -165,7 +166,7 @@ function IdeaPage() {
                     className={
                       "px-2 py-2 text-[10px] tracking-[0.18em] uppercase text-center transition-colors sm:px-4 sm:text-[11px] sm:tracking-[0.24em] " +
                       (active
-                        ? "bg-primary text-primary-foreground"
+                        ? (k === "mainnet" ? "bg-red-600 text-white" : "bg-primary text-primary-foreground")
                         : "bg-card text-foreground/70 hover:text-primary hover:bg-background")
                     }
                     aria-pressed={active}
@@ -226,6 +227,25 @@ function IdeaPage() {
                 known issues →
               </Link>
             </p>
+          )}
+          {variant === "mainnet" && (
+            <div className="mt-3 border border-red-600/60 bg-red-950/30 p-4 max-w-3xl text-xs leading-relaxed font-light text-red-100">
+              <p className="uppercase tracking-[0.24em] text-red-400 mb-2 text-[10px]">⚠️ Mainnet — real value</p>
+              <p>
+                This dapp is vibe-coded and unaudited. Use Mainnet only as a bragging-right proof-of-deploy
+                after a full Undeployed → Preprod → Preview dry-run. Buy NIGHT from an official exchange
+                partner and withdraw to your Lace unshielded address:{" "}
+                <a
+                  href="https://midnight.network/night?tag=exchange"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="story-gold text-red-200 underline"
+                >
+                  midnight.network/night?tag=exchange ↗
+                </a>
+                . The generated prompt includes a mandatory persistent red banner + README disclaimer.
+              </p>
+            </div>
           )}
 
           <p className="mt-4 text-sm text-muted-foreground mb-4 font-light leading-relaxed">

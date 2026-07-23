@@ -11,9 +11,9 @@ import { buildVariant, OS_LABELS } from "../src/lib/mega-prompt-variants.ts";
 const OUT = "public";
 mkdirSync(OUT, { recursive: true });
 
-const NETWORKS = ["preview", "preprod", "undeployed"];
+const NETWORKS = ["preview", "preprod", "undeployed", "mainnet"];
 const OSES = ["macos", "windows", "linux"];
-const NET_LABEL = { preview: "Preview", preprod: "Preproduction", undeployed: "Undeployed" };
+const NET_LABEL = { preview: "Preview", preprod: "Preproduction", undeployed: "Undeployed", mainnet: "Mainnet" };
 
 const themesById = Object.fromEntries(THEMES.map((t) => [t.slug, t]));
 
