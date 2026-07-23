@@ -91,10 +91,12 @@ function ShowcaseIndex() {
         Working <span className="italic text-primary">ZK demos</span>.
       </h1>
       <p className="mt-6 text-muted-foreground max-w-2xl leading-relaxed">
-        Two reference builds from the prompt library: a Compact-contract ledger and a hackathon-ready
-        token kit. Both include deploy scripts, Lace wallet steps, and are tested on public testnets and
-        the local Undeployed stack.
+        Three reference builds from the prompt library: a Compact-contract ledger, a hackathon-ready
+        token kit, and the ChoreoCrowd Fund demo built live during the Midnight Fireside chat. All
+        include deploy scripts, Lace wallet steps, and are tested on public testnets and the local
+        Undeployed stack.
       </p>
+
 
       <DualDeployStatus
         cfgs={NETWORK_IDS.map((n) => CONTRACTS[n])}
