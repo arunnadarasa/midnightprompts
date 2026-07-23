@@ -319,13 +319,19 @@ VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs`}
           full recipe from the strategy page and run it on your machine.
         </p>
         <ol className="mt-4 space-y-1.5 text-sm text-foreground/90 font-light list-decimal pl-5">
-          <li>Install Lace, switch it to <em>Midnight preview</em> or <em>preprod</em>, get tDUST from the matching faucet.</li>
+          <li>Install Lace, switch it to <em>Midnight preview</em>, <em>preprod</em>, or <em>undeployed</em> (local), then get tDUST from the matching faucet — or from the genesis wallet on undeployed.</li>
           <li>
             <code>compact update</code> → <code>compact compile</code> your{" "}
             <code>.compact</code> file.
           </li>
           <li>
             <code>docker run -p 6300:6300 midnightntwrk/proof-server:{MIDNIGHT_MATRIX.proofServer} midnight-proof-server -v</code>
+          </li>
+          <li>
+            <strong className="text-primary">Fastest path (undeployed):</strong>{" "}
+            <code>bun scripts/midnight-standalone.mjs up</code> then{" "}
+            <code>VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs</code> — no faucet,
+            Docker-only. See <Link to="/undeployed" className="text-primary underline">the guide</Link>.
           </li>
           <li>
             Paste any mega-prompt from this repo into Lovable — it wires Lace + the proof server
