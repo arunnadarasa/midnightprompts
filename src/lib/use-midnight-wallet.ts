@@ -20,7 +20,7 @@ export type MidnightWalletState = {
   apiVersion: string | null;
   network: string | null;
   error: string | null;
-  connect: () => Promise<void>;
+  connect: (preferredNetwork?: string) => Promise<void>;
   disconnect: () => void;
   redetect: () => void;
 };
@@ -126,7 +126,7 @@ export function useMidnightWallet(): MidnightWalletState {
     };
   }, [detectTick]);
 
-  const connect = useCallback(async () => {
+  const connect = useCallback(async (preferredNetwork?: string) => {
     try {
       setError(null);
       setStatus("connecting");
@@ -138,8 +138,13 @@ export function useMidnightWallet(): MidnightWalletState {
         );
       }
       const envNet = (import.meta.env.VITE_NETWORK_ID as string | undefined) ?? "preprod";
-      const preferred = envNet === "preview" || envNet === "preprod" || envNet === "mainnet" ? envNet : "preprod";
-      const candidates = Array.from(new Set([preferred, "preview", "preprod", "mainnet"]));
+      const known = ["preview", "preprod", "mainnet", "undeployed"];
+      const preferred = preferredNetwork && known.includes(preferredNetwork)
+        ? preferredNetwork
+        : known.includes(envNet)
+          ? envNet
+          : "preprod";
+      const candidates = Array.from(new Set([preferred, "undeployed", "preview", "preprod", "mainnet"]));
       let api: ConnectedApi | null = null;
       let usedNetwork: string | null = null;
       let lastMismatch: unknown = null;
@@ -160,10 +165,11 @@ export function useMidnightWallet(): MidnightWalletState {
       if (!api || !usedNetwork) {
         throw new Error(
           lastMismatch
-            ? "Lace is on a different network than this app supports. Switch Lace to Preview or Preprod and retry."
+            ? "Lace is on a different network than this app supports. Switch Lace to Preview, Preprod, or your local Undeployed custom network and retry."
             : "Failed to connect to Lace.",
         );
       }
+
       let addr: string | null = null;
       let coinPk: string | null = null;
       // v4 DApp Connector API: state() removed, use granular methods.
