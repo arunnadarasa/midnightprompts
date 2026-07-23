@@ -1,20 +1,20 @@
-## Add Undeployed network to the Midnight Ledger demo
+## Update Primer: include Undeployed network
 
-**File:** `src/routes/showcase.midnight-ledger.tsx`
+On `src/routes/quantum-primer.tsx`, extend the "Preprod vs Preview vs Mainnet" section to cover all four networks Midnight ships.
 
-Bring the Midnight Ledger page in line with the rest of the site (WalletConnectPanel, NetworkToggle, and preflight page already support `undeployed`).
+### Changes
+1. Rename heading to **"Undeployed vs Preprod vs Preview vs Mainnet"** and update the intro to mention four networks (local + three hosted).
+2. Add an **Undeployed** column (leftmost) to the comparison table with these row values:
+   - Purpose: Local standalone chain running in Docker — no faucet dance, offline-friendly, resets when you `docker compose down -v`.
+   - Address prefix: `mn_addr_undeployed1…` (Lace labels it "Preview" — see Known Issues).
+   - Token: tDUST minted by local genesis seed (`…0002`); Lace itself starts at 0 and must be funded via `scripts/fund-lace.sh`.
+   - Faucet: None — local `midnight-local-dev faucet` / bundled script instead.
+   - SDK version: Matches the Docker image tags pinned in the support matrix (`midnight-node:0.22.5`, `indexer-standalone:4.0.2`, `proof-server:8.0.3`).
+   - Use for: Hackathon dev loop, offline demos, first-mint proof warm-up.
+   - Reset policy: Whenever you tear down the containers or delete the volume.
+3. Update the "Which one for the hackathon?" callout to recommend **Undeployed** for the local dev loop and **Preprod** for the shareable submission, keeping Preview for bleeding-edge SDK needs.
+4. Add a small link to `/undeployed` next to the existing docs links at the bottom.
 
-1. **Eyebrow + meta**: change "Live on Midnight preview + preprod" → "Live on Midnight preview · preprod · undeployed" (also in `head()` title/og description).
-2. **Deploy status**: extend `DualDeployStatus` array to include `CONTRACTS.undeployed` so all three networks show; update the "both networks" eyebrow label to "all networks".
-3. **Sanity-check card**: the current card is preview-only. Keep it, but make its copy conditional on the selected `network` so:
-   - `preview` / `preprod`: existing faucet + `check-midnight-wallet.mjs --network=<n>` copy.
-   - `undeployed`: replace with local-stack guidance — no faucet, genesis wallet mints tDUST; link to `/undeployed-preflight` and `/undeployed`; show expected prefixes `mn_addr_undeployed1… · mn_shield-addr_undeployed1…`; show local RPC / indexer URLs from `CONTRACTS.undeployed`.
-4. **"Awaiting deploy" block**: when `network === "undeployed"`, swap the faucet/tNIGHT paragraph for the local flow:
-   - Bring up the standalone stack: `bun scripts/midnight-standalone.mjs up`
-   - Deploy: `VITE_NETWORK_ID=undeployed bun scripts/deploy-midnight.mjs`
-   - Note the deployed address writes to `src/data/midnight-contract.undeployed.json`.
-   - Hide the tNIGHT/tDUST faucet link (undeployed has no faucet URL).
-5. **"Try it locally" ordered list**: add a fifth bullet (or a small note) mentioning the `undeployed` variant as the fastest path — no faucet, Docker-only.
-6. Do NOT change the default selected network (keeps `preprod` as the default, matching the rest of the site).
-
-No other files change — `NetworkToggle`, `WalletConnectPanel`, and `CONTRACTS.undeployed` already support this.
+### Technical
+- Table stays a single `<table>`; widen `min-w` from `560px` to ~`720px` to fit the extra column without truncation, and keep `overflow-x-auto` for mobile.
+- No new components, no routing changes, no data-layer changes — presentation only.
