@@ -1158,6 +1158,7 @@ Explorer: https://midnightexplorer.com/
 Support matrix (Mainnet node ${MIDNIGHT_MATRIX.node.mainnet}): ${SUPPORT_MATRIX_URL}`;
 
 
+export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, os: OSTarget = "macos"): string {
   const { title, pitch, subDiscipline: sub } = idea;
   const hid = idea.quantumHookId || "compact-deploy";
   const hook = HOOKS[hid] ?? HOOKS["compact-deploy"];
