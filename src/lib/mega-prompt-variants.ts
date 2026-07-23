@@ -1142,8 +1142,8 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, 
 Build "${title}" in ONE Lovable message. Single-page Midnight ZK demo.
 
 TARGET NETWORK: **${netLabel}** (VITE_NETWORK_ID = \`${network}\`)
-This is one of three variants of the same idea — Preview / Preprod / Undeployed. Only the network
-config, secrets, and (for Undeployed) local-stack setup differ. Contract + UI + Lace flow are identical.
+This is one of FOUR variants of the same idea — Preview / Preprod / Undeployed / Mainnet. Only the network
+config, secrets, signing surface, and disclaimers differ. Contract + UI + Lace flow are otherwise identical.
 
 CONCEPT
 ${pitch}
