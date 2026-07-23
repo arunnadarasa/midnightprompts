@@ -84,14 +84,15 @@ function MidnightLedgerDemo() {
 
   return (
     <div className="max-w-4xl mx-auto px-5 sm:px-8 py-12 sm:py-20">
-      <span className="eyebrow">Demo · Live on Midnight preview + preprod</span>
+      <span className="eyebrow">Demo · Live on Midnight preview · preprod · undeployed</span>
       <h1 className="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
         Midnight <span className="italic text-primary">Ledger</span>
       </h1>
       <p className="mt-5 text-muted-foreground max-w-2xl leading-relaxed">
         A Compact contract that logs choreography to the public ledger while the author's identity
         stays behind a private-witness ZK proof. Reading is public — writing needs the Lace wallet,
-        the local proof server, and a small amount of tDUST from the faucet.
+        the local proof server, and a small amount of tDUST from the faucet (or the genesis wallet
+        on <em>undeployed</em>).
       </p>
 
       <p className="mt-3 text-[12px] text-muted-foreground">
@@ -106,8 +107,8 @@ function MidnightLedgerDemo() {
       </div>
 
       <div className="mt-8">
-        <span className="eyebrow block mb-2">Deploy status · both networks</span>
-        <DualDeployStatus cfgs={[CONTRACTS.preview, CONTRACTS.preprod]} />
+        <span className="eyebrow block mb-2">Deploy status · all networks</span>
+        <DualDeployStatus cfgs={[CONTRACTS.preview, CONTRACTS.preprod, CONTRACTS.undeployed]} />
       </div>
 
       <div className="mt-10 flex items-center justify-between gap-4 flex-wrap">
