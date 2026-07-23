@@ -526,13 +526,116 @@ const dust = await api.getDustBalance();
 // dust is usually an object like { balance: bigint, ... }
 ```
 
-Display the balance prominently (e.g. "71 / 250,000 tDUST") and show a warning: "Fund your Lace wallet with tDUST before minting." This prevents the user from reaching a cryptic proof-submission error.
+
+
+## Undeployed writes: the server-append pattern (ChoreoCrowd Fund learnings)
+
+This is the #1 architectural decision on Undeployed. Get it wrong and you'll lose a full day to `Custom error: 117` and mystery `ChargedState` crashes.
+
+Mental model:
+
+```text
+Undeployed:  UI → POST /api/append-entry → genesis wallet (server) → chain
+Other nets:  UI → LaceWalletProvider → Lace signs in browser → chain
+Reads (all): fetchPublicContractLedger via indexer, no wallet needed
+```
+
+### One shared constant, imported from BOTH sides
+
+```ts
+// src/lib/midnight-shared.ts
+export const GENESIS_SEED        = '0000000000000000000000000000000000000000000000000000000000000002';
+export const PRIVATE_STATE_STORE = 'my-app-priv';   // pick one name, use it everywhere
+```
+
+Both `scripts/deploy-midnight.mjs` and `src/lib/append-entry.server.ts` must call
+`initializeMidnightProviders({ privateStateStoreName: PRIVATE_STATE_STORE, ... })` with the
+same value. `findDeployedContract` reads/writes the deployer's signing key in a LevelDB store
+keyed by that name + the contract address. Mismatch → no key found → SDK **samples a fresh
+signing key** → on-chain contract authority no longer matches → chain rejects the tx with
+`RpcError 1010: Invalid Transaction: Custom error: 117`.
+
+Debug tip: log the first/last 8 chars of `deployed.deployTxData.private.signingKey` on both
+sides. They must match byte-for-byte.
+
+### `ledger()` call shape — pass the inner state
+
+```ts
+// From getPublicStates():
+const { contractState } = await getPublicStates(publicDataProvider, address);
+const onChain = ledger(contractState.data);              // .data, not the wrapper
+
+// Right after a successful callTx:
+const onChain = ledger(result.public.nextContractState);
+```
+
+Passing the raw `ContractState` wrapper throws `expected instance of ChargedState`.
+
+### Recovery after Docker reset
+
+`midnight:down` wipes chain state and the address in
+`src/data/midnight-contract.undeployed.json` becomes dead:
+
+```bash
+bun run midnight:down
+bun run midnight:up
+bun run midnight:deploy       # refreshes midnight-contract.undeployed.json
+# restart the dev server so it re-imports the JSON
+```
+
+The server-append route caches `wallet + providers` in a module-scope `ctxPromise` for warm-path
+speed. Invalidate it when the contract address changes — otherwise the 2nd+ append silently
+targets the previous contract and fails with error 117 or a stale-state error. Pattern:
+
+```ts
+let cachedAddress: string | null = null;
+let ctxPromise: Promise<Ctx> | null = null;
+export async function getCtx(address: string) {
+  if (address !== cachedAddress) { cachedAddress = address; ctxPromise = buildCtx(address); }
+  return ctxPromise!;
+}
+```
+
+### `optimizeDeps.exclude` additions for the server-append path
+
+`testkit-js` pulls in Node-only deps transitively (`pino`, `ws`, `ssh2`, `cpu-features`). Vite /
+Rolldown tries to pre-bundle them and the dev server hangs on "Loading …" forever. Extend the
+existing exclude list:
+
+```ts
+optimizeDeps: {
+  exclude: [
+    // … existing @midnight-ntwrk/* entries …
+    '@midnight-ntwrk/testkit-js',
+    'pino', 'ws', 'ssh2', 'cpu-features',
+  ],
+}
+```
+
+### SSR stub for the server function
+
+Add `src/lib/append-entry.server.ts` → `src/lib/append-entry.ssr-stub.ts` to the
+`midnightSsrStub()` swap list (same pattern as `mint.server.ts`). The stub returns 500 with a
+clear "dev-only" message — the published Cloudflare Worker can't reach the local Docker stack
+anyway. Gate the stub on `command === "build"` so dev SSR still loads the real Midnight libs.
+
+### UX: a disabled write button is almost always empty form fields
+
+`canFund` / `canMint` usually requires every input non-empty AND (for deployed networks) Lace
+connected with tDUST. Show a tooltip that names the missing field ("Enter a project name and an
+amount to enable") so no one chases a phantom wallet bug for an hour.
 
 
 ## Failure modes ranked by frequency (with new rows)
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
+| `RpcError 1010: Invalid Transaction: Custom error: 117` on Undeployed append | Signing-key store mismatch: `privateStateStoreName` in deploy script ≠ server-append route → `findDeployedContract` sampled a fresh key → chain rejects | Import ONE shared `PRIVATE_STATE_STORE` constant from `src/lib/midnight-shared.ts` in both files. Log first/last 8 chars of the signing key on both sides to confirm they match |
+| `expected instance of ChargedState` when calling `ledger(...)` | Passed the raw `ContractState` wrapper instead of the inner state | Pass `contractState.data` (from `getPublicStates`) or `result.public.nextContractState` (after `callTx`) |
+| Dev server stuck on "Loading …" fallback, `bun run dev` never boots the app | Rolldown/Vite pre-bundling Node-only transitive deps pulled in by `@midnight-ntwrk/testkit-js` | Add `@midnight-ntwrk/testkit-js`, `pino`, `ws`, `ssh2`, `cpu-features` to `optimizeDeps.exclude` |
+| First append works, 2nd+ appends fail silently or 117 | Stale `ctxPromise` cache in the server route after redeploy | Invalidate `ctxPromise` when the contract address changes; restart the dev server after `midnight:deploy` |
+| Undeployed append fails after `docker compose down` / `up` | Chain state wiped; `midnight-contract.undeployed.json` still references the previous contract | Always run `bun run midnight:deploy` after any `midnight:down`/`up`, then restart the dev server |
+| "Prove & submit" button greyed out despite Lace connected | Empty form field; not a wallet bug | Tooltip naming the missing field; check `canFund` / `canMint` predicate |
 | `Cannot connect to the Docker daemon` | Docker Desktop / colima not started | Start it, wait for the whale icon, retry |
 | Pull fails `midnightntwrk/midnight-node:latest not found` | `latest` tag doesn't exist | Pin `0.22.5` |
 | Node container in "Restarting" loop, logs say `db_sync_postgres_connection_string must be defined` | Using partner-chain 2.x image | Switch to `midnight-node:0.22.5` with `CFG_PRESET=dev` |

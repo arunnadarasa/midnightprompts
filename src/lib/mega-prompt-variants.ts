@@ -130,29 +130,109 @@ function midnightSsrStub(): Plugin {
 
 const MIDNIGHTJS_BOOT = "WALLET DETECT (src/lib/lace.ts) \u2014 poll window.midnight up to 5s:\n```ts\nimport type { InitialAPI } from '@midnight-ntwrk/dapp-connector-api';\nimport semver from 'semver';\nexport async function waitForLace(timeoutMs = 5000): Promise<InitialAPI> {\n  return new Promise((resolve, reject) => {\n    const start = Date.now();\n    const t = setInterval(() => {\n      const m = (window as any).midnight ?? {};\n      const w = Object.values(m).find((x: any) =>\n        x && typeof x === 'object' && 'apiVersion' in x &&\n        semver.satisfies(x.apiVersion, '4.x')) as InitialAPI | undefined;\n      if (w) { clearInterval(t); resolve(w); return; }\n      if (Date.now() - start > timeoutMs) { clearInterval(t);\n        reject(new Error('Lace Midnight wallet not found. Install it: https://www.lace.io/')); }\n    }, 100);\n  });\n}\n```\n\nBUFFER POLYFILL (src/main.tsx, MUST be the very first line):\n```ts\nimport { Buffer } from 'buffer'; (globalThis as any).Buffer = Buffer;\n```\n\nPROVIDERS (src/lib/providers.ts) \u2014 chain Lace + proof server + indexer:\n```ts\nimport { setNetworkId } from '@midnight-ntwrk/midnight-js-network-id';\nimport { FetchZkConfigProvider } from '@midnight-ntwrk/midnight-js-fetch-zk-config-provider';\nimport { httpClientProofProvider } from '@midnight-ntwrk/midnight-js-http-client-proof-provider';\nimport { indexerPublicDataProvider } from '@midnight-ntwrk/midnight-js-indexer-public-data-provider';\nimport { waitForLace } from './lace';\n\nexport async function initProviders() {\n  setNetworkId(import.meta.env.VITE_NETWORK_ID ?? 'preview');\n  const lace = await waitForLace();\n  const connectedAPI = await lace.connect(import.meta.env.VITE_NETWORK_ID ?? 'preview');\n  const cfg = await connectedAPI.getConfiguration();\n  const zk = new FetchZkConfigProvider(window.location.origin, fetch.bind(window));\n  return {\n    connectedAPI,\n    zkConfigProvider: zk,\n    proofProvider: httpClientProofProvider(cfg.proverServerUri ?? import.meta.env.VITE_PROOF_SERVER_URL, zk),\n    publicDataProvider: indexerPublicDataProvider(cfg.indexerUri, cfg.indexerWsUri),\n  };\n}\n```\n\nREAD-ONLY LEDGER FETCH (no wallet needed \u2014 great for public feeds):\n```ts\nconst INDEXER = import.meta.env.VITE_INDEXER_URL;\nexport async function readLedger(address: string) {\n  const r = await fetch(INDEXER, {\n    method: 'POST', headers: { 'Content-Type': 'application/json' },\n    body: JSON.stringify({\n      query: `query($a:HexEncoded!){ contractAction(address:$a){ state } }`,\n      variables: { address },\n    }),\n  });\n  return (await r.json()).data?.contractAction?.state as string | null;\n}\n```";
 
-const SIGNING_STRATEGY = `SIGNING STRATEGY — Undeployed vs Preview/Preprod (hard-won lesson from Choreo Kits):
+const SIGNING_STRATEGY = `SIGNING STRATEGY — Undeployed vs Preview/Preprod (hard-won lessons from Choreo Kits + ChoreoCrowd Fund):
+
+Mental model — burn this in before writing a line of code:
+
+\`\`\`text
+Undeployed:  UI → POST /api/append-entry → genesis wallet (server) → chain
+Other nets:  UI → LaceWalletProvider → Lace signs in browser → chain
+Reads (all): fetchPublicContractLedger via indexer (no wallet needed)
+\`\`\`
 
 | Mode | Signing | UI wallet |
 | --- | --- | --- |
-| \`undeployed\` | **Server-side** Fluent wallet via \`/api/mint\` route | Lace optional / limited |
-| \`preview\` / \`preprod\` | Lace \`publishKit\` | Full Lace flow |
+| \`undeployed\` | **Server-side** genesis wallet via \`/api/append-entry\` (or \`/api/mint\`, name it after your circuit) | Lace optional / limited |
+| \`preview\` / \`preprod\` | Lace \`publishKit\` / \`callTx\` in the browser | Full Lace flow |
+| \`mainnet\` | Lace only — NEVER server-side | Full Lace flow, user-initiated |
 
 **Lace CANNOT sign on Undeployed.** Per Midnight docs, Lace cannot balance/sign on the local
-\`undeployed\` chain (only Preview/Preprod). Symptom: ZK proof completes, Lace's "Prove transaction"
-dialog spins forever OR submit fails with \`Unexpected error submitting scoped transaction '<unnamed>': Error\`
-— even with tDUST funded.
+\`undeployed\` chain (only Preview/Preprod/Mainnet). Symptoms: ZK proof completes, Lace's "Prove
+transaction" dialog spins forever OR submit fails with \`Unexpected error submitting scoped
+transaction '<unnamed>': Error\` — even with tDUST funded.
 
-Fix on Undeployed: route every write through a TanStack server route (\`src/routes/api/mint.ts\`)
-that reuses the same \`WalletBuilder\` + genesis seed \`…0002\` as \`scripts/deploy-midnight.mjs\`.
-Cache the wallet in a module-scope promise so the first call warms it and subsequent calls are fast.
-Frontend detects \`import.meta.env.VITE_NETWORK_ID === "undeployed"\` and POSTs
-\`{ contractAddress, ...fields }\` to \`/api/mint\` instead of calling Lace. Skip the Lace-connect
-and tDUST-balance guards on Undeployed entirely.
+Fix on Undeployed: route every write through a TanStack server route
+(\`src/routes/api/append-entry.ts\` → \`src/lib/append-entry.server.ts\`) that reuses the same
+\`WalletBuilder\` + genesis seed \`…0002\` as \`scripts/deploy-midnight.mjs\`. Cache the wallet +
+providers in a module-scope \`ctxPromise\` so the first call warms them and subsequent calls are
+fast. Frontend detects \`import.meta.env.VITE_NETWORK_ID === "undeployed"\` and POSTs
+\`{ contractAddress, ...fields }\` to \`/api/append-entry\` instead of calling Lace. Skip the
+Lace-connect and tDUST-balance guards on Undeployed entirely.
 
-Cloudflare build: add \`src/lib/mint.server.ts\` → \`src/lib/mint.ssr-stub.ts\` to the
-\`midnightSsrStub()\` swap list, and gate the stub on \`command === "build"\` so dev SSR still loads
-real Midnight libs for the API route. The published Worker cannot reach the local Docker stack
-anyway; the stub just returns 500 with a clear "dev-only" message.`;
+SHARED CONSTANTS — MUST stay identical across deploy script AND server-append route.
+Mismatch = \`RpcError 1010: Invalid Transaction: Custom error: 117\` (see RED FLAGS below).
+
+\`\`\`ts
+// src/lib/midnight-shared.ts — import from BOTH deploy script and server route
+export const GENESIS_SEED       = '0000000000000000000000000000000000000000000000000000000000000002';
+export const PRIVATE_STATE_STORE = 'my-app-priv';   // pick one name, use it EVERYWHERE
+\`\`\`
+
+Then in \`scripts/deploy-midnight.mjs\` AND \`src/lib/append-entry.server.ts\`:
+
+\`\`\`ts
+import { GENESIS_SEED, PRIVATE_STATE_STORE } from '@/lib/midnight-shared';
+initializeMidnightProviders({ privateStateStoreName: PRIVATE_STATE_STORE, /* … */ });
+\`\`\`
+
+Why: \`findDeployedContract\` reads/writes the deployer's signing key in a LevelDB store keyed by
+\`privateStateStoreName\` + contract address. A mismatched store name → no key found → SDK samples
+a FRESH signing key → on-chain contract authority does not match → chain rejects with error 117.
+Debug tip: log the first/last 8 chars of \`deployed.deployTxData.private.signingKey\` on both
+deploy and append; they must match byte-for-byte.
+
+LEDGER READ CALL SHAPE — pass the INNER state, never the wrapper:
+
+\`\`\`ts
+// After getPublicStates():
+const { contractState } = await getPublicStates(publicDataProvider, address);
+const onChain = ledger(contractState.data);            // ← .data, not contractState
+
+// Right after a successful callTx:
+const onChain = ledger(result.public.nextContractState);
+\`\`\`
+
+Passing the raw \`ContractState\` wrapper throws \`expected instance of ChargedState\` from the
+compiled contract helpers.
+
+RECOVERY AFTER DOCKER RESET — the address in \`src/data/midnight-contract.undeployed.json\` is
+invalidated with the chain state. Do this every time:
+
+\`\`\`bash
+bun run midnight:down
+bun run midnight:up
+bun run midnight:deploy       # refreshes midnight-contract.undeployed.json
+# restart the dev server so it re-imports the JSON
+\`\`\`
+
+Also invalidate the server route's \`ctxPromise\` cache whenever the contract address changes
+(re-read the JSON on each request, or re-init when \`address !== cachedAddress\`) — otherwise the
+2nd+ append silently uses the previous contract and fails with error 117 or a stale-state error.
+
+VITE optimizeDeps — the server-append path pulls Node-only deps transitively. Add them to
+\`optimizeDeps.exclude\` in \`vite.config.ts\` or the dev server hangs on "Loading …":
+
+\`\`\`ts
+optimizeDeps: {
+  exclude: [
+    // … existing @midnight-ntwrk/* entries …
+    '@midnight-ntwrk/testkit-js',
+    'pino',
+    'ws',
+    'ssh2',
+    'cpu-features',
+  ],
+}
+\`\`\`
+
+Cloudflare build: add \`src/lib/append-entry.server.ts\` → \`src/lib/append-entry.ssr-stub.ts\` to
+the \`midnightSsrStub()\` swap list. The stub just returns 500 with a clear "dev-only" message —
+the published Worker cannot reach the local Docker stack anyway. Gate the stub on
+\`command === "build"\` so dev SSR still loads real Midnight libs for the API route.
+
+UX NOTE — a disabled "Prove & submit" button is almost always empty form fields, not a wallet
+bug. Show a tooltip on hover ("Fill in {project name} and {amount} to enable") so the user
+doesn't chase a phantom Lace / tDUST problem.`;
 
 const ASYNC_BUFFER_CLIENT_ENTRY = `ASYNC BUFFER CLIENT ENTRY (TanStack Start) — replaces the module-scope Buffer polyfill.
 
@@ -198,7 +278,7 @@ Best practice from Choreo Kits:
 - Dedupe by \`publishedAt\` and prefer the local row that already has \`txId\` when the indexer
   catches up (usually a few seconds later).`;
 
-const REDFLAGS = "RED FLAGS \u2014 DO NOT ATTEMPT:\n- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.\n- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.\n- No recursion in Compact. Loops must be bounded by compile-time constants.\n- No sub-second finality UX. Proofs for k=14 circuits take 30\u2013120s \u2014 build for that latency.\n- No SSR for the write path. MidnightJS uses `window`, `Buffer`, and WASM top-level-await;\n  load every `@midnight-ntwrk/*` behind `<ClientOnly>` + `useEffect`. On TanStack Start, keep\n  nitro ENABLED and stub Midnight packages in the SSR pass (see `midnightSsrStub()`).\n- Do NOT set `nitro: false` on TanStack Start to 'escape SSR'. That splits the SSR output into\n  chunks (`assets/server-*.js` importing `assets/react-*.js`) that the Cloudflare Worker cannot\n  resolve at runtime \u2014 you get `Error: No such module \"assets/react\"` on every request. Keep\n  nitro on and use the `midnightSsrStub()` swap instead.\n- Do NOT sign Undeployed writes with Lace. Lace cannot balance/sign on the local `undeployed`\n  chain \u2014 the proof completes but submit fails silently. Route every write through a server\n  `/api/mint` route that reuses the genesis seed (see SIGNING STRATEGY block).\n- Do NOT ship Mainnet without the persistent red risk banner AND the README disclaimer at the top\n  of `README.md`. Mainnet handles REAL value \u2014 this codebase is vibe-coded / unaudited / hackathon-grade.\n- Do NOT route Mainnet writes through a server `/api/mint`. There is no genesis wallet on Mainnet;\n  signing MUST be Lace-only, initiated by the user.\n- Do NOT prompt users for NIGHT seed/recovery phrases. On Mainnet, funds arrive via a withdrawal from\n  an official exchange partner (https://midnight.network/night?tag=exchange) directly to the Lace\n  unshielded address. Never accept a phrase in chat, form, screenshot, or issue tracker.\n- Do NOT ship `levelPrivateStateProvider` to the browser. Its `browser-level` \u2192 `abstract-level`\n  chain breaks under production Rollup with `Class extends value undefined is not a constructor or null`.\n  Use a `localStorage`-backed PrivateStateProvider in the browser; keep `levelPrivateStateProvider`\n  only in Node deploy scripts.\n- No deploying from a Cloudflare Worker / TanStack server function. Deploys are a local `bun`\n  script only \u2014 they need Docker, the proof server, and localhost.\n- Do NOT use `midnightntwrk/midnight-node:latest` (tag often missing) or the partner-chain 2.x\n  tags (need Cardano follower + Postgres). For public networks pin the matrix tags: proof-server:8.1.0,\n  midnight-node:1.0.1 (Preview), indexer:4.3.3. For local Undeployed use the local-dev triple:\n  proof-server:8.0.3, midnight-node:0.22.5, indexer-standalone:4.0.2.\n- Do NOT accept a user's recovery phrase in chat. Ship `scripts/check-midnight-wallet.mjs` that\n  reads `MIDNIGHT_WALLET_SEED` from their shell env and prints only PUBLIC addresses.\n- Do NOT derive shielded and unshielded addresses through different `NetworkId` values \u2014 use ONE\n  `NetworkId` across both encoders and validate the emitted bech32 prefix before writing `.env`";
+const REDFLAGS = "RED FLAGS \u2014 DO NOT ATTEMPT:\n- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.\n- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.\n- No recursion in Compact. Loops must be bounded by compile-time constants.\n- No sub-second finality UX. Proofs for k=14 circuits take 30\u2013120s \u2014 build for that latency.\n- No SSR for the write path. MidnightJS uses `window`, `Buffer`, and WASM top-level-await;\n  load every `@midnight-ntwrk/*` behind `<ClientOnly>` + `useEffect`. On TanStack Start, keep\n  nitro ENABLED and stub Midnight packages in the SSR pass (see `midnightSsrStub()`).\n- Do NOT set `nitro: false` on TanStack Start to 'escape SSR'. That splits the SSR output into\n  chunks (`assets/server-*.js` importing `assets/react-*.js`) that the Cloudflare Worker cannot\n  resolve at runtime \u2014 you get `Error: No such module \"assets/react\"` on every request. Keep\n  nitro on and use the `midnightSsrStub()` swap instead.\n- Do NOT sign Undeployed writes with Lace. Lace cannot balance/sign on the local `undeployed`\n  chain \u2014 the proof completes but submit fails silently. Route every write through a server\n  `/api/append-entry` (or `/api/mint`) route that reuses the genesis seed (see SIGNING STRATEGY block).\n- Do NOT let `privateStateStoreName` drift between `scripts/deploy-midnight.mjs` and the\n  server-append route. Mismatch \u2192 `findDeployedContract` samples a FRESH signing key \u2192 chain\n  rejects with `RpcError 1010: Invalid Transaction: Custom error: 117`. Import ONE shared\n  constant (e.g. `PRIVATE_STATE_STORE` from `src/lib/midnight-shared.ts`) in BOTH files. Debug\n  by logging the first/last 8 chars of the signing key on each side \u2014 they must match.\n- Do NOT pass the raw `ContractState` wrapper to `ledger()`. Symptom:\n  `expected instance of ChargedState`. Pass `contractState.data` (from `getPublicStates`) or\n  `result.public.nextContractState` (after a successful `callTx`).\n- Do NOT skip re-deploying after `midnight:down` / `midnight:up`. The chain state is wiped and\n  the address in `src/data/midnight-contract.undeployed.json` is dead. Always run\n  `bun run midnight:deploy` and restart the dev server, or invalidate the server route's\n  `ctxPromise` cache when the JSON changes \u2014 otherwise the 2nd+ append silently targets the\n  previous contract and fails with a stale-state or 117 error.\n- Do NOT diagnose a disabled 'Prove & submit' / 'Mint' button as a wallet or chain bug before\n  checking the form. In 90% of cases `canFund` / `canMint` just needs both fields non-empty.\n  Ship a tooltip that names the missing field so no one loses an hour on this.\n- Do NOT omit `@midnight-ntwrk/testkit-js`, `pino`, `ws`, `ssh2`, `cpu-features` from\n  `optimizeDeps.exclude` when using the server-append pattern. Rolldown/Vite tries to\n  pre-bundle those Node-only transitive deps and the dev server hangs indefinitely on the\n  'Loading \u2026' fallback.\n- Do NOT ship Mainnet without the persistent red risk banner AND the README disclaimer at the top\n  of `README.md`. Mainnet handles REAL value \u2014 this codebase is vibe-coded / unaudited / hackathon-grade.\n- Do NOT route Mainnet writes through a server `/api/mint`. There is no genesis wallet on Mainnet;\n  signing MUST be Lace-only, initiated by the user.\n- Do NOT prompt users for NIGHT seed/recovery phrases. On Mainnet, funds arrive via a withdrawal from\n  an official exchange partner (https://midnight.network/night?tag=exchange) directly to the Lace\n  unshielded address. Never accept a phrase in chat, form, screenshot, or issue tracker.\n- Do NOT ship `levelPrivateStateProvider` to the browser. Its `browser-level` \u2192 `abstract-level`\n  chain breaks under production Rollup with `Class extends value undefined is not a constructor or null`.\n  Use a `localStorage`-backed PrivateStateProvider in the browser; keep `levelPrivateStateProvider`\n  only in Node deploy scripts.\n- No deploying from a Cloudflare Worker / TanStack server function. Deploys are a local `bun`\n  script only \u2014 they need Docker, the proof server, and localhost.\n- Do NOT use `midnightntwrk/midnight-node:latest` (tag often missing) or the partner-chain 2.x\n  tags (need Cardano follower + Postgres). For public networks pin the matrix tags: proof-server:8.1.0,\n  midnight-node:1.0.1 (Preview), indexer:4.3.3. For local Undeployed use the local-dev triple:\n  proof-server:8.0.3, midnight-node:0.22.5, indexer-standalone:4.0.2.\n- Do NOT accept a user's recovery phrase in chat. Ship `scripts/check-midnight-wallet.mjs` that\n  reads `MIDNIGHT_WALLET_SEED` from their shell env and prints only PUBLIC addresses.\n- Do NOT derive shielded and unshielded addresses through different `NetworkId` values \u2014 use ONE\n  `NetworkId` across both encoders and validate the emitted bech32 prefix before writing `.env`";
 
 const EXPERIMENTAL_DISCLAIMER = `EXPERIMENTAL DAPP DISCLAIMER (MANDATORY on ALL networks, non-negotiable on Mainnet):
 
