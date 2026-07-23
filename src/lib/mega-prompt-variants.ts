@@ -1119,7 +1119,45 @@ https://midnightprompts.lovable.app so end users can browse the full
 network variants + preflight tools.`;
 }
 
-export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, os: OSTarget = "macos"): string {
+const MAINNET_ACQUIRE = `MAINNET \u2014 ACQUIRE NIGHT VIA AN OFFICIAL EXCHANGE PARTNER (there is no faucet):
+
+NIGHT is a real on-chain asset with monetary value. Midnight does not run a mainnet faucet.
+The ONLY safe way to obtain NIGHT is to buy it from an official exchange partner listed at
+https://midnight.network/night?tag=exchange, withdraw it directly to your Lace UNSHIELDED
+mainnet address (\`mn_addr1\u2026\`), and then delegate NIGHT \u2192 DUST inside Lace to pay circuit fees.
+
+Steps to render in the in-app setup panel and in \`README.md\`:
+
+1. Install Lace \u2192 https://www.lace.io/ \u2192 switch to Midnight **Mainnet**.
+2. Copy your UNSHIELDED mainnet address (\`mn_addr1\u2026\`). NEVER share the shielded address for
+   an exchange withdrawal \u2014 exchanges reject it and the funds may not arrive.
+3. Buy NIGHT on an official exchange partner (see https://midnight.network/night?tag=exchange
+   for the current allowlist). Do NOT source NIGHT from anonymous OTC / social DMs \u2014 those are
+   the standard mainnet-phishing vector.
+4. Withdraw to your Lace unshielded address. Wait for confirmation.
+5. In Lace, click **Generate DUST** to delegate NIGHT \u2192 DUST. DUST pays proof + tx fees.
+6. Start the matrix proof server:
+   \`docker run -p 6300:6300 midnightntwrk/proof-server:${MIDNIGHT_MATRIX.proofServer} midnight-proof-server -v\`
+7. Deploy: \`VITE_NETWORK_ID=mainnet bun scripts/deploy-midnight.mjs\`.
+8. Paste the printed hex address into \`VITE_DEFAULT_CONTRACT\` and reload.
+
+HARD RULES on Mainnet:
+- Do a full Undeployed \u2192 Preprod \u2192 Preview dry-run BEFORE touching Mainnet. Mainnet is the
+  last stop, not the demo path.
+- Every write MUST be user-initiated through Lace. No server-side signing, no \`/api/mint\`,
+  no genesis wallet \u2014 those exist only on Undeployed.
+- Never accept a recovery phrase / seed / private key from the user in chat, forms, screenshots,
+  screenshots-of-terminals, or issue trackers. If they want to sanity-check their wallet, ship
+  \`scripts/check-midnight-wallet.mjs\` that reads \`MIDNIGHT_WALLET_SEED\` from their shell env
+  and prints only PUBLIC addresses.
+- Show the red MAINNET banner (see EXPERIMENTAL DAPP DISCLAIMER block) and a "no audit"
+  chip next to every write button. Non-dismissible on Mainnet.
+- Read-only feeds via the Indexer are fine and cheap (no DUST cost).
+
+Explorer: https://midnightexplorer.com/
+Support matrix (Mainnet node ${MIDNIGHT_MATRIX.node.mainnet}): ${SUPPORT_MATRIX_URL}`;
+
+
   const { title, pitch, subDiscipline: sub } = idea;
   const hid = idea.quantumHookId || "compact-deploy";
   const hook = HOOKS[hid] ?? HOOKS["compact-deploy"];
