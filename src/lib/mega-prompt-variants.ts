@@ -1108,6 +1108,8 @@ FURTHER REFERENCE (community skills registry — browsable, per-primitive scaffo
 - \`indexer\`                    — public data provider + GraphQL patterns for read-only ledger views
 - \`example-locker-dapp\`        — timelock vault reference (blockTimeGte, receive/sendUnshielded)
 - \`example-counter\`            — smallest end-to-end Compact + MidnightJS reference
+- Fly.io hosting (four-app topology + failure-mode table): https://midnightprompts.lovable.app/undeployed#flyio
+- Signing strategy (Undeployed uses server /api/mint; Preview/Preprod uses Lace publishKit): see SIGNING STRATEGY block above
 If the target Lovable session is on this workspace, those six skills are already active. Otherwise, drop
 \`.agents/skills/<name>/SKILL.md\` into your project from the repo above and run \`skills--apply_draft\`.
 
