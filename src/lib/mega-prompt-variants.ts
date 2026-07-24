@@ -1507,6 +1507,8 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, 
   const undeployedFundBlock = network === "undeployed" ? `\n${UNDEPLOYED_FUND_LACE}\n` : "";
   const flyioBlock = network === "undeployed" ? `\n${HOSTING_FLYIO}\n` : "";
   const mainnetBlock = network === "mainnet" ? `\n${MAINNET_ACQUIRE}\n` : "";
+  const protocolBlock = idea.protocol ? `\n\n${PROTOCOL_BLOCKS[idea.protocol]}\n` : "";
+
 
   return `${MATRIX_PREAMBLE}
 
