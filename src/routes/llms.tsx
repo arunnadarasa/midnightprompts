@@ -19,18 +19,16 @@ import preprodLinux from "../../public/llms-prompts-preprod-linux.txt.asset.json
 import undeployedMacos from "../../public/llms-prompts-undeployed-macos.txt.asset.json";
 import undeployedWindows from "../../public/llms-prompts-undeployed-windows.txt.asset.json";
 import undeployedLinux from "../../public/llms-prompts-undeployed-linux.txt.asset.json";
-import mainnetMacos from "../../public/llms-prompts-mainnet-macos.txt.asset.json";
-import mainnetWindows from "../../public/llms-prompts-mainnet-windows.txt.asset.json";
-import mainnetLinux from "../../public/llms-prompts-mainnet-linux.txt.asset.json";
+// Mainnet prompt bundles are generated but hidden in the UI per Midnight DevRel guidance
+// (independent devs are currently blacklisted from publishing to mainnet).
 
 const PROMPTS: Record<string, Record<string, { url: string; size: number }>> = {
   preview: { macos: previewMacos, windows: previewWindows, linux: previewLinux },
   preprod: { macos: preprodMacos, windows: preprodWindows, linux: preprodLinux },
   undeployed: { macos: undeployedMacos, windows: undeployedWindows, linux: undeployedLinux },
-  mainnet: { macos: mainnetMacos, windows: mainnetWindows, linux: mainnetLinux },
 };
 
-const NET_LABEL: Record<string, string> = { preview: "Preview", preprod: "Preproduction", undeployed: "Undeployed", mainnet: "Mainnet" };
+const NET_LABEL: Record<string, string> = { preview: "Preview", preprod: "Preproduction", undeployed: "Undeployed" };
 const OS_LABEL: Record<string, string> = { macos: "macOS", windows: "Windows", linux: "Linux" };
 
 function humanSize(bytes: number) {
