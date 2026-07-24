@@ -115,6 +115,7 @@ const wallet = await WalletBuilder.buildFromSeed(
       { label: "Service Desk ↗", href: SERVICE_DESK },
       { label: "Support matrix ↗", href: SUPPORT_MATRIX },
     ],
+  },
   {
     id: "lace-dust-sdk-zero",
     title: "Lace shows DUST but SDK reports 0 / unshielded never syncs",
