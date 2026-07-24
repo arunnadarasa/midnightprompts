@@ -1557,8 +1557,9 @@ ${PRIVATE_STATE_PROVIDER}
 ${TANSTACK_START}
 
 ${body}
-
+${protocolBlock}
 ${inAppSetupPanel(network, os)}
+
 
 ${REDFLAGS}
 
