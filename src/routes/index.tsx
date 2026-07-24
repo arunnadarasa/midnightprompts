@@ -108,7 +108,7 @@ function Index() {
             </div>
           </Link>
 
-          <div className="bg-primary text-primary-foreground p-8 flex flex-col justify-center items-center text-center relative overflow-hidden">
+          <div className="bg-primary text-primary-foreground p-8 min-h-[180px] flex flex-col justify-center items-center text-center relative overflow-hidden">
             <span className="font-display text-7xl italic leading-none">1k</span>
             <span className="eyebrow text-primary-foreground/80 mt-3" style={{ color: "var(--color-primary-foreground)", opacity: 0.85 }}>
               ZK Entries
