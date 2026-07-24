@@ -201,7 +201,7 @@ function Index() {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Bug reports, 1010 rejections, /check 400, DUST sync stalls — routed to the Midnight engineering team.
               </p>
-              <div className="flex flex-wrap gap-5 text-[11px] uppercase tracking-[0.24em] mt-1">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-3 sm:flex sm:flex-wrap sm:gap-5 text-[11px] uppercase tracking-[0.24em] mt-1">
                 <Link to="/undeployed" className="text-primary hover:text-foreground transition-colors">
                   Undeployed quick-start →
                 </Link>
