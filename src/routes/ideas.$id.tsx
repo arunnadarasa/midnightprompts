@@ -14,7 +14,7 @@ const VARIANT_META: Record<NetworkVariant, { label: string; caption: string; exp
   undeployed: { label: "Undeployed (local)",  caption: "Run the standalone stack on your own machine. No faucet, unlimited tDUST. DevRel-advised.", explorer: null },
   mainnet:    { label: "Mainnet ⚠️",           caption: "REAL VALUE. Buy NIGHT from an official exchange partner. Vibe-coded, no audit — bragging-right proof-of-deploy only.", explorer: "https://midnightexplorer.com/" },
 };
-const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed", "mainnet"];
+const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed"];
 const OS_KEYS: OSTarget[] = ["macos", "windows", "linux"];
 
 function detectOS(): OSTarget {
