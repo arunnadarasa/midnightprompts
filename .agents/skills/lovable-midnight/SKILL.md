@@ -271,3 +271,59 @@ Invocation: `MIDNIGHT_WALLET_SEED="word1 word2 ..." bun scripts/check-midnight-w
 - Don't accept a user's recovery phrase in chat or run it through the Lovable sandbox — give them a local script that reads the seed from their own shell env.
 - Don't derive unshielded and shielded addresses through different `NetworkId` values in the same script — that's the bug that makes Lace say the addresses don't match.
 - Don't assume Node scripts under `scripts/` inherit Vite's dep resolution — every `import` must be `bun add`-ed into `package.json`.
+
+## Agentic-commerce overlays (A2A + AP2, UCP, x402 · mUSDC)
+
+Optional overlay on top of the base Midnight stack: every agentic prompt closes with a real Midnight transaction. Three protocols, three Compact contracts, one banner.
+
+### Non-negotiables
+
+1. **Every overlay ends with a Midnight tx.** A2A/UCP/x402 negotiations that don't anchor on-chain are out of scope — the whole point of the overlay is auditability against a Midnight indexer, not off-chain messaging.
+2. **mUSDC is a MIMIC token. No peg, no value.** Ship `MidnightUSDC.compact` with a 10-mUSDC faucet cap and NEVER deploy to Mainnet. Every UI that shows an mUSDC balance must render `<ExperimentalAgenticBanner>` and link to `/agentic-experimental`.
+3. **Banner is non-dismissible on Mainnet.** On Preview/Preprod/Undeployed it may be collapsible (localStorage key `agentic-banner-ack`), but it must render on every page that touches the overlay.
+4. **Compact-witness signing, NOT EIP-712.** Cross-verifying AP2 mandates from this stack against EVM verifiers won't work — buyer/seller/merchant public keys are `persistentHash([pad(32,"<domain>:v1"), sk])`. Domain separators are per-protocol and MUST NOT be reused (`ap2:buyer:v1`, `ucp:merchant:v1`, `musdc:signer:v1`).
+5. **Facilitator falls back to `{ simulated: true }` when no contract is deployed.** Never crash at boot for missing config — same demo-fallback contract as the base skill. Return a stub `midnightTxHash: "0xSIMULATED"` and let the UI surface a "simulated" chip.
+6. **x402 header casing is literal.** `PAYMENT-SIGNATURE` (request), `PAYMENT-RESPONSE` (response). Send exactly that. Read case-insensitively.
+7. **x402 v2 envelope, Midnight scheme.** `scheme: "midnight-mUSDC"`, `network: "midnight:<preview|preprod|undeployed>"`, `amount` in atomic 6-decimal units as a string. The signed payload wraps under `accepted` (echo the full requirement), NOT at the top level.
+8. **Nonce is bytes32 random, never reused.** `spent_nonces: Set<Bytes<32>>` on `MidnightUSDC` enforces this on-chain — the client must also generate a fresh nonce per attempt.
+9. **RFC 9421 signing keys are anchored on `OrderLedger.recordSigningKey` on first boot.** UCP callers verify signatures against the on-chain fingerprint, not just the discovery doc.
+
+### Contracts (drop into `contracts/`)
+
+| Contract | Purpose | Domain separator |
+|---|---|---|
+| `MandateVault.compact` | Anchor signed AP2 CartMandate hashes | `ap2:buyer:v1` |
+| `OrderLedger.compact`  | Record UCP order hashes + merchant signing-key fingerprint | `ucp:merchant:v1` |
+| `MidnightUSDC.compact` | mUSDC mimic token: faucet + EIP-3009-style transfer + spent-nonce set | `musdc:signer:v1` |
+
+All three follow the base skill's rules: `pragma language_version 0.23;`, `import CompactStandardLibrary;`, every ledger write is `disclose(...)`, witness bodies live in TypeScript.
+
+### Server routes (drop into `src/routes/api/public/`)
+
+All routes bypass Lovable's published-site auth gate — verify inputs yourself. Under-load callable, so the facilitator MUST be idempotent per nonce.
+
+- `ap2-anchor.ts` — POST { mandateHash, buyer, seller, amount, proof }; on Undeployed uses the genesis wallet (`…0002`), on Preview/Preprod uses Lace `publishKit`.
+- `ucp-discovery.ts` / `ucp-checkout.ts` / `ucp-self-test.ts` — RFC 9421-signed discovery + order recorder + conformance self-test.
+- `x402-proxy.ts` / `x402-challenge.ts` / `x402-verify.ts` / `x402-settle.ts` — CORS-safe same-origin proxy, 402 challenge, proof verify against the contract's verifier, and settlement via `MidnightUSDC.transfer`.
+
+### Failure modes specific to the overlay
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| AP2 verifier rejects a mandate with matching hash | Buyer signed with a different domain separator (e.g. reused `ucp:merchant:v1`) | Use `ap2:buyer:v1` in both the Compact circuit AND the TypeScript witness derivation |
+| x402 client gets `invalid_payload` from the facilitator | Sent v1 envelope (`scheme`/`network` at top level) | Wrap under `accepted` — echo the full requirement chosen from `accepts[]` |
+| `nonce already spent` on retry | Client reused the nonce after a network hiccup | Generate a fresh `crypto.getRandomValues(new Uint8Array(32))` per attempt; never store-and-replay |
+| UCP receipt verifies signature but the on-chain fingerprint is empty | `recordSigningKey` never called on first boot | Call it once from a bootstrap route or the deploy script |
+| Facilitator returns a real `midnightTxHash` in preview but the UI shows "simulated" | Response passed through a proxy that dropped `PAYMENT-RESPONSE` | Restore the header in the proxy (`res.headers.set("PAYMENT-RESPONSE", …)`) — it's non-standard, most proxies strip unknown headers |
+| Buyer signs an AP2 mandate but `anchorMandate` reverts with `buyer signature invalid` | Buyer public key derived on the client with a different byte layout than the circuit expects | Match exactly: `persistentHash<Vector<2, Bytes<32>>>([pad(32, "ap2:buyer:v1"), sk])` — no extra fields, no different order |
+| Mainnet publish attempts an x402/mUSDC path | mUSDC has no peg — this is a real security risk | Gate the overlay off Mainnet entirely; keep the disclaimer banner non-dismissible on Mainnet routes |
+
+### Prompt-catalogue split
+
+For a hackathon prompt bundle, the overlay adds three theme slugs on top of the base 10 disciplines:
+
+- `agentic-a2a-ap2` — 500 ideas (buyer↔seller negotiation flows)
+- `agentic-ucp` — 250 ideas (RFC 9421 signed checkout flows)
+- `agentic-x402` — 250 ideas (pay-per-call with mUSDC)
+
+Multiply by the 4-network × 3-OS matrix if you're generating full prompt variants.
