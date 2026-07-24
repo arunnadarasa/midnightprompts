@@ -155,7 +155,7 @@ function IdeaPage() {
           </div>
 
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <div className="grid grid-cols-2 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
+            <div className="grid grid-cols-3 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
               {VARIANT_KEYS.map((k) => {
                 const active = k === variant;
                 return (
@@ -166,7 +166,7 @@ function IdeaPage() {
                     className={
                       "px-2 py-2 text-[10px] tracking-[0.18em] uppercase text-center transition-colors sm:px-4 sm:text-[11px] sm:tracking-[0.24em] " +
                       (active
-                        ? (k === "mainnet" ? "bg-red-600 text-white" : "bg-primary text-primary-foreground")
+                        ? "bg-primary text-primary-foreground"
                         : "bg-card text-foreground/70 hover:text-primary hover:bg-background")
                     }
                     aria-pressed={active}
