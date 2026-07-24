@@ -63,6 +63,59 @@ const ISSUES: Issue[] = [
     ),
   },
   {
+    id: "wallet-sync-memory",
+    title: "Wallet sync stalls or blows up memory during initial sync",
+    symptom:
+      "Headless WalletFacade / SDK script hangs for hours on a fresh wallet, or the Node process OOMs while walking chain history. Every run starts from scratch and re-scans everything.",
+    cause:
+      "Midnight DevRel guidance (Jay Albert, Midnight Network — Dev Hangout Prep, July 2026): there is no snapshot / fast-sync path yet, and the default transaction-history storage keeps every event in memory even when your script never reads it.",
+    fix: (
+      <>
+        <p>Two complementary techniques Midnight recommends today:</p>
+        <ol className="list-decimal pl-5 space-y-3 mt-2">
+          <li>
+            <strong>Sync from where you last left off.</strong> Serialize the wallet state to disk
+            after the first successful sync, then restore it on the next run so only the delta syncs.
+            <pre className="mt-2 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto whitespace-pre">
+{`// After first sync
+const serialized = await wallet.serializeState();
+await fs.writeFile("wallet-state.bin", serialized);
+
+// Next run — restore before wallet.start()
+const restored = await fs.readFile("wallet-state.bin");
+const wallet = await WalletBuilder.restore(
+  indexerUrl, indexerWsUrl, proofServerUrl, nodeUrl,
+  restored, networkId,
+);
+wallet.start(); // only the delta re-syncs`}
+            </pre>
+          </li>
+          <li>
+            <strong>Don't store history you won't read.</strong> Pass{" "}
+            <code>NoOpTransactionHistoryStorage</code> in your wallet config to cut memory during
+            sync. <em>Only</em> safe if your script never queries transaction history.
+            <pre className="mt-2 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto whitespace-pre">
+{`import { NoOpTransactionHistoryStorage } from "@midnight-ntwrk/wallet";
+
+const wallet = await WalletBuilder.buildFromSeed(
+  indexerUrl, indexerWsUrl, proofServerUrl, nodeUrl,
+  seed, networkId,
+  { transactionHistoryStorage: new NoOpTransactionHistoryStorage() },
+);`}
+            </pre>
+          </li>
+        </ol>
+        <p className="mt-3 text-xs text-muted-foreground">
+          Combine both for headless deploy / server-append scripts: they never need history, and a
+          serialized wallet-state file keeps CI / Fly.io restarts fast.
+        </p>
+      </>
+    ),
+    links: [
+      { label: "Service Desk ↗", href: SERVICE_DESK },
+      { label: "Support matrix ↗", href: SUPPORT_MATRIX },
+    ],
+  {
     id: "lace-dust-sdk-zero",
     title: "Lace shows DUST but SDK reports 0 / unshielded never syncs",
     symptom:
