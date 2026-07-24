@@ -95,7 +95,7 @@ function Index() {
             className="md:row-span-2 group bg-card border border-border p-7 flex flex-col hover:border-primary/50 transition-all duration-500"
           >
             <div className="flex-1 flex flex-col">
-              <div className="w-full aspect-[3/4] bg-background border border-border/60 mb-6 overflow-hidden relative">
+              <div className="w-full aspect-[3/4] max-h-[260px] md:max-h-none bg-background border border-border/60 mb-6 overflow-hidden relative">
                 <div className="absolute inset-0 gold-bloom opacity-40" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="font-display text-[9rem] italic text-primary/30 leading-none">02</span>
