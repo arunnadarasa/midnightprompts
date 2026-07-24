@@ -73,8 +73,53 @@ const DEMOS: DemoCard[] = [
 
     ),
   },
-
+  {
+    key: "a2a-ap2",
+    to: "/showcase/a2a-ap2-negotiation",
+    tag: "Agentic · A2A + AP2",
+    badge: "Experimental",
+    networks: ["preview", "preprod", "undeployed"],
+    title: "A2A + AP2 Negotiation",
+    body: (
+      <>
+        Buyer and seller agents exchange typed A2A DataParts, agree on a CartMandate,
+        and anchor the signed mandate on the Midnight <code>MandateVault</code> Compact
+        contract. Every negotiation ends with a real on-chain tx.
+      </>
+    ),
+  },
+  {
+    key: "ucp-checkout",
+    to: "/showcase/ucp-zk-checkout",
+    tag: "Agentic · UCP",
+    badge: "Experimental",
+    networks: ["preview", "preprod", "undeployed"],
+    title: "UCP ZK-Checkout",
+    body: (
+      <>
+        RFC 9421-signed discovery and checkout, closed by recording the order hash on the
+        Midnight <code>OrderLedger</code>. The signed receipt carries a{" "}
+        <code>Midnight-Tx</code> header.
+      </>
+    ),
+  },
+  {
+    key: "x402-paywall",
+    to: "/showcase/x402-midnight-paywall",
+    tag: "Agentic · x402 · mUSDC",
+    badge: "Experimental",
+    networks: ["preview", "preprod", "undeployed"],
+    title: "x402 Midnight Paywall",
+    body: (
+      <>
+        Pay 0.01 mUSDC to unlock a protected endpoint. Ports the x402 v2 envelope +
+        <code> PAYMENT-SIGNATURE</code>/<code>PAYMENT-RESPONSE</code> headers to Midnight,
+        settling via the mimic <code>MidnightUSDC</code> contract.
+      </>
+    ),
+  },
 ];
+
 
 export const Route = createFileRoute("/showcase/")({
   component: ShowcaseIndex,
