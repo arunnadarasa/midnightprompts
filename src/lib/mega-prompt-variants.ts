@@ -2,7 +2,7 @@
 // If you change any block here, mirror the same edit in the Python script
 // (or vice-versa) so regenerated JSON and runtime prompts stay in sync.
 
-import type { Idea, Theme, NetworkVariant } from "@/data/ideas";
+import type { Idea, Theme, NetworkVariant, Protocol } from "@/data/ideas";
 import { MIDNIGHT_MATRIX, SUPPORT_MATRIX_URL } from "./midnight-matrix";
 
 export type OSTarget = "macos" | "windows" | "linux";
