@@ -634,6 +634,31 @@ bun scripts/deploy-midnight.mjs`}
             Read more about the differences between networks in the{" "}
             <Link to="/quantum-primer" hash="networks" className="text-primary underline">Quantum Primer →</Link>
           </div>
+
+          <div className="mt-10 p-5 border border-primary/40 bg-card">
+            <span className="eyebrow text-primary">Sync stalls · DevRel tip</span>
+            <p className="mt-2 text-sm text-foreground/90 leading-relaxed">
+              If a headless SDK wallet hangs for hours or OOMs on a fresh sync, Midnight DevRel
+              (Jay Albert) recommends two remedies you can combine:
+            </p>
+            <ol className="mt-3 list-decimal pl-5 space-y-1 text-sm text-foreground/85">
+              <li>
+                <strong>Sync from where you left off</strong> — serialize wallet state after the
+                first sync and restore it next run so only the delta syncs.
+              </li>
+              <li>
+                <strong>Skip history you won't read</strong> — pass{" "}
+                <code>NoOpTransactionHistoryStorage</code> in the wallet config to cut memory
+                during sync. Only safe when your script never queries transaction history.
+              </li>
+            </ol>
+            <p className="mt-3 text-xs text-muted-foreground">
+              Code snippets on the{" "}
+              <Link to="/known-issues" hash="wallet-sync-memory" className="text-primary underline">
+                Known Issues page →
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
     </SiteShell>
