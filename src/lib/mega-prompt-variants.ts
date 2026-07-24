@@ -2,7 +2,7 @@
 // If you change any block here, mirror the same edit in the Python script
 // (or vice-versa) so regenerated JSON and runtime prompts stay in sync.
 
-import type { Idea, Theme, NetworkVariant } from "@/data/ideas";
+import type { Idea, Theme, NetworkVariant, Protocol } from "@/data/ideas";
 import { MIDNIGHT_MATRIX, SUPPORT_MATRIX_URL } from "./midnight-matrix";
 
 export type OSTarget = "macos" | "windows" | "linux";
@@ -1238,6 +1238,258 @@ Explorer: https://midnightexplorer.com/
 Support matrix (Mainnet node ${MIDNIGHT_MATRIX.node.mainnet}): ${SUPPORT_MATRIX_URL}`;
 
 
+// -----------------------------------------------------------------------------
+// AGENTIC-COMMERCE OVERLAY BLOCKS (idea.protocol)
+// -----------------------------------------------------------------------------
+// Every agentic prompt MUST end with a Midnight transaction. Each block ships:
+//   1) A Compact contract sketch specific to the protocol
+//   2) A server route or facilitator sketch that submits the tx
+//   3) A disclaimer + banner requirement (unaudited, hackathon use only)
+//   4) A pointer to the reference showcase demo on this site
+
+const EXPERIMENTAL_AGENTIC = `EXPERIMENTAL AGENTIC-COMMERCE BANNER — MANDATORY:
+
+Render <ExperimentalAgenticBanner /> at the TOP of every page that touches the
+agentic overlay. Copy (do NOT reword):
+
+  "Experimental agentic commerce. Contracts are unaudited. mUSDC is a mimic
+   token — no peg, no value. For hackathon and research use only. See
+   https://midnightprompts.lovable.app/agentic-experimental"
+
+The banner is non-dismissible on Mainnet. On other networks it may be collapsible
+but must persist between sessions (localStorage key "agentic-banner-ack").`;
+
+const A2A_AP2_BLOCK = `AGENTIC OVERLAY — A2A + AP2 (Google Agent-to-Agent + Agent Payments Protocol)
+
+This idea sits on the A2A negotiation loop and closes with an AP2 CartMandate
+anchored on Midnight. Reference: https://a2a.dev · https://github.com/google-agentic-commerce/AP2
+
+FLOW (implement exactly this shape):
+  1) Buyer agent POSTs an A2A "message/send" with an IntentMandate DataPart.
+  2) Seller agent replies with one or more CartMandate offers as DataParts.
+     MIME: application/vnd.ap2.cart-mandate+json
+  3) Buyer signs the chosen CartMandate (EIP-712-style over the mandate hash).
+     For Midnight we use Compact-witness signing — the buyer runs a local circuit
+     that produces { proof, publicInputs } binding the cart hash to their address.
+  4) Server calls /api/public/ap2-anchor which submits anchorMandate(...) on the
+     MandateVault Compact contract deployed for this project.
+  5) UI displays the negotiation transcript AND the resulting Midnight tx hash
+     with a link to the Indexer.
+
+REQUIRED CONTRACT — contracts/MandateVault.compact
+\`\`\`compact
+pragma language_version 0.23;
+import CompactStandardLibrary;
+
+// Cart mandate anchors: each entry is (mandateHash, buyerAddress, sellerAddress, amount).
+export ledger anchored_count: Counter;
+export ledger last_mandate_hash: Bytes<32>;
+export ledger last_buyer: Bytes<32>;
+export ledger last_seller: Bytes<32>;
+export ledger last_amount: Uint<64>;
+
+witness buyerSecret(): Bytes<32>;
+
+constructor() {
+  anchored_count.increment(1);
+}
+
+// Anchor a signed CartMandate on-chain. Every write is disclosed intentionally.
+export circuit anchorMandate(
+  mandateHash: Bytes<32>,
+  buyer: Bytes<32>,
+  seller: Bytes<32>,
+  amount: Uint<64>,
+): [] {
+  // Bind the anchor to the buyer's private key (witness) to prove the buyer
+  // authorised THIS mandate, without revealing the key itself.
+  const sk = buyerSecret();
+  const pk = persistentHash<Vector<2, Bytes<32>>>([pad(32, "ap2:buyer:v1"), sk]);
+  assert(pk == buyer, "buyer signature invalid");
+
+  last_mandate_hash = disclose(mandateHash);
+  last_buyer = disclose(buyer);
+  last_seller = disclose(seller);
+  last_amount = disclose(amount);
+  anchored_count.increment(1);
+}
+\`\`\`
+
+REQUIRED SERVER ROUTE — src/routes/api/public/ap2-anchor.ts
+
+- POST { mandateHash, buyer, seller, amount, proof, publicInputs }
+- Verifies proof against MandateVault's verifier key
+- On Undeployed: submits via the genesis wallet (…0002) reusing scripts/deploy-midnight.mjs
+  provider setup and /api/append-entry pattern.
+- On Preview/Preprod: uses the caller's Lace \`publishKit\` — server just validates.
+- Returns { midnightTxHash, network, indexerUrl, simulated }
+- If no contract is deployed for the selected network, return { simulated: true } and
+  a stub tx hash — the UI must show a clear "simulated" chip.
+
+REFERENCE SHOWCASE: /showcase/a2a-ap2-negotiation on this site is the canonical
+buyer↔seller negotiation demo with an anchored CartMandate.
+
+${EXPERIMENTAL_AGENTIC}`;
+
+const UCP_BLOCK = `AGENTIC OVERLAY — UCP (Universal Commerce Protocol)
+
+This idea uses UCP's typed checkout schema and closes by recording the order on a
+Midnight OrderLedger contract. The discovery + self-test endpoints stay off-chain.
+
+FLOW:
+  1) Merchant serves GET /api/public/ucp/discovery — signed with RFC 9421
+     HTTP Message Signatures. The signing key's fingerprint is anchored ONCE
+     on OrderLedger.recordSigningKey when the app first boots.
+  2) Buyer POSTs to /api/public/ucp/checkout with { items, buyer, currency }.
+  3) Server validates the checkout with Zod, computes itemHash = keccak256(items),
+     assigns an orderId, and calls recordOrder(orderId, itemHash, buyer, amount)
+     on the OrderLedger Compact contract.
+  4) Server returns a UCP-shaped order receipt signed with RFC 9421 including a
+     "Midnight-Tx" custom header carrying the tx hash.
+  5) UI shows the signed-headers view side-by-side with the Midnight tx hash.
+
+REQUIRED CONTRACT — contracts/OrderLedger.compact
+\`\`\`compact
+pragma language_version 0.23;
+import CompactStandardLibrary;
+
+export ledger order_count: Counter;
+export ledger last_order_id: Bytes<32>;
+export ledger last_item_hash: Bytes<32>;
+export ledger last_buyer: Bytes<32>;
+export ledger last_amount: Uint<64>;
+export ledger signing_key_fpr: Bytes<32>;
+
+witness merchantSecret(): Bytes<32>;
+
+constructor() {
+  order_count.increment(1);
+}
+
+// Pin the merchant's UCP signing-key fingerprint on-chain. Callers can verify
+// signatures against this record instead of trusting the discovery doc alone.
+export circuit recordSigningKey(fpr: Bytes<32>): [] {
+  const sk = merchantSecret();
+  const pk = persistentHash<Vector<2, Bytes<32>>>([pad(32, "ucp:merchant:v1"), sk]);
+  assert(pk == signing_key_fpr || signing_key_fpr == default<Bytes<32>>(),
+         "merchant signature invalid");
+  signing_key_fpr = disclose(fpr);
+}
+
+export circuit recordOrder(
+  orderId: Bytes<32>,
+  itemHash: Bytes<32>,
+  buyer: Bytes<32>,
+  amount: Uint<64>,
+): [] {
+  last_order_id = disclose(orderId);
+  last_item_hash = disclose(itemHash);
+  last_buyer = disclose(buyer);
+  last_amount = disclose(amount);
+  order_count.increment(1);
+}
+\`\`\`
+
+REQUIRED SERVER ROUTES — src/routes/api/public/
+  - ucp-discovery.ts   → GET; returns the discovery document, RFC 9421 signed
+  - ucp-checkout.ts    → POST; validates, records order, returns signed receipt
+  - ucp-self-test.ts   → GET; runs the UCP conformance self-test (off-chain)
+
+REFERENCE SHOWCASE: /showcase/ucp-zk-checkout on this site.
+
+${EXPERIMENTAL_AGENTIC}`;
+
+const X402_BLOCK = `AGENTIC OVERLAY — x402 with mUSDC (mimic USDC) on Midnight
+
+This idea ports the x402 v2 pay-per-call protocol (originally EVM-only) to
+Midnight. USDC is not native to Midnight, so we ship a mimic token: MidnightUSDC.
+No peg, no value — hackathon experiment. The prompt MUST make this loud and clear.
+
+BASELINE (ported from the Optimism Blockchain Catalyst project — same envelope,
+same header casing):
+  - v2 envelope: { x402Version: 2, accepted, payload: { signature, authorization } }
+  - Literal-cased headers: PAYMENT-SIGNATURE (request) / PAYMENT-RESPONSE (response)
+  - Same-origin proxy route to sidestep CORS on external facilitators
+  - Per-request random 32-byte nonce; validAfter=now-60s; validBefore=now+300s
+
+MIDNIGHT-SPECIFIC ADAPTATIONS:
+  - Scheme = "midnight-mUSDC" (NOT "exact")
+  - Network id = "midnight:preview" | "midnight:preprod" | "midnight:undeployed"
+  - Signature = Compact-witness proof over (from, to, amount, nonce, expiry)
+    binding a witness secret key. Domain values are read from the deployed
+    MidnightUSDC contract, not from requirement.extra (same rule as EVM x402 —
+    trusting requirement.extra silently breaks the digest).
+  - Settlement = facilitator submits MidnightUSDC.transfer(from, to, amount) as
+    a real tx on Midnight. Returns the Midnight tx hash in PAYMENT-RESPONSE.
+
+REQUIRED CONTRACT — contracts/MidnightUSDC.compact
+\`\`\`compact
+pragma language_version 0.23;
+import CompactStandardLibrary;
+
+// mUSDC — mimic USDC. 6 decimals like real USDC.
+export ledger total_supply: Uint<64>;
+export ledger balances: Map<Bytes<32>, Uint<64>>;
+// Anti-replay: spent nonces
+export ledger spent_nonces: Set<Bytes<32>>;
+
+witness senderSecret(): Bytes<32>;
+
+constructor() {
+  total_supply = 0;
+}
+
+// Faucet: anyone can mint a small amount for demo. Hackathon-only.
+export circuit faucet(to: Bytes<32>, amount: Uint<64>): [] {
+  assert(amount <= 10000000 as Uint<64>, "faucet cap: 10 mUSDC");
+  const prev = balances.member(disclose(to)) ? balances.lookup(disclose(to)) : 0 as Uint<64>;
+  balances.insert(disclose(to), disclose((prev + amount) as Uint<64>));
+  total_supply = disclose((total_supply + amount) as Uint<64>);
+}
+
+// EIP-3009-style transfer with authorization. Nonce prevents replay.
+export circuit transfer(
+  from: Bytes<32>,
+  to: Bytes<32>,
+  amount: Uint<64>,
+  nonce: Bytes<32>,
+): [] {
+  const sk = senderSecret();
+  const pk = persistentHash<Vector<2, Bytes<32>>>([pad(32, "musdc:signer:v1"), sk]);
+  assert(pk == from, "signer does not match from address");
+  assert(!spent_nonces.member(disclose(nonce)), "nonce already spent");
+
+  const fromBal = balances.member(disclose(from)) ? balances.lookup(disclose(from)) : 0 as Uint<64>;
+  assert(fromBal >= amount, "insufficient mUSDC");
+  const toBal = balances.member(disclose(to)) ? balances.lookup(disclose(to)) : 0 as Uint<64>;
+
+  balances.insert(disclose(from), disclose((fromBal - amount) as Uint<64>));
+  balances.insert(disclose(to),   disclose((toBal + amount) as Uint<64>));
+  spent_nonces.insert(disclose(nonce));
+}
+\`\`\`
+
+REQUIRED SERVER ROUTES — src/routes/api/public/
+  - x402-challenge.ts  → returns 402 with accepts[] describing the mUSDC price
+  - x402-verify.ts     → verifies the mUSDC proof against the contract's verifier
+  - x402-settle.ts     → submits MidnightUSDC.transfer, returns Midnight tx hash
+  - x402-proxy.ts      → same-origin proxy for CORS (mirrors the Optimism recipe)
+
+PAYMENT-RESPONSE payload (base64 JSON):
+  { "success": true, "network": "midnight:<net>", "payer": "mn_addr…",
+    "midnightTxHash": "0x…", "indexerUrl": "https://…" }
+
+REFERENCE SHOWCASE: /showcase/x402-midnight-paywall on this site.
+
+${EXPERIMENTAL_AGENTIC}`;
+
+const PROTOCOL_BLOCKS: Record<Protocol, string> = {
+  "a2a-ap2": A2A_AP2_BLOCK,
+  "ucp":     UCP_BLOCK,
+  "x402":    X402_BLOCK,
+};
+
+
 export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, os: OSTarget = "macos"): string {
   const { title, pitch, subDiscipline: sub } = idea;
   const hid = idea.quantumHookId || "compact-deploy";
@@ -1255,6 +1507,8 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, 
   const undeployedFundBlock = network === "undeployed" ? `\n${UNDEPLOYED_FUND_LACE}\n` : "";
   const flyioBlock = network === "undeployed" ? `\n${HOSTING_FLYIO}\n` : "";
   const mainnetBlock = network === "mainnet" ? `\n${MAINNET_ACQUIRE}\n` : "";
+  const protocolBlock = idea.protocol ? `\n\n${PROTOCOL_BLOCKS[idea.protocol]}\n` : "";
+
 
   return `${MATRIX_PREAMBLE}
 
@@ -1303,8 +1557,9 @@ ${PRIVATE_STATE_PROVIDER}
 ${TANSTACK_START}
 
 ${body}
-
+${protocolBlock}
 ${inAppSetupPanel(network, os)}
+
 
 ${REDFLAGS}
 

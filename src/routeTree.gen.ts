@@ -19,16 +19,21 @@ import { Route as QuantumPrimerRouteImport } from './routes/quantum-primer'
 import { Route as ProofServerRouteImport } from './routes/proof-server'
 import { Route as LlmsRouteImport } from './routes/llms'
 import { Route as KnownIssuesRouteImport } from './routes/known-issues'
+import { Route as AgenticExperimentalRouteImport } from './routes/agentic-experimental'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ThemesIndexRouteImport } from './routes/themes.index'
 import { Route as ShowcaseIndexRouteImport } from './routes/showcase.index'
 import { Route as ThemesThemeRouteImport } from './routes/themes.$theme'
+import { Route as ShowcaseX402MidnightPaywallRouteImport } from './routes/showcase.x402-midnight-paywall'
+import { Route as ShowcaseUcpZkCheckoutRouteImport } from './routes/showcase.ucp-zk-checkout'
 import { Route as ShowcaseProgrammaticDustRouteImport } from './routes/showcase.programmatic-dust'
 import { Route as ShowcaseMoveBoardRouteImport } from './routes/showcase.move-board'
 import { Route as ShowcaseMidnightLedgerRouteImport } from './routes/showcase.midnight-ledger'
 import { Route as ShowcaseChoreoLedgerLocalRouteImport } from './routes/showcase.choreo-ledger-local'
+import { Route as ShowcaseA2aAp2NegotiationRouteImport } from './routes/showcase.a2a-ap2-negotiation'
 import { Route as IdeasIdRouteImport } from './routes/ideas.$id'
+import { Route as ApiPublicX402ProxyRouteImport } from './routes/api/public/x402-proxy'
 
 const WalletRoute = WalletRouteImport.update({
   id: '/wallet',
@@ -80,6 +85,11 @@ const KnownIssuesRoute = KnownIssuesRouteImport.update({
   path: '/known-issues',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AgenticExperimentalRoute = AgenticExperimentalRouteImport.update({
+  id: '/agentic-experimental',
+  path: '/agentic-experimental',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -105,6 +115,17 @@ const ThemesThemeRoute = ThemesThemeRouteImport.update({
   path: '/$theme',
   getParentRoute: () => ThemesRoute,
 } as any)
+const ShowcaseX402MidnightPaywallRoute =
+  ShowcaseX402MidnightPaywallRouteImport.update({
+    id: '/x402-midnight-paywall',
+    path: '/x402-midnight-paywall',
+    getParentRoute: () => ShowcaseRoute,
+  } as any)
+const ShowcaseUcpZkCheckoutRoute = ShowcaseUcpZkCheckoutRouteImport.update({
+  id: '/ucp-zk-checkout',
+  path: '/ucp-zk-checkout',
+  getParentRoute: () => ShowcaseRoute,
+} as any)
 const ShowcaseProgrammaticDustRoute =
   ShowcaseProgrammaticDustRouteImport.update({
     id: '/programmatic-dust',
@@ -127,15 +148,27 @@ const ShowcaseChoreoLedgerLocalRoute =
     path: '/choreo-ledger-local',
     getParentRoute: () => ShowcaseRoute,
   } as any)
+const ShowcaseA2aAp2NegotiationRoute =
+  ShowcaseA2aAp2NegotiationRouteImport.update({
+    id: '/a2a-ap2-negotiation',
+    path: '/a2a-ap2-negotiation',
+    getParentRoute: () => ShowcaseRoute,
+  } as any)
 const IdeasIdRoute = IdeasIdRouteImport.update({
   id: '/ideas/$id',
   path: '/ideas/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicX402ProxyRoute = ApiPublicX402ProxyRouteImport.update({
+  id: '/api/public/x402-proxy',
+  path: '/api/public/x402-proxy',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/agentic-experimental': typeof AgenticExperimentalRoute
   '/known-issues': typeof KnownIssuesRoute
   '/llms': typeof LlmsRoute
   '/proof-server': typeof ProofServerRoute
@@ -147,17 +180,22 @@ export interface FileRoutesByFullPath {
   '/undeployed-preflight': typeof UndeployedPreflightRoute
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
+  '/showcase/a2a-ap2-negotiation': typeof ShowcaseA2aAp2NegotiationRoute
   '/showcase/choreo-ledger-local': typeof ShowcaseChoreoLedgerLocalRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
   '/showcase/move-board': typeof ShowcaseMoveBoardRoute
   '/showcase/programmatic-dust': typeof ShowcaseProgrammaticDustRoute
+  '/showcase/ucp-zk-checkout': typeof ShowcaseUcpZkCheckoutRoute
+  '/showcase/x402-midnight-paywall': typeof ShowcaseX402MidnightPaywallRoute
   '/themes/$theme': typeof ThemesThemeRoute
   '/showcase/': typeof ShowcaseIndexRoute
   '/themes/': typeof ThemesIndexRoute
+  '/api/public/x402-proxy': typeof ApiPublicX402ProxyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/agentic-experimental': typeof AgenticExperimentalRoute
   '/known-issues': typeof KnownIssuesRoute
   '/llms': typeof LlmsRoute
   '/proof-server': typeof ProofServerRoute
@@ -167,18 +205,23 @@ export interface FileRoutesByTo {
   '/undeployed-preflight': typeof UndeployedPreflightRoute
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
+  '/showcase/a2a-ap2-negotiation': typeof ShowcaseA2aAp2NegotiationRoute
   '/showcase/choreo-ledger-local': typeof ShowcaseChoreoLedgerLocalRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
   '/showcase/move-board': typeof ShowcaseMoveBoardRoute
   '/showcase/programmatic-dust': typeof ShowcaseProgrammaticDustRoute
+  '/showcase/ucp-zk-checkout': typeof ShowcaseUcpZkCheckoutRoute
+  '/showcase/x402-midnight-paywall': typeof ShowcaseX402MidnightPaywallRoute
   '/themes/$theme': typeof ThemesThemeRoute
   '/showcase': typeof ShowcaseIndexRoute
   '/themes': typeof ThemesIndexRoute
+  '/api/public/x402-proxy': typeof ApiPublicX402ProxyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/agentic-experimental': typeof AgenticExperimentalRoute
   '/known-issues': typeof KnownIssuesRoute
   '/llms': typeof LlmsRoute
   '/proof-server': typeof ProofServerRoute
@@ -190,19 +233,24 @@ export interface FileRoutesById {
   '/undeployed-preflight': typeof UndeployedPreflightRoute
   '/wallet': typeof WalletRoute
   '/ideas/$id': typeof IdeasIdRoute
+  '/showcase/a2a-ap2-negotiation': typeof ShowcaseA2aAp2NegotiationRoute
   '/showcase/choreo-ledger-local': typeof ShowcaseChoreoLedgerLocalRoute
   '/showcase/midnight-ledger': typeof ShowcaseMidnightLedgerRoute
   '/showcase/move-board': typeof ShowcaseMoveBoardRoute
   '/showcase/programmatic-dust': typeof ShowcaseProgrammaticDustRoute
+  '/showcase/ucp-zk-checkout': typeof ShowcaseUcpZkCheckoutRoute
+  '/showcase/x402-midnight-paywall': typeof ShowcaseX402MidnightPaywallRoute
   '/themes/$theme': typeof ThemesThemeRoute
   '/showcase/': typeof ShowcaseIndexRoute
   '/themes/': typeof ThemesIndexRoute
+  '/api/public/x402-proxy': typeof ApiPublicX402ProxyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/agentic-experimental'
     | '/known-issues'
     | '/llms'
     | '/proof-server'
@@ -214,17 +262,22 @@ export interface FileRouteTypes {
     | '/undeployed-preflight'
     | '/wallet'
     | '/ideas/$id'
+    | '/showcase/a2a-ap2-negotiation'
     | '/showcase/choreo-ledger-local'
     | '/showcase/midnight-ledger'
     | '/showcase/move-board'
     | '/showcase/programmatic-dust'
+    | '/showcase/ucp-zk-checkout'
+    | '/showcase/x402-midnight-paywall'
     | '/themes/$theme'
     | '/showcase/'
     | '/themes/'
+    | '/api/public/x402-proxy'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/agentic-experimental'
     | '/known-issues'
     | '/llms'
     | '/proof-server'
@@ -234,17 +287,22 @@ export interface FileRouteTypes {
     | '/undeployed-preflight'
     | '/wallet'
     | '/ideas/$id'
+    | '/showcase/a2a-ap2-negotiation'
     | '/showcase/choreo-ledger-local'
     | '/showcase/midnight-ledger'
     | '/showcase/move-board'
     | '/showcase/programmatic-dust'
+    | '/showcase/ucp-zk-checkout'
+    | '/showcase/x402-midnight-paywall'
     | '/themes/$theme'
     | '/showcase'
     | '/themes'
+    | '/api/public/x402-proxy'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/agentic-experimental'
     | '/known-issues'
     | '/llms'
     | '/proof-server'
@@ -256,18 +314,23 @@ export interface FileRouteTypes {
     | '/undeployed-preflight'
     | '/wallet'
     | '/ideas/$id'
+    | '/showcase/a2a-ap2-negotiation'
     | '/showcase/choreo-ledger-local'
     | '/showcase/midnight-ledger'
     | '/showcase/move-board'
     | '/showcase/programmatic-dust'
+    | '/showcase/ucp-zk-checkout'
+    | '/showcase/x402-midnight-paywall'
     | '/themes/$theme'
     | '/showcase/'
     | '/themes/'
+    | '/api/public/x402-proxy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AgenticExperimentalRoute: typeof AgenticExperimentalRoute
   KnownIssuesRoute: typeof KnownIssuesRoute
   LlmsRoute: typeof LlmsRoute
   ProofServerRoute: typeof ProofServerRoute
@@ -279,6 +342,7 @@ export interface RootRouteChildren {
   UndeployedPreflightRoute: typeof UndeployedPreflightRoute
   WalletRoute: typeof WalletRoute
   IdeasIdRoute: typeof IdeasIdRoute
+  ApiPublicX402ProxyRoute: typeof ApiPublicX402ProxyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -353,6 +417,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KnownIssuesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/agentic-experimental': {
+      id: '/agentic-experimental'
+      path: '/agentic-experimental'
+      fullPath: '/agentic-experimental'
+      preLoaderRoute: typeof AgenticExperimentalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -388,6 +459,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ThemesThemeRouteImport
       parentRoute: typeof ThemesRoute
     }
+    '/showcase/x402-midnight-paywall': {
+      id: '/showcase/x402-midnight-paywall'
+      path: '/x402-midnight-paywall'
+      fullPath: '/showcase/x402-midnight-paywall'
+      preLoaderRoute: typeof ShowcaseX402MidnightPaywallRouteImport
+      parentRoute: typeof ShowcaseRoute
+    }
+    '/showcase/ucp-zk-checkout': {
+      id: '/showcase/ucp-zk-checkout'
+      path: '/ucp-zk-checkout'
+      fullPath: '/showcase/ucp-zk-checkout'
+      preLoaderRoute: typeof ShowcaseUcpZkCheckoutRouteImport
+      parentRoute: typeof ShowcaseRoute
+    }
     '/showcase/programmatic-dust': {
       id: '/showcase/programmatic-dust'
       path: '/programmatic-dust'
@@ -416,6 +501,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShowcaseChoreoLedgerLocalRouteImport
       parentRoute: typeof ShowcaseRoute
     }
+    '/showcase/a2a-ap2-negotiation': {
+      id: '/showcase/a2a-ap2-negotiation'
+      path: '/a2a-ap2-negotiation'
+      fullPath: '/showcase/a2a-ap2-negotiation'
+      preLoaderRoute: typeof ShowcaseA2aAp2NegotiationRouteImport
+      parentRoute: typeof ShowcaseRoute
+    }
     '/ideas/$id': {
       id: '/ideas/$id'
       path: '/ideas/$id'
@@ -423,22 +515,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IdeasIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/x402-proxy': {
+      id: '/api/public/x402-proxy'
+      path: '/api/public/x402-proxy'
+      fullPath: '/api/public/x402-proxy'
+      preLoaderRoute: typeof ApiPublicX402ProxyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface ShowcaseRouteChildren {
+  ShowcaseA2aAp2NegotiationRoute: typeof ShowcaseA2aAp2NegotiationRoute
   ShowcaseChoreoLedgerLocalRoute: typeof ShowcaseChoreoLedgerLocalRoute
   ShowcaseMidnightLedgerRoute: typeof ShowcaseMidnightLedgerRoute
   ShowcaseMoveBoardRoute: typeof ShowcaseMoveBoardRoute
   ShowcaseProgrammaticDustRoute: typeof ShowcaseProgrammaticDustRoute
+  ShowcaseUcpZkCheckoutRoute: typeof ShowcaseUcpZkCheckoutRoute
+  ShowcaseX402MidnightPaywallRoute: typeof ShowcaseX402MidnightPaywallRoute
   ShowcaseIndexRoute: typeof ShowcaseIndexRoute
 }
 
 const ShowcaseRouteChildren: ShowcaseRouteChildren = {
+  ShowcaseA2aAp2NegotiationRoute: ShowcaseA2aAp2NegotiationRoute,
   ShowcaseChoreoLedgerLocalRoute: ShowcaseChoreoLedgerLocalRoute,
   ShowcaseMidnightLedgerRoute: ShowcaseMidnightLedgerRoute,
   ShowcaseMoveBoardRoute: ShowcaseMoveBoardRoute,
   ShowcaseProgrammaticDustRoute: ShowcaseProgrammaticDustRoute,
+  ShowcaseUcpZkCheckoutRoute: ShowcaseUcpZkCheckoutRoute,
+  ShowcaseX402MidnightPaywallRoute: ShowcaseX402MidnightPaywallRoute,
   ShowcaseIndexRoute: ShowcaseIndexRoute,
 }
 
@@ -462,6 +567,7 @@ const ThemesRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AgenticExperimentalRoute: AgenticExperimentalRoute,
   KnownIssuesRoute: KnownIssuesRoute,
   LlmsRoute: LlmsRoute,
   ProofServerRoute: ProofServerRoute,
@@ -473,17 +579,8 @@ const rootRouteChildren: RootRouteChildren = {
   UndeployedPreflightRoute: UndeployedPreflightRoute,
   WalletRoute: WalletRoute,
   IdeasIdRoute: IdeasIdRoute,
+  ApiPublicX402ProxyRoute: ApiPublicX402ProxyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
