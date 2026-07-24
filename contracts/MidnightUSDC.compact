@@ -1,0 +1,43 @@
+// MidnightUSDC (mUSDC) — mimic USDC on Midnight. NO PEG, NO VALUE.
+// x402 v2 settlement asset for the Midnight facilitator. Hackathon-only.
+pragma language_version 0.23;
+import CompactStandardLibrary;
+
+// 6 decimals like real USDC.
+export ledger total_supply: Uint<64>;
+export ledger balances: Map<Bytes<32>, Uint<64>>;
+export ledger spent_nonces: Set<Bytes<32>>;
+
+witness senderSecret(): Bytes<32>;
+
+constructor() {
+  total_supply = 0;
+}
+
+// Demo faucet — 10 mUSDC per call max. Do NOT ship this on Mainnet.
+export circuit faucet(to: Bytes<32>, amount: Uint<64>): [] {
+  assert(amount <= 10000000 as Uint<64>, "faucet cap: 10 mUSDC");
+  const prev = balances.member(disclose(to)) ? balances.lookup(disclose(to)) : 0 as Uint<64>;
+  balances.insert(disclose(to), disclose((prev + amount) as Uint<64>));
+  total_supply = disclose((total_supply + amount) as Uint<64>);
+}
+
+export circuit transfer(
+  from: Bytes<32>,
+  to: Bytes<32>,
+  amount: Uint<64>,
+  nonce: Bytes<32>,
+): [] {
+  const sk = senderSecret();
+  const pk = persistentHash<Vector<2, Bytes<32>>>([pad(32, "musdc:signer:v1"), sk]);
+  assert(pk == from, "signer does not match from address");
+  assert(!spent_nonces.member(disclose(nonce)), "nonce already spent");
+
+  const fromBal = balances.member(disclose(from)) ? balances.lookup(disclose(from)) : 0 as Uint<64>;
+  assert(fromBal >= amount, "insufficient mUSDC");
+  const toBal = balances.member(disclose(to)) ? balances.lookup(disclose(to)) : 0 as Uint<64>;
+
+  balances.insert(disclose(from), disclose((fromBal - amount) as Uint<64>));
+  balances.insert(disclose(to),   disclose((toBal + amount) as Uint<64>));
+  spent_nonces.insert(disclose(nonce));
+}
