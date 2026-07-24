@@ -65,7 +65,7 @@ function Index() {
         </header>
 
         {/* BENTO — primary repository grid */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-4 auto-rows-[260px] gap-4 md:gap-5">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-4 md:auto-rows-[260px] gap-4 md:gap-5">
           <Link
             to="/ideas/$id"
             params={{ id: featured.id }}
@@ -95,7 +95,7 @@ function Index() {
             className="md:row-span-2 group bg-card border border-border p-7 flex flex-col hover:border-primary/50 transition-all duration-500"
           >
             <div className="flex-1 flex flex-col">
-              <div className="w-full aspect-[3/4] bg-background border border-border/60 mb-6 overflow-hidden relative">
+              <div className="w-full aspect-[3/4] max-h-[260px] md:max-h-none bg-background border border-border/60 mb-6 overflow-hidden relative">
                 <div className="absolute inset-0 gold-bloom opacity-40" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="font-display text-[9rem] italic text-primary/30 leading-none">02</span>
@@ -108,7 +108,7 @@ function Index() {
             </div>
           </Link>
 
-          <div className="bg-primary text-primary-foreground p-8 flex flex-col justify-center items-center text-center relative overflow-hidden">
+          <div className="bg-primary text-primary-foreground p-8 min-h-[180px] flex flex-col justify-center items-center text-center relative overflow-hidden">
             <span className="font-display text-7xl italic leading-none">1k</span>
             <span className="eyebrow text-primary-foreground/80 mt-3" style={{ color: "var(--color-primary-foreground)", opacity: 0.85 }}>
               ZK Entries
@@ -201,7 +201,7 @@ function Index() {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Bug reports, 1010 rejections, /check 400, DUST sync stalls — routed to the Midnight engineering team.
               </p>
-              <div className="flex flex-wrap gap-5 text-[11px] uppercase tracking-[0.24em] mt-1">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-3 sm:flex sm:flex-wrap sm:gap-5 text-[11px] uppercase tracking-[0.24em] mt-1">
                 <Link to="/undeployed" className="text-primary hover:text-foreground transition-colors">
                   Undeployed quick-start →
                 </Link>

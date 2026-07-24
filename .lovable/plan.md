@@ -1,29 +1,18 @@
-## Task 1: Hide Mainnet prompt variants (revert to 9,000)
+## Mobile UX fix — Homepage bento grid overflow
 
-Per Midnight Dev Rel: mainnet publishing is blacklisted for independent devs right now, so remove the mainnet option from the UI to avoid misleading hackathon participants. Keep the code paths so we can re-enable in ~2 months.
+**Problem:** In the homepage bento (`src/routes/index.tsx`), `auto-rows-[260px]` is applied at all breakpoints. On mobile the Status card and Support card contents are taller than 260px, so they overflow their row and visually collide (the "Support · Midnight team" eyebrow bleeds up against the Status card border, as shown in the screenshot). The featured card's inner portrait aspect-[3/4] block is also oversized on narrow screens.
 
-- `src/routes/llms.tsx`: remove the Mainnet tab from the network `TabsList`, drop the `mainnet` entry from the `PROMPTS` map and its 3 asset imports, remove the red mainnet risk banner paragraph. Update the intro copy: "4 networks × 3 host OSes, including an experimental Mainnet variant" → "3 networks × 3 host OSes"; adjust the ideaCount/variantCount sentence to say 9 variants per idea. Leave the mainnet `.asset.json` files and generator code on disk.
-- `src/routes/ideas.$id.tsx`: remove Mainnet from the network selector tabs so per-idea prompt pages only show Preview / Preproduction / Undeployed.
-- `src/lib/mega-prompt-variants.ts`: no functional change needed — `buildVariant` still supports mainnet for when we re-enable. (If there's a hardcoded network list feeding the UI, prune mainnet there too.)
-- Do NOT regenerate bundles or delete `llms-prompts-mainnet-*` assets; hiding at the UI layer is enough and preserves easy re-enable.
+### Changes (scoped to `src/routes/index.tsx`)
 
-## Task 2: Add sync-issue solutions to relevant pages
+1. Restrict the fixed row height to `md:` and up: `auto-rows-[260px]` → `md:auto-rows-[260px]` so mobile rows size to content.
+2. Add `min-h` fallbacks where a card looks empty without the fixed height (the "1k ZK Entries" tile and the "02" portrait tile), so they still feel like feature blocks on mobile.
+3. Constrain the portrait card's inner `aspect-[3/4]` to `max-h-[280px]` on mobile so it doesn't dominate the viewport.
+4. Tighten the Support card action row: switch `flex flex-wrap gap-5` → `grid grid-cols-2 gap-x-4 gap-y-3` on mobile so the four links stack cleanly instead of wrapping unevenly.
+5. Hero CTA row: allow the three faucet/index buttons to be full-width friendly on mobile (`flex-wrap` is fine; ensure no forced min-width causes crowding — verify padding).
 
-Dev Rel's two approaches from the Discord screenshot:
+No content or business-logic changes. Only presentation utilities on the homepage.
 
-1. **Serialize wallet state after first sync** and restore on next run so only the delta syncs.
-2. **Pass `NoOpTransactionHistoryStorage`** in wallet config to cut memory during sync — only if the script never queries history.
+### Verification
 
-Add a new "Wallet sync stalls / memory blowups" section to:
-
-- `src/routes/known-issues.tsx` — a new card with both remedies, a short code sketch for `NoOpTransactionHistoryStorage` in `WalletBuilder` config, and the "serialize → restore" pattern. Credit "Midnight Dev Rel (Jay Albert)".
-- `src/routes/wallet.tsx` — a short callout at the bottom of the wallet setup content pointing to the same two techniques, with a link to the Known Issues entry.
-
-No changes to mega-prompts for this task (would trigger a bundle rebuild); can be added in a follow-up if desired.
-
-## Files touched
-
-- `src/routes/llms.tsx` (mainnet UI hide)
-- `src/routes/ideas.$id.tsx` (mainnet tab hide)
-- `src/routes/known-issues.tsx` (new sync-issues card)
-- `src/routes/wallet.tsx` (sync callout + link)
+- Reload `/` at 384px viewport and confirm Status and Support cards no longer overlap, all four Support links are readable, and the featured/portrait tiles retain their editorial feel.
+- Spot-check at `md` and `lg` to confirm desktop bento is unchanged.
