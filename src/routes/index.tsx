@@ -65,7 +65,7 @@ function Index() {
         </header>
 
         {/* BENTO — primary repository grid */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-4 auto-rows-[260px] gap-4 md:gap-5">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-4 md:auto-rows-[260px] gap-4 md:gap-5">
           <Link
             to="/ideas/$id"
             params={{ id: featured.id }}
