@@ -228,25 +228,6 @@ function IdeaPage() {
               </Link>
             </p>
           )}
-          {variant === "mainnet" && (
-            <div className="mt-3 border border-red-600/60 bg-red-950/30 p-4 max-w-3xl text-xs leading-relaxed font-light text-red-100">
-              <p className="uppercase tracking-[0.24em] text-red-400 mb-2 text-[10px]">⚠️ Mainnet — real value</p>
-              <p>
-                This dapp is vibe-coded and unaudited. Use Mainnet only as a bragging-right proof-of-deploy
-                after a full Undeployed → Preprod → Preview dry-run. Buy NIGHT from an official exchange
-                partner and withdraw to your Lace unshielded address:{" "}
-                <a
-                  href="https://midnight.network/night?tag=exchange"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="story-gold text-red-200 underline"
-                >
-                  midnight.network/night?tag=exchange ↗
-                </a>
-                . The generated prompt includes a mandatory persistent red banner + README disclaimer.
-              </p>
-            </div>
-          )}
 
           <p className="mt-4 text-sm text-muted-foreground mb-4 font-light leading-relaxed">
             Paste into a fresh Lovable project. Make sure the secrets for this target are set first.{" "}
