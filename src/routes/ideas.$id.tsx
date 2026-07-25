@@ -229,6 +229,16 @@ function IdeaPage() {
               </Link>
             </p>
           )}
+          {variant === "undeployed-fly" && (
+            <p className="mt-2 text-xs text-primary/80 font-light leading-relaxed max-w-3xl">
+              This variant bundles the full four-app Fly.io topology (node · indexer · proof · faucet),
+              the readiness-check fix for WalletFacade 4.1.1, and the flymidnight
+              hard-won lessons (public HTTPS proof URL, contract-address override, faucet cold-boot retry).{" "}
+              <Link to="/undeployed" hash="flyio" className="story-gold text-primary">
+                Fly.io hosting guide →
+              </Link>
+            </p>
+          )}
 
           <p className="mt-4 text-sm text-muted-foreground mb-4 font-light leading-relaxed">
             Paste into a fresh Lovable project. Make sure the secrets for this target are set first.{" "}
