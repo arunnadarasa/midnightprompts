@@ -1932,7 +1932,7 @@ STACK
 ${PACKAGES}
 
 ${TOOLCHAIN_BY_OS[os]}
-${localBlock}${undeployedFundBlock}${flyioBlock}${mainnetBlock}
+${localBlock}${undeployedFundBlock}${flyioBlock}${flyLessonsBlock}${mainnetBlock}
 ${EXPERIMENTAL_DISCLAIMER}
 
 ${SCRIPTS_FOLDER}
