@@ -1167,6 +1167,58 @@ FAILURE-MODE TABLE (new rows from Choreo Kits, copy the fixes verbatim):
 Full skill reference: https://midnightprompts.lovable.app/undeployed (Fly.io section).`;
 
 
+const FLYMIDNIGHT_LESSONS = `FLY.IO STACK — HARD-WON LESSONS FROM \`flymidnight\` (2026-07):
+
+These are the fixes that turned a red-across-the-board \`/undeployed-preflight\` into 4 green pills
+on a live Fly-hosted stack. All of them are non-obvious; skip any one and hours evaporate.
+
+1. **Readiness = \`state.dust.state.progress.isStrictlyComplete()\`.** WalletFacade 4.1.1 shape.
+   Do NOT check \`state.progress?.isSynced\`, \`state.progress === true\`, or the older
+   \`walletReady\` boolean \u2014 those never flip on 4.1.1 and the app hangs on "warming up" forever
+   even after DUST is fully synced. Log the raw \`state.dust.state.progress\` object once when
+   debugging; it exposes \`applyGap\`, \`sourceGap\`, and \`isStrictlyComplete()\`.
+
+2. **Browser \u2192 proof server MUST use the public HTTPS URL.** \`https://choreo-proof.fly.dev\`.
+   The proof-server binary listens on IPv4 only, Fly 6PN is IPv6-only, and the browser is
+   HTTPS \u2014 \`choreo-proof.internal:6300\` fails on all three counts. Do NOT wrap it with socat;
+   the distroless image has no shell (\`exec: 127\`) and public IPv4 through Fly's edge is the
+   supported path. Only server-to-server 6PN calls need the \`.internal\` name (indexer \u2192 node,
+   faucet \u2192 node); proof server is always public.
+
+3. **\`VITE_DEFAULT_CONTRACT\` must OVERRIDE cached localStorage on load.** After a Fly redeploy
+   the volume can rotate, and yesterday's contract address is dead \u2014 but the SPA cached it in
+   \`localStorage["midnight-contract-address"]\`. On boot: prefer \`import.meta.env.VITE_DEFAULT_CONTRACT\`
+   when set, otherwise fall back to localStorage. Symptom if you invert the priority:
+   \`Couldn't find template \u2026\` on every write after redeploy, even though the site was just built.
+
+4. **Health probe order matters.** \`/undeployed-preflight\` must probe node WS FIRST, then
+   indexer HTTP, then indexer WS, then proof HTTP. If the node is stuck at #0 (see the Fly
+   failure-mode table above), every other probe returns misleading errors and users chase
+   phantom bugs. Fail fast on node before painting the rest of the grid.
+
+5. **Fund each Lace visitor from an in-app \`Get tDUST\` button.** The genesis seed \`\u20260002\`
+   funds ONLY the deploy wallet; every Lace visitor on Undeployed starts with 0 tDUST and
+   writes fail with a cryptic \`Unexpected error submitting scoped transaction\` after signing.
+   Wire a Faucet button that POSTs \`{ address: laceUnshieldedAddress }\` to
+   \`\${VITE_FAUCET_URL}/grant\`. Poll the Lace \`getDustBalance()\` afterwards; disable the mint
+   button until balance > 0.
+
+6. **Retry the faucet with backoff for the first 90 s after redeploy.** \`choreo-faucet\` cold
+   boot: \`wallet.start()\` needs 10\u201390 s to sync a non-zero balance. During that window,
+   \`/grant\` returns \`503 warming up\`. Show a "faucet warming up (~90 s)" toast, retry
+   automatically every 10 s, and don't set \`min_machines_running=0\` on the faucet unless you
+   accept that first-request delay.
+
+7. **When you rebuild the node volume, refund the faucet.** Destroying \`chain_data\` on the
+   node wipes every previously-minted tDUST, including the faucet wallet. Follow the volume
+   destroy with: \`bun scripts/fund-faucet.mjs\` (which uses the genesis \`\u20260002\` seed to send
+   tDUST to the faucet's \`/health\` address). Otherwise the next visitor's \`/grant\` returns
+   500 \`Insufficient Funds\` and the demo silently breaks.
+
+Cross-reference: the \`flymidnight\` repo (github.com/arunnadarasa/flymidnight) is the canonical
+working example \u2014 mirror the file layout when in doubt.`;
+
+
 function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
   const dockerInstall: Record<OSTarget, string> = {
     macos: "Install Docker Desktop for Mac (`brew install --cask docker`, then `open -a Docker`).",
