@@ -75,46 +75,51 @@ const DEMOS: DemoCard[] = [
   },
   {
     key: "a2a-ap2",
-    to: "/showcase/a2a-ap2-negotiation",
+    href: "https://agenticmidnight.lovable.app/",
     tag: "Agentic · A2A + AP2",
-    badge: "Experimental",
+    badge: "External demo",
     networks: ["preview", "preprod", "undeployed"],
     title: "A2A + AP2 Negotiation",
     body: (
       <>
         Buyer and seller agents exchange typed A2A DataParts, agree on a CartMandate,
         and anchor the signed mandate on the Midnight <code>MandateVault</code> Compact
-        contract. Every negotiation ends with a real on-chain tx.
+        contract. Live demo at{" "}
+        <a href="https://agenticmidnight.lovable.app/" target="_blank" rel="noreferrer" className="underline hover:text-primary">agenticmidnight.lovable.app</a>; source on{" "}
+        <a href="https://github.com/arunnadarasa/agenticmidnight" target="_blank" rel="noreferrer" className="underline hover:text-primary">GitHub</a>.
       </>
     ),
   },
   {
     key: "ucp-checkout",
-    to: "/showcase/ucp-zk-checkout",
+    href: "https://ucpmidnight.lovable.app/",
     tag: "Agentic · UCP",
-    badge: "Experimental",
+    badge: "External demo",
     networks: ["preview", "preprod", "undeployed"],
     title: "UCP ZK-Checkout",
     body: (
       <>
         RFC 9421-signed discovery and checkout, closed by recording the order hash on the
-        Midnight <code>OrderLedger</code>. The signed receipt carries a{" "}
-        <code>Midnight-Tx</code> header.
+        Midnight <code>OrderLedger</code>. Live demo at{" "}
+        <a href="https://ucpmidnight.lovable.app/" target="_blank" rel="noreferrer" className="underline hover:text-primary">ucpmidnight.lovable.app</a>; source on{" "}
+        <a href="https://github.com/arunnadarasa/ucpmidnight" target="_blank" rel="noreferrer" className="underline hover:text-primary">GitHub</a>.
       </>
     ),
   },
   {
     key: "x402-paywall",
-    to: "/showcase/x402-midnight-paywall",
+    href: "https://x402midnight.lovable.app/",
     tag: "Agentic · x402 · mUSDC",
-    badge: "Experimental",
+    badge: "External demo",
     networks: ["preview", "preprod", "undeployed"],
     title: "x402 Midnight Paywall",
     body: (
       <>
-        Pay 0.01 mUSDC to unlock a protected endpoint. Ports the x402 v2 envelope +
-        <code> PAYMENT-SIGNATURE</code>/<code>PAYMENT-RESPONSE</code> headers to Midnight,
-        settling via the mimic <code>MidnightUSDC</code> contract.
+        Pay 0.01 mUSDC to unlock a protected endpoint. Ports the x402 v2 envelope +{" "}
+        <code>PAYMENT-SIGNATURE</code>/<code>PAYMENT-RESPONSE</code> headers to Midnight,
+        settling via the mimic <code>MidnightUSDC</code> contract. Live demo at{" "}
+        <a href="https://x402midnight.lovable.app/" target="_blank" rel="noreferrer" className="underline hover:text-primary">x402midnight.lovable.app</a>; source on{" "}
+        <a href="https://github.com/arunnadarasa/x402midnight" target="_blank" rel="noreferrer" className="underline hover:text-primary">GitHub</a>.
       </>
     ),
   },
