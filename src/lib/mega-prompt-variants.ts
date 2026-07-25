@@ -1897,9 +1897,12 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, 
 
   const netLabel = NETWORK_LABELS[network] ?? network;
   const netSecrets = NETWORK_SECRETS[network] ?? NETWORK_SECRETS.preview;
-  const localBlock = network === "undeployed" ? `\n\n${localStackSetup(os)}\n` : "";
-  const undeployedFundBlock = network === "undeployed" ? `\n${UNDEPLOYED_FUND_LACE}\n` : "";
-  const flyioBlock = network === "undeployed" ? `\n${HOSTING_FLYIO}\n` : "";
+  const isUndeployedLocal = network === "undeployed";
+  const isUndeployedFly = network === "undeployed-fly";
+  const localBlock = isUndeployedLocal ? `\n\n${localStackSetup(os)}\n` : "";
+  const undeployedFundBlock = isUndeployedLocal ? `\n${UNDEPLOYED_FUND_LACE}\n` : "";
+  const flyioBlock = isUndeployedLocal || isUndeployedFly ? `\n${HOSTING_FLYIO}\n` : "";
+  const flyLessonsBlock = isUndeployedFly ? `\n${FLYMIDNIGHT_LESSONS}\n` : "";
   const mainnetBlock = network === "mainnet" ? `\n${MAINNET_ACQUIRE}\n` : "";
   const protocolBlock = idea.protocol ? `\n\n${PROTOCOL_BLOCKS[idea.protocol]}\n` : "";
 
