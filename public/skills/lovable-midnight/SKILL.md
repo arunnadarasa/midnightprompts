@@ -24,9 +24,191 @@ The official [Midnight Support Matrix](https://docs.midnight.network/relnotes/su
 | On-chain runtime | 3.0.0 | 3.0.0 |
 | testkit-js | 4.1.1 | 4.1.1 |
 
-The local Undeployed Docker tags (`midnight-node:0.22.5`, `indexer-standalone:4.0.2`, `proof-server:8.0.3`) come from the official `midnightntwrk/midnight-local-dev` repository and are not listed in the public matrix. For any public-network deployment, start with the matrix proof server (`8.1.0`) and align every other dependency to the same matrix row.
 
-## Pick the target FIRST
+## 2026-08 update — hard-won lessons from working agentic repos
+
+These rules come from three end-to-end agentic-commerce dApps that reached real on-chain Undeployed anchors ([agenticmidnight](https://github.com/arunnadarasa/agenticmidnight) — AP2 `anchorMandate`, [ucpmidnight](https://github.com/arunnadarasa/ucpmidnight) — UCP `appendEntry`, [x402midnight](https://github.com/arunnadarasa/x402midnight) — x402 + Sepolia + EffectStream `anchorChunk`). Where they contradict older sections in this skill, **these rules win**. Skim this whole section before writing any deploy or server-append code.
+
+### 1. Wallet / SDK stack MUST match the indexer
+
+- Local Undeployed uses **`indexer-standalone:4.0.2`**. Pin the wallet stack to it: **`@midnight-ntwrk/wallet-sdk@1.2.0`** + **`@midnight-ntwrk/testkit-js@4.1.1`** + `midnight-js-*@4.1.1`. Use `MidnightWalletProvider` (from wallet-sdk) or the testkit `WalletFacade`, not `WalletBuilder.buildFromSeed` from `@midnight-ntwrk/wallet@5`.
+- `@midnight-ntwrk/wallet@5.0.0` `WalletBuilder` speaks a newer GraphQL schema. Against indexer 4.0.2 every subscribe dies with `Unknown field "wallet" on type "Subscription"` / `Unknown type "ProgressUpdate"` / `"ViewingUpdate"`. Do NOT use wallet@5 for Undeployed until the indexer catches up.
+- Node deploy scripts must polyfill WebSocket: `import WebSocket from 'ws'; (globalThis as any).WebSocket = WebSocket;`.
+- `NetworkId` from `@midnight-ntwrk/midnight-js-network-id` is **type-only** at 4.1.1 — it is NOT a runtime enum. Use `setNetworkId("undeployed")` with a string literal. The wallet-side runtime enum lives on `wallet-sdk` under a nested namespace: `NetworkId.NetworkId.Undeployed`. Fly.io faucets on Bun crash importing this package's ESM entry — pass the numeric enum (`0` for Undeployed) or the string name directly.
+- Compact 0.31 emits ESM `contracts/managed/<name>/contract/index.js`. Deploy scripts must resolve `.js` first with `.cjs` only as fallback — hard-coding `index.cjs` breaks with `MODULE_NOT_FOUND`.
+- Every Node-side deploy import must be in `package.json` (Vite resolution does not carry into scripts). Minimum `bun add` for a working deploy: `@midnight-ntwrk/midnight-js-contracts@4.1.1`, `@midnight-ntwrk/midnight-js-node-zk-config-provider@4.1.1`, `@midnight-ntwrk/midnight-js-level-private-state-provider@4.1.1`, `@midnight-ntwrk/midnight-js-http-client-proof-provider@4.1.1`, `@midnight-ntwrk/midnight-js-indexer-public-data-provider@4.1.1`, `@midnight-ntwrk/midnight-js-utils@4.1.1`, `@midnight-ntwrk/wallet-sdk@1.2.0`, `@midnight-ntwrk/testkit-js@4.1.1`, `@midnight-ntwrk/zswap@4.0.0`, `ws`.
+
+Deploy skeleton (replaces the older `WalletBuilder` skeleton further down; keep gotchas ①–⑨):
+
+```ts
+import WebSocket from "ws";
+(globalThis as any).WebSocket = WebSocket;
+
+import { setNetworkId } from "@midnight-ntwrk/midnight-js-network-id";
+import { CompiledContract } from "@midnight-ntwrk/midnight-js-contracts";
+import { MidnightWalletProvider } from "@midnight-ntwrk/wallet-sdk";
+// ...zk / private-state / proof / indexer providers as before
+
+setNetworkId("undeployed"); // string, NOT NetworkId.Undeployed
+
+const wallet = await MidnightWalletProvider.create({
+  networkId: "undeployed",
+  seedHex: GENESIS_SEED, // "…0002" — see gotcha ③ below
+  indexerUrl: process.env.VITE_INDEXER_URL!,
+  indexerWsUrl: process.env.VITE_INDEXER_WS_URL!,
+  proofServerUrl: process.env.VITE_PROOF_SERVER_URL!,
+  nodeUrl: "ws://localhost:9944",
+});
+await wallet.start(true); // DUST-aware sync
+// ...providers bag + CompiledContract.make(...).withWitnesses(...).withCompiledFileAssets(...)
+```
+
+### 2. Design deploy for server-append from day ONE (Undeployed non-negotiable)
+
+Lace cannot sign on Undeployed. Every write path on Undeployed must go through a server route that reuses the genesis wallet. In Lovable / TanStack Start that means:
+
+```text
+Undeployed:  UI → POST /api/public/<verb> → genesis wallet (server) → chain
+Preview/Preprod/Mainnet:  UI → Lace publishKit → chain
+Reads on every network:  indexer GraphQL, no wallet needed
+```
+
+To make server-append actually reload the deploy-time witness (i.e. avoid `RpcError 117` "cannot find private state"), everything the deploy step touched MUST be reconstructable at append time. Put these in a **shared** module (`src/lib/midnight-shared.ts` — imported by both `scripts/deploy-midnight.mjs` and every `*.server.ts` file):
+
+- `GENESIS_SEED = "…0002"` — the standalone chain funds this seed, NOT `…0001`.
+- `PRIVATE_STATE_ID` — a **stable** string, e.g. `"agentic-mandate-v1"`. Never `Date.now()`.
+- `PRIVATE_STATE_STORE` — the LevelDB store name (both deploy and server MUST open the same one).
+- `PRIVATE_STORAGE_PASSWORD` — same on both sides; ≥3 char classes.
+- `DEPLOYER_SECRET_HEX` — **deterministic** 32-byte hex, NOT `crypto.getRandomValues`. Otherwise server-append cannot re-derive the witness.
+- Deterministic buyer/merchant public key: `persistentHash<Vector<2, Bytes<32>>>([pad(32, "<domain>:v1"), sk])`. Domain per protocol: `ap2:buyer:v1`, `ucp:merchant:v1`, `musdc:signer:v1`, `abodc:author:v1` — never reused across protocols.
+
+Persist deploy output to `src/data/midnight-contract.undeployed.json`:
+
+```json
+{ "contractAddress": "…", "deployTxId": "…", "privateStateId": "agentic-mandate-v1", "buyerPk": "…", "deployedAt": "…" }
+```
+
+Every server route MUST call `providers.privateStateProvider.setContractAddress(contractAddress)` **before** any `get`/`set` — omitting it is the most common cause of a 500 with "Contract address not set".
+
+`levelPrivateStateProvider` at 4.1.1 no longer accepts `{ privateStateStoreName: "…" }` alone. It requires a **function** password provider and an `accountId`: `levelPrivateStateProvider({ privateStateStoreName, accountId, privateStoragePasswordProvider: { get: async () => PASSWORD } })`. The `{ get: async () => … }` shape on the outer providers bag from older skeletons is outdated for 4.1.1.
+
+### 3. `midnightSsrStub()` MUST be gated with `apply: "build"`
+
+Escalated to a top-level rule. Any Vite plugin that swaps `@midnight-ntwrk/*` or `*.server.ts` files for stubs must include `apply: "build"`. Without it, `vite dev` API handlers hit the stub, `/api/public/<verb>` silently returns `{ simulated: true, midnightTxHash: "0xSIMULATED" }`, and the UI shows "ANCHORED" for a transaction that never happened. The production Cloudflare Worker build still gets the stub; local dev keeps the real Midnight Node modules.
+
+```ts
+function midnightSsrStub(): Plugin {
+  return {
+    name: "midnight-ssr-stub",
+    enforce: "pre",
+    apply: "build",                // ← MANDATORY, not optional
+    async resolveId(id, importer, options) { /* … */ },
+  };
+}
+```
+
+Any server route that silently returns a fake tx hash on `simulated: true` should be re-audited to **fail loudly** when the contract-address JSON is missing or `VITE_NETWORK_ID !== "undeployed"`. Do NOT ship a "successful" UI state that reads `midnightTxHash: "0xSIMULATED"` — always verify via the indexer.
+
+### 4. `optimizeDeps.exclude` — full list
+
+`testkit-js` and `wallet-sdk` pull in Node-only transitives (`pino`, `ws`, `ssh2`, `cpu-features`) that hang the Vite dev server on "Loading…" if pre-bundled. Ship these excludes from day one:
+
+```ts
+optimizeDeps: {
+  noDiscovery: true,
+  exclude: [
+    "@midnight-ntwrk/testkit-js",
+    "@midnight-ntwrk/wallet-sdk",
+    "@midnight-ntwrk/midnight-js-contracts",
+    "@midnight-ntwrk/midnight-js-http-client-proof-provider",
+    "@midnight-ntwrk/midnight-js-indexer-public-data-provider",
+    "@midnight-ntwrk/midnight-js-node-zk-config-provider",
+    "@midnight-ntwrk/midnight-js-level-private-state-provider",
+    "@midnight-ntwrk/midnight-js-network-id",
+    "@midnight-ntwrk/midnight-js-utils",
+    "@midnight-ntwrk/wallet",
+    "@midnight-ntwrk/compact-runtime",
+    "@midnight-ntwrk/onchain-runtime-v3",
+    "pino", "ws", "ssh2", "cpu-features",
+  ],
+}
+```
+
+### 5. Compact-side gotchas
+
+- `pad(32, "<domain>:<role>")` — the string must be **≤ 32 UTF-8 bytes** or Compact refuses to compile with `cannot pad "…" to length 32 since its utf8-equivalent already exceeds that length`. Keep domain separators short (`ap2:buyer:v1`, `ucp:merchant:v1`, `musdc:signer:v1`, `abodc:author:v1`). Never use a full product name.
+- `Opaque<"string">` ledger fields **cannot** be initialised in `constructor()` with a string literal like `"(empty)"` — literals are `Bytes<N>`. Drop the init and let the field start uninitialised; guard reads in the circuit.
+- Any Compact-side signing key that a TypeScript witness will re-derive later MUST use the **exact** byte layout the circuit expects: `persistentHash<Vector<2, Bytes<32>>>([pad(32, "<domain>:v1"), sk])` — no extra fields, no reordered inputs, no different arity.
+
+### 6. React "Page Unresponsive" on wallet-connect panels
+
+Symptom: main thread dies as soon as you click "Connect Lace"; Chrome shows a "Page Unresponsive" dialog. It is NOT a Lace bug — it is a `setState`-during-render loop in the wallet-bubble component. Rule: never call `onChange(walletState)` inside the component body. Bubble state upward from a `useEffect` only.
+
+### 7. Definition of done for Undeployed — verify with the indexer, not the SDK
+
+Before polishing UI, POST to the indexer:
+
+```graphql
+query($addr: HexEncoded!) {
+  contractAction(address: $addr) {
+    ... on ContractCall {
+      entryPoint
+      transaction { hash block { height } }
+    }
+  }
+}
+```
+
+Confirm `entryPoint` matches the circuit you called (`anchorMandate`, `appendEntry`, `anchorChunk`, …) and a non-null block height. midnight-js `txId` returned by `callTx.…` and the indexer's `transaction.hash` are **different strings** — do not string-match one against the other. The indexer's ledger hash is the source of truth for "anchored".
+
+After every `midnight:down` → `midnight:up`: **redeploy the contract AND restart Vite**. The LevelDB store is wiped, the previous contract address no longer exists, and Vite's cached module graph still holds the old `ctxPromise`. Both must be reset together.
+
+### 8. EffectStream / dual-rail (Sepolia → Undeployed) overlay
+
+From x402midnight: Sepolia Circle assets (USDC/EURC/cirBTC) never move to Midnight. EffectStream is a **sync/overlay** that anchors a chunk hash on the Undeployed `StreamingChoreographyIP` contract after the Sepolia payment settles. Do NOT describe this as bridging. Rules for the pattern:
+
+- **x402 multi-accept.** The 402 challenge advertises every viable rail at once: `midnight-mUSDC` plus Sepolia `exact` options on `eip155:11155111` for USDC / EURC / cirBTC.
+- **Decimals differ per asset.** USDC = 6, EURC = 6, cirBTC = 8. Ship a `priceMicroUsdToTokenAtomic(asset, priceMicroUsd)` helper — never hardcode `10**6`.
+- **Sepolia rail traps that eat hours** (from x402midnight):
+  - Foundry `forge create` silently dry-runs unless `--broadcast` appears in the correct position. Always confirm the receipt on the block explorer; a success message alone is not evidence of an on-chain deploy.
+  - Etherscan V1 per-chain hosts (`api-sepolia.etherscan.io`) are deprecated. Verify with V2: `--verifier-url https://api.etherscan.io/v2/api?chainid=11155111 --skip-is-verified-check`. A valid V2 key can pass balance pings and still fail V1-style ABI preflight.
+  - Infura rejects gas > 2²⁴ (16 777 216). When `eth_estimateGas` fails (usually zero token balance or missing allowance) MetaMask falls back to 21 000 000 and Infura returns `transaction gas limit too high (cap: 16777216, tx: 21000000)`. This looks like a contract revert in viem's error wrapping; it isn't. Surface `balance >= required` and allowance state BEFORE calling `writeContract`, with a `faucet.circle.com` CTA.
+- **`/api/public/sepolia-fulfill` must fail loudly.** If the SCIP contract address JSON is missing or `VITE_NETWORK_ID !== "undeployed"`, return an HTTP 4xx/5xx error, NOT `{ midnightTxHash: "0xSIMULATED" }` with `success: true`. A UI that reads "ANCHORED" from `0xSIMULATED` is a bug, not a demo mode.
+- **Two networks, two wallets.** Sepolia → MetaMask + Circle tokens. Undeployed writes → server genesis wallet + local proof server. Never conflate them; never force Lace for Undeployed settlement.
+
+### 9. Canonical file layout the three repos converged on
+
+```
+src/lib/midnight-shared.ts             # seed, private-state id/store/password, deployer secret, domain sep
+src/lib/midnight-providers.server.ts   # shared Undeployed providers bag (wallet + zk + priv-state + proof + indexer)
+src/lib/<verb>.server.ts               # findDeployedContract + callTx.<verb>(args) — one per circuit entry point
+src/lib/<verb>.ssr-stub.ts             # inert stub for Cloudflare production build only
+src/routes/api/public/<verb>.ts        # POST handler — on Undeployed calls the .server.ts; other nets return 501 or defer to Lace client-side
+src/data/midnight-contract.undeployed.json  # deploy metadata (address, tx, privateStateId, buyerPk)
+scripts/midnight-standalone.mjs        # writes .midnight/standalone.docker-compose.yml with the full APP__INFRA__ env
+scripts/deploy-midnight.mjs            # MidnightWalletProvider + CompiledContract.make; writes the JSON above
+```
+
+### 10. Failure modes added by this update
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| `Unknown field "wallet" on type "Subscription"` from any deploy or provider | `@midnight-ntwrk/wallet@5` against indexer-standalone `4.0.2` | Downgrade to `MidnightWalletProvider` + `wallet-sdk@1.2.0` + `testkit-js@4.1.1` |
+| Indexer container exits at boot with `missing field 'secret' for key "INFRA"` | Compose only sets `APP__INFRA__NODE__URL` | Adopt the full `midnight-local-dev/standalone.yml` env block (with `APP__INFRA__SECRET`) |
+| Compact refuses to compile: `cannot pad "<long>:author:" to length 32` | Domain-separator string is > 32 UTF-8 bytes | Shorten to `<abbrev>:<role>:v1` (e.g. `abodc:author:v1`) |
+| Compact refuses to compile: `disclose("(empty)")` on an `Opaque<"string">` field | String literals are `Bytes<N>`, not `Opaque` | Drop the constructor init; let the field start uninitialised |
+| Deploy fails with `MODULE_NOT_FOUND` on `.../contract/index.cjs` | Compact 0.31 emits ESM `index.js` | Resolve `contract/index.js` first, `.cjs` only as fallback |
+| `NetworkId is not defined` at runtime after `import { NetworkId } from "@midnight-ntwrk/midnight-js-network-id"` | It's a TYPE-only export in 4.1.1 | `setNetworkId("undeployed")`; use `wallet-sdk`'s `NetworkId.NetworkId.Undeployed` when a runtime enum is needed |
+| `/api/public/<verb>` always returns `simulated: true` in dev | `midnightSsrStub()` runs on all SSR including local API routes | Gate the plugin with `apply: "build"` |
+| Server-append fails with RpcError 117 / "cannot find private state" | `DEPLOYER_SECRET_HEX`/`privateStateId`/store name/password differ between deploy and server | Move them all to `src/lib/midnight-shared.ts`; both sides import the same constants |
+| POST to indexer `/api/v4/graphql` returns 405 | Used GET | GraphQL requires POST |
+| Wallet-connect panel triggers Chrome "Page Unresponsive" | Parent `setState` called during render in the wallet-bubble component | Bubble wallet state via `useEffect` only |
+| UI shows "ANCHORED" but the tx hash is `0xSIMULATED` | Server route silently returned a fake hash | Fail loudly when SCIP JSON is missing or network isn't Undeployed; verify with indexer `contractAction` |
+| Etherscan verify fails with `Invalid API Key` on a working key | Foundry hit the deprecated V1 host | `--verifier-url https://api.etherscan.io/v2/api?chainid=<id> --skip-is-verified-check` |
+| Sepolia tx errors with `transaction gas limit too high (cap: 16777216, tx: 21000000)` | `eth_estimateGas` failed (usually 0 balance / no allowance) → MetaMask fell back to 21M → Infura's 2²⁴ cap | Fund the wallet / approve the token first; surface balance vs required BEFORE `writeContract` |
+| `forge create` "succeeded" but nothing on the explorer | Missing or misplaced `--broadcast` | Always add `--broadcast` and check the block explorer receipt |
+
+
 
 | Target | Use when | Wallet | Node/Indexer | Proof server |
 | --- | --- | --- | --- | --- |
