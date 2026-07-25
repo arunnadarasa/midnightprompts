@@ -38,11 +38,14 @@ function ThemePage() {
   const ideas = IDEAS_BY_THEME[theme.slug];
   const [q, setQ] = useState("");
   const [hookFilter, setHookFilter] = useState<string | null>(null);
+  const [protocolFilter, setProtocolFilter] = useState<ProtocolFilter>(null);
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     return ideas.filter((i) => {
       if (hookFilter && i.quantumHookId !== hookFilter) return false;
+      if (protocolFilter === "base" && i.protocol) return false;
+      if (protocolFilter && protocolFilter !== "base" && i.protocol !== protocolFilter) return false;
       if (!needle) return true;
       return (
         i.title.toLowerCase().includes(needle) ||
@@ -50,7 +53,8 @@ function ThemePage() {
         i.subDiscipline.toLowerCase().includes(needle)
       );
     });
-  }, [ideas, q, hookFilter]);
+  }, [ideas, q, hookFilter, protocolFilter]);
+
 
   return (
     <SiteShell>
