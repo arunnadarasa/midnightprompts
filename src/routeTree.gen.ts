@@ -17,6 +17,7 @@ import { Route as StrategyRouteImport } from './routes/strategy'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
 import { Route as QuantumPrimerRouteImport } from './routes/quantum-primer'
 import { Route as ProofServerRouteImport } from './routes/proof-server'
+import { Route as MobileRouteImport } from './routes/mobile'
 import { Route as LlmsRouteImport } from './routes/llms'
 import { Route as KnownIssuesRouteImport } from './routes/known-issues'
 import { Route as AgenticExperimentalRouteImport } from './routes/agentic-experimental'
@@ -73,6 +74,11 @@ const QuantumPrimerRoute = QuantumPrimerRouteImport.update({
 const ProofServerRoute = ProofServerRouteImport.update({
   id: '/proof-server',
   path: '/proof-server',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MobileRoute = MobileRouteImport.update({
+  id: '/mobile',
+  path: '/mobile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LlmsRoute = LlmsRouteImport.update({
@@ -171,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/agentic-experimental': typeof AgenticExperimentalRoute
   '/known-issues': typeof KnownIssuesRoute
   '/llms': typeof LlmsRoute
+  '/mobile': typeof MobileRoute
   '/proof-server': typeof ProofServerRoute
   '/quantum-primer': typeof QuantumPrimerRoute
   '/showcase': typeof ShowcaseRouteWithChildren
@@ -198,6 +205,7 @@ export interface FileRoutesByTo {
   '/agentic-experimental': typeof AgenticExperimentalRoute
   '/known-issues': typeof KnownIssuesRoute
   '/llms': typeof LlmsRoute
+  '/mobile': typeof MobileRoute
   '/proof-server': typeof ProofServerRoute
   '/quantum-primer': typeof QuantumPrimerRoute
   '/strategy': typeof StrategyRoute
@@ -224,6 +232,7 @@ export interface FileRoutesById {
   '/agentic-experimental': typeof AgenticExperimentalRoute
   '/known-issues': typeof KnownIssuesRoute
   '/llms': typeof LlmsRoute
+  '/mobile': typeof MobileRoute
   '/proof-server': typeof ProofServerRoute
   '/quantum-primer': typeof QuantumPrimerRoute
   '/showcase': typeof ShowcaseRouteWithChildren
@@ -253,6 +262,7 @@ export interface FileRouteTypes {
     | '/agentic-experimental'
     | '/known-issues'
     | '/llms'
+    | '/mobile'
     | '/proof-server'
     | '/quantum-primer'
     | '/showcase'
@@ -280,6 +290,7 @@ export interface FileRouteTypes {
     | '/agentic-experimental'
     | '/known-issues'
     | '/llms'
+    | '/mobile'
     | '/proof-server'
     | '/quantum-primer'
     | '/strategy'
@@ -305,6 +316,7 @@ export interface FileRouteTypes {
     | '/agentic-experimental'
     | '/known-issues'
     | '/llms'
+    | '/mobile'
     | '/proof-server'
     | '/quantum-primer'
     | '/showcase'
@@ -333,6 +345,7 @@ export interface RootRouteChildren {
   AgenticExperimentalRoute: typeof AgenticExperimentalRoute
   KnownIssuesRoute: typeof KnownIssuesRoute
   LlmsRoute: typeof LlmsRoute
+  MobileRoute: typeof MobileRoute
   ProofServerRoute: typeof ProofServerRoute
   QuantumPrimerRoute: typeof QuantumPrimerRoute
   ShowcaseRoute: typeof ShowcaseRouteWithChildren
@@ -401,6 +414,13 @@ declare module '@tanstack/react-router' {
       path: '/proof-server'
       fullPath: '/proof-server'
       preLoaderRoute: typeof ProofServerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mobile': {
+      id: '/mobile'
+      path: '/mobile'
+      fullPath: '/mobile'
+      preLoaderRoute: typeof MobileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/llms': {
@@ -570,6 +590,7 @@ const rootRouteChildren: RootRouteChildren = {
   AgenticExperimentalRoute: AgenticExperimentalRoute,
   KnownIssuesRoute: KnownIssuesRoute,
   LlmsRoute: LlmsRoute,
+  MobileRoute: MobileRoute,
   ProofServerRoute: ProofServerRoute,
   QuantumPrimerRoute: QuantumPrimerRoute,
   ShowcaseRoute: ShowcaseRouteWithChildren,
@@ -584,13 +605,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
