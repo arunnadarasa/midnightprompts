@@ -149,6 +149,8 @@ midnightntwrk/indexer-standalone:4.0.2
 
 ## Local standalone stack (Undeployed) — canonical `docker-compose.yml`
 
+**IMPORTANT (2026-08 update from agenticmidnight / ucpmidnight / x402midnight).** Earlier versions of this skill shipped a compose block that set only `APP__INFRA__NODE__URL`. `indexer-standalone:4.0.2` requires more than that and crashes at boot with `missing field 'secret' for key "INFRA" in APP__ environment variable(s)`. Adopt the full env from the official [`midnight-local-dev` `standalone.yml`](https://github.com/midnightntwrk/midnight-local-dev):
+
 ```yaml
 services:
   proof-server:
@@ -167,8 +169,18 @@ services:
     depends_on: [node]
     environment:
       APP__INFRA__NODE__URL: ws://node:9944
+      APP__APPLICATION__NETWORK_ID: undeployed
+      APP__INFRA__STORAGE__PASSWORD: indexer
+      APP__INFRA__PUB_SUB__PASSWORD: indexer
+      APP__INFRA__LEDGER_STATE_STORAGE__PASSWORD: indexer
+      APP__INFRA__SECRET: "303132333435363738393031323334353637383930313233343536373839303132"
+      APP__INFRA__SPO_NODE__BLOCKFROST_ID: "placeholder-not-used-standalone"
     ports: ["8088:8088"]
 ```
+
+`APP__INFRA__SECRET` must be 32 hex-encoded bytes (64 hex chars). `APP__INFRA__SPO_NODE__BLOCKFROST_ID` is a required placeholder for standalone mode. Force-recreate the containers (`docker compose up -d --force-recreate`) when you change these — the indexer caches its config on a named volume.
+
+**GraphQL readiness must use POST**, not GET. `curl` the endpoint with `-X POST -H 'content-type: application/json' -d '{"query":"{__typename}"}'`; a bare GET returns `405 Method Not Allowed` and is not evidence of a broken indexer. Any readiness script (including `scripts/midnight-standalone.mjs`) must POST.
 
 Env for the frontend:
 
@@ -181,6 +193,8 @@ VITE_DEFAULT_CONTRACT=<hex, written by deploy script>
 ```
 
 Note: the standalone indexer (v4.0.2) serves GraphQL on **`/api/v4/graphql`**, the same path as the hosted preview/preprod indexers. The old `/api/v1/graphql` path returns a 308 redirect loop on the public fly.dev URL and should not be used anywhere.
+
+Local indexer subscriptions available on 4.0.2 are: `blocks`, `contractActions`, `dustLedgerEvents`, `shieldedTransactions`, `unshieldedTransactions`, `zswapLedgerEvents`. There is **no `wallet` subscription** and no `ProgressUpdate`/`ViewingUpdate` types — those live on the newer wallet@5 schema. Any deploy or provider stack that tries to subscribe to `wallet` on this indexer fails with `Unknown field "wallet" on type "Subscription"` (see next section).
 
 ## Preview/Preprod network table (unchanged)
 
