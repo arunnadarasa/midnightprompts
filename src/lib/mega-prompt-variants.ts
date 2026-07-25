@@ -1255,7 +1255,38 @@ function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
 6. Reload this page. Preflight:
    https://midnightprompts.lovable.app/undeployed-preflight`;
 
-  const steps = network === "undeployed" ? undeployed : previewPreprod;
+  const undeployedFly = `1. This target expects the FOUR-app Fly.io stack already deployed
+   (choreo-node / choreo-indexer / choreo-proof / choreo-faucet). If it isn't
+   yet, follow the HOSTING ON FLY.IO block above end-to-end first — the node
+   must be authoring blocks (\`flyctl logs -a choreo-node | grep "Imported #[1-9]"\`)
+   before any visitor can use the demo.
+2. Point Lace at NetworkId.Undeployed (Settings → Network → Custom → RPC.
+   Leave the RPC blank or point at the FLY node only if you're the operator;
+   ordinary visitors use their existing Undeployed setting). Prefix confirmation:
+   mn_addr_undeployed1… on Lace after switching.
+3. Click the in-app "Get tDUST" button (wired to \`\${VITE_FAUCET_URL}/grant\`)
+   to fund your Lace visitor wallet. The genesis seed only funds the deploy
+   wallet; every visitor needs their own tDUST or writes fail with a cryptic
+   submission error. Poll Lace.getDustBalance() and disable the mint button
+   until balance > 0. If /grant returns 503, retry every 10 s (faucet cold
+   boot is 10–90 s).
+4. Deploy the contract FROM a 6PN Fly Machine, not the Lovable sandbox or
+   your laptop:
+   ./scripts/fly-deploy-contract.sh
+   (Ephemeral machine \`flyctl machine run\`-s a tiny image containing
+   scripts/deploy-midnight.mjs + compiled artefacts, prints the address.)
+5. Paste the printed hex into VITE_DEFAULT_CONTRACT (Lovable env vars) and
+   republish. VITE_DEFAULT_CONTRACT must OVERRIDE any localStorage-cached
+   contract address on boot — otherwise the SPA keeps calling yesterday's
+   dead address after a redeploy.
+6. Verify the readiness check in wallet code is
+   \`state.dust.state.progress.isStrictlyComplete()\` (WalletFacade 4.1.1),
+   NOT \`state.progress?.isSynced\`. Wrong shape = "warming up" toast stuck
+   forever even after DUST is synced.
+7. Preflight the deployed site: it should show 4 green pills for
+   node / indexer / proof / faucet — probe order matters, node first.`;
+
+  const steps = network === "undeployed" ? undeployed : network === "undeployed-fly" ? undeployedFly : previewPreprod;
 
   return `IN-APP SETUP PANEL — MANDATORY (render on the primary page):
 
