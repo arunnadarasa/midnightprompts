@@ -3,11 +3,12 @@ import { useState } from "react";
 import { CONTRACTS, NETWORK_IDS } from "@/data/midnight-contract";
 import { DualDeployStatus } from "@/components/DeployStatusPanel";
 
-type NetworkFilter = "all" | "preview" | "preprod" | "undeployed";
+type NetworkFilter = "all" | "preview" | "preprod" | "undeployed" | "undeployed-fly";
 
 const FILTERS: { key: NetworkFilter; label: string }[] = [
   { key: "all", label: "All" },
   { key: "undeployed", label: "Local · Undeployed" },
+  { key: "undeployed-fly", label: "Fly.io · Undeployed" },
   { key: "preview", label: "Preview" },
   { key: "preprod", label: "Preprod" },
 ];
