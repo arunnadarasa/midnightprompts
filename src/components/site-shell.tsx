@@ -41,6 +41,7 @@ function SiteHeader() {
               { to: "/proof-server", label: "Proof Server" },
               { to: "/undeployed", label: "Undeployed" },
               { to: "/undeployed-preflight", label: "Preflight" },
+              { to: "/mobile", label: "Mobile Dev" },
               { to: "/known-issues", label: "Known Issues" },
             ]}
           />
@@ -69,14 +70,6 @@ function SiteHeader() {
             className="px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
           >
             Midskills ↗
-          </a>
-          <a
-            href="https://kuiralabs.github.io/kuira-sdk-android/"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden xl:inline-block px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
-          >
-            Mobile SDK ↗
           </a>
           <a
             href="https://creativequantum.lovable.app/"
@@ -114,6 +107,7 @@ function SiteHeader() {
               <MobileLink to="/proof-server" onClick={close}>Proof Server</MobileLink>
               <MobileLink to="/undeployed" onClick={close}>Undeployed</MobileLink>
               <MobileLink to="/undeployed-preflight" onClick={close}>Preflight</MobileLink>
+              <MobileLink to="/mobile" onClick={close}>Mobile Dev</MobileLink>
               <MobileLink to="/strategy" onClick={close}>Strategy</MobileLink>
               <MobileLink to="/quantum-primer" onClick={close}>Primer</MobileLink>
               <MobileLink to="/llms" onClick={close}>LLM Docs</MobileLink>
@@ -136,15 +130,6 @@ function SiteHeader() {
                 className="mt-1 px-4 py-2.5 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
               >
                 Midskills ↗
-              </a>
-              <a
-                href="https://kuiralabs.github.io/kuira-sdk-android/"
-                target="_blank"
-                rel="noreferrer"
-                onClick={close}
-                className="mt-1 px-4 py-2.5 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
-              >
-                Mobile SDK ↗
               </a>
               <a
                 href="https://preview.midnightexplorer.com/"
