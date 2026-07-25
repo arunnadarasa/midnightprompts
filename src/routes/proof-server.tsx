@@ -132,6 +132,30 @@ function ProofServer() {
           <DockerSetupGuide defaultOpen defaultOs={platform === "windows" ? "windows" : undefined} />
         </div>
 
+        <aside className="mt-4 p-4 border border-border bg-card/60 text-sm text-muted-foreground leading-relaxed">
+          <strong className="text-foreground">Prefer no Docker?</strong>{" "}
+          The community{" "}
+          <a
+            href="https://github.com/effectstream/effectstream"
+            target="_blank"
+            rel="noreferrer"
+            className="text-primary underline"
+          >
+            Effectstream
+          </a>{" "}
+          project publishes the proof server as an npm binary
+          (<span className="font-mono text-foreground">@effectstream/midnight-proof-server</span>) so
+          you can <span className="font-mono">bun add</span> it instead — useful when Docker Desktop
+          is fighting WSL / BIOS virtualization. See the{" "}
+          <Link to="/undeployed" hash="effectstream" className="text-primary underline">
+            Effectstream section on /undeployed
+          </Link>{" "}
+          for the full quickstart. Versions may drift from the official support matrix — fall back
+          to Docker if that happens.
+        </aside>
+
+
+
         <div>
           <span className="eyebrow text-primary">step 02</span>
           <h2 className="font-display text-2xl mt-2 text-foreground">Boot the proof server</h2>
