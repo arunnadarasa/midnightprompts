@@ -113,6 +113,30 @@ function ThemePage() {
             <span className="shrink-0 w-2" aria-hidden />
           </div>
         </div>
+        <div
+          className="mt-3 flex md:flex-wrap gap-2 overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0 md:overflow-visible pb-1 md:pb-0"
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(to right, black 0, black calc(100% - 24px), transparent 100%)",
+            maskImage:
+              "linear-gradient(to right, black 0, black calc(100% - 24px), transparent 100%)",
+          }}
+          aria-label="Protocol overlay filter"
+        >
+          <FilterChip active={protocolFilter === null} onClick={() => setProtocolFilter(null)}>
+            All protocols
+          </FilterChip>
+          <FilterChip active={protocolFilter === "base"} onClick={() => setProtocolFilter("base")}>
+            Base only
+          </FilterChip>
+          {(Object.keys(PROTOCOL_LABELS) as Protocol[]).map((p) => (
+            <FilterChip key={p} active={protocolFilter === p} onClick={() => setProtocolFilter(p)}>
+              {PROTOCOL_LABELS[p]}
+            </FilterChip>
+          ))}
+          <span className="shrink-0 w-2" aria-hidden />
+        </div>
+
       </section>
 
       <section className="max-w-7xl mx-auto px-5 sm:px-8 py-10 sm:py-14">
