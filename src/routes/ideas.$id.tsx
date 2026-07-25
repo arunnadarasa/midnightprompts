@@ -156,7 +156,7 @@ function IdeaPage() {
           </div>
 
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <div className="grid grid-cols-3 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
               {VARIANT_KEYS.map((k) => {
                 const active = k === variant;
                 return (
