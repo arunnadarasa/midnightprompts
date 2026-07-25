@@ -974,3 +974,38 @@ For a hackathon prompt bundle, the overlay adds three theme slugs on top of the 
 - `agentic-x402` — 250 ideas (pay-per-call with mUSDC)
 
 Multiply by the 4-network × 3-OS matrix if you're generating full prompt variants.
+
+## 2026-07 update — flymidnight hard-won lessons (Fly.io hosted Undeployed)
+
+From `github.com/arunnadarasa/flymidnight` — the canonical working example of a public
+Fly-hosted Undeployed stack. Skip any one and hours evaporate.
+
+1. **Readiness = `state.dust.state.progress.isStrictlyComplete()`.** WalletFacade 4.1.1
+   shape. Do NOT check `state.progress?.isSynced`, `state.progress === true`, or an older
+   `walletReady` boolean — those never flip on 4.1.1. Symptom: "warming up" toast stuck
+   forever after DUST is fully synced.
+
+2. **Browser → proof server MUST use the public HTTPS URL.** `https://choreo-proof.fly.dev`.
+   Proof binary is IPv4-only, Fly 6PN is IPv6-only, browser is HTTPS —
+   `choreo-proof.internal:6300` fails on all three counts. No socat wrapper: distroless
+   image has no shell (`exec: 127`). Only server-to-server 6PN calls use `.internal` names.
+
+3. **`VITE_DEFAULT_CONTRACT` must OVERRIDE cached localStorage on load.** After a Fly
+   redeploy the volume can rotate; yesterday's cached address is dead. On boot prefer
+   `import.meta.env.VITE_DEFAULT_CONTRACT`, fall back to localStorage. Symptom if inverted:
+   `Couldn't find template …` on every write after redeploy.
+
+4. **Preflight probe order: node → indexer HTTP → indexer WS → proof HTTP.** Node stuck
+   at #0 makes every other probe return misleading errors. Fail fast on the node first.
+
+5. **Fund each Lace visitor via an in-app `Get tDUST` button.** Genesis `…0002` funds only
+   the deploy wallet; each visitor starts at 0 tDUST. Wire a button that POSTs
+   `{ address }` to `${VITE_FAUCET_URL}/grant`, poll `getDustBalance()`, gate mint on
+   balance > 0.
+
+6. **Retry the faucet with backoff for 90 s after redeploy.** `wallet.start()` cold boot
+   returns `503 warming up`. Show a toast, retry every 10 s.
+
+7. **When you rebuild the node volume, refund the faucet.** Destroying `chain_data` wipes
+   the faucet's tDUST too. Follow with `bun scripts/fund-faucet.mjs` (genesis `…0002` →
+   faucet `/health` address) or `/grant` returns 500 `Insufficient Funds`.

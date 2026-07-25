@@ -454,3 +454,51 @@ scripts/deploy-midnight.mjs            # MidnightWalletProvider + CompiledContra
 | Etherscan verify: `Invalid API Key` on a valid key | Foundry hit V1 host | V2 with `--skip-is-verified-check` |
 | Sepolia: `transaction gas limit too high (cap: 16777216, tx: 21000000)` | `eth_estimateGas` failed → MetaMask fell back to 21M → Infura cap | Fund/approve first; surface balance vs required before `writeContract` |
 | `forge create` "succeeded" but nothing on-chain | Missing `--broadcast` | Add `--broadcast`; verify explorer receipt |
+
+## 2026-07 update — flymidnight hard-won lessons (Fly.io hosted Undeployed)
+
+From `github.com/arunnadarasa/flymidnight` — the canonical working example of a public
+Fly-hosted Undeployed stack. Skip any one and hours evaporate.
+
+1. **Readiness = `state.dust.state.progress.isStrictlyComplete()`.** WalletFacade 4.1.1
+   shape. Do NOT check `state.progress?.isSynced`, `state.progress === true`, or an older
+   `walletReady` boolean — those never flip on 4.1.1. Symptom: "warming up" toast stuck
+   forever after DUST is fully synced. Debug once by logging the raw `state.dust.state.progress`
+   object; it exposes `applyGap`, `sourceGap`, and `isStrictlyComplete()`.
+
+2. **Browser → proof server MUST use the public HTTPS URL.** `https://choreo-proof.fly.dev`.
+   The proof-server binary listens on IPv4 only, Fly 6PN is IPv6-only, and the browser is
+   HTTPS — `choreo-proof.internal:6300` fails on all three counts. Do NOT wrap it with
+   socat; the distroless image has no shell (`exec: 127`) and public IPv4 through Fly's
+   edge is the supported path. Only server-to-server 6PN calls need `.internal` names
+   (indexer → node, faucet → node); proof server is always public.
+
+3. **`VITE_DEFAULT_CONTRACT` must OVERRIDE cached localStorage on load.** After a Fly
+   redeploy the volume can rotate, and yesterday's contract address is dead — but the SPA
+   cached it in `localStorage["midnight-contract-address"]`. On boot: prefer
+   `import.meta.env.VITE_DEFAULT_CONTRACT` when set, otherwise fall back to localStorage.
+   Symptom if you invert the priority: `Couldn't find template …` on every write after
+   redeploy.
+
+4. **Health probe order matters: node → indexer HTTP → indexer WS → proof HTTP.** If the
+   node is stuck at #0 (see the Fly failure-mode table above), every other probe returns
+   misleading errors and users chase phantom bugs. Fail fast on node before painting the
+   rest of the preflight grid.
+
+5. **Fund each Lace visitor from an in-app `Get tDUST` button.** The genesis seed `…0002`
+   funds ONLY the deploy wallet; every Lace visitor on Undeployed starts with 0 tDUST and
+   writes fail with a cryptic `Unexpected error submitting scoped transaction` after
+   signing. Wire a Faucet button that POSTs `{ address: laceUnshieldedAddress }` to
+   `${VITE_FAUCET_URL}/grant`. Poll `getDustBalance()` afterwards; disable the mint button
+   until balance > 0.
+
+6. **Retry the faucet with backoff for 90 s after redeploy.** `choreo-faucet` cold boot:
+   `wallet.start()` needs 10–90 s to sync a non-zero balance. During that window `/grant`
+   returns `503 warming up`. Show a "faucet warming up (~90 s)" toast, retry every 10 s,
+   and don't set `min_machines_running=0` on the faucet unless you accept the delay.
+
+7. **When you rebuild the node volume, refund the faucet.** Destroying `chain_data` wipes
+   every previously-minted tDUST, including the faucet wallet. Follow the volume destroy
+   with `bun scripts/fund-faucet.mjs` (uses genesis `…0002` seed → faucet `/health`
+   address). Otherwise `/grant` returns 500 `Insufficient Funds` and the demo silently
+   breaks.
