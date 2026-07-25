@@ -230,7 +230,105 @@ function UndeployedPage() {
           </a>
         </div>
 
+        <section id="effectstream" className="mt-20 pt-10 border-t border-border scroll-mt-24">
+          <span className="eyebrow text-primary">alternative · no docker · community</span>
+          <h2 className="font-display text-3xl sm:text-4xl mt-3 leading-[1.1]">
+            Skip Docker with <span className="italic text-primary">Effectstream</span>
+          </h2>
+          <p className="mt-4 text-muted-foreground leading-relaxed max-w-2xl">
+            <a
+              href="https://github.com/effectstream/effectstream"
+              target="_blank"
+              rel="noreferrer"
+              className="text-primary underline break-words"
+            >
+              effectstream/effectstream
+            </a>{" "}
+            is a community chain-abstraction orchestrator that wraps the Midnight node, indexer, and
+            proof server as plain npm binaries — no Docker Desktop, no WSL, no BIOS virtualization.
+            One <code>bunx</code> command supervises the whole dev stack (node + indexer + proof
+            server + your deploy step + frontend) with <code>status</code> and <code>logs</code>
+            subcommands. If Docker is fighting you on Windows, this is the fastest path back to
+            building.
+          </p>
+
+          <div className="mt-8 grid md:grid-cols-2 gap-4">
+            <div className="p-5 border border-border bg-card">
+              <h3 className="font-display text-lg mb-3">1 · Install the binaries</h3>
+              <pre className="text-[11px] sm:text-xs bg-background border border-border p-3 overflow-x-auto leading-relaxed">
+{`bun add -d @effectstream/midnight-node \\
+  @effectstream/midnight-indexer \\
+  @effectstream/midnight-proof-server \\
+  @effectstream/orchestrator`}
+              </pre>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Same binaries the Midnight team ships — just resolved through npm instead of Docker
+                Hub.
+              </p>
+            </div>
+            <div className="p-5 border border-border bg-card">
+              <h3 className="font-display text-lg mb-3">2 · Run the dev loop</h3>
+              <pre className="text-[11px] sm:text-xs bg-background border border-border p-3 overflow-x-auto leading-relaxed">
+{`bunx orchestrator start --background
+bunx orchestrator status
+bunx orchestrator logs
+bunx orchestrator stop`}
+              </pre>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Once running, point <code>VITE_INDEXER_URL</code>,{" "}
+                <code>VITE_PROOF_SERVER_URL</code>, and node RPC at the local ports the orchestrator
+                prints on start.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 p-5 border border-border bg-card">
+            <h3 className="font-display text-lg mb-2">Reference templates worth reading</h3>
+            <ul className="text-sm text-muted-foreground space-y-2 leading-relaxed">
+              <li>
+                <a
+                  href="https://github.com/effectstream/effectstream/tree/v-next/templates/evm-midnight-v2"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-primary underline"
+                >
+                  templates/evm-midnight-v2
+                </a>{" "}
+                — EVM + Midnight, ERC-721 sync, ZK contracts, full React frontend. Closest match to
+                a hackathon dApp that spans two chains.
+              </li>
+              <li>
+                <a
+                  href="https://github.com/effectstream/effectstream/tree/v-next/templates/zswap-da"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-primary underline"
+                >
+                  templates/zswap-da
+                </a>{" "}
+                — Midnight Zswap for decentralized liquidity. Good reference for anyone building
+                token-flow demos on Undeployed.
+              </li>
+            </ul>
+          </div>
+
+          <p className="mt-4 text-xs text-muted-foreground max-w-2xl">
+            Community project — not an official Midnight release. If a binary version drifts from
+            the{" "}
+            <a
+              href="https://docs.midnight.network/relnotes/support-matrix"
+              target="_blank"
+              rel="noreferrer"
+              className="text-primary underline"
+            >
+              support matrix
+            </a>
+            , fall back to the Docker Compose recipe above.
+          </p>
+        </section>
+
         <section id="fly" className="mt-20 pt-10 border-t border-border scroll-mt-24">
+
           <span className="eyebrow text-primary">optional · public demo · fly.io</span>
           <h2 className="font-display text-3xl sm:text-4xl mt-3 leading-[1.1]">
             Host the same stack <span className="italic text-primary">on Fly.io</span>
