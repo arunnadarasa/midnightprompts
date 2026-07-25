@@ -75,6 +75,25 @@ const DEMOS: DemoCard[] = [
     ),
   },
   {
+    key: "flymidnight",
+    href: "https://flymidnight.lovable.app/",
+    tag: "Hosted Undeployed · Fly.io",
+    badge: "Fly.io · Undeployed",
+    networks: ["undeployed", "undeployed-fly"],
+    title: "flymidnight",
+    body: (
+      <>
+        Public Fly.io-hosted Undeployed stack — four apps (node · indexer · proof · faucet)
+        deployed once, any visitor with Lace can try the demo without running Docker. Canonical
+        reference for the WalletFacade 4.1.1 readiness check
+        (<code>state.dust.state.progress.isStrictlyComplete()</code>), the public HTTPS proof-server
+        URL, and the in-app <code>Get tDUST</code> faucet button. Live demo at{" "}
+        <a href="https://flymidnight.lovable.app/" target="_blank" rel="noreferrer" className="underline hover:text-primary">flymidnight.lovable.app</a>; source on{" "}
+        <a href="https://github.com/arunnadarasa/flymidnight" target="_blank" rel="noreferrer" className="underline hover:text-primary">GitHub</a>.
+      </>
+    ),
+  },
+  {
     key: "a2a-ap2",
     href: "https://agenticmidnight.lovable.app/",
     tag: "Agentic · A2A + AP2",
