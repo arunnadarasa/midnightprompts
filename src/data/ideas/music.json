@@ -2,7 +2,7 @@
   "theme": {
     "slug": "music",
     "name": "Music & Sound Design",
-    "emoji": "🎵",
+    "emoji": "\ud83c\udfb5",
     "audience": "musicians, producers, composers, sound designers",
     "market_anchor": "the music software market (~$11B and music creators (~50M))"
   },
@@ -17,9 +17,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a sample tracking demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$2B — global market for sample libraries",
-      "sam": "$500M — licensed sample usage among producers",
-      "som": "$50M — early adopters in legal sample attribution tools"
+      "tam": "$2B \u2014 global market for sample libraries",
+      "sam": "$500M \u2014 licensed sample usage among producers",
+      "som": "$50M \u2014 early adopters in legal sample attribution tools"
     },
     {
       "id": "music-onchain-remix-rights-1",
@@ -31,9 +31,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a remix licensing demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$3B — remix music production market",
-      "sam": "$700M — digital remix licensing sector",
-      "som": "$70M — independent remixer user base"
+      "tam": "$3B \u2014 remix music production market",
+      "sam": "$700M \u2014 digital remix licensing sector",
+      "som": "$70M \u2014 independent remixer user base"
     },
     {
       "id": "music-collaborative-beat-ledger-2",
@@ -45,9 +45,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a beat collaboration demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.5B — collaborative music platforms",
-      "sam": "$400M — beatmaking communities online",
-      "som": "$40M — active beat collaboration users"
+      "tam": "$1.5B \u2014 collaborative music platforms",
+      "sam": "$400M \u2014 beatmaking communities online",
+      "som": "$40M \u2014 active beat collaboration users"
     },
     {
       "id": "music-sound-effect-nft-vault-3",
@@ -59,9 +59,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a sound libraries demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$800M — sound effect market for media",
-      "sam": "$200M — digital sound asset sales",
-      "som": "$25M — niche sound NFT collectors"
+      "tam": "$800M \u2014 sound effect market for media",
+      "sam": "$200M \u2014 digital sound asset sales",
+      "som": "$25M \u2014 niche sound NFT collectors"
     },
     {
       "id": "music-onchain-sample-swap-4",
@@ -73,9 +73,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a sample exchange demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — sample sharing market",
-      "sam": "$300M — licensed sample swap communities",
-      "som": "$35M — active swap platform users"
+      "tam": "$1.2B \u2014 sample sharing market",
+      "sam": "$300M \u2014 licensed sample swap communities",
+      "som": "$35M \u2014 active swap platform users"
     },
     {
       "id": "music-live-set-royalty-split-5",
@@ -87,9 +87,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a live performance demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$4B — live music streaming economy",
-      "sam": "$1B — royalty management for live artists",
-      "som": "$100M — early live performer adopters"
+      "tam": "$4B \u2014 live music streaming economy",
+      "sam": "$1B \u2014 royalty management for live artists",
+      "som": "$100M \u2014 early live performer adopters"
     },
     {
       "id": "music-ai-audio-license-6",
@@ -101,23 +101,23 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a AI-generated music demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$600M — AI music generation",
-      "sam": "$150M — AI music licensing",
-      "som": "$20M — AI music creators adopting blockchain"
+      "tam": "$600M \u2014 AI music generation",
+      "sam": "$150M \u2014 AI music licensing",
+      "som": "$20M \u2014 AI music creators adopting blockchain"
     },
     {
       "id": "music-onchain-music-curriculum-7",
       "theme": "music",
       "title": "Onchain Music Curriculum",
-      "pitch": "Certify students’ composition and sound design achievements onchain for transparent credentialing.",
+      "pitch": "Certify students\u2019 composition and sound design achievements onchain for transparent credentialing.",
       "subDiscipline": "music education",
       "quantumHook": "Compact ZK contract",
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a music education demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$3B — global music education",
-      "sam": "$800M — online music learning platforms",
-      "som": "$80M — blockchain-verified certificate users"
+      "tam": "$3B \u2014 global music education",
+      "sam": "$800M \u2014 online music learning platforms",
+      "som": "$80M \u2014 blockchain-verified certificate users"
     },
     {
       "id": "music-tokenized-composer-credits-8",
@@ -129,9 +129,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a credit attribution demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$5B — global composition markets",
-      "sam": "$1.2B — digital composer rights management",
-      "som": "$120M — composer token adoption"
+      "tam": "$5B \u2014 global composition markets",
+      "sam": "$1.2B \u2014 digital composer rights management",
+      "som": "$120M \u2014 composer token adoption"
     },
     {
       "id": "music-sound-asset-crowdfunding-9",
@@ -143,9 +143,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a music funding demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$700M — music crowdfunding market",
-      "sam": "$180M — digital creative project funding",
-      "som": "$22M — music crowdfunding blockchain users"
+      "tam": "$700M \u2014 music crowdfunding market",
+      "sam": "$180M \u2014 digital creative project funding",
+      "som": "$22M \u2014 music crowdfunding blockchain users"
     },
     {
       "id": "music-onchain-synth-presets-10",
@@ -157,9 +157,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a synth programming demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$900M — synth software market",
-      "sam": "$250M — preset pack sales",
-      "som": "$30M — synth preset NFT buyers"
+      "tam": "$900M \u2014 synth software market",
+      "sam": "$250M \u2014 preset pack sales",
+      "som": "$30M \u2014 synth preset NFT buyers"
     },
     {
       "id": "music-decentralized-jam-sessions-11",
@@ -171,9 +171,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a remote collaboration demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.8B — remote music collaboration",
-      "sam": "$450M — collaborative streaming platforms",
-      "som": "$50M — blockchain jam session participants"
+      "tam": "$1.8B \u2014 remote music collaboration",
+      "sam": "$450M \u2014 collaborative streaming platforms",
+      "som": "$50M \u2014 blockchain jam session participants"
     },
     {
       "id": "music-interactive-sound-nfts-12",
@@ -185,9 +185,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a dynamic audio demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.1B — interactive media market",
-      "sam": "$300M — audio NFT sales",
-      "som": "$35M — interactive sound collectors"
+      "tam": "$1.1B \u2014 interactive media market",
+      "sam": "$300M \u2014 audio NFT sales",
+      "som": "$35M \u2014 interactive sound collectors"
     },
     {
       "id": "music-onchain-remix-competitions-13",
@@ -199,9 +199,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a contest management demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$2B — music competition market",
-      "sam": "$500M — online remix contests",
-      "som": "$60M — blockchain contest platform users"
+      "tam": "$2B \u2014 music competition market",
+      "sam": "$500M \u2014 online remix contests",
+      "som": "$60M \u2014 blockchain contest platform users"
     },
     {
       "id": "music-sample-chain-marketplace-14",
@@ -213,9 +213,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a music marketplaces demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.7B — digital sample sales",
-      "sam": "$400M — licensed sample marketplaces",
-      "som": "$45M — blockchain sample marketplace users"
+      "tam": "$1.7B \u2014 digital sample sales",
+      "sam": "$400M \u2014 licensed sample marketplaces",
+      "som": "$45M \u2014 blockchain sample marketplace users"
     },
     {
       "id": "music-onchain-audio-stems-15",
@@ -227,9 +227,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a stem distribution demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$2.5B — stem-based music production",
-      "sam": "$600M — digital stem trading",
-      "som": "$70M — onchain stem marketplace adopters"
+      "tam": "$2.5B \u2014 stem-based music production",
+      "sam": "$600M \u2014 digital stem trading",
+      "som": "$70M \u2014 onchain stem marketplace adopters"
     },
     {
       "id": "music-blockchain-soundscapes-16",
@@ -241,9 +241,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a environmental audio demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$500M — environmental sound libraries",
-      "sam": "$120M — soundscape licensing",
-      "som": "$15M — blockchain soundscape users"
+      "tam": "$500M \u2014 environmental sound libraries",
+      "sam": "$120M \u2014 soundscape licensing",
+      "som": "$15M \u2014 blockchain soundscape users"
     },
     {
       "id": "music-decentralized-music-feedback-17",
@@ -255,9 +255,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a peer review demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.3B — peer review music platforms",
-      "sam": "$350M — online music feedback",
-      "som": "$40M — blockchain feedback users"
+      "tam": "$1.3B \u2014 peer review music platforms",
+      "sam": "$350M \u2014 online music feedback",
+      "som": "$40M \u2014 blockchain feedback users"
     },
     {
       "id": "music-onchain-dj-set-logs-18",
@@ -269,9 +269,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a performance archiving demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.6B — DJ software market",
-      "sam": "$450M — live set archiving services",
-      "som": "$50M — blockchain DJ set recorders"
+      "tam": "$1.6B \u2014 DJ software market",
+      "sam": "$450M \u2014 live set archiving services",
+      "som": "$50M \u2014 blockchain DJ set recorders"
     },
     {
       "id": "music-smart-contract-audio-rng-19",
@@ -283,9 +283,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a generative music demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$800M — generative music market",
-      "sam": "$220M — NFT generative compositions",
-      "som": "$25M — blockchain generative music buyers"
+      "tam": "$800M \u2014 generative music market",
+      "sam": "$220M \u2014 NFT generative compositions",
+      "som": "$25M \u2014 blockchain generative music buyers"
     },
     {
       "id": "music-token-gated-music-releases-20",
@@ -297,9 +297,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a exclusive content demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$3.5B — premium music content",
-      "sam": "$900M — token-gated release platforms",
-      "som": "$90M — blockchain music exclusivity users"
+      "tam": "$3.5B \u2014 premium music content",
+      "sam": "$900M \u2014 token-gated release platforms",
+      "som": "$90M \u2014 blockchain music exclusivity users"
     },
     {
       "id": "music-onchain-vocal-processing-21",
@@ -311,9 +311,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a vocal effects demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1B — vocal effects market",
-      "sam": "$280M — effect preset sales",
-      "som": "$30M — blockchain vocal effect users"
+      "tam": "$1B \u2014 vocal effects market",
+      "sam": "$280M \u2014 effect preset sales",
+      "som": "$30M \u2014 blockchain vocal effect users"
     },
     {
       "id": "music-music-metadata-registry-22",
@@ -325,9 +325,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a metadata management demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$2.8B — music information management",
-      "sam": "$700M — digital metadata services",
-      "som": "$80M — blockchain metadata users"
+      "tam": "$2.8B \u2014 music information management",
+      "sam": "$700M \u2014 digital metadata services",
+      "som": "$80M \u2014 blockchain metadata users"
     },
     {
       "id": "music-smart-contract-sync-licenses-23",
@@ -339,9 +339,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a sync licensing demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$4.5B — sync licensing market",
-      "sam": "$1.2B — digital sync rights management",
-      "som": "$125M — blockchain sync license adopters"
+      "tam": "$4.5B \u2014 sync licensing market",
+      "sam": "$1.2B \u2014 digital sync rights management",
+      "som": "$125M \u2014 blockchain sync license adopters"
     },
     {
       "id": "music-onchain-audio-watermarking-24",
@@ -353,9 +353,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a copyright protection demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.3B — audio copyright management",
-      "sam": "$350M — digital watermarking technologies",
-      "som": "$40M — blockchain watermark adopters"
+      "tam": "$1.3B \u2014 audio copyright management",
+      "sam": "$350M \u2014 digital watermarking technologies",
+      "som": "$40M \u2014 blockchain watermark adopters"
     },
     {
       "id": "music-loop-provenance-0",
@@ -367,9 +367,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a sample lineage demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$2B — global audio loop market",
-      "sam": "$500M — sample pack and loop sales",
-      "som": "$50M — producers using authenticated loop libraries"
+      "tam": "$2B \u2014 global audio loop market",
+      "sam": "$500M \u2014 sample pack and loop sales",
+      "som": "$50M \u2014 producers using authenticated loop libraries"
     },
     {
       "id": "music-patch-vault-1",
@@ -381,9 +381,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a synth preset archiving demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.5B — global synth and preset market",
-      "sam": "$300M — digital synth presets sales",
-      "som": "$25M — sound designers sharing presets"
+      "tam": "$1.5B \u2014 global synth and preset market",
+      "sam": "$300M \u2014 digital synth presets sales",
+      "som": "$25M \u2014 sound designers sharing presets"
     },
     {
       "id": "music-score-archive-2",
@@ -395,9 +395,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a composition notation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — music publishing and notation software",
-      "sam": "$200M — digital score resale and licensing",
-      "som": "$15M — composers storing verified originals"
+      "tam": "$1B \u2014 music publishing and notation software",
+      "sam": "$200M \u2014 digital score resale and licensing",
+      "som": "$15M \u2014 composers storing verified originals"
     },
     {
       "id": "music-samplechain-3",
@@ -409,9 +409,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a sample licensing demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$3B — sample licensing industry",
-      "sam": "$700M — sample license transactions digitally",
-      "som": "$60M — independent producers licensing samples"
+      "tam": "$3B \u2014 sample licensing industry",
+      "sam": "$700M \u2014 sample license transactions digitally",
+      "som": "$60M \u2014 independent producers licensing samples"
     },
     {
       "id": "music-mix-history-4",
@@ -423,9 +423,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a mix versioning demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — audio mixing software market",
-      "sam": "$250M — online mix collaboration tools",
-      "som": "$20M — studios with version-tracked mixes"
+      "tam": "$1B \u2014 audio mixing software market",
+      "sam": "$250M \u2014 online mix collaboration tools",
+      "som": "$20M \u2014 studios with version-tracked mixes"
     },
     {
       "id": "music-soundscape-atlas-5",
@@ -437,9 +437,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a field recording demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$300M — field recording industry",
-      "sam": "$80M — licensed environmental sound libraries",
-      "som": "$10M — sound designers curating soundscapes"
+      "tam": "$300M \u2014 field recording industry",
+      "sam": "$80M \u2014 licensed environmental sound libraries",
+      "som": "$10M \u2014 sound designers curating soundscapes"
     },
     {
       "id": "music-preset-gallery-6",
@@ -451,9 +451,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a plugin preset sharing demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.2B — music plugin market",
-      "sam": "$350M — plugin preset marketplace",
-      "som": "$30M — producers accessing verified presets"
+      "tam": "$1.2B \u2014 music plugin market",
+      "sam": "$350M \u2014 plugin preset marketplace",
+      "som": "$30M \u2014 producers accessing verified presets"
     },
     {
       "id": "music-vinyl-metadata-7",
@@ -465,9 +465,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a record collection demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$500M — vinyl collector market",
-      "sam": "$120M — online vinyl metadata databases",
-      "som": "$12M — sellers verifying vinyl provenance"
+      "tam": "$500M \u2014 vinyl collector market",
+      "sam": "$120M \u2014 online vinyl metadata databases",
+      "som": "$12M \u2014 sellers verifying vinyl provenance"
     },
     {
       "id": "music-moodsampler-8",
@@ -479,9 +479,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a emotional tagging demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$600M — sample discovery platforms",
-      "sam": "$150M — tagged sample sales",
-      "som": "$18M — producers using mood-tagged loops"
+      "tam": "$600M \u2014 sample discovery platforms",
+      "sam": "$150M \u2014 tagged sample sales",
+      "som": "$18M \u2014 producers using mood-tagged loops"
     },
     {
       "id": "music-beatledger-9",
@@ -493,9 +493,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a beat ownership demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$900M — beat marketplace",
-      "sam": "$220M — independent beat sales",
-      "som": "$25M — producers establishing beat provenance"
+      "tam": "$900M \u2014 beat marketplace",
+      "sam": "$220M \u2014 independent beat sales",
+      "som": "$25M \u2014 producers establishing beat provenance"
     },
     {
       "id": "music-synth-patchbook-10",
@@ -507,9 +507,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a sound design catalog demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.1B — synth sound design tools",
-      "sam": "$280M — shared patch marketplaces",
-      "som": "$22M — sound designers trading patches"
+      "tam": "$1.1B \u2014 synth sound design tools",
+      "sam": "$280M \u2014 shared patch marketplaces",
+      "som": "$22M \u2014 sound designers trading patches"
     },
     {
       "id": "music-remix-rights-11",
@@ -521,9 +521,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a remix management demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.3B — remix licensing market",
-      "sam": "$320M — remix rights management tools",
-      "som": "$30M — artists managing remix documentation"
+      "tam": "$1.3B \u2014 remix licensing market",
+      "sam": "$320M \u2014 remix rights management tools",
+      "som": "$30M \u2014 artists managing remix documentation"
     },
     {
       "id": "music-loopswap-12",
@@ -535,9 +535,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a loop exchange demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$2.1B — loop and sample exchange market",
-      "sam": "$600M — digital loop sales",
-      "som": "$45M — producers swapping verified loops"
+      "tam": "$2.1B \u2014 loop and sample exchange market",
+      "sam": "$600M \u2014 digital loop sales",
+      "som": "$45M \u2014 producers swapping verified loops"
     },
     {
       "id": "music-patch-ledger-13",
@@ -549,9 +549,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a sound patch tracking demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — plugin preset market",
-      "sam": "$250M — sound patch licensing",
-      "som": "$20M — designers protecting patch IP"
+      "tam": "$1B \u2014 plugin preset market",
+      "sam": "$250M \u2014 sound patch licensing",
+      "som": "$20M \u2014 designers protecting patch IP"
     },
     {
       "id": "music-composer-collab-14",
@@ -563,9 +563,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a composition sharing demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$900M — online composition tools",
-      "sam": "$230M — collaborative composition market",
-      "som": "$18M — composers using verified shared scores"
+      "tam": "$900M \u2014 online composition tools",
+      "sam": "$230M \u2014 collaborative composition market",
+      "som": "$18M \u2014 composers using verified shared scores"
     },
     {
       "id": "music-sound-nft-15",
@@ -577,9 +577,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a audio collectibles demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$3B — music NFT market",
-      "sam": "$800M — audio NFT sales",
-      "som": "$70M — musicians minting audio NFTs"
+      "tam": "$3B \u2014 music NFT market",
+      "sam": "$800M \u2014 audio NFT sales",
+      "som": "$70M \u2014 musicians minting audio NFTs"
     },
     {
       "id": "music-samplechain-pro-16",
@@ -591,9 +591,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a sample provenance demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$3.5B — professional sample market",
-      "sam": "$900M — sample provenance tools",
-      "som": "$80M — studios verifying sample history"
+      "tam": "$3.5B \u2014 professional sample market",
+      "sam": "$900M \u2014 sample provenance tools",
+      "som": "$80M \u2014 studios verifying sample history"
     },
     {
       "id": "music-liveloop-archive-17",
@@ -605,9 +605,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a live set recording demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.4B — live performance software",
-      "sam": "$350M — live set archival tools",
-      "som": "$28M — live musicians archiving sessions"
+      "tam": "$1.4B \u2014 live performance software",
+      "sam": "$350M \u2014 live set archival tools",
+      "som": "$28M \u2014 live musicians archiving sessions"
     },
     {
       "id": "music-soundpatch-market-18",
@@ -619,9 +619,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a preset marketplace demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.3B — digital preset market",
-      "sam": "$400M — preset sales platforms",
-      "som": "$30M — buyers verifying patch legitimacy"
+      "tam": "$1.3B \u2014 digital preset market",
+      "sam": "$400M \u2014 preset sales platforms",
+      "som": "$30M \u2014 buyers verifying patch legitimacy"
     },
     {
       "id": "music-genre-mapper-19",
@@ -633,9 +633,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a music classification demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$800M — music metadata services",
-      "sam": "$180M — genre tagging platforms",
-      "som": "$15M — producers using classified samples"
+      "tam": "$800M \u2014 music metadata services",
+      "sam": "$180M \u2014 genre tagging platforms",
+      "som": "$15M \u2014 producers using classified samples"
     },
     {
       "id": "music-audio-blueprint-20",
@@ -647,9 +647,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a sound design templates demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — sound design template market",
-      "sam": "$250M — template sales platforms",
-      "som": "$20M — designers sharing verified templates"
+      "tam": "$1B \u2014 sound design template market",
+      "sam": "$250M \u2014 template sales platforms",
+      "som": "$20M \u2014 designers sharing verified templates"
     },
     {
       "id": "music-loopchain-sync-21",
@@ -661,9 +661,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a collaborative looping demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.6B — collaborative music software",
-      "sam": "$400M — online loop collaboration",
-      "som": "$30M — musicians using synced loops"
+      "tam": "$1.6B \u2014 collaborative music software",
+      "sam": "$400M \u2014 online loop collaboration",
+      "som": "$30M \u2014 musicians using synced loops"
     },
     {
       "id": "music-dynamic-scores-22",
@@ -675,9 +675,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a interactive notation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$700M — digital score software",
-      "sam": "$150M — interactive score solutions",
-      "som": "$12M — educators using verified interactive scores"
+      "tam": "$700M \u2014 digital score software",
+      "sam": "$150M \u2014 interactive score solutions",
+      "som": "$12M \u2014 educators using verified interactive scores"
     },
     {
       "id": "music-stem-provenance-23",
@@ -689,9 +689,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a multitrack tracking demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.8B — multitrack audio market",
-      "sam": "$400M — stem licensing platforms",
-      "som": "$35M — producers verifying stem usage"
+      "tam": "$1.8B \u2014 multitrack audio market",
+      "sam": "$400M \u2014 stem licensing platforms",
+      "som": "$35M \u2014 producers verifying stem usage"
     },
     {
       "id": "music-gasless-remix-exchange-0",
@@ -703,9 +703,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a collaborative remixing demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$800M — global remix platform software",
-      "sam": "$250M — remix collaboration tools",
-      "som": "$12M — gasless remixing apps"
+      "tam": "$800M \u2014 global remix platform software",
+      "sam": "$250M \u2014 remix collaboration tools",
+      "som": "$12M \u2014 gasless remixing apps"
     },
     {
       "id": "music-onchain-sound-packs-1",
@@ -717,9 +717,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a sample library distribution demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1B — digital sample market",
-      "sam": "$300M — sample subscription services",
-      "som": "$15M — verified sample delivery"
+      "tam": "$1B \u2014 digital sample market",
+      "sam": "$300M \u2014 sample subscription services",
+      "som": "$15M \u2014 verified sample delivery"
     },
     {
       "id": "music-nft-beat-marketplace-2",
@@ -731,9 +731,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a beat selling demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$600M — digital beat marketplace",
-      "sam": "$120M — NFT music sales",
-      "som": "$10M — gasless NFT beat sales"
+      "tam": "$600M \u2014 digital beat marketplace",
+      "sam": "$120M \u2014 NFT music sales",
+      "som": "$10M \u2014 gasless NFT beat sales"
     },
     {
       "id": "music-instant-royalty-splits-3",
@@ -745,9 +745,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a music rights management demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$7B — global royalty management",
-      "sam": "$1.5B — digital royalty platforms",
-      "som": "$80M — automated royalty splitting"
+      "tam": "$7B \u2014 global royalty management",
+      "sam": "$1.5B \u2014 digital royalty platforms",
+      "som": "$80M \u2014 automated royalty splitting"
     },
     {
       "id": "music-gas-free-live-sampling-4",
@@ -759,9 +759,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a live-set sampling demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$900M — live performance software",
-      "sam": "$220M — live sampling tools",
-      "som": "$18M — free live sample sharing"
+      "tam": "$900M \u2014 live performance software",
+      "sam": "$220M \u2014 live sampling tools",
+      "som": "$18M \u2014 free live sample sharing"
     },
     {
       "id": "music-social-jam-sessions-5",
@@ -773,9 +773,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a online collaboration demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$500M — online collaboration platforms",
-      "sam": "$140M — live music collaboration",
-      "som": "$12M — onchain jam sessions"
+      "tam": "$500M \u2014 online collaboration platforms",
+      "sam": "$140M \u2014 live music collaboration",
+      "som": "$12M \u2014 onchain jam sessions"
     },
     {
       "id": "music-curated-sound-trails-6",
@@ -787,9 +787,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a music curation demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$2B — music streaming platforms",
-      "sam": "$400M — playlist curation services",
-      "som": "$30M — gasless playlist tools"
+      "tam": "$2B \u2014 music streaming platforms",
+      "sam": "$400M \u2014 playlist curation services",
+      "som": "$30M \u2014 gasless playlist tools"
     },
     {
       "id": "music-authentic-sample-provenance-7",
@@ -801,9 +801,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a sample authentication demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$750M — sample licensing market",
-      "sam": "$200M — sample authentication tech",
-      "som": "$14M — gasless provenance services"
+      "tam": "$750M \u2014 sample licensing market",
+      "sam": "$200M \u2014 sample authentication tech",
+      "som": "$14M \u2014 gasless provenance services"
     },
     {
       "id": "music-onchain-synth-presets-8",
@@ -815,9 +815,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a sound design presets demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$450M — synth preset market",
-      "sam": "$95M — preset monetization",
-      "som": "$8M — gasless preset distribution"
+      "tam": "$450M \u2014 synth preset market",
+      "sam": "$95M \u2014 preset monetization",
+      "som": "$8M \u2014 gasless preset distribution"
     },
     {
       "id": "music-gasless-beat-battles-9",
@@ -829,9 +829,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a music competitions demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$300M — online music contests",
-      "sam": "$85M — beat battle platforms",
-      "som": "$7M — free competition hosting"
+      "tam": "$300M \u2014 online music contests",
+      "sam": "$85M \u2014 beat battle platforms",
+      "som": "$7M \u2014 free competition hosting"
     },
     {
       "id": "music-collaborative-loop-vault-10",
@@ -843,9 +843,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a loop sharing demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$600M — loop marketplaces",
-      "sam": "$150M — collaborative loop tools",
-      "som": "$11M — gasless loop sharing"
+      "tam": "$600M \u2014 loop marketplaces",
+      "sam": "$150M \u2014 collaborative loop tools",
+      "som": "$11M \u2014 gasless loop sharing"
     },
     {
       "id": "music-transparent-sample-licensing-11",
@@ -857,9 +857,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a sample rights demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1B — sample licensing market",
-      "sam": "$270M — transparent licensing solutions",
-      "som": "$16M — gasless licensing platforms"
+      "tam": "$1B \u2014 sample licensing market",
+      "sam": "$270M \u2014 transparent licensing solutions",
+      "som": "$16M \u2014 gasless licensing platforms"
     },
     {
       "id": "music-instant-collab-contracts-12",
@@ -871,9 +871,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a agreement automation demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$4B — digital contract management",
-      "sam": "$900M — music collaboration contracts",
-      "som": "$50M — gasless contract signing"
+      "tam": "$4B \u2014 digital contract management",
+      "sam": "$900M \u2014 music collaboration contracts",
+      "som": "$50M \u2014 gasless contract signing"
     },
     {
       "id": "music-gasless-sound-design-nft-13",
@@ -885,9 +885,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a NFT sound assets demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$500M — NFT music asset market",
-      "sam": "$130M — sound design NFTs",
-      "som": "$9M — gasless NFT minting"
+      "tam": "$500M \u2014 NFT music asset market",
+      "sam": "$130M \u2014 sound design NFTs",
+      "som": "$9M \u2014 gasless NFT minting"
     },
     {
       "id": "music-onchain-mix-feedback-14",
@@ -899,9 +899,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a mix critique demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$350M — online music feedback",
-      "sam": "$90M — mix critique platforms",
-      "som": "$6M — gasless feedback solutions"
+      "tam": "$350M \u2014 online music feedback",
+      "sam": "$90M \u2014 mix critique platforms",
+      "som": "$6M \u2014 gasless feedback solutions"
     },
     {
       "id": "music-gasless-sample-swap-15",
@@ -913,9 +913,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a sample exchange demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$800M — sample exchange market",
-      "sam": "$210M — P2P music swaps",
-      "som": "$13M — gasless sample exchanges"
+      "tam": "$800M \u2014 sample exchange market",
+      "sam": "$210M \u2014 P2P music swaps",
+      "som": "$13M \u2014 gasless sample exchanges"
     },
     {
       "id": "music-live-set-proof-16",
@@ -927,9 +927,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a performance verification demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1B — live performance software",
-      "sam": "$300M — performance verification tools",
-      "som": "$25M — gasless proof platforms"
+      "tam": "$1B \u2014 live performance software",
+      "sam": "$300M \u2014 performance verification tools",
+      "som": "$25M \u2014 gasless proof platforms"
     },
     {
       "id": "music-gasless-loop-licensing-17",
@@ -941,9 +941,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a loop rights demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$650M — loop licensing market",
-      "sam": "$180M — loop licensing tech",
-      "som": "$12M — gasless licensing apps"
+      "tam": "$650M \u2014 loop licensing market",
+      "sam": "$180M \u2014 loop licensing tech",
+      "som": "$12M \u2014 gasless licensing apps"
     },
     {
       "id": "music-social-audio-credits-18",
@@ -955,9 +955,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a microtransactions demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$700M — music microtransaction market",
-      "sam": "$160M — tip and credit platforms",
-      "som": "$10M — gasless tipping solutions"
+      "tam": "$700M \u2014 music microtransaction market",
+      "sam": "$160M \u2014 tip and credit platforms",
+      "som": "$10M \u2014 gasless tipping solutions"
     },
     {
       "id": "music-gasless-synth-sharing-19",
@@ -969,9 +969,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a preset sharing demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$400M — synth preset community",
-      "sam": "$100M — preset sharing tools",
-      "som": "$7M — gasless synth sharing"
+      "tam": "$400M \u2014 synth preset community",
+      "sam": "$100M \u2014 preset sharing tools",
+      "som": "$7M \u2014 gasless synth sharing"
     },
     {
       "id": "music-onchain-audio-stems-20",
@@ -983,9 +983,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a stem distribution demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$900M — stem marketplaces",
-      "sam": "$250M — stem distribution platforms",
-      "som": "$20M — gasless stem sharing"
+      "tam": "$900M \u2014 stem marketplaces",
+      "sam": "$250M \u2014 stem distribution platforms",
+      "som": "$20M \u2014 gasless stem sharing"
     },
     {
       "id": "music-gasless-sample-challenges-21",
@@ -997,9 +997,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a creative contests demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$350M — music challenge market",
-      "sam": "$85M — sample contest platforms",
-      "som": "$7M — gasless creative contests"
+      "tam": "$350M \u2014 music challenge market",
+      "sam": "$85M \u2014 sample contest platforms",
+      "som": "$7M \u2014 gasless creative contests"
     },
     {
       "id": "music-decentralized-sound-workshops-22",
@@ -1011,9 +1011,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a music education demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — music education tech",
-      "sam": "$300M — sound workshop platforms",
-      "som": "$22M — gasless workshop hosting"
+      "tam": "$1.2B \u2014 music education tech",
+      "sam": "$300M \u2014 sound workshop platforms",
+      "som": "$22M \u2014 gasless workshop hosting"
     },
     {
       "id": "music-collaborative-audio-nfts-23",
@@ -1025,9 +1025,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a co-authored NFTs demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$550M — audio NFT market",
-      "sam": "$140M — collaborative NFT platforms",
-      "som": "$11M — gasless co-authored NFTs"
+      "tam": "$550M \u2014 audio NFT market",
+      "sam": "$140M \u2014 collaborative NFT platforms",
+      "som": "$11M \u2014 gasless co-authored NFTs"
     },
     {
       "id": "music-gasless-midi-trading-24",
@@ -1039,9 +1039,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a MIDI asset exchange demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$450M — MIDI asset market",
-      "sam": "$120M — MIDI trading platforms",
-      "som": "$9M — gasless MIDI exchange"
+      "tam": "$450M \u2014 MIDI asset market",
+      "sam": "$120M \u2014 MIDI trading platforms",
+      "som": "$9M \u2014 gasless MIDI exchange"
     },
     {
       "id": "music-sample-provenance-vault-0",
@@ -1052,10 +1052,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a sample library curation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$4B — global sample marketplace",
-      "sam": "$800M — curated sample libraries",
-      "som": "$150M — niche sample resale platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a sample library curation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$4B \u2014 global sample marketplace",
+      "sam": "$800M \u2014 curated sample libraries",
+      "som": "$150M \u2014 niche sample resale platforms"
     },
     {
       "id": "music-mix-snapshot-ledger-1",
@@ -1066,10 +1066,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a mix version archiving demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.2B — music production software",
-      "sam": "$300M — mixing and mastering studios",
-      "som": "$50M — indie producer tools"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a mix version archiving demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.2B \u2014 music production software",
+      "sam": "$300M \u2014 mixing and mastering studios",
+      "som": "$50M \u2014 indie producer tools"
     },
     {
       "id": "music-synth-patch-provenance-2",
@@ -1080,10 +1080,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a synthesizer preset sharing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$700M — synth market",
-      "sam": "$200M — preset marketplaces",
-      "som": "$40M — boutique synth users"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a synthesizer preset sharing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$700M \u2014 synth market",
+      "sam": "$200M \u2014 preset marketplaces",
+      "som": "$40M \u2014 boutique synth users"
     },
     {
       "id": "music-sample-remix-rights-3",
@@ -1094,10 +1094,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a remix licensing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$5B — music rights licensing",
-      "sam": "$1B — remix licensing platforms",
-      "som": "$120M — small remix communities"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a remix licensing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$5B \u2014 music rights licensing",
+      "sam": "$1B \u2014 remix licensing platforms",
+      "som": "$120M \u2014 small remix communities"
     },
     {
       "id": "music-live-loop-provenance-4",
@@ -1108,10 +1108,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a live performance loops demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$2B — live performance tech",
-      "sam": "$500M — loop creation tools",
-      "som": "$80M — live loop marketplaces"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a live performance loops demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$2B \u2014 live performance tech",
+      "sam": "$500M \u2014 loop creation tools",
+      "som": "$80M \u2014 live loop marketplaces"
     },
     {
       "id": "music-virtual-instrument-tokens-5",
@@ -1122,10 +1122,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a instrument sample packs demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$3B — virtual instrument market",
-      "sam": "$600M — sample pack sales",
-      "som": "$100M — exclusive sample pack niches"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a instrument sample packs demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$3B \u2014 virtual instrument market",
+      "sam": "$600M \u2014 sample pack sales",
+      "som": "$100M \u2014 exclusive sample pack niches"
     },
     {
       "id": "music-sound-effect-provenance-6",
@@ -1136,10 +1136,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a sound effect libraries demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.5B — sound effects market",
-      "sam": "$400M — licensed SFX libraries",
-      "som": "$60M — indie SFX creators"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a sound effect libraries demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.5B \u2014 sound effects market",
+      "sam": "$400M \u2014 licensed SFX libraries",
+      "som": "$60M \u2014 indie SFX creators"
     },
     {
       "id": "music-composer-cue-tokens-7",
@@ -1150,24 +1150,24 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a media scoring segments demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.8B — sync licensing market",
-      "sam": "$450M — media scoring services",
-      "som": "$70M — indie composer platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a media scoring segments demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.8B \u2014 sync licensing market",
+      "sam": "$450M \u2014 media scoring services",
+      "som": "$70M \u2014 indie composer platforms"
     },
     {
       "id": "music-collaborative-track-tokens-8",
       "theme": "music",
       "title": "Collaborative Track Tokens",
-      "pitch": "Create NFTs representing joint music projects, tracking all contributors’ rights.",
+      "pitch": "Create NFTs representing joint music projects, tracking all contributors\u2019 rights.",
       "subDiscipline": "co-creation tracking",
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a co-creation tracking demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$2.5B — collaborative music tools",
-      "sam": "$700M — co-creation software",
-      "som": "$100M — emerging artist teams"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a co-creation tracking demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$2.5B \u2014 collaborative music tools",
+      "sam": "$700M \u2014 co-creation software",
+      "som": "$100M \u2014 emerging artist teams"
     },
     {
       "id": "music-mastering-provenance-tags-9",
@@ -1178,10 +1178,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a audio mastering records demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$900M — audio mastering market",
-      "sam": "$250M — mastering studios",
-      "som": "$40M — freelance mastering engineers"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a audio mastering records demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$900M \u2014 audio mastering market",
+      "sam": "$250M \u2014 mastering studios",
+      "som": "$40M \u2014 freelance mastering engineers"
     },
     {
       "id": "music-remix-chain-registry-10",
@@ -1192,10 +1192,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a remix lineage tracking demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$4B — remix licensing market",
-      "sam": "$1B — online remix services",
-      "som": "$150M — niche remix artists"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a remix lineage tracking demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$4B \u2014 remix licensing market",
+      "sam": "$1B \u2014 online remix services",
+      "som": "$150M \u2014 niche remix artists"
     },
     {
       "id": "music-songwriting-drafts-mint-11",
@@ -1206,10 +1206,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a lyric version control demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1B — songwriting tools",
-      "sam": "$300M — lyric collaboration apps",
-      "som": "$50M — independent songwriters"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a lyric version control demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1B \u2014 songwriting tools",
+      "sam": "$300M \u2014 lyric collaboration apps",
+      "som": "$50M \u2014 independent songwriters"
     },
     {
       "id": "music-field-recording-mint-12",
@@ -1220,10 +1220,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a ambient sound archives demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$600M — field recording tools",
-      "sam": "$180M — ambient sound markets",
-      "som": "$30M — indie recordists"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a ambient sound archives demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$600M \u2014 field recording tools",
+      "sam": "$180M \u2014 ambient sound markets",
+      "som": "$30M \u2014 indie recordists"
     },
     {
       "id": "music-sound-design-presets-13",
@@ -1234,10 +1234,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a fx preset marketplaces demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.1B — sound design software",
-      "sam": "$350M — effect preset markets",
-      "som": "$60M — boutique sound designers"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a fx preset marketplaces demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.1B \u2014 sound design software",
+      "sam": "$350M \u2014 effect preset markets",
+      "som": "$60M \u2014 boutique sound designers"
     },
     {
       "id": "music-album-art-audio-tokens-14",
@@ -1248,10 +1248,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a integrated art & sound demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$2.2B — multimedia album markets",
-      "sam": "$600M — artist merchandise",
-      "som": "$90M — indie visual musicians"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a integrated art & sound demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$2.2B \u2014 multimedia album markets",
+      "sam": "$600M \u2014 artist merchandise",
+      "som": "$90M \u2014 indie visual musicians"
     },
     {
       "id": "music-music-education-tokens-15",
@@ -1262,10 +1262,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a tutorial authenticity demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$3B — online music education",
-      "sam": "$700M — music tutorial platforms",
-      "som": "$120M — instructor niche markets"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a tutorial authenticity demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$3B \u2014 online music education",
+      "sam": "$700M \u2014 music tutorial platforms",
+      "som": "$120M \u2014 instructor niche markets"
     },
     {
       "id": "music-sound-asset-licensing-16",
@@ -1276,10 +1276,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a asset marketplace demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$5B — sound licensing economy",
-      "sam": "$1.2B — digital asset stores",
-      "som": "$200M — independent sound creators"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a asset marketplace demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$5B \u2014 sound licensing economy",
+      "sam": "$1.2B \u2014 digital asset stores",
+      "som": "$200M \u2014 independent sound creators"
     },
     {
       "id": "music-genre-evolution-tokens-17",
@@ -1290,10 +1290,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a music style tracking demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$2B — music analytics tools",
-      "sam": "$400M — genre classification software",
-      "som": "$70M — niche curator communities"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a music style tracking demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$2B \u2014 music analytics tools",
+      "sam": "$400M \u2014 genre classification software",
+      "som": "$70M \u2014 niche curator communities"
     },
     {
       "id": "music-interactive-audio-nfts-18",
@@ -1304,10 +1304,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a dynamic sound compositions demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.7B — interactive media",
-      "sam": "$450M — dynamic music platforms",
-      "som": "$80M — experimental musicians"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a dynamic sound compositions demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.7B \u2014 interactive media",
+      "sam": "$450M \u2014 dynamic music platforms",
+      "som": "$80M \u2014 experimental musicians"
     },
     {
       "id": "music-dj-set-provenance-19",
@@ -1318,10 +1318,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a live set archiving demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.4B — DJ software market",
-      "sam": "$350M — live set sales",
-      "som": "$50M — underground DJ communities"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a live set archiving demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.4B \u2014 DJ software market",
+      "sam": "$350M \u2014 live set sales",
+      "som": "$50M \u2014 underground DJ communities"
     },
     {
       "id": "music-voice-sample-tokens-20",
@@ -1332,10 +1332,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a vocal sample authentication demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$900M — vocal sample market",
-      "sam": "$250M — vocal sample packs",
-      "som": "$40M — indie vocalists"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a vocal sample authentication demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$900M \u2014 vocal sample market",
+      "sam": "$250M \u2014 vocal sample packs",
+      "som": "$40M \u2014 indie vocalists"
     },
     {
       "id": "music-podcast-sound-mint-21",
@@ -1346,10 +1346,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a podcast audio authenticity demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$3.2B — podcast production",
-      "sam": "$800M — indie podcast creators",
-      "som": "$130M — podcast sound designers"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a podcast audio authenticity demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$3.2B \u2014 podcast production",
+      "sam": "$800M \u2014 indie podcast creators",
+      "som": "$130M \u2014 podcast sound designers"
     },
     {
       "id": "music-film-score-provenance-22",
@@ -1360,10 +1360,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a cinematic composition demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$2.7B — film music market",
-      "sam": "$700M — scoring professionals",
-      "som": "$110M — indie film composers"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a cinematic composition demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$2.7B \u2014 film music market",
+      "sam": "$700M \u2014 scoring professionals",
+      "som": "$110M \u2014 indie film composers"
     },
     {
       "id": "music-ambient-track-tokens-23",
@@ -1374,10 +1374,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a ambient music archives demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$800M — ambient music market",
-      "sam": "$200M — online ambient platforms",
-      "som": "$30M — niche ambient artists"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a ambient music archives demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$800M \u2014 ambient music market",
+      "sam": "$200M \u2014 online ambient platforms",
+      "som": "$30M \u2014 niche ambient artists"
     },
     {
       "id": "music-instrument-sample-provenance-24",
@@ -1388,10 +1388,1510 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a instrumental sample rights demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.5B — instrument sample libraries",
-      "sam": "$400M — instrument sampling services",
-      "som": "$70M — boutique instrument sample sellers"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a instrumental sample rights demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.5B \u2014 instrument sample libraries",
+      "sam": "$400M \u2014 instrument sampling services",
+      "som": "$70M \u2014 boutique instrument sample sellers"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-000-sourcing-agent-for-streaming-split-payme",
+      "theme": "music",
+      "title": "Sourcing Agent for streaming split payments",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: sourcing agent. Vertical: streaming split payments. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-001-escrow-beat-drop-sample-licensing-via-se",
+      "theme": "music",
+      "title": "Escrow beat-drop sample licensing via seller agent",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: seller agent. Vertical: beat-drop sample licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-002-rebalance-sync-license-negotiation-via-r",
+      "theme": "music",
+      "title": "Rebalance sync-license negotiation via recommender agent",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: recommender agent. Vertical: sync-license negotiation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-003-agentic-broker-producer-commissions",
+      "theme": "music",
+      "title": "Agentic broker: producer commissions",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: sourcing agent. Vertical: producer commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-004-broker-session-musician-bookings",
+      "theme": "music",
+      "title": "Broker \u00b7 session-musician bookings",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: escrow agent. Vertical: session-musician bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-005-agentic-escrow-royalty-splits",
+      "theme": "music",
+      "title": "Agentic escrow: royalty splits",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: aggregator agent. Vertical: royalty splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-006-pricing-agent-for-stem-sales",
+      "theme": "music",
+      "title": "Pricing Agent for stem sales",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: pricing agent. Vertical: stem sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-007-playlist-placements-aggregate-lane",
+      "theme": "music",
+      "title": "Playlist Placements \u2014 aggregate lane",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: pricing agent. Vertical: playlist placements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-008-agentic-broker-concert-ticket-splits",
+      "theme": "music",
+      "title": "Agentic broker: concert ticket splits",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: buyer agent. Vertical: concert ticket splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-009-rebalance-album-pre-orders",
+      "theme": "music",
+      "title": "Rebalance \u00b7 album pre-orders",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: arbitrator agent. Vertical: album pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-010-aggregator-agent-for-streaming-split-pay",
+      "theme": "music",
+      "title": "Aggregator Agent for streaming split payments",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: aggregator agent. Vertical: streaming split payments. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-011-pricing-agent-for-beat-drop-sample-licen",
+      "theme": "music",
+      "title": "Pricing Agent for beat-drop sample licensing",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: pricing agent. Vertical: beat-drop sample licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-012-rebalance-sync-license-negotiation-via-a",
+      "theme": "music",
+      "title": "Rebalance sync-license negotiation via aggregator agent",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: aggregator agent. Vertical: sync-license negotiation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-013-underwrite-producer-commissions",
+      "theme": "music",
+      "title": "Underwrite \u00b7 producer commissions",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: seller agent. Vertical: producer commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-014-pricing-agent-for-session-musician-booki",
+      "theme": "music",
+      "title": "Pricing Agent for session-musician bookings",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: pricing agent. Vertical: session-musician bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-015-auction-royalty-splits",
+      "theme": "music",
+      "title": "Auction \u00b7 royalty splits",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: aggregator agent. Vertical: royalty splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-016-escrow-stem-sales",
+      "theme": "music",
+      "title": "Escrow \u00b7 stem sales",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: aggregator agent. Vertical: stem sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-017-broker-playlist-placements-via-sourcing-",
+      "theme": "music",
+      "title": "Broker playlist placements via sourcing agent",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: sourcing agent. Vertical: playlist placements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-018-pricing-agent-for-concert-ticket-splits",
+      "theme": "music",
+      "title": "Pricing Agent for concert ticket splits",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: pricing agent. Vertical: concert ticket splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-019-aggregate-album-pre-orders",
+      "theme": "music",
+      "title": "Aggregate \u00b7 album pre-orders",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: aggregator agent. Vertical: album pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-020-match-streaming-split-payments",
+      "theme": "music",
+      "title": "Match \u00b7 streaming split payments",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: escrow agent. Vertical: streaming split payments. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-021-agentic-match-beat-drop-sample-licensing",
+      "theme": "music",
+      "title": "Agentic match: beat-drop sample licensing",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: pricing agent. Vertical: beat-drop sample licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-022-agentic-auction-sync-license-negotiation",
+      "theme": "music",
+      "title": "Agentic auction: sync-license negotiation",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: aggregator agent. Vertical: sync-license negotiation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-023-producer-commissions-escrow-lane",
+      "theme": "music",
+      "title": "Producer Commissions \u2014 escrow lane",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: translator agent. Vertical: producer commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-024-negotiate-session-musician-bookings",
+      "theme": "music",
+      "title": "Negotiate \u00b7 session-musician bookings",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: sourcing agent. Vertical: session-musician bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-025-broker-royalty-splits-via-arbitrator-age",
+      "theme": "music",
+      "title": "Broker royalty splits via arbitrator agent",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: arbitrator agent. Vertical: royalty splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-026-underwrite-stem-sales",
+      "theme": "music",
+      "title": "Underwrite \u00b7 stem sales",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: sourcing agent. Vertical: stem sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-027-playlist-placements-underwrite-lane",
+      "theme": "music",
+      "title": "Playlist Placements \u2014 underwrite lane",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: escrow agent. Vertical: playlist placements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-028-sourcing-agent-for-concert-ticket-splits",
+      "theme": "music",
+      "title": "Sourcing Agent for concert ticket splits",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: sourcing agent. Vertical: concert ticket splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-029-album-pre-orders-auction-lane",
+      "theme": "music",
+      "title": "Album Pre-Orders \u2014 auction lane",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: recommender agent. Vertical: album pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-030-escrow-agent-for-streaming-split-payment",
+      "theme": "music",
+      "title": "Escrow Agent for streaming split payments",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: escrow agent. Vertical: streaming split payments. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-031-match-beat-drop-sample-licensing-via-sou",
+      "theme": "music",
+      "title": "Match beat-drop sample licensing via sourcing agent",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: sourcing agent. Vertical: beat-drop sample licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-032-agentic-escrow-sync-license-negotiation",
+      "theme": "music",
+      "title": "Agentic escrow: sync-license negotiation",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: recommender agent. Vertical: sync-license negotiation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-033-arbitrator-agent-for-producer-commission",
+      "theme": "music",
+      "title": "Arbitrator Agent for producer commissions",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: arbitrator agent. Vertical: producer commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-034-underwrite-session-musician-bookings-via",
+      "theme": "music",
+      "title": "Underwrite session-musician bookings via buyer agent",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: buyer agent. Vertical: session-musician bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-035-underwrite-royalty-splits-via-buyer-agen",
+      "theme": "music",
+      "title": "Underwrite royalty splits via buyer agent",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: buyer agent. Vertical: royalty splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-036-split-stem-sales",
+      "theme": "music",
+      "title": "Split \u00b7 stem sales",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: arbitrator agent. Vertical: stem sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-037-delegate-playlist-placements-via-sourcin",
+      "theme": "music",
+      "title": "Delegate playlist placements via sourcing agent",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: sourcing agent. Vertical: playlist placements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-038-match-concert-ticket-splits-via-curator-",
+      "theme": "music",
+      "title": "Match concert ticket splits via curator agent",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: curator agent. Vertical: concert ticket splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-039-pricing-agent-for-album-pre-orders",
+      "theme": "music",
+      "title": "Pricing Agent for album pre-orders",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: pricing agent. Vertical: album pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-040-delegate-streaming-split-payments-via-cu",
+      "theme": "music",
+      "title": "Delegate streaming split payments via curator agent",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: curator agent. Vertical: streaming split payments. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-041-auction-beat-drop-sample-licensing",
+      "theme": "music",
+      "title": "Auction \u00b7 beat-drop sample licensing",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: curator agent. Vertical: beat-drop sample licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-042-sync-license-negotiation-rebalance-lane",
+      "theme": "music",
+      "title": "Sync-License Negotiation \u2014 rebalance lane",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: curator agent. Vertical: sync-license negotiation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-043-agentic-negotiate-producer-commissions",
+      "theme": "music",
+      "title": "Agentic negotiate: producer commissions",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: aggregator agent. Vertical: producer commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-044-agentic-match-session-musician-bookings",
+      "theme": "music",
+      "title": "Agentic match: session-musician bookings",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: pricing agent. Vertical: session-musician bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-045-aggregate-royalty-splits-via-sourcing-ag",
+      "theme": "music",
+      "title": "Aggregate royalty splits via sourcing agent",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: sourcing agent. Vertical: royalty splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-046-negotiate-stem-sales-via-sourcing-agent",
+      "theme": "music",
+      "title": "Negotiate stem sales via sourcing agent",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: sourcing agent. Vertical: stem sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-047-auction-playlist-placements",
+      "theme": "music",
+      "title": "Auction \u00b7 playlist placements",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: arbitrator agent. Vertical: playlist placements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-048-underwrite-concert-ticket-splits-via-agg",
+      "theme": "music",
+      "title": "Underwrite concert ticket splits via aggregator agent",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: aggregator agent. Vertical: concert ticket splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-a2a-ap2-049-agentic-match-album-pre-orders",
+      "theme": "music",
+      "title": "Agentic match: album pre-orders",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: pricing agent. Vertical: album pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "music-agentic-ucp-000-agentic-bulk-order-streaming-split-payme",
+      "theme": "music",
+      "title": "Agentic bulk order: streaming split payments",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: artist co-operative. Vertical: streaming split payments. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-001-refund-beat-drop-sample-licensing-via-gi",
+      "theme": "music",
+      "title": "Refund beat-drop sample licensing via gig-worker collective",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: gig-worker collective. Vertical: beat-drop sample licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-002-discovery-sync-license-negotiation",
+      "theme": "music",
+      "title": "Discovery \u00b7 sync-license negotiation",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: gig-worker collective. Vertical: sync-license negotiation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-003-buyer-for-producer-commissions",
+      "theme": "music",
+      "title": "Buyer for producer commissions",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: buyer. Vertical: producer commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-004-bulk-order-session-musician-bookings-via",
+      "theme": "music",
+      "title": "Bulk Order session-musician bookings via buyer",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: buyer. Vertical: session-musician bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-005-self-test-royalty-splits",
+      "theme": "music",
+      "title": "Self-Test \u00b7 royalty splits",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: affiliate. Vertical: royalty splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-006-discovery-stem-sales",
+      "theme": "music",
+      "title": "Discovery \u00b7 stem sales",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: gig-worker collective. Vertical: stem sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-007-gig-worker-collective-for-playlist-place",
+      "theme": "music",
+      "title": "Gig-Worker Collective for playlist placements",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: gig-worker collective. Vertical: playlist placements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-008-artist-co-operative-for-concert-ticket-s",
+      "theme": "music",
+      "title": "Artist Co-Operative for concert ticket splits",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: artist co-operative. Vertical: concert ticket splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-009-bulk-order-album-pre-orders-via-co-op-me",
+      "theme": "music",
+      "title": "Bulk Order album pre-orders via co-op member",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: co-op member. Vertical: album pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-010-refund-streaming-split-payments",
+      "theme": "music",
+      "title": "Refund \u00b7 streaming split payments",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: gig-worker collective. Vertical: streaming split payments. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-011-self-test-beat-drop-sample-licensing-via",
+      "theme": "music",
+      "title": "Self-Test beat-drop sample licensing via buyer",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: buyer. Vertical: beat-drop sample licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-012-sync-license-negotiation-zk-checkout-lan",
+      "theme": "music",
+      "title": "Sync-License Negotiation \u2014 zk checkout lane",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: creator DAO. Vertical: sync-license negotiation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-013-producer-commissions-refund-lane",
+      "theme": "music",
+      "title": "Producer Commissions \u2014 refund lane",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: merchant. Vertical: producer commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-014-session-musician-bookings-self-test-lane",
+      "theme": "music",
+      "title": "Session-Musician Bookings \u2014 self-test lane",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: gig-worker collective. Vertical: session-musician bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-015-co-op-member-for-royalty-splits",
+      "theme": "music",
+      "title": "Co-Op Member for royalty splits",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: co-op member. Vertical: royalty splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-016-buyer-for-stem-sales",
+      "theme": "music",
+      "title": "Buyer for stem sales",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: buyer. Vertical: stem sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-017-signed-receipt-playlist-placements-via-m",
+      "theme": "music",
+      "title": "Signed Receipt playlist placements via merchant",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: merchant. Vertical: playlist placements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-018-agentic-zk-checkout-concert-ticket-split",
+      "theme": "music",
+      "title": "Agentic zk checkout: concert ticket splits",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: merchant. Vertical: concert ticket splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-019-self-test-album-pre-orders",
+      "theme": "music",
+      "title": "Self-Test \u00b7 album pre-orders",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: co-op member. Vertical: album pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-020-zk-checkout-streaming-split-payments",
+      "theme": "music",
+      "title": "ZK Checkout \u00b7 streaming split payments",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: gig-worker collective. Vertical: streaming split payments. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-021-beat-drop-sample-licensing-zk-checkout-l",
+      "theme": "music",
+      "title": "Beat-Drop Sample Licensing \u2014 zk checkout lane",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: merchant. Vertical: beat-drop sample licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-022-affiliate-for-sync-license-negotiation",
+      "theme": "music",
+      "title": "Affiliate for sync-license negotiation",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: affiliate. Vertical: sync-license negotiation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-023-refund-producer-commissions",
+      "theme": "music",
+      "title": "Refund \u00b7 producer commissions",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: artist co-operative. Vertical: producer commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-ucp-024-gig-worker-collective-for-session-musici",
+      "theme": "music",
+      "title": "Gig-Worker Collective for session-musician bookings",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: gig-worker collective. Vertical: session-musician bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "music-agentic-x402-000-prepaid-streaming-split-payments-via-cod",
+      "theme": "music",
+      "title": "Prepaid streaming split payments via code-audit LLM route",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: code-audit LLM route. Vertical: streaming split payments. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-001-premium-content-feed-for-beat-drop-sampl",
+      "theme": "music",
+      "title": "Premium Content Feed for beat-drop sample licensing",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: premium content feed. Vertical: beat-drop sample licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-002-agentic-metered-api-sync-license-negotia",
+      "theme": "music",
+      "title": "Agentic metered api: sync-license negotiation",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: search-tool webhook. Vertical: sync-license negotiation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-003-agentic-streaming-producer-commissions",
+      "theme": "music",
+      "title": "Agentic streaming: producer commissions",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: high-resolution asset. Vertical: producer commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-004-metered-api-session-musician-bookings-vi",
+      "theme": "music",
+      "title": "Metered API session-musician bookings via on-demand transcription API",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: on-demand transcription API. Vertical: session-musician bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-005-prepaid-royalty-splits",
+      "theme": "music",
+      "title": "Prepaid \u00b7 royalty splits",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: code-audit LLM route. Vertical: royalty splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-006-refund-stem-sales",
+      "theme": "music",
+      "title": "Refund \u00b7 stem sales",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: AI-model API. Vertical: stem sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-007-playlist-placements-prepaid-lane",
+      "theme": "music",
+      "title": "Playlist Placements \u2014 prepaid lane",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: AI-model API. Vertical: playlist placements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-008-agentic-streaming-concert-ticket-splits",
+      "theme": "music",
+      "title": "Agentic streaming: concert ticket splits",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: moderator LLM. Vertical: concert ticket splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-009-agentic-prepaid-album-pre-orders",
+      "theme": "music",
+      "title": "Agentic prepaid: album pre-orders",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: embedding-search endpoint. Vertical: album pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-010-streaming-split-payments-refund-lane",
+      "theme": "music",
+      "title": "Streaming Split Payments \u2014 refund lane",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: premium content feed. Vertical: streaming split payments. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-011-metered-api-beat-drop-sample-licensing",
+      "theme": "music",
+      "title": "Metered API \u00b7 beat-drop sample licensing",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: translator microservice. Vertical: beat-drop sample licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-012-agentic-refund-sync-license-negotiation",
+      "theme": "music",
+      "title": "Agentic refund: sync-license negotiation",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: on-demand transcription API. Vertical: sync-license negotiation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-013-prepaid-producer-commissions",
+      "theme": "music",
+      "title": "Prepaid \u00b7 producer commissions",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: search-tool webhook. Vertical: producer commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-014-tiered-session-musician-bookings",
+      "theme": "music",
+      "title": "Tiered \u00b7 session-musician bookings",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: AI-model API. Vertical: session-musician bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-015-tiered-royalty-splits",
+      "theme": "music",
+      "title": "Tiered \u00b7 royalty splits",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: on-demand transcription API. Vertical: royalty splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-016-tiered-stem-sales-via-embedding-search-e",
+      "theme": "music",
+      "title": "Tiered stem sales via embedding-search endpoint",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: embedding-search endpoint. Vertical: stem sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-017-refund-playlist-placements-via-high-reso",
+      "theme": "music",
+      "title": "Refund playlist placements via high-resolution asset",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: high-resolution asset. Vertical: playlist placements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-018-refund-concert-ticket-splits-via-high-re",
+      "theme": "music",
+      "title": "Refund concert ticket splits via high-resolution asset",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: high-resolution asset. Vertical: concert ticket splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-019-album-pre-orders-paywall-lane",
+      "theme": "music",
+      "title": "Album Pre-Orders \u2014 paywall lane",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: moderator LLM. Vertical: album pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-020-streaming-split-payments-streaming-lane",
+      "theme": "music",
+      "title": "Streaming Split Payments \u2014 streaming lane",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: embedding-search endpoint. Vertical: streaming split payments. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-021-translator-microservice-for-beat-drop-sa",
+      "theme": "music",
+      "title": "Translator Microservice for beat-drop sample licensing",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: translator microservice. Vertical: beat-drop sample licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-022-sync-license-negotiation-streaming-lane",
+      "theme": "music",
+      "title": "Sync-License Negotiation \u2014 streaming lane",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: premium content feed. Vertical: sync-license negotiation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-023-metered-api-producer-commissions-via-pri",
+      "theme": "music",
+      "title": "Metered API producer commissions via private analytics endpoint",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: private analytics endpoint. Vertical: producer commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "music-agentic-x402-024-agentic-tiered-session-musician-bookings",
+      "theme": "music",
+      "title": "Agentic tiered: session-musician bookings",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: AI-model API. Vertical: session-musician bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
     }
   ]
 }

@@ -2,7 +2,7 @@
   "theme": {
     "slug": "fashion",
     "name": "Fashion & Textile Design",
-    "emoji": "👗",
+    "emoji": "\ud83d\udc57",
     "audience": "fashion designers, textile artists, costume designers, stylists",
     "market_anchor": "the fashion design software market (~$1.2B) within a $2.5T global fashion industry"
   },
@@ -17,9 +17,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a material provenance demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$250M — sustainable textile tracking tools",
-      "som": "$15M — organic fabric brands using blockchain verification"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$250M \u2014 sustainable textile tracking tools",
+      "som": "$15M \u2014 organic fabric brands using blockchain verification"
     },
     {
       "id": "fashion-designauth-mint-1",
@@ -31,9 +31,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a design copyright demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$180M — design IP protection solutions",
-      "som": "$12M — independent designers seeking copyright assurance"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$180M \u2014 design IP protection solutions",
+      "som": "$12M \u2014 independent designers seeking copyright assurance"
     },
     {
       "id": "fashion-colorpalette-dao-2",
@@ -45,9 +45,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a color curation demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$100M — digital color tool platforms",
-      "som": "$8M — stylists and artists using shared palettes"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$100M \u2014 digital color tool platforms",
+      "som": "$8M \u2014 stylists and artists using shared palettes"
     },
     {
       "id": "fashion-virtualfitting-nft-3",
@@ -59,23 +59,23 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a virtual try-on demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$200M — virtual fitting room software",
-      "som": "$20M — stylists offering exclusive virtual fittings"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$200M \u2014 virtual fitting room software",
+      "som": "$20M \u2014 stylists offering exclusive virtual fittings"
     },
     {
       "id": "fashion-upcycleproof-chain-4",
       "theme": "fashion",
       "title": "UpcycleProof Chain",
-      "pitch": "Authenticate recycled textiles’ origin to validate upcycled fashion products.",
+      "pitch": "Authenticate recycled textiles\u2019 origin to validate upcycled fashion products.",
       "subDiscipline": "recycled textile verification",
       "quantumHook": "Compact ZK contract",
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a recycled textile verification demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$150M — upcycled textile verification tools",
-      "som": "$10M — brands certifying recycled materials"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$150M \u2014 upcycled textile verification tools",
+      "som": "$10M \u2014 brands certifying recycled materials"
     },
     {
       "id": "fashion-trendsignal-oracles-5",
@@ -87,9 +87,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a trend prediction demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$120M — trend analytics platforms",
-      "som": "$9M — designers leveraging real-time trend insights"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$120M \u2014 trend analytics platforms",
+      "som": "$9M \u2014 designers leveraging real-time trend insights"
     },
     {
       "id": "fashion-patternshare-hub-6",
@@ -101,9 +101,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a pattern licensing demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$130M — pattern sharing marketplaces",
-      "som": "$11M — independent pattern makers monetizing work"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$130M \u2014 pattern sharing marketplaces",
+      "som": "$11M \u2014 independent pattern makers monetizing work"
     },
     {
       "id": "fashion-costumenft-archive-7",
@@ -115,9 +115,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a historical costume catalog demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$90M — museum digital archive solutions",
-      "som": "$7M — costume designers accessing verified archives"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$90M \u2014 museum digital archive solutions",
+      "som": "$7M \u2014 costume designers accessing verified archives"
     },
     {
       "id": "fashion-stylistbooking-chain-8",
@@ -129,9 +129,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a consultation scheduling demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$110M — stylist booking software",
-      "som": "$8M — freelance stylists using decentralized bookings"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$110M \u2014 stylist booking software",
+      "som": "$8M \u2014 freelance stylists using decentralized bookings"
     },
     {
       "id": "fashion-sustainlabel-verify-9",
@@ -143,9 +143,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a eco-label validation demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$140M — eco-label verification platforms",
-      "som": "$12M — brands requiring certified transparency"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$140M \u2014 eco-label verification platforms",
+      "som": "$12M \u2014 brands requiring certified transparency"
     },
     {
       "id": "fashion-biofiber-token-10",
@@ -157,9 +157,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a biomaterial crowdfunding demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$100M — textile innovation crowdfunding",
-      "som": "$9M — startups crowdfunding sustainable fibers"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$100M \u2014 textile innovation crowdfunding",
+      "som": "$9M \u2014 startups crowdfunding sustainable fibers"
     },
     {
       "id": "fashion-fashioncollab-dao-11",
@@ -171,9 +171,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a collaborative design demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$115M — collaborative design tools",
-      "som": "$10M — teams using DAO frameworks for fashion"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$115M \u2014 collaborative design tools",
+      "som": "$10M \u2014 teams using DAO frameworks for fashion"
     },
     {
       "id": "fashion-supplychain-mint-12",
@@ -185,9 +185,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a production tracking demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$160M — fashion supply chain software",
-      "som": "$13M — brands enforcing supply transparency"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$160M \u2014 fashion supply chain software",
+      "som": "$13M \u2014 brands enforcing supply transparency"
     },
     {
       "id": "fashion-stylelicense-nft-13",
@@ -199,9 +199,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a style licensing demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$125M — style IP licensing",
-      "som": "$10M — designers monetizing unique styles"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$125M \u2014 style IP licensing",
+      "som": "$10M \u2014 designers monetizing unique styles"
     },
     {
       "id": "fashion-fabricbatch-chain-14",
@@ -213,9 +213,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a batch quality control demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$135M — textile quality management tools",
-      "som": "$11M — manufacturers providing batch traceability"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$135M \u2014 textile quality management tools",
+      "som": "$11M \u2014 manufacturers providing batch traceability"
     },
     {
       "id": "fashion-wearablestats-token-15",
@@ -227,9 +227,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a performance textiles demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$80M — smart textile software",
-      "som": "$6M — brands incentivizing eco-friendly wear"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$80M \u2014 smart textile software",
+      "som": "$6M \u2014 brands incentivizing eco-friendly wear"
     },
     {
       "id": "fashion-virtualrunway-dao-16",
@@ -241,9 +241,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a digital fashion shows demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$90M — virtual event platforms",
-      "som": "$7M — designers producing blockchain-secured shows"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$90M \u2014 virtual event platforms",
+      "som": "$7M \u2014 designers producing blockchain-secured shows"
     },
     {
       "id": "fashion-textilewaste-nft-17",
@@ -255,9 +255,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a waste management demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$100M — fashion waste tracking tools",
-      "som": "$8M — recyclers certifying textile waste reuse"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$100M \u2014 fashion waste tracking tools",
+      "som": "$8M \u2014 recyclers certifying textile waste reuse"
     },
     {
       "id": "fashion-patternproof-chain-18",
@@ -269,9 +269,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a pattern authenticity demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$120M — digital pattern authentication",
-      "som": "$9M — designers protecting pattern creations"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$120M \u2014 digital pattern authentication",
+      "som": "$9M \u2014 designers protecting pattern creations"
     },
     {
       "id": "fashion-accessoryauth-mint-19",
@@ -283,9 +283,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a accessory authentication demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$110M — accessory authentication solutions",
-      "som": "$7M — luxury accessory brands using NFTs"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$110M \u2014 accessory authentication solutions",
+      "som": "$7M \u2014 luxury accessory brands using NFTs"
     },
     {
       "id": "fashion-fashioncontractor-dao-20",
@@ -297,9 +297,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a freelance contract management demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$95M — freelance contract platforms",
-      "som": "$6M — freelance designers using blockchain contracts"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$95M \u2014 freelance contract platforms",
+      "som": "$6M \u2014 freelance designers using blockchain contracts"
     },
     {
       "id": "fashion-digitalswatch-token-21",
@@ -311,9 +311,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a digital fabric samples demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$85M — digital fabric sample tools",
-      "som": "$5M — textile artists exchanging digital swatches"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$85M \u2014 digital fabric sample tools",
+      "som": "$5M \u2014 textile artists exchanging digital swatches"
     },
     {
       "id": "fashion-ecofashion-dao-22",
@@ -325,9 +325,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a sustainability governance demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$105M — sustainable fashion governance",
-      "som": "$7M — brands engaging community decisions"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$105M \u2014 sustainable fashion governance",
+      "som": "$7M \u2014 brands engaging community decisions"
     },
     {
       "id": "fashion-runwayroyalties-nft-23",
@@ -339,9 +339,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a event royalty management demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$90M — event royalty software",
-      "som": "$6M — designers and models receiving automated royalties"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$90M \u2014 event royalty software",
+      "som": "$6M \u2014 designers and models receiving automated royalties"
     },
     {
       "id": "fashion-styleswap-chain-24",
@@ -353,9 +353,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a digital fashion exchange demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — fashion design software market",
-      "sam": "$100M — digital fashion marketplaces",
-      "som": "$8M — consumers swapping digital garments"
+      "tam": "$1.2B \u2014 fashion design software market",
+      "sam": "$100M \u2014 digital fashion marketplaces",
+      "som": "$8M \u2014 consumers swapping digital garments"
     },
     {
       "id": "fashion-fabric-storyline-0",
@@ -367,9 +367,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a digital textile archives demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$2B — global digital textile market",
-      "sam": "$400M — textile design software",
-      "som": "$25M — niche digital fabric design tools"
+      "tam": "$2B \u2014 global digital textile market",
+      "sam": "$400M \u2014 textile design software",
+      "som": "$25M \u2014 niche digital fabric design tools"
     },
     {
       "id": "fashion-runway-replay-1",
@@ -381,9 +381,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a fashion show documentation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.5B — global fashion event content market",
-      "sam": "$250M — fashion show digital assets",
-      "som": "$15M — event archiving solutions"
+      "tam": "$1.5B \u2014 global fashion event content market",
+      "sam": "$250M \u2014 fashion show digital assets",
+      "som": "$15M \u2014 event archiving solutions"
     },
     {
       "id": "fashion-color-code-vault-2",
@@ -395,9 +395,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a color palette preservation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$500M — global color management software",
-      "sam": "$120M — fashion color tools",
-      "som": "$10M — color palette storage apps"
+      "tam": "$500M \u2014 global color management software",
+      "sam": "$120M \u2014 fashion color tools",
+      "som": "$10M \u2014 color palette storage apps"
     },
     {
       "id": "fashion-stitch-trace-3",
@@ -409,9 +409,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a garment construction logs demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$600M — global fashion manufacturing software",
-      "sam": "$130M — textile production tracking",
-      "som": "$12M — artisan stitch documentation"
+      "tam": "$600M \u2014 global fashion manufacturing software",
+      "sam": "$130M \u2014 textile production tracking",
+      "som": "$12M \u2014 artisan stitch documentation"
     },
     {
       "id": "fashion-moodboard-ledger-4",
@@ -423,9 +423,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a inspiration curation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$700M — digital creative asset management",
-      "sam": "$150M — fashion moodboard tools",
-      "som": "$11M — pinned inspiration apps"
+      "tam": "$700M \u2014 digital creative asset management",
+      "sam": "$150M \u2014 fashion moodboard tools",
+      "som": "$11M \u2014 pinned inspiration apps"
     },
     {
       "id": "fashion-trend-lineage-5",
@@ -437,9 +437,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a fashion trend mapping demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — fashion analytics market",
-      "sam": "$200M — trend forecasting software",
-      "som": "$18M — trend provenance tracking"
+      "tam": "$1B \u2014 fashion analytics market",
+      "sam": "$200M \u2014 trend forecasting software",
+      "som": "$18M \u2014 trend provenance tracking"
     },
     {
       "id": "fashion-texture-token-6",
@@ -451,9 +451,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a fabric texture archives demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$800M — global textile sample market",
-      "sam": "$180M — fabric library platforms",
-      "som": "$14M — texture sharing tools"
+      "tam": "$800M \u2014 global textile sample market",
+      "sam": "$180M \u2014 fabric library platforms",
+      "som": "$14M \u2014 texture sharing tools"
     },
     {
       "id": "fashion-fit-file-safe-7",
@@ -465,9 +465,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a 3D garment fitting demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.2B — global 3D fashion tech",
-      "sam": "$300M — virtual fitting software",
-      "som": "$22M — fit data storage platforms"
+      "tam": "$1.2B \u2014 global 3D fashion tech",
+      "sam": "$300M \u2014 virtual fitting software",
+      "som": "$22M \u2014 fit data storage platforms"
     },
     {
       "id": "fashion-accessory-archive-8",
@@ -479,9 +479,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a digital accessory cataloging demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$500M — accessory design market",
-      "sam": "$110M — accessory software tools",
-      "som": "$8M — accessory IP management"
+      "tam": "$500M \u2014 accessory design market",
+      "sam": "$110M \u2014 accessory software tools",
+      "som": "$8M \u2014 accessory IP management"
     },
     {
       "id": "fashion-capsule-catalog-9",
@@ -493,9 +493,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a seasonal collection storage demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.8B — global fashion catalog market",
-      "sam": "$350M — collection management software",
-      "som": "$20M — seasonal archive solutions"
+      "tam": "$1.8B \u2014 global fashion catalog market",
+      "sam": "$350M \u2014 collection management software",
+      "som": "$20M \u2014 seasonal archive solutions"
     },
     {
       "id": "fashion-drape-documentation-10",
@@ -507,9 +507,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a fabric draping records demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$600M — fashion design experimentation",
-      "sam": "$130M — fabric manipulation tools",
-      "som": "$9M — draping documentation apps"
+      "tam": "$600M \u2014 fashion design experimentation",
+      "sam": "$130M \u2014 fabric manipulation tools",
+      "som": "$9M \u2014 draping documentation apps"
     },
     {
       "id": "fashion-print-provenance-11",
@@ -521,9 +521,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a digital print design demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$900M — digital textile print market",
-      "sam": "$210M — print design software",
-      "som": "$16M — print IP protection"
+      "tam": "$900M \u2014 digital textile print market",
+      "sam": "$210M \u2014 print design software",
+      "som": "$16M \u2014 print IP protection"
     },
     {
       "id": "fashion-ecofabric-ledger-12",
@@ -535,9 +535,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a sustainable textile tracking demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.1B — sustainable fashion market",
-      "sam": "$280M — eco textile tracking",
-      "som": "$19M — sustainability certification archives"
+      "tam": "$1.1B \u2014 sustainable fashion market",
+      "sam": "$280M \u2014 eco textile tracking",
+      "som": "$19M \u2014 sustainability certification archives"
     },
     {
       "id": "fashion-pattern-pathway-13",
@@ -549,9 +549,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a seamless pattern sharing demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.4B — pattern design software",
-      "sam": "$320M — pattern sharing platforms",
-      "som": "$23M — pattern version control apps"
+      "tam": "$1.4B \u2014 pattern design software",
+      "sam": "$320M \u2014 pattern sharing platforms",
+      "som": "$23M \u2014 pattern version control apps"
     },
     {
       "id": "fashion-avant-atlas-14",
@@ -563,9 +563,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a experimental design archives demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$400M — avant-garde fashion market",
-      "sam": "$90M — experimental design tools",
-      "som": "$7M — conceptual fashion archives"
+      "tam": "$400M \u2014 avant-garde fashion market",
+      "sam": "$90M \u2014 experimental design tools",
+      "som": "$7M \u2014 conceptual fashion archives"
     },
     {
       "id": "fashion-fabric-fusion-15",
@@ -577,9 +577,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a mixed media textile records demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$700M — digital textile innovation",
-      "sam": "$150M — multimedia fabric software",
-      "som": "$10M — mixed media fashion archives"
+      "tam": "$700M \u2014 digital textile innovation",
+      "sam": "$150M \u2014 multimedia fabric software",
+      "som": "$10M \u2014 mixed media fashion archives"
     },
     {
       "id": "fashion-wearable-wallet-16",
@@ -591,9 +591,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a digital wardrobe management demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — digital wardrobe apps",
-      "sam": "$250M — wardrobe management software",
-      "som": "$17M — digital closet archiving"
+      "tam": "$1B \u2014 digital wardrobe apps",
+      "sam": "$250M \u2014 wardrobe management software",
+      "som": "$17M \u2014 digital closet archiving"
     },
     {
       "id": "fashion-costume-chronicle-17",
@@ -605,9 +605,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a theatrical costume records demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$600M — costume design market",
-      "sam": "$140M — costume documentation software",
-      "som": "$11M — theatrical costume archives"
+      "tam": "$600M \u2014 costume design market",
+      "sam": "$140M \u2014 costume documentation software",
+      "som": "$11M \u2014 theatrical costume archives"
     },
     {
       "id": "fashion-style-snapshot-18",
@@ -619,9 +619,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a fashion influencer galleries demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.2B — influencer marketing fashion",
-      "sam": "$280M — influencer content management",
-      "som": "$21M — influencer style archives"
+      "tam": "$1.2B \u2014 influencer marketing fashion",
+      "sam": "$280M \u2014 influencer content management",
+      "som": "$21M \u2014 influencer style archives"
     },
     {
       "id": "fashion-thread-token-19",
@@ -633,9 +633,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a yarn and thread digital catalogs demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$700M — yarn and thread supply chain",
-      "sam": "$160M — textile supplier software",
-      "som": "$12M — digital thread catalogues"
+      "tam": "$700M \u2014 yarn and thread supply chain",
+      "sam": "$160M \u2014 textile supplier software",
+      "som": "$12M \u2014 digital thread catalogues"
     },
     {
       "id": "fashion-fashion-footprint-20",
@@ -647,9 +647,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a design lifecycle tracking demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.5B — fashion supply chain analytics",
-      "sam": "$300M — lifecycle tracking tools",
-      "som": "$18M — accountability archive apps"
+      "tam": "$1.5B \u2014 fashion supply chain analytics",
+      "sam": "$300M \u2014 lifecycle tracking tools",
+      "som": "$18M \u2014 accountability archive apps"
     },
     {
       "id": "fashion-pattern-nft-forge-21",
@@ -661,9 +661,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a blockchain pattern minting demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$500M — fashion NFT market",
-      "sam": "$130M — design minting platforms",
-      "som": "$9M — pattern NFT tools"
+      "tam": "$500M \u2014 fashion NFT market",
+      "sam": "$130M \u2014 design minting platforms",
+      "som": "$9M \u2014 pattern NFT tools"
     },
     {
       "id": "fashion-digital-drapery-hub-22",
@@ -675,9 +675,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a online fabric simulation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$900M — fabric simulation software",
-      "sam": "$220M — collaborative design tools",
-      "som": "$14M — fabric simulation archives"
+      "tam": "$900M \u2014 fabric simulation software",
+      "sam": "$220M \u2014 collaborative design tools",
+      "som": "$14M \u2014 fabric simulation archives"
     },
     {
       "id": "fashion-ethical-edit-log-23",
@@ -689,9 +689,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a design decision auditing demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$800M — ethical fashion software",
-      "sam": "$180M — transparency tools",
-      "som": "$13M — ethical audit archives"
+      "tam": "$800M \u2014 ethical fashion software",
+      "sam": "$180M \u2014 transparency tools",
+      "som": "$13M \u2014 ethical audit archives"
     },
     {
       "id": "fashion-silhouette-sync-24",
@@ -703,9 +703,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a design silhouette sharing demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.1B — fashion collaboration tools",
-      "sam": "$270M — silhouette design software",
-      "som": "$16M — sketch archiving platforms"
+      "tam": "$1.1B \u2014 fashion collaboration tools",
+      "sam": "$270M \u2014 silhouette design software",
+      "som": "$16M \u2014 sketch archiving platforms"
     },
     {
       "id": "fashion-fabric-storychain-0",
@@ -717,9 +717,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a material provenance demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — global fashion design software market",
-      "sam": "$200M — textile traceability software segment",
-      "som": "$20M — early adopters in sustainable fashion brands"
+      "tam": "$1.2B \u2014 global fashion design software market",
+      "sam": "$200M \u2014 textile traceability software segment",
+      "som": "$20M \u2014 early adopters in sustainable fashion brands"
     },
     {
       "id": "fashion-moodboard-mint-1",
@@ -731,9 +731,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a collaborative curation demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — overall fashion design software market",
-      "sam": "$150M — collaborative design tools",
-      "som": "$15M — social curation platforms for fashion"
+      "tam": "$1.2B \u2014 overall fashion design software market",
+      "sam": "$150M \u2014 collaborative design tools",
+      "som": "$15M \u2014 social curation platforms for fashion"
     },
     {
       "id": "fashion-trendtoken-vault-2",
@@ -745,9 +745,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a trend validation demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — global fashion design software",
-      "sam": "$100M — trend analytics tools",
-      "som": "$10M — blockchain-based verification solutions"
+      "tam": "$1.2B \u2014 global fashion design software",
+      "sam": "$100M \u2014 trend analytics tools",
+      "som": "$10M \u2014 blockchain-based verification solutions"
     },
     {
       "id": "fashion-patternshare-3",
@@ -759,9 +759,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a digital pattern exchange demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion design software",
-      "sam": "$180M — pattern design and licensing",
-      "som": "$18M — blockchain licensing for textiles"
+      "tam": "$1.2B \u2014 fashion design software",
+      "sam": "$180M \u2014 pattern design and licensing",
+      "som": "$18M \u2014 blockchain licensing for textiles"
     },
     {
       "id": "fashion-colorchain-palette-4",
@@ -773,9 +773,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a color provenance demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion design software",
-      "sam": "$120M — color management systems",
-      "som": "$12M — secure color formula sharing"
+      "tam": "$1.2B \u2014 fashion design software",
+      "sam": "$120M \u2014 color management systems",
+      "som": "$12M \u2014 secure color formula sharing"
     },
     {
       "id": "fashion-wearable-royalties-5",
@@ -787,9 +787,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a digital fashion royalties demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion design software",
-      "sam": "$300M — digital fashion monetization",
-      "som": "$30M — blockchain royalty platforms"
+      "tam": "$1.2B \u2014 fashion design software",
+      "sam": "$300M \u2014 digital fashion monetization",
+      "som": "$30M \u2014 blockchain royalty platforms"
     },
     {
       "id": "fashion-runway-replay-6",
@@ -801,9 +801,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a event recording demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$800M — fashion event tech market",
-      "sam": "$100M — event content rights management",
-      "som": "$8M — blockchain-backed show archives"
+      "tam": "$800M \u2014 fashion event tech market",
+      "sam": "$100M \u2014 event content rights management",
+      "som": "$8M \u2014 blockchain-backed show archives"
     },
     {
       "id": "fashion-sartorial-social-7",
@@ -815,9 +815,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a designer networking demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$500M — fashion networking software",
-      "sam": "$75M — digital collaboration tools",
-      "som": "$7M — blockchain contract solutions for creatives"
+      "tam": "$500M \u2014 fashion networking software",
+      "sam": "$75M \u2014 digital collaboration tools",
+      "som": "$7M \u2014 blockchain contract solutions for creatives"
     },
     {
       "id": "fashion-fabric-fraction-8",
@@ -829,9 +829,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a material micro-ownership demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion design software",
-      "sam": "$90M — textile asset tokenization",
-      "som": "$9M — early adoption in luxury textiles"
+      "tam": "$1.2B \u2014 fashion design software",
+      "sam": "$90M \u2014 textile asset tokenization",
+      "som": "$9M \u2014 early adoption in luxury textiles"
     },
     {
       "id": "fashion-virtual-trychain-9",
@@ -843,9 +843,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a try-on verification demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion software market",
-      "sam": "$250M — virtual fitting solutions",
-      "som": "$25M — blockchain try-on authentication"
+      "tam": "$1.2B \u2014 fashion software market",
+      "sam": "$250M \u2014 virtual fitting solutions",
+      "som": "$25M \u2014 blockchain try-on authentication"
     },
     {
       "id": "fashion-accessory-auth-10",
@@ -857,9 +857,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a jewelry provenance demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$700M — accessory design software",
-      "sam": "$90M — provenance verification",
-      "som": "$9M — blockchain provenance for jewelry"
+      "tam": "$700M \u2014 accessory design software",
+      "sam": "$90M \u2014 provenance verification",
+      "som": "$9M \u2014 blockchain provenance for jewelry"
     },
     {
       "id": "fashion-capsule-contract-11",
@@ -871,9 +871,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a collaborative capsule collections demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion design software",
-      "sam": "$130M — collaboration management",
-      "som": "$13M — blockchain contracts for fashion"
+      "tam": "$1.2B \u2014 fashion design software",
+      "sam": "$130M \u2014 collaboration management",
+      "som": "$13M \u2014 blockchain contracts for fashion"
     },
     {
       "id": "fashion-style-stake-12",
@@ -885,9 +885,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a community style curation demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion software market",
-      "sam": "$140M — community curation platforms",
-      "som": "$14M — blockchain staking in fashion"
+      "tam": "$1.2B \u2014 fashion software market",
+      "sam": "$140M \u2014 community curation platforms",
+      "som": "$14M \u2014 blockchain staking in fashion"
     },
     {
       "id": "fashion-fabric-swapchain-13",
@@ -899,9 +899,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a material bartering demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion design software",
-      "sam": "$110M — material exchange platforms",
-      "som": "$11M — blockchain-based swaps"
+      "tam": "$1.2B \u2014 fashion design software",
+      "sam": "$110M \u2014 material exchange platforms",
+      "som": "$11M \u2014 blockchain-based swaps"
     },
     {
       "id": "fashion-runway-reward-14",
@@ -913,9 +913,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a event incentives demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$800M — fashion event tech",
-      "sam": "$60M — event incentive platforms",
-      "som": "$6M — blockchain rewards for attendees"
+      "tam": "$800M \u2014 fashion event tech",
+      "sam": "$60M \u2014 event incentive platforms",
+      "som": "$6M \u2014 blockchain rewards for attendees"
     },
     {
       "id": "fashion-style-snapshot-15",
@@ -927,9 +927,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a digital outfit logging demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion design software",
-      "sam": "$90M — digital wardrobe management",
-      "som": "$9M — blockchain outfit logs"
+      "tam": "$1.2B \u2014 fashion design software",
+      "sam": "$90M \u2014 digital wardrobe management",
+      "som": "$9M \u2014 blockchain outfit logs"
     },
     {
       "id": "fashion-craft-credit-16",
@@ -941,9 +941,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a artisan attribution demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion software",
-      "sam": "$80M — artisan tracking tools",
-      "som": "$8M — onchain artisan credit solutions"
+      "tam": "$1.2B \u2014 fashion software",
+      "sam": "$80M \u2014 artisan tracking tools",
+      "som": "$8M \u2014 onchain artisan credit solutions"
     },
     {
       "id": "fashion-pattern-provenance-17",
@@ -955,9 +955,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a design copyright demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion design software",
-      "sam": "$100M — copyright management",
-      "som": "$10M — blockchain copyright for patterns"
+      "tam": "$1.2B \u2014 fashion design software",
+      "sam": "$100M \u2014 copyright management",
+      "som": "$10M \u2014 blockchain copyright for patterns"
     },
     {
       "id": "fashion-tailor-token-18",
@@ -969,9 +969,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a custom order management demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$500M — bespoke tailoring software",
-      "sam": "$70M — custom order platforms",
-      "som": "$7M — blockchain contract management"
+      "tam": "$500M \u2014 bespoke tailoring software",
+      "sam": "$70M \u2014 custom order platforms",
+      "som": "$7M \u2014 blockchain contract management"
     },
     {
       "id": "fashion-fashion-dao-hub-19",
@@ -983,9 +983,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a decentralized fashion governance demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion design software",
-      "sam": "$160M — community governance tools",
-      "som": "$16M — blockchain DAOs for designers"
+      "tam": "$1.2B \u2014 fashion design software",
+      "sam": "$160M \u2014 community governance tools",
+      "som": "$16M \u2014 blockchain DAOs for designers"
     },
     {
       "id": "fashion-vintage-vault-20",
@@ -997,9 +997,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a authenticity verification demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$700M — vintage fashion market software",
-      "sam": "$75M — authenticity platforms",
-      "som": "$7.5M — blockchain vintage authentication"
+      "tam": "$700M \u2014 vintage fashion market software",
+      "sam": "$75M \u2014 authenticity platforms",
+      "som": "$7.5M \u2014 blockchain vintage authentication"
     },
     {
       "id": "fashion-style-swap-21",
@@ -1011,9 +1011,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a peer-to-peer fashion exchange demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion design software",
-      "sam": "$120M — peer fashion exchange",
-      "som": "$12M — blockchain-based swap platforms"
+      "tam": "$1.2B \u2014 fashion design software",
+      "sam": "$120M \u2014 peer fashion exchange",
+      "som": "$12M \u2014 blockchain-based swap platforms"
     },
     {
       "id": "fashion-textile-tokenizer-22",
@@ -1025,9 +1025,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a fabric asset digitization demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion software market",
-      "sam": "$140M — textile digitization",
-      "som": "$14M — tokenized asset trading"
+      "tam": "$1.2B \u2014 fashion software market",
+      "sam": "$140M \u2014 textile digitization",
+      "som": "$14M \u2014 tokenized asset trading"
     },
     {
       "id": "fashion-designer-direct-23",
@@ -1039,9 +1039,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a supply chain transparency demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion design software",
-      "sam": "$130M — supply chain platforms",
-      "som": "$13M — blockchain transparency solutions"
+      "tam": "$1.2B \u2014 fashion design software",
+      "sam": "$130M \u2014 supply chain platforms",
+      "som": "$13M \u2014 blockchain transparency solutions"
     },
     {
       "id": "fashion-capsule-claim-24",
@@ -1053,9 +1053,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a limited drop authentication demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — fashion design software",
-      "sam": "$110M — limited edition verification",
-      "som": "$11M — blockchain certificates for drops"
+      "tam": "$1.2B \u2014 fashion design software",
+      "sam": "$110M \u2014 limited edition verification",
+      "som": "$11M \u2014 blockchain certificates for drops"
     },
     {
       "id": "fashion-thread-legacy-0",
@@ -1066,10 +1066,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a fabric provenance demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$300M — global sustainable fabric traceability market",
-      "sam": "$80M — fashion designers focused on eco-friendly sourcing",
-      "som": "$5M — early adopters in ethical fabric provenance apps"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a fabric provenance demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$300M \u2014 global sustainable fabric traceability market",
+      "sam": "$80M \u2014 fashion designers focused on eco-friendly sourcing",
+      "som": "$5M \u2014 early adopters in ethical fabric provenance apps"
     },
     {
       "id": "fashion-costume-chronicle-1",
@@ -1080,10 +1080,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a historical costume design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$120M — costume design software market",
-      "sam": "$35M — theatrical and film costume designers",
-      "som": "$3M — NFT-based costume design adoption in entertainment"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a historical costume design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$120M \u2014 costume design software market",
+      "sam": "$35M \u2014 theatrical and film costume designers",
+      "som": "$3M \u2014 NFT-based costume design adoption in entertainment"
     },
     {
       "id": "fashion-style-vault-2",
@@ -1094,10 +1094,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a outfit curation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$500M — fashion curation platforms worldwide",
-      "sam": "$150M — personal stylists and fashion consultants",
-      "som": "$10M — NFT adoption among digital fashion curators"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a outfit curation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$500M \u2014 fashion curation platforms worldwide",
+      "sam": "$150M \u2014 personal stylists and fashion consultants",
+      "som": "$10M \u2014 NFT adoption among digital fashion curators"
     },
     {
       "id": "fashion-pattern-provenance-3",
@@ -1108,10 +1108,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a textile pattern design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$250M — textile design software market",
-      "sam": "$70M — freelance textile and surface designers",
-      "som": "$4M — NFT-based pattern registration use cases"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a textile pattern design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$250M \u2014 textile design software market",
+      "sam": "$70M \u2014 freelance textile and surface designers",
+      "som": "$4M \u2014 NFT-based pattern registration use cases"
     },
     {
       "id": "fashion-colorcode-ledger-4",
@@ -1122,10 +1122,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a color study demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$100M — color management tools in fashion",
-      "sam": "$30M — apparel and accessory color designers",
-      "som": "$2M — early color palette NFT adoption"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a color study demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$100M \u2014 color management tools in fashion",
+      "sam": "$30M \u2014 apparel and accessory color designers",
+      "som": "$2M \u2014 early color palette NFT adoption"
     },
     {
       "id": "fashion-fabric-nft-atlas-5",
@@ -1136,10 +1136,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a textile sourcing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400M — global textile sourcing market",
-      "sam": "$120M — fashion brands sourcing artisanal fabrics",
-      "som": "$8M — provenance NFT use in artisanal textiles"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a textile sourcing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400M \u2014 global textile sourcing market",
+      "sam": "$120M \u2014 fashion brands sourcing artisanal fabrics",
+      "som": "$8M \u2014 provenance NFT use in artisanal textiles"
     },
     {
       "id": "fashion-design-chain-diary-6",
@@ -1150,10 +1150,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a fashion sketching demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$350M — fashion design software users",
-      "sam": "$90M — independent fashion illustrators",
-      "som": "$6M — NFT adoption by sketch-based designers"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a fashion sketching demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$350M \u2014 fashion design software users",
+      "sam": "$90M \u2014 independent fashion illustrators",
+      "som": "$6M \u2014 NFT adoption by sketch-based designers"
     },
     {
       "id": "fashion-capsule-mint-7",
@@ -1164,10 +1164,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a collection drops demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$600M — limited-edition fashion market",
-      "sam": "$200M — fashion brands launching exclusive capsule collections",
-      "som": "$15M — NFT-driven limited drop platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a collection drops demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$600M \u2014 limited-edition fashion market",
+      "sam": "$200M \u2014 fashion brands launching exclusive capsule collections",
+      "som": "$15M \u2014 NFT-driven limited drop platforms"
     },
     {
       "id": "fashion-weave-witness-8",
@@ -1178,10 +1178,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a handloom textiles demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$180M — handloom textile market globally",
-      "sam": "$50M — designers focused on handcrafted textiles",
-      "som": "$3M — provenance NFT use in handloom fabrics"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a handloom textiles demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$180M \u2014 handloom textile market globally",
+      "sam": "$50M \u2014 designers focused on handcrafted textiles",
+      "som": "$3M \u2014 provenance NFT use in handloom fabrics"
     },
     {
       "id": "fashion-trend-tokenizer-9",
@@ -1192,10 +1192,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a fashion forecasting demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$220M — global fashion forecasting services",
-      "sam": "$70M — fashion analytics and consultancy firms",
-      "som": "$4M — NFT adoption in trend insight monetization"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a fashion forecasting demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$220M \u2014 global fashion forecasting services",
+      "sam": "$70M \u2014 fashion analytics and consultancy firms",
+      "som": "$4M \u2014 NFT adoption in trend insight monetization"
     },
     {
       "id": "fashion-fashion-dna-10",
@@ -1206,10 +1206,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a brand identity demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$800M — brand management software market",
-      "sam": "$250M — emerging fashion brands protecting IP",
-      "som": "$20M — NFT-based brand authenticity initiatives"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a brand identity demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$800M \u2014 brand management software market",
+      "sam": "$250M \u2014 emerging fashion brands protecting IP",
+      "som": "$20M \u2014 NFT-based brand authenticity initiatives"
     },
     {
       "id": "fashion-upcycle-proof-11",
@@ -1220,10 +1220,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a sustainable design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$150M — sustainable fashion upcycling market",
-      "sam": "$45M — designers specializing in garment reuse",
-      "som": "$3M — NFT adoption for upcycled product verification"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a sustainable design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$150M \u2014 sustainable fashion upcycling market",
+      "sam": "$45M \u2014 designers specializing in garment reuse",
+      "som": "$3M \u2014 NFT adoption for upcycled product verification"
     },
     {
       "id": "fashion-accessory-archives-12",
@@ -1234,10 +1234,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a jewelry design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400M — jewelry design software market",
-      "sam": "$110M — independent jewelry designers",
-      "som": "$7M — NFT use for jewelry provenance tracking"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a jewelry design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400M \u2014 jewelry design software market",
+      "sam": "$110M \u2014 independent jewelry designers",
+      "som": "$7M \u2014 NFT use for jewelry provenance tracking"
     },
     {
       "id": "fashion-moodboard-mint-13",
@@ -1248,10 +1248,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a concept curation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$300M — creative concept and moodboard tools",
-      "sam": "$80M — fashion creative directors and stylists",
-      "som": "$5M — NFT adoption in creative asset verification"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a concept curation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$300M \u2014 creative concept and moodboard tools",
+      "sam": "$80M \u2014 fashion creative directors and stylists",
+      "som": "$5M \u2014 NFT adoption in creative asset verification"
     },
     {
       "id": "fashion-fit-nft-lab-14",
@@ -1262,24 +1262,24 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a virtual fitting demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$350M — digital fitting and wardrobe software market",
-      "sam": "$100M — virtual fashion designers and stylists",
-      "som": "$6M — NFT-driven virtual fit solutions"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a virtual fitting demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$350M \u2014 digital fitting and wardrobe software market",
+      "sam": "$100M \u2014 virtual fashion designers and stylists",
+      "som": "$6M \u2014 NFT-driven virtual fit solutions"
     },
     {
       "id": "fashion-runway-record-15",
       "theme": "fashion",
       "title": "Runway Record",
-      "pitch": "Mint NFTs documenting runway shows’ looks for authentic digital archiving and resale.",
+      "pitch": "Mint NFTs documenting runway shows\u2019 looks for authentic digital archiving and resale.",
       "subDiscipline": "showcase curation",
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a showcase curation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$450M — fashion event and showcase software",
-      "sam": "$130M — show producers and designers",
-      "som": "$8M — NFT provenance for runway digital archives"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a showcase curation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$450M \u2014 fashion event and showcase software",
+      "sam": "$130M \u2014 show producers and designers",
+      "som": "$8M \u2014 NFT provenance for runway digital archives"
     },
     {
       "id": "fashion-fabric-remix-16",
@@ -1290,10 +1290,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a textile remixing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$270M — textile remix and mashup software",
-      "sam": "$75M — textile artists experimenting with pattern fusion",
-      "som": "$5M — NFT-based remix pattern authentication"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a textile remixing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$270M \u2014 textile remix and mashup software",
+      "sam": "$75M \u2014 textile artists experimenting with pattern fusion",
+      "som": "$5M \u2014 NFT-based remix pattern authentication"
     },
     {
       "id": "fashion-sustainable-stitch-17",
@@ -1304,10 +1304,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a zero-waste design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$200M — zero-waste apparel design market",
-      "sam": "$60M — eco-conscious fashion designers",
-      "som": "$4M — NFT use in zero-waste design attribution"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a zero-waste design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$200M \u2014 zero-waste apparel design market",
+      "sam": "$60M \u2014 eco-conscious fashion designers",
+      "som": "$4M \u2014 NFT use in zero-waste design attribution"
     },
     {
       "id": "fashion-digital-drapes-18",
@@ -1318,10 +1318,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a 3D garment design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$500M — 3D fashion design software market",
-      "sam": "$140M — virtual garment innovators and stylists",
-      "som": "$9M — NFT adoption for 3D design provenance"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a 3D garment design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$500M \u2014 3D fashion design software market",
+      "sam": "$140M \u2014 virtual garment innovators and stylists",
+      "som": "$9M \u2014 NFT adoption for 3D design provenance"
     },
     {
       "id": "fashion-ethnic-essence-19",
@@ -1332,10 +1332,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a cultural textiles demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$350M — ethnic textile and craft markets",
-      "sam": "$90M — designers specializing in cultural textiles",
-      "som": "$6M — NFT use for cultural heritage textile protection"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a cultural textiles demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$350M \u2014 ethnic textile and craft markets",
+      "sam": "$90M \u2014 designers specializing in cultural textiles",
+      "som": "$6M \u2014 NFT use for cultural heritage textile protection"
     },
     {
       "id": "fashion-accessory-authenticator-20",
@@ -1346,10 +1346,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a limited-edition accessories demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$320M — accessory design and retail software",
-      "sam": "$95M — fashion brands producing exclusive accessories",
-      "som": "$7M — NFT-driven authentication in accessories"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a limited-edition accessories demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$320M \u2014 accessory design and retail software",
+      "sam": "$95M \u2014 fashion brands producing exclusive accessories",
+      "som": "$7M \u2014 NFT-driven authentication in accessories"
     },
     {
       "id": "fashion-craft-chain-connect-21",
@@ -1360,10 +1360,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a artisan collaboration demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$280M — artisan-designer collaboration platforms",
-      "sam": "$75M — fashion designers working with craftspeople",
-      "som": "$5M — NFT adoption in co-created fashion products"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a artisan collaboration demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$280M \u2014 artisan-designer collaboration platforms",
+      "sam": "$75M \u2014 fashion designers working with craftspeople",
+      "som": "$5M \u2014 NFT adoption in co-created fashion products"
     },
     {
       "id": "fashion-virtual-vogue-vault-22",
@@ -1374,24 +1374,24 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a digital fashion archives demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400M — digital fashion archive services",
-      "sam": "$110M — fashion museums and digital curators",
-      "som": "$7M — NFT use in fashion archival digitization"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a digital fashion archives demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400M \u2014 digital fashion archive services",
+      "sam": "$110M \u2014 fashion museums and digital curators",
+      "som": "$7M \u2014 NFT use in fashion archival digitization"
     },
     {
       "id": "fashion-print-proofs-23",
       "theme": "fashion",
       "title": "Print Proofs",
-      "pitch": "Mint NFTs to prove original fabric print designs’ authorship and exclusivity.",
+      "pitch": "Mint NFTs to prove original fabric print designs\u2019 authorship and exclusivity.",
       "subDiscipline": "fabric print designs",
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a fabric print designs demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$260M — fabric print design market",
-      "sam": "$70M — freelance textile print designers",
-      "som": "$4M — NFT-based print design exclusivity verification"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a fabric print designs demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$260M \u2014 fabric print design market",
+      "sam": "$70M \u2014 freelance textile print designers",
+      "som": "$4M \u2014 NFT-based print design exclusivity verification"
     },
     {
       "id": "fashion-style-storyline-24",
@@ -1402,10 +1402,1510 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a fashion storytelling demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$350M — fashion brand storytelling tools",
-      "sam": "$90M — fashion marketers and brand storytellers",
-      "som": "$6M — NFT adoption in narrative ownership for fashion"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a fashion storytelling demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$350M \u2014 fashion brand storytelling tools",
+      "sam": "$90M \u2014 fashion marketers and brand storytellers",
+      "som": "$6M \u2014 NFT adoption in narrative ownership for fashion"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-000-textile-pattern-licensing-auction-lane",
+      "theme": "fashion",
+      "title": "Textile-Pattern Licensing \u2014 auction lane",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: sourcing agent. Vertical: textile-pattern licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-001-match-sample-run-commissions-via-escrow-",
+      "theme": "fashion",
+      "title": "Match sample-run commissions via escrow agent",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: escrow agent. Vertical: sample-run commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-002-second-hand-fashion-resale-aggregate-lan",
+      "theme": "fashion",
+      "title": "Second-Hand Fashion Resale \u2014 aggregate lane",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: arbitrator agent. Vertical: second-hand fashion resale. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-003-recommender-agent-for-stylist-bookings",
+      "theme": "fashion",
+      "title": "Recommender Agent for stylist bookings",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: recommender agent. Vertical: stylist bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-004-negotiate-runway-clip-licensing",
+      "theme": "fashion",
+      "title": "Negotiate \u00b7 runway-clip licensing",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: buyer agent. Vertical: runway-clip licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-005-negotiate-costume-rental-agreements-via-",
+      "theme": "fashion",
+      "title": "Negotiate costume-rental agreements via arbitrator agent",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: arbitrator agent. Vertical: costume-rental agreements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-006-escrow-capsule-drop-pre-orders-via-buyer",
+      "theme": "fashion",
+      "title": "Escrow capsule-drop pre-orders via buyer agent",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: buyer agent. Vertical: capsule-drop pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-007-rebalance-made-to-measure-bookings",
+      "theme": "fashion",
+      "title": "Rebalance \u00b7 made-to-measure bookings",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: seller agent. Vertical: made-to-measure bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-008-arbitrator-agent-for-supply-chain-proven",
+      "theme": "fashion",
+      "title": "Arbitrator Agent for supply-chain provenance",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: arbitrator agent. Vertical: supply-chain provenance. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-009-agentic-auction-designer-collab-splits",
+      "theme": "fashion",
+      "title": "Agentic auction: designer-collab splits",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: buyer agent. Vertical: designer-collab splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-010-escrow-textile-pattern-licensing-via-buy",
+      "theme": "fashion",
+      "title": "Escrow textile-pattern licensing via buyer agent",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: buyer agent. Vertical: textile-pattern licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-011-broker-sample-run-commissions",
+      "theme": "fashion",
+      "title": "Broker \u00b7 sample-run commissions",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: sourcing agent. Vertical: sample-run commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-012-escrow-second-hand-fashion-resale",
+      "theme": "fashion",
+      "title": "Escrow \u00b7 second-hand fashion resale",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: pricing agent. Vertical: second-hand fashion resale. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-013-agentic-match-stylist-bookings",
+      "theme": "fashion",
+      "title": "Agentic match: stylist bookings",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: translator agent. Vertical: stylist bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-014-auction-runway-clip-licensing",
+      "theme": "fashion",
+      "title": "Auction \u00b7 runway-clip licensing",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: recommender agent. Vertical: runway-clip licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-015-agentic-broker-costume-rental-agreements",
+      "theme": "fashion",
+      "title": "Agentic broker: costume-rental agreements",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: sourcing agent. Vertical: costume-rental agreements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-016-agentic-broker-capsule-drop-pre-orders",
+      "theme": "fashion",
+      "title": "Agentic broker: capsule-drop pre-orders",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: sourcing agent. Vertical: capsule-drop pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-017-agentic-broker-made-to-measure-bookings",
+      "theme": "fashion",
+      "title": "Agentic broker: made-to-measure bookings",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: sourcing agent. Vertical: made-to-measure bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-018-agentic-negotiate-supply-chain-provenanc",
+      "theme": "fashion",
+      "title": "Agentic negotiate: supply-chain provenance",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: escrow agent. Vertical: supply-chain provenance. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-019-broker-designer-collab-splits",
+      "theme": "fashion",
+      "title": "Broker \u00b7 designer-collab splits",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: recommender agent. Vertical: designer-collab splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-020-translator-agent-for-textile-pattern-lic",
+      "theme": "fashion",
+      "title": "Translator Agent for textile-pattern licensing",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: translator agent. Vertical: textile-pattern licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-021-sample-run-commissions-underwrite-lane",
+      "theme": "fashion",
+      "title": "Sample-Run Commissions \u2014 underwrite lane",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: seller agent. Vertical: sample-run commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-022-aggregate-second-hand-fashion-resale",
+      "theme": "fashion",
+      "title": "Aggregate \u00b7 second-hand fashion resale",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: translator agent. Vertical: second-hand fashion resale. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-023-split-stylist-bookings",
+      "theme": "fashion",
+      "title": "Split \u00b7 stylist bookings",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: arbitrator agent. Vertical: stylist bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-024-rebalance-runway-clip-licensing",
+      "theme": "fashion",
+      "title": "Rebalance \u00b7 runway-clip licensing",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: arbitrator agent. Vertical: runway-clip licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-025-agentic-delegate-costume-rental-agreemen",
+      "theme": "fashion",
+      "title": "Agentic delegate: costume-rental agreements",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: pricing agent. Vertical: costume-rental agreements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-026-recommender-agent-for-capsule-drop-pre-o",
+      "theme": "fashion",
+      "title": "Recommender Agent for capsule-drop pre-orders",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: recommender agent. Vertical: capsule-drop pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-027-translator-agent-for-made-to-measure-boo",
+      "theme": "fashion",
+      "title": "Translator Agent for made-to-measure bookings",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: translator agent. Vertical: made-to-measure bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-028-buyer-agent-for-supply-chain-provenance",
+      "theme": "fashion",
+      "title": "Buyer Agent for supply-chain provenance",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: buyer agent. Vertical: supply-chain provenance. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-029-agentic-aggregate-designer-collab-splits",
+      "theme": "fashion",
+      "title": "Agentic aggregate: designer-collab splits",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: escrow agent. Vertical: designer-collab splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-030-escrow-textile-pattern-licensing",
+      "theme": "fashion",
+      "title": "Escrow \u00b7 textile-pattern licensing",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: translator agent. Vertical: textile-pattern licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-031-broker-sample-run-commissions-via-transl",
+      "theme": "fashion",
+      "title": "Broker sample-run commissions via translator agent",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: translator agent. Vertical: sample-run commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-032-sourcing-agent-for-second-hand-fashion-r",
+      "theme": "fashion",
+      "title": "Sourcing Agent for second-hand fashion resale",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: sourcing agent. Vertical: second-hand fashion resale. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-033-stylist-bookings-negotiate-lane",
+      "theme": "fashion",
+      "title": "Stylist Bookings \u2014 negotiate lane",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: seller agent. Vertical: stylist bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-034-runway-clip-licensing-negotiate-lane",
+      "theme": "fashion",
+      "title": "Runway-Clip Licensing \u2014 negotiate lane",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: curator agent. Vertical: runway-clip licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-035-negotiate-costume-rental-agreements-via-",
+      "theme": "fashion",
+      "title": "Negotiate costume-rental agreements via aggregator agent",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: aggregator agent. Vertical: costume-rental agreements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-036-capsule-drop-pre-orders-split-lane",
+      "theme": "fashion",
+      "title": "Capsule-Drop Pre-Orders \u2014 split lane",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: arbitrator agent. Vertical: capsule-drop pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-037-recommender-agent-for-made-to-measure-bo",
+      "theme": "fashion",
+      "title": "Recommender Agent for made-to-measure bookings",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: recommender agent. Vertical: made-to-measure bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-038-supply-chain-provenance-match-lane",
+      "theme": "fashion",
+      "title": "Supply-Chain Provenance \u2014 match lane",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: seller agent. Vertical: supply-chain provenance. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-039-rebalance-designer-collab-splits-via-esc",
+      "theme": "fashion",
+      "title": "Rebalance designer-collab splits via escrow agent",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: escrow agent. Vertical: designer-collab splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-040-agentic-auction-textile-pattern-licensin",
+      "theme": "fashion",
+      "title": "Agentic auction: textile-pattern licensing",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: curator agent. Vertical: textile-pattern licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-041-negotiate-sample-run-commissions-via-tra",
+      "theme": "fashion",
+      "title": "Negotiate sample-run commissions via translator agent",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: translator agent. Vertical: sample-run commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-042-seller-agent-for-second-hand-fashion-res",
+      "theme": "fashion",
+      "title": "Seller Agent for second-hand fashion resale",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: seller agent. Vertical: second-hand fashion resale. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-043-agentic-split-stylist-bookings",
+      "theme": "fashion",
+      "title": "Agentic split: stylist bookings",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: seller agent. Vertical: stylist bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-044-aggregate-runway-clip-licensing",
+      "theme": "fashion",
+      "title": "Aggregate \u00b7 runway-clip licensing",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: curator agent. Vertical: runway-clip licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-045-match-costume-rental-agreements-via-sell",
+      "theme": "fashion",
+      "title": "Match costume-rental agreements via seller agent",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: seller agent. Vertical: costume-rental agreements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-046-curator-agent-for-capsule-drop-pre-order",
+      "theme": "fashion",
+      "title": "Curator Agent for capsule-drop pre-orders",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: curator agent. Vertical: capsule-drop pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-047-agentic-underwrite-made-to-measure-booki",
+      "theme": "fashion",
+      "title": "Agentic underwrite: made-to-measure bookings",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: recommender agent. Vertical: made-to-measure bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-048-match-supply-chain-provenance",
+      "theme": "fashion",
+      "title": "Match \u00b7 supply-chain provenance",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: recommender agent. Vertical: supply-chain provenance. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-a2a-ap2-049-designer-collab-splits-escrow-lane",
+      "theme": "fashion",
+      "title": "Designer-Collab Splits \u2014 escrow lane",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: buyer agent. Vertical: designer-collab splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "fashion-agentic-ucp-000-affiliate-for-textile-pattern-licensing",
+      "theme": "fashion",
+      "title": "Affiliate for textile-pattern licensing",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: affiliate. Vertical: textile-pattern licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-001-creator-dao-for-sample-run-commissions",
+      "theme": "fashion",
+      "title": "Creator Dao for sample-run commissions",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: creator DAO. Vertical: sample-run commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-002-bulk-order-second-hand-fashion-resale",
+      "theme": "fashion",
+      "title": "Bulk Order \u00b7 second-hand fashion resale",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: merchant. Vertical: second-hand fashion resale. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-003-agentic-self-test-stylist-bookings",
+      "theme": "fashion",
+      "title": "Agentic self-test: stylist bookings",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: affiliate. Vertical: stylist bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-004-discovery-runway-clip-licensing",
+      "theme": "fashion",
+      "title": "Discovery \u00b7 runway-clip licensing",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: artist co-operative. Vertical: runway-clip licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-005-bulk-order-costume-rental-agreements",
+      "theme": "fashion",
+      "title": "Bulk Order \u00b7 costume-rental agreements",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: co-op member. Vertical: costume-rental agreements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-006-capsule-drop-pre-orders-zk-checkout-lane",
+      "theme": "fashion",
+      "title": "Capsule-Drop Pre-Orders \u2014 zk checkout lane",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: buyer. Vertical: capsule-drop pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-007-made-to-measure-bookings-bulk-order-lane",
+      "theme": "fashion",
+      "title": "Made-To-Measure Bookings \u2014 bulk order lane",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: artist co-operative. Vertical: made-to-measure bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-008-creator-dao-for-supply-chain-provenance",
+      "theme": "fashion",
+      "title": "Creator Dao for supply-chain provenance",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: creator DAO. Vertical: supply-chain provenance. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-009-zk-checkout-designer-collab-splits-via-m",
+      "theme": "fashion",
+      "title": "ZK Checkout designer-collab splits via merchant",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: merchant. Vertical: designer-collab splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-010-bulk-order-textile-pattern-licensing-via",
+      "theme": "fashion",
+      "title": "Bulk Order textile-pattern licensing via co-op member",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: co-op member. Vertical: textile-pattern licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-011-sample-run-commissions-self-test-lane",
+      "theme": "fashion",
+      "title": "Sample-Run Commissions \u2014 self-test lane",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: gig-worker collective. Vertical: sample-run commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-012-agentic-discovery-second-hand-fashion-re",
+      "theme": "fashion",
+      "title": "Agentic discovery: second-hand fashion resale",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: artist co-operative. Vertical: second-hand fashion resale. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-013-agentic-bulk-order-stylist-bookings",
+      "theme": "fashion",
+      "title": "Agentic bulk order: stylist bookings",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: merchant. Vertical: stylist bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-014-refund-runway-clip-licensing",
+      "theme": "fashion",
+      "title": "Refund \u00b7 runway-clip licensing",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: affiliate. Vertical: runway-clip licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-015-costume-rental-agreements-signed-receipt",
+      "theme": "fashion",
+      "title": "Costume-Rental Agreements \u2014 signed receipt lane",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: gig-worker collective. Vertical: costume-rental agreements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-016-agentic-discovery-capsule-drop-pre-order",
+      "theme": "fashion",
+      "title": "Agentic discovery: capsule-drop pre-orders",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: artist co-operative. Vertical: capsule-drop pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-017-signed-receipt-made-to-measure-bookings",
+      "theme": "fashion",
+      "title": "Signed Receipt \u00b7 made-to-measure bookings",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: merchant. Vertical: made-to-measure bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-018-bulk-order-supply-chain-provenance-via-c",
+      "theme": "fashion",
+      "title": "Bulk Order supply-chain provenance via creator DAO",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: creator DAO. Vertical: supply-chain provenance. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-019-co-op-member-for-designer-collab-splits",
+      "theme": "fashion",
+      "title": "Co-Op Member for designer-collab splits",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: co-op member. Vertical: designer-collab splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-020-refund-textile-pattern-licensing",
+      "theme": "fashion",
+      "title": "Refund \u00b7 textile-pattern licensing",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: artist co-operative. Vertical: textile-pattern licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-021-bulk-order-sample-run-commissions-via-co",
+      "theme": "fashion",
+      "title": "Bulk Order sample-run commissions via co-op member",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: co-op member. Vertical: sample-run commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-022-creator-dao-for-second-hand-fashion-resa",
+      "theme": "fashion",
+      "title": "Creator Dao for second-hand fashion resale",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: creator DAO. Vertical: second-hand fashion resale. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-023-refund-stylist-bookings-via-artist-co-op",
+      "theme": "fashion",
+      "title": "Refund stylist bookings via artist co-operative",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: artist co-operative. Vertical: stylist bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-ucp-024-runway-clip-licensing-signed-receipt-lan",
+      "theme": "fashion",
+      "title": "Runway-Clip Licensing \u2014 signed receipt lane",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: creator DAO. Vertical: runway-clip licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "fashion-agentic-x402-000-textile-pattern-licensing-tiered-lane",
+      "theme": "fashion",
+      "title": "Textile-Pattern Licensing \u2014 tiered lane",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: on-demand transcription API. Vertical: textile-pattern licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-001-translator-microservice-for-sample-run-c",
+      "theme": "fashion",
+      "title": "Translator Microservice for sample-run commissions",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: translator microservice. Vertical: sample-run commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-002-second-hand-fashion-resale-refund-lane",
+      "theme": "fashion",
+      "title": "Second-Hand Fashion Resale \u2014 refund lane",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: moderator LLM. Vertical: second-hand fashion resale. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-003-stylist-bookings-streaming-lane",
+      "theme": "fashion",
+      "title": "Stylist Bookings \u2014 streaming lane",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: code-audit LLM route. Vertical: stylist bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-004-agentic-refund-runway-clip-licensing",
+      "theme": "fashion",
+      "title": "Agentic refund: runway-clip licensing",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: on-demand transcription API. Vertical: runway-clip licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-005-paywall-costume-rental-agreements-via-se",
+      "theme": "fashion",
+      "title": "Paywall costume-rental agreements via search-tool webhook",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: search-tool webhook. Vertical: costume-rental agreements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-006-paywall-capsule-drop-pre-orders",
+      "theme": "fashion",
+      "title": "Paywall \u00b7 capsule-drop pre-orders",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: private analytics endpoint. Vertical: capsule-drop pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-007-made-to-measure-bookings-prepaid-lane",
+      "theme": "fashion",
+      "title": "Made-To-Measure Bookings \u2014 prepaid lane",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: moderator LLM. Vertical: made-to-measure bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-008-refund-supply-chain-provenance",
+      "theme": "fashion",
+      "title": "Refund \u00b7 supply-chain provenance",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: search-tool webhook. Vertical: supply-chain provenance. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-009-designer-collab-splits-refund-lane",
+      "theme": "fashion",
+      "title": "Designer-Collab Splits \u2014 refund lane",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: private analytics endpoint. Vertical: designer-collab splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-010-tiered-textile-pattern-licensing-via-emb",
+      "theme": "fashion",
+      "title": "Tiered textile-pattern licensing via embedding-search endpoint",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: embedding-search endpoint. Vertical: textile-pattern licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-011-metered-api-sample-run-commissions-via-c",
+      "theme": "fashion",
+      "title": "Metered API sample-run commissions via code-audit LLM route",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: code-audit LLM route. Vertical: sample-run commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-012-refund-second-hand-fashion-resale-via-pr",
+      "theme": "fashion",
+      "title": "Refund second-hand fashion resale via premium content feed",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: premium content feed. Vertical: second-hand fashion resale. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-013-stylist-bookings-metered-api-lane",
+      "theme": "fashion",
+      "title": "Stylist Bookings \u2014 metered api lane",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: AI-model API. Vertical: stylist bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-014-streaming-runway-clip-licensing-via-on-d",
+      "theme": "fashion",
+      "title": "Streaming runway-clip licensing via on-demand transcription API",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: on-demand transcription API. Vertical: runway-clip licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-015-premium-content-feed-for-costume-rental-",
+      "theme": "fashion",
+      "title": "Premium Content Feed for costume-rental agreements",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: premium content feed. Vertical: costume-rental agreements. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-016-capsule-drop-pre-orders-tiered-lane",
+      "theme": "fashion",
+      "title": "Capsule-Drop Pre-Orders \u2014 tiered lane",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: on-demand transcription API. Vertical: capsule-drop pre-orders. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-017-made-to-measure-bookings-refund-lane",
+      "theme": "fashion",
+      "title": "Made-To-Measure Bookings \u2014 refund lane",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: translator microservice. Vertical: made-to-measure bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-018-prepaid-supply-chain-provenance",
+      "theme": "fashion",
+      "title": "Prepaid \u00b7 supply-chain provenance",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: translator microservice. Vertical: supply-chain provenance. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-019-prepaid-designer-collab-splits",
+      "theme": "fashion",
+      "title": "Prepaid \u00b7 designer-collab splits",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: code-audit LLM route. Vertical: designer-collab splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-020-refund-textile-pattern-licensing-via-mod",
+      "theme": "fashion",
+      "title": "Refund textile-pattern licensing via moderator LLM",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: moderator LLM. Vertical: textile-pattern licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-021-prepaid-sample-run-commissions-via-moder",
+      "theme": "fashion",
+      "title": "Prepaid sample-run commissions via moderator LLM",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: moderator LLM. Vertical: sample-run commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-022-second-hand-fashion-resale-paywall-lane",
+      "theme": "fashion",
+      "title": "Second-Hand Fashion Resale \u2014 paywall lane",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: private analytics endpoint. Vertical: second-hand fashion resale. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-023-moderator-llm-for-stylist-bookings",
+      "theme": "fashion",
+      "title": "Moderator Llm for stylist bookings",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: moderator LLM. Vertical: stylist bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "fashion-agentic-x402-024-paywall-runway-clip-licensing",
+      "theme": "fashion",
+      "title": "Paywall \u00b7 runway-clip licensing",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: code-audit LLM route. Vertical: runway-clip licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
     }
   ]
 }

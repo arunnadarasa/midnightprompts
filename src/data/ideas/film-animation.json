@@ -2,7 +2,7 @@
   "theme": {
     "slug": "film-animation",
     "name": "Filmmaking & Animation",
-    "emoji": "🎬",
+    "emoji": "\ud83c\udfac",
     "audience": "filmmakers, animators, motion designers, storyboard artists",
     "market_anchor": "the animation industry (~$400B incl. film/TV) with >500K working animators"
   },
@@ -17,9 +17,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a frame provenance demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation and filmmaking industry",
-      "sam": "$3B — digital asset provenance solutions for animation",
-      "som": "$50M — blockchain-based IP verification tools for animators"
+      "tam": "$400B \u2014 global animation and filmmaking industry",
+      "sam": "$3B \u2014 digital asset provenance solutions for animation",
+      "som": "$50M \u2014 blockchain-based IP verification tools for animators"
     },
     {
       "id": "film-animation-scriptmint-1",
@@ -31,9 +31,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a script rights tracking demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global filmmaking and script market",
-      "sam": "$1.2B — digital rights management software",
-      "som": "$20M — blockchain DRM for filmmakers"
+      "tam": "$400B \u2014 global filmmaking and script market",
+      "sam": "$1.2B \u2014 digital rights management software",
+      "som": "$20M \u2014 blockchain DRM for filmmakers"
     },
     {
       "id": "film-animation-animstake-voting-2",
@@ -45,9 +45,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a crowd animation funding demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation funding market",
-      "sam": "$500M — crowdfunding platforms for creative projects",
-      "som": "$10M — onchain voting tools for animators"
+      "tam": "$400B \u2014 global animation funding market",
+      "sam": "$500M \u2014 crowdfunding platforms for creative projects",
+      "som": "$10M \u2014 onchain voting tools for animators"
     },
     {
       "id": "film-animation-motionnft-vault-3",
@@ -59,9 +59,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a motion asset NFTs demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation assets market",
-      "sam": "$2B — NFT marketplace for digital creatives",
-      "som": "$30M — NFT licensing for motion designers"
+      "tam": "$400B \u2014 global animation assets market",
+      "sam": "$2B \u2014 NFT marketplace for digital creatives",
+      "som": "$30M \u2014 NFT licensing for motion designers"
     },
     {
       "id": "film-animation-storyboardchain-4",
@@ -73,9 +73,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a storyboard authenticity demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global pre-production market",
-      "sam": "$750M — digital storyboard software",
-      "som": "$15M — blockchain-based storyboard verification"
+      "tam": "$400B \u2014 global pre-production market",
+      "sam": "$750M \u2014 digital storyboard software",
+      "som": "$15M \u2014 blockchain-based storyboard verification"
     },
     {
       "id": "film-animation-licenselock-5",
@@ -87,9 +87,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a license management demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation licensing industry",
-      "sam": "$1.5B — digital rights and licenses software",
-      "som": "$25M — onchain license management for creatives"
+      "tam": "$400B \u2014 global animation licensing industry",
+      "sam": "$1.5B \u2014 digital rights and licenses software",
+      "som": "$25M \u2014 onchain license management for creatives"
     },
     {
       "id": "film-animation-animcred-score-6",
@@ -101,9 +101,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a creator reputation demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global creative labor market",
-      "sam": "$600M — reputation and credential platforms",
-      "som": "$12M — blockchain reputation systems for animators"
+      "tam": "$400B \u2014 global creative labor market",
+      "sam": "$600M \u2014 reputation and credential platforms",
+      "som": "$12M \u2014 blockchain reputation systems for animators"
     },
     {
       "id": "film-animation-sceneswap-dex-7",
@@ -115,9 +115,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a asset exchange demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation asset market",
-      "sam": "$1.8B — digital asset marketplaces",
-      "som": "$28M — onchain asset trading platforms"
+      "tam": "$400B \u2014 global animation asset market",
+      "sam": "$1.8B \u2014 digital asset marketplaces",
+      "som": "$28M \u2014 onchain asset trading platforms"
     },
     {
       "id": "film-animation-animguild-dao-8",
@@ -129,9 +129,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a community governance demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation industry",
-      "sam": "$300M — creative DAOs and communities",
-      "som": "$7M — blockchain governance tools for animators"
+      "tam": "$400B \u2014 global animation industry",
+      "sam": "$300M \u2014 creative DAOs and communities",
+      "som": "$7M \u2014 blockchain governance tools for animators"
     },
     {
       "id": "film-animation-renderstake-9",
@@ -143,9 +143,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a distributed rendering demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation rendering market",
-      "sam": "$900M — cloud rendering services",
-      "som": "$18M — blockchain-based rendering networks"
+      "tam": "$400B \u2014 global animation rendering market",
+      "sam": "$900M \u2014 cloud rendering services",
+      "som": "$18M \u2014 blockchain-based rendering networks"
     },
     {
       "id": "film-animation-animproof-timestamp-10",
@@ -157,9 +157,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a work timestamping demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation IP market",
-      "sam": "$2B — IP protection services",
-      "som": "$35M — blockchain timestamping for creators"
+      "tam": "$400B \u2014 global animation IP market",
+      "sam": "$2B \u2014 IP protection services",
+      "som": "$35M \u2014 blockchain timestamping for creators"
     },
     {
       "id": "film-animation-voicechain-sync-11",
@@ -171,9 +171,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a voice sync verification demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — animation and dubbing industry",
-      "sam": "$400M — audio-video synchronization tools",
-      "som": "$8M — blockchain verification for voice sync"
+      "tam": "$400B \u2014 animation and dubbing industry",
+      "sam": "$400M \u2014 audio-video synchronization tools",
+      "som": "$8M \u2014 blockchain verification for voice sync"
     },
     {
       "id": "film-animation-animtip-jar-12",
@@ -185,9 +185,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a micro-donations demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation audience economy",
-      "sam": "$700M — digital creator monetization",
-      "som": "$9M — onchain tipping apps for filmmakers"
+      "tam": "$400B \u2014 global animation audience economy",
+      "sam": "$700M \u2014 digital creator monetization",
+      "som": "$9M \u2014 onchain tipping apps for filmmakers"
     },
     {
       "id": "film-animation-charanim-nft-13",
@@ -199,9 +199,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a character IP NFT demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — animation character licensing market",
-      "sam": "$1B — IP-based NFT collectibles",
-      "som": "$22M — character NFT licensing platforms"
+      "tam": "$400B \u2014 animation character licensing market",
+      "sam": "$1B \u2014 IP-based NFT collectibles",
+      "som": "$22M \u2014 character NFT licensing platforms"
     },
     {
       "id": "film-animation-animlesson-chain-14",
@@ -213,9 +213,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a educational credentialing demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation education market",
-      "sam": "$300M — e-learning credential platforms",
-      "som": "$6M — onchain certification for animators"
+      "tam": "$400B \u2014 global animation education market",
+      "sam": "$300M \u2014 e-learning credential platforms",
+      "som": "$6M \u2014 onchain certification for animators"
     },
     {
       "id": "film-animation-animcontest-dao-15",
@@ -227,9 +227,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a competition governance demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation contest market",
-      "sam": "$200M — digital creative contests",
-      "som": "$5M — blockchain contest platforms for filmmakers"
+      "tam": "$400B \u2014 global animation contest market",
+      "sam": "$200M \u2014 digital creative contests",
+      "som": "$5M \u2014 blockchain contest platforms for filmmakers"
     },
     {
       "id": "film-animation-animscript-oracles-16",
@@ -241,9 +241,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a script verification demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — scriptwriting and animation industry",
-      "sam": "$500M — blockchain oracle services",
-      "som": "$8M — script integrity verification tools"
+      "tam": "$400B \u2014 scriptwriting and animation industry",
+      "sam": "$500M \u2014 blockchain oracle services",
+      "som": "$8M \u2014 script integrity verification tools"
     },
     {
       "id": "film-animation-animroyalties-17",
@@ -255,9 +255,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a royalty distribution demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation revenue stream",
-      "sam": "$1B — royalty management software",
-      "som": "$20M — blockchain royalty automation for creatives"
+      "tam": "$400B \u2014 global animation revenue stream",
+      "sam": "$1B \u2014 royalty management software",
+      "som": "$20M \u2014 blockchain royalty automation for creatives"
     },
     {
       "id": "film-animation-scenemood-chain-18",
@@ -269,9 +269,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a color grading proof demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — post-production market",
-      "sam": "$600M — color grading software",
-      "som": "$12M — blockchain-based creative proofing"
+      "tam": "$400B \u2014 post-production market",
+      "sam": "$600M \u2014 color grading software",
+      "som": "$12M \u2014 blockchain-based creative proofing"
     },
     {
       "id": "film-animation-animbadge-awards-19",
@@ -283,9 +283,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a industry recognition demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — animation professional development",
-      "sam": "$250M — credentialing and awards market",
-      "som": "$4M — blockchain awards platforms"
+      "tam": "$400B \u2014 animation professional development",
+      "sam": "$250M \u2014 credentialing and awards market",
+      "som": "$4M \u2014 blockchain awards platforms"
     },
     {
       "id": "film-animation-animframe-trade-20",
@@ -297,9 +297,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a frame licensing demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — animation licensing market",
-      "sam": "$800M — digital asset licensing",
-      "som": "$15M — blockchain frame licensing tools"
+      "tam": "$400B \u2014 animation licensing market",
+      "sam": "$800M \u2014 digital asset licensing",
+      "som": "$15M \u2014 blockchain frame licensing tools"
     },
     {
       "id": "film-animation-animpitch-fund-21",
@@ -311,9 +311,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a project pitching demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — animation financing market",
-      "sam": "$400M — crowdfunding for films and animation",
-      "som": "$7M — blockchain pitching platforms"
+      "tam": "$400B \u2014 animation financing market",
+      "sam": "$400M \u2014 crowdfunding for films and animation",
+      "som": "$7M \u2014 blockchain pitching platforms"
     },
     {
       "id": "film-animation-licenchain-tracker-22",
@@ -325,9 +325,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a license audit trail demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — global animation licensing market",
-      "sam": "$1.3B — license tracking solutions",
-      "som": "$18M — blockchain license audit software"
+      "tam": "$400B \u2014 global animation licensing market",
+      "sam": "$1.3B \u2014 license tracking solutions",
+      "som": "$18M \u2014 blockchain license audit software"
     },
     {
       "id": "film-animation-animmetamanager-23",
@@ -339,9 +339,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a metadata control demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — animation asset management",
-      "sam": "$700M — metadata platforms for creatives",
-      "som": "$10M — onchain metadata tools"
+      "tam": "$400B \u2014 animation asset management",
+      "sam": "$700M \u2014 metadata platforms for creatives",
+      "som": "$10M \u2014 onchain metadata tools"
     },
     {
       "id": "film-animation-animcollab-chain-24",
@@ -353,9 +353,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a collaborative workflows demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400B — animation production market",
-      "sam": "$900M — project management software for creatives",
-      "som": "$14M — blockchain collaboration tools for animators"
+      "tam": "$400B \u2014 animation production market",
+      "sam": "$900M \u2014 project management software for creatives",
+      "som": "$14M \u2014 blockchain collaboration tools for animators"
     },
     {
       "id": "film-animation-frameforge-archive-0",
@@ -367,9 +367,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a storyboard management demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — global digital storyboard software market",
-      "sam": "$300M — cloud-based collaborative previsualization tools",
-      "som": "$50M — indie and freelance filmmaker storyboard users"
+      "tam": "$1B \u2014 global digital storyboard software market",
+      "sam": "$300M \u2014 cloud-based collaborative previsualization tools",
+      "som": "$50M \u2014 indie and freelance filmmaker storyboard users"
     },
     {
       "id": "film-animation-texturevault-1",
@@ -381,9 +381,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a material asset library demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$800M — global 3D asset marketplaces",
-      "sam": "$200M — texture libraries for animation studios",
-      "som": "$40M — freelance artist asset sharing platforms"
+      "tam": "$800M \u2014 global 3D asset marketplaces",
+      "sam": "$200M \u2014 texture libraries for animation studios",
+      "som": "$40M \u2014 freelance artist asset sharing platforms"
     },
     {
       "id": "film-animation-animscene-sync-2",
@@ -395,9 +395,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a scene version control demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$600M — animation production management tools",
-      "sam": "$150M — scene version tracking software",
-      "som": "$25M — small studio adoption of cloud scene versioning"
+      "tam": "$600M \u2014 animation production management tools",
+      "sam": "$150M \u2014 scene version tracking software",
+      "som": "$25M \u2014 small studio adoption of cloud scene versioning"
     },
     {
       "id": "film-animation-moodboardchain-3",
@@ -409,9 +409,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a color study curation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$400M — digital moodboard platforms",
-      "sam": "$100M — collaborative color grading tools",
-      "som": "$15M — freelance colorists and animators using moodboards"
+      "tam": "$400M \u2014 digital moodboard platforms",
+      "sam": "$100M \u2014 collaborative color grading tools",
+      "som": "$15M \u2014 freelance colorists and animators using moodboards"
     },
     {
       "id": "film-animation-rigpin-sync-4",
@@ -423,9 +423,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a character rig sharing demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$350M — rigging software market",
-      "sam": "$90M — rig sharing platforms",
-      "som": "$10M — mid-sized animation studios"
+      "tam": "$350M \u2014 rigging software market",
+      "sam": "$90M \u2014 rig sharing platforms",
+      "som": "$10M \u2014 mid-sized animation studios"
     },
     {
       "id": "film-animation-loop-provenance-5",
@@ -437,9 +437,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a animation loop libraries demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$250M — animation cycle marketplaces",
-      "sam": "$70M — loop library subscriptions",
-      "som": "$8M — indie animator userbase"
+      "tam": "$250M \u2014 animation cycle marketplaces",
+      "sam": "$70M \u2014 loop library subscriptions",
+      "som": "$8M \u2014 indie animator userbase"
     },
     {
       "id": "film-animation-scenemetastore-6",
@@ -451,9 +451,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a metadata tagging demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$500M — animation project management",
-      "sam": "$130M — metadata enrichment tools",
-      "som": "$20M — small studio metadata adoption"
+      "tam": "$500M \u2014 animation project management",
+      "sam": "$130M \u2014 metadata enrichment tools",
+      "som": "$20M \u2014 small studio metadata adoption"
     },
     {
       "id": "film-animation-storyboardchain-7",
@@ -465,9 +465,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a distributed storyboarding demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — collaborative storytelling tools",
-      "sam": "$250M — episodic production platforms",
-      "som": "$35M — indie episodic creators"
+      "tam": "$1B \u2014 collaborative storytelling tools",
+      "sam": "$250M \u2014 episodic production platforms",
+      "som": "$35M \u2014 indie episodic creators"
     },
     {
       "id": "film-animation-animprops-ledger-8",
@@ -479,9 +479,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a prop asset management demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$300M — 3D prop asset market",
-      "sam": "$75M — prop sharing platforms",
-      "som": "$12M — niche animation studios"
+      "tam": "$300M \u2014 3D prop asset market",
+      "sam": "$75M \u2014 prop sharing platforms",
+      "som": "$12M \u2014 niche animation studios"
     },
     {
       "id": "film-animation-palettechain-9",
@@ -493,9 +493,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a color palette sharing demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$200M — digital color tools",
-      "sam": "$50M — shared palette libraries",
-      "som": "$7M — motion designers and colorists"
+      "tam": "$200M \u2014 digital color tools",
+      "sam": "$50M \u2014 shared palette libraries",
+      "som": "$7M \u2014 motion designers and colorists"
     },
     {
       "id": "film-animation-animdata-store-10",
@@ -507,9 +507,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a animation data archival demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$700M — animation production software",
-      "sam": "$180M — data archiving solutions",
-      "som": "$30M — studio archival users"
+      "tam": "$700M \u2014 animation production software",
+      "sam": "$180M \u2014 data archiving solutions",
+      "som": "$30M \u2014 studio archival users"
     },
     {
       "id": "film-animation-motionmap-vault-11",
@@ -521,9 +521,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a motion capture storage demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.2B — motion capture market",
-      "sam": "$400M — cloud mocap storage services",
-      "som": "$60M — indie studios and artists"
+      "tam": "$1.2B \u2014 motion capture market",
+      "sam": "$400M \u2014 cloud mocap storage services",
+      "som": "$60M \u2014 indie studios and artists"
     },
     {
       "id": "film-animation-animvoice-ledger-12",
@@ -535,9 +535,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a voice asset management demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$900M — audio asset management",
-      "sam": "$250M — voiceover libraries",
-      "som": "$35M — freelance voice artists"
+      "tam": "$900M \u2014 audio asset management",
+      "sam": "$250M \u2014 voiceover libraries",
+      "som": "$35M \u2014 freelance voice artists"
     },
     {
       "id": "film-animation-vfxchain-sync-13",
@@ -549,9 +549,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a effects asset curation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — VFX production tools",
-      "sam": "$300M — VFX asset marketplaces",
-      "som": "$45M — mid-size studios"
+      "tam": "$1B \u2014 VFX production tools",
+      "sam": "$300M \u2014 VFX asset marketplaces",
+      "som": "$45M \u2014 mid-size studios"
     },
     {
       "id": "film-animation-animscript-pin-14",
@@ -563,9 +563,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a script integration demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$800M — scriptwriting software",
-      "sam": "$200M — collaborative script platforms",
-      "som": "$30M — indie creators"
+      "tam": "$800M \u2014 scriptwriting software",
+      "sam": "$200M \u2014 collaborative script platforms",
+      "som": "$30M \u2014 indie creators"
     },
     {
       "id": "film-animation-animcollab-hub-15",
@@ -577,9 +577,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a team project syncing demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.5B — collaborative animation tools",
-      "sam": "$400M — project management software",
-      "som": "$50M — small to mid-size studios"
+      "tam": "$1.5B \u2014 collaborative animation tools",
+      "sam": "$400M \u2014 project management software",
+      "som": "$50M \u2014 small to mid-size studios"
     },
     {
       "id": "film-animation-storyboard-replay-16",
@@ -591,9 +591,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a animatic playback demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$600M — animatic production tools",
-      "sam": "$150M — animatic asset libraries",
-      "som": "$20M — freelance animators"
+      "tam": "$600M \u2014 animatic production tools",
+      "sam": "$150M \u2014 animatic asset libraries",
+      "som": "$20M \u2014 freelance animators"
     },
     {
       "id": "film-animation-modelpin-archive-17",
@@ -605,9 +605,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a 3D model documentation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — 3D modeling platforms",
-      "sam": "$300M — model asset documentation",
-      "som": "$40M — mid-tier studios"
+      "tam": "$1B \u2014 3D modeling platforms",
+      "sam": "$300M \u2014 model asset documentation",
+      "som": "$40M \u2014 mid-tier studios"
     },
     {
       "id": "film-animation-animfont-locker-18",
@@ -619,9 +619,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a typography asset vault demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$400M — font licensing market",
-      "sam": "$100M — typographic asset portals",
-      "som": "$15M — motion designers"
+      "tam": "$400M \u2014 font licensing market",
+      "sam": "$100M \u2014 typographic asset portals",
+      "som": "$15M \u2014 motion designers"
     },
     {
       "id": "film-animation-lipsync-ledger-19",
@@ -633,9 +633,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a lipsync data storage demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$500M — animation lipsync tools",
-      "sam": "$120M — lipsync data marketplaces",
-      "som": "$18M — indie and freelance animators"
+      "tam": "$500M \u2014 animation lipsync tools",
+      "sam": "$120M \u2014 lipsync data marketplaces",
+      "som": "$18M \u2014 indie and freelance animators"
     },
     {
       "id": "film-animation-animshot-library-20",
@@ -647,9 +647,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a shot list archival demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$700M — shot management software",
-      "sam": "$200M — production planning tools",
-      "som": "$25M — small production houses"
+      "tam": "$700M \u2014 shot management software",
+      "sam": "$200M \u2014 production planning tools",
+      "som": "$25M \u2014 small production houses"
     },
     {
       "id": "film-animation-propchain-share-21",
@@ -661,9 +661,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a prop design collaboration demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$350M — 3D prop design software",
-      "sam": "$90M — prop collaboration platforms",
-      "som": "$12M — niche animation teams"
+      "tam": "$350M \u2014 3D prop design software",
+      "sam": "$90M \u2014 prop collaboration platforms",
+      "som": "$12M \u2014 niche animation teams"
     },
     {
       "id": "film-animation-storyboard-captioner-22",
@@ -675,9 +675,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a dialogue annotation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$450M — subtitling and captioning tools",
-      "sam": "$110M — script annotation platforms",
-      "som": "$14M — indie animation projects"
+      "tam": "$450M \u2014 subtitling and captioning tools",
+      "sam": "$110M \u2014 script annotation platforms",
+      "som": "$14M \u2014 indie animation projects"
     },
     {
       "id": "film-animation-animframe-swap-23",
@@ -689,9 +689,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a frame trading marketplace demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$300M — frame asset marketplaces",
-      "sam": "$80M — independent frame trading",
-      "som": "$10M — freelance animator users"
+      "tam": "$300M \u2014 frame asset marketplaces",
+      "sam": "$80M \u2014 independent frame trading",
+      "som": "$10M \u2014 freelance animator users"
     },
     {
       "id": "film-animation-storyboard-sync-0",
@@ -703,9 +703,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a storyboard collaboration demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$3B — global digital storyboard tools market",
-      "sam": "$500M — SaaS for collaborative pre-production software",
-      "som": "$10M — early adopters in blockchain-enabled creative tools"
+      "tam": "$3B \u2014 global digital storyboard tools market",
+      "sam": "$500M \u2014 SaaS for collaborative pre-production software",
+      "som": "$10M \u2014 early adopters in blockchain-enabled creative tools"
     },
     {
       "id": "film-animation-animatic-drops-1",
@@ -717,9 +717,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a animatic distribution demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$2B — animation production content distribution",
-      "sam": "$400M — animatic and pitch distribution platforms",
-      "som": "$8M — blockchain-integrated animation marketing"
+      "tam": "$2B \u2014 animation production content distribution",
+      "sam": "$400M \u2014 animatic and pitch distribution platforms",
+      "som": "$8M \u2014 blockchain-integrated animation marketing"
     },
     {
       "id": "film-animation-motion-share-2",
@@ -731,9 +731,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a motion design sharing demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.5B — motion graphics software market",
-      "sam": "$300M — social collaboration tools for motion designers",
-      "som": "$6M — early market for blockchain-enabled feedback"
+      "tam": "$1.5B \u2014 motion graphics software market",
+      "sam": "$300M \u2014 social collaboration tools for motion designers",
+      "som": "$6M \u2014 early market for blockchain-enabled feedback"
     },
     {
       "id": "film-animation-frame-rights-3",
@@ -745,9 +745,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a frame licensing demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$5B — digital rights management in animation",
-      "sam": "$1B — licensing platforms for creative assets",
-      "som": "$20M — niche blockchain licensing solutions"
+      "tam": "$5B \u2014 digital rights management in animation",
+      "sam": "$1B \u2014 licensing platforms for creative assets",
+      "som": "$20M \u2014 niche blockchain licensing solutions"
     },
     {
       "id": "film-animation-voice-sync-4",
@@ -759,9 +759,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a voice-over integration demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1B — voice-over and dubbing services",
-      "sam": "$200M — collaboration tools for voice artists",
-      "som": "$4M — blockchain for audio collaboration"
+      "tam": "$1B \u2014 voice-over and dubbing services",
+      "sam": "$200M \u2014 collaboration tools for voice artists",
+      "som": "$4M \u2014 blockchain for audio collaboration"
     },
     {
       "id": "film-animation-anim-rights-vault-5",
@@ -773,9 +773,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a animation IP protection demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$10B — global IP rights management",
-      "sam": "$2B — animation and media IP tools",
-      "som": "$40M — blockchain IP management early adopters"
+      "tam": "$10B \u2014 global IP rights management",
+      "sam": "$2B \u2014 animation and media IP tools",
+      "som": "$40M \u2014 blockchain IP management early adopters"
     },
     {
       "id": "film-animation-render-economy-6",
@@ -787,9 +787,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a distributed rendering demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$4B — cloud-based rendering services",
-      "sam": "$700M — freelance rendering marketplaces",
-      "som": "$15M — blockchain-powered payment solutions"
+      "tam": "$4B \u2014 cloud-based rendering services",
+      "sam": "$700M \u2014 freelance rendering marketplaces",
+      "som": "$15M \u2014 blockchain-powered payment solutions"
     },
     {
       "id": "film-animation-loop-provenance-7",
@@ -801,9 +801,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a loop animation tracking demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1B — animation asset provenance market",
-      "sam": "$200M — digital asset authentication",
-      "som": "$5M — blockchain provenance niche"
+      "tam": "$1B \u2014 animation asset provenance market",
+      "sam": "$200M \u2014 digital asset authentication",
+      "som": "$5M \u2014 blockchain provenance niche"
     },
     {
       "id": "film-animation-pitchchain-8",
@@ -815,9 +815,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a film pitch verification demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$500M — animation pitch and funding platforms",
-      "sam": "$100M — creative project submission tools",
-      "som": "$3M — blockchain pitch verification"
+      "tam": "$500M \u2014 animation pitch and funding platforms",
+      "sam": "$100M \u2014 creative project submission tools",
+      "som": "$3M \u2014 blockchain pitch verification"
     },
     {
       "id": "film-animation-anim-badge-9",
@@ -829,23 +829,23 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a skill certification demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$2B — online creative education market",
-      "sam": "$400M — certification platforms for animation",
-      "som": "$7M — blockchain credentialing early adopters"
+      "tam": "$2B \u2014 online creative education market",
+      "sam": "$400M \u2014 certification platforms for animation",
+      "som": "$7M \u2014 blockchain credentialing early adopters"
     },
     {
       "id": "film-animation-framechain-10",
       "theme": "film-animation",
       "title": "FrameChain",
-      "pitch": "Record and verify each frame’s creative contribution onchain via seamless social wallet transactions.",
+      "pitch": "Record and verify each frame\u2019s creative contribution onchain via seamless social wallet transactions.",
       "subDiscipline": "frame-by-frame tracking",
       "quantumHook": "Lace wallet + tDUST",
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a frame-by-frame tracking demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$3B — animation production tracking",
-      "sam": "$600M — collaborative asset management",
-      "som": "$12M — blockchain creative tracking"
+      "tam": "$3B \u2014 animation production tracking",
+      "sam": "$600M \u2014 collaborative asset management",
+      "som": "$12M \u2014 blockchain creative tracking"
     },
     {
       "id": "film-animation-animateswap-11",
@@ -857,9 +857,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a asset trading demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$6B — digital asset marketplaces",
-      "sam": "$1.2B — animation asset trading platforms",
-      "som": "$25M — blockchain asset exchange early market"
+      "tam": "$6B \u2014 digital asset marketplaces",
+      "sam": "$1.2B \u2014 animation asset trading platforms",
+      "som": "$25M \u2014 blockchain asset exchange early market"
     },
     {
       "id": "film-animation-loopsync-12",
@@ -871,9 +871,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a looped animation synchronization demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.2B — loop animation market globally",
-      "sam": "$250M — collaborative animation tools",
-      "som": "$5M — blockchain-enabled collaboration"
+      "tam": "$1.2B \u2014 loop animation market globally",
+      "sam": "$250M \u2014 collaborative animation tools",
+      "som": "$5M \u2014 blockchain-enabled collaboration"
     },
     {
       "id": "film-animation-designtoken-flow-13",
@@ -885,9 +885,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a tokenized asset flow demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$7B — tokenized digital media market",
-      "sam": "$1.5B — animation asset tokenization services",
-      "som": "$30M — blockchain token flow startups"
+      "tam": "$7B \u2014 tokenized digital media market",
+      "sam": "$1.5B \u2014 animation asset tokenization services",
+      "som": "$30M \u2014 blockchain token flow startups"
     },
     {
       "id": "film-animation-animcrew-chain-14",
@@ -899,9 +899,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a team collaboration demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$4B — animation studio management tools",
-      "sam": "$800M — team collaboration SaaS",
-      "som": "$18M — blockchain payout solutions"
+      "tam": "$4B \u2014 animation studio management tools",
+      "sam": "$800M \u2014 team collaboration SaaS",
+      "som": "$18M \u2014 blockchain payout solutions"
     },
     {
       "id": "film-animation-styleswap-15",
@@ -913,9 +913,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a animation style exchange demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1B — animation style marketplaces",
-      "sam": "$200M — digital creative asset exchange",
-      "som": "$4M — blockchain style sharing early market"
+      "tam": "$1B \u2014 animation style marketplaces",
+      "sam": "$200M \u2014 digital creative asset exchange",
+      "som": "$4M \u2014 blockchain style sharing early market"
     },
     {
       "id": "film-animation-voicechain-cast-16",
@@ -927,9 +927,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a cast rights tracking demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.5B — voice actor management",
-      "sam": "$350M — rights tracking for creatives",
-      "som": "$7M — blockchain voice rights platforms"
+      "tam": "$1.5B \u2014 voice actor management",
+      "sam": "$350M \u2014 rights tracking for creatives",
+      "som": "$7M \u2014 blockchain voice rights platforms"
     },
     {
       "id": "film-animation-animchain-feedback-17",
@@ -941,9 +941,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a creative feedback loops demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$800M — animation review & feedback tools",
-      "sam": "$150M — collaborative creative feedback",
-      "som": "$3M — blockchain feedback innovators"
+      "tam": "$800M \u2014 animation review & feedback tools",
+      "sam": "$150M \u2014 collaborative creative feedback",
+      "som": "$3M \u2014 blockchain feedback innovators"
     },
     {
       "id": "film-animation-metascene-ledger-18",
@@ -955,9 +955,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a scene metadata tracking demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$2B — animation production metadata",
-      "sam": "$400M — digital asset metadata services",
-      "som": "$9M — blockchain metadata tools"
+      "tam": "$2B \u2014 animation production metadata",
+      "sam": "$400M \u2014 digital asset metadata services",
+      "som": "$9M \u2014 blockchain metadata tools"
     },
     {
       "id": "film-animation-clipchain-share-19",
@@ -969,9 +969,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a clip sharing demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$3.5B — digital clip distribution market",
-      "sam": "$700M — animation clip sharing platforms",
-      "som": "$14M — blockchain clip sharing startups"
+      "tam": "$3.5B \u2014 digital clip distribution market",
+      "sam": "$700M \u2014 animation clip sharing platforms",
+      "som": "$14M \u2014 blockchain clip sharing startups"
     },
     {
       "id": "film-animation-animfeedback-nft-20",
@@ -983,9 +983,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a feedback monetization demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1B — NFT marketplace for creatives",
-      "sam": "$250M — monetized feedback platforms",
-      "som": "$5M — blockchain NFT monetization"
+      "tam": "$1B \u2014 NFT marketplace for creatives",
+      "sam": "$250M \u2014 monetized feedback platforms",
+      "som": "$5M \u2014 blockchain NFT monetization"
     },
     {
       "id": "film-animation-storyboard-mint-21",
@@ -997,9 +997,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a storyboard NFT minting demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$2B — digital storyboard assets",
-      "sam": "$400M — NFT minting tools",
-      "som": "$8M — blockchain storyboard markets"
+      "tam": "$2B \u2014 digital storyboard assets",
+      "sam": "$400M \u2014 NFT minting tools",
+      "som": "$8M \u2014 blockchain storyboard markets"
     },
     {
       "id": "film-animation-anim-guild-22",
@@ -1011,9 +1011,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a community governance demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$500M — animator professional networks",
-      "sam": "$100M — creative guild SaaS",
-      "som": "$2M — blockchain community governance"
+      "tam": "$500M \u2014 animator professional networks",
+      "sam": "$100M \u2014 creative guild SaaS",
+      "som": "$2M \u2014 blockchain community governance"
     },
     {
       "id": "film-animation-motiontrack-rewards-23",
@@ -1025,9 +1025,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a performance incentives demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.5B — creative incentives market",
-      "sam": "$300M — freelancer reward platforms",
-      "som": "$6M — blockchain incentive tech"
+      "tam": "$1.5B \u2014 creative incentives market",
+      "sam": "$300M \u2014 freelancer reward platforms",
+      "som": "$6M \u2014 blockchain incentive tech"
     },
     {
       "id": "film-animation-clipchain-rights-24",
@@ -1039,9 +1039,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a clip rights management demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$4B — digital clip rights market",
-      "sam": "$800M — rights management SaaS",
-      "som": "$18M — blockchain clip rights"
+      "tam": "$4B \u2014 digital clip rights market",
+      "sam": "$800M \u2014 rights management SaaS",
+      "som": "$18M \u2014 blockchain clip rights"
     },
     {
       "id": "film-animation-framechain-legacy-0",
@@ -1052,10 +1052,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a storyboard provenance demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — global animation and filmmaking industry",
-      "sam": "$50B — professional storyboard and previsualization tools",
-      "som": "$500M — digital storyboard NFT platforms for creators"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a storyboard provenance demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 global animation and filmmaking industry",
+      "sam": "$50B \u2014 professional storyboard and previsualization tools",
+      "som": "$500M \u2014 digital storyboard NFT platforms for creators"
     },
     {
       "id": "film-animation-animmint-vault-1",
@@ -1066,10 +1066,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a character animation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — animation market including film and TV",
-      "sam": "$30B — character animation software and assets",
-      "som": "$200M — certified NFT animation asset marketplaces"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a character animation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 animation market including film and TV",
+      "sam": "$30B \u2014 character animation software and assets",
+      "som": "$200M \u2014 certified NFT animation asset marketplaces"
     },
     {
       "id": "film-animation-scenestamp-auth-2",
@@ -1080,10 +1080,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a scene composition demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — global visual storytelling industries",
-      "sam": "$20B — scene design and virtual production solutions",
-      "som": "$150M — NFT-based scene licensing services"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a scene composition demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 global visual storytelling industries",
+      "sam": "$20B \u2014 scene design and virtual production solutions",
+      "som": "$150M \u2014 NFT-based scene licensing services"
     },
     {
       "id": "film-animation-motionmark-ledger-3",
@@ -1094,10 +1094,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a motion design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — global animation and motion design sector",
-      "sam": "$25B — motion graphics software market",
-      "som": "$100M — NFT catalogs of motion design assets"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a motion design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 global animation and motion design sector",
+      "sam": "$25B \u2014 motion graphics software market",
+      "som": "$100M \u2014 NFT catalogs of motion design assets"
     },
     {
       "id": "film-animation-colorproof-chain-4",
@@ -1108,10 +1108,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a color grading demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — film and animation post-production",
-      "sam": "$10B — color grading software and plugins",
-      "som": "$50M — color grading NFT profile marketplaces"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a color grading demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 film and animation post-production",
+      "sam": "$10B \u2014 color grading software and plugins",
+      "som": "$50M \u2014 color grading NFT profile marketplaces"
     },
     {
       "id": "film-animation-vfx-provenance-5",
@@ -1122,10 +1122,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a visual effects demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — film and animation visual effects industry",
-      "sam": "$40B — VFX software and assets market",
-      "som": "$120M — VFX NFT asset exchanges"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a visual effects demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 film and animation visual effects industry",
+      "sam": "$40B \u2014 VFX software and assets market",
+      "som": "$120M \u2014 VFX NFT asset exchanges"
     },
     {
       "id": "film-animation-propmint-archive-6",
@@ -1136,10 +1136,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a 3D prop modeling demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — animation and filmmaking asset creation",
-      "sam": "$15B — 3D modeling tools and marketplaces",
-      "som": "$80M — NFT 3D asset trading platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a 3D prop modeling demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 animation and filmmaking asset creation",
+      "sam": "$15B \u2014 3D modeling tools and marketplaces",
+      "som": "$80M \u2014 NFT 3D asset trading platforms"
     },
     {
       "id": "film-animation-voicetrack-token-7",
@@ -1150,10 +1150,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a voiceover recording demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — animation and film audio sectors",
-      "sam": "$8B — voiceover and audio production software",
-      "som": "$30M — NFT verified voice asset exchanges"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a voiceover recording demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 animation and film audio sectors",
+      "sam": "$8B \u2014 voiceover and audio production software",
+      "som": "$30M \u2014 NFT verified voice asset exchanges"
     },
     {
       "id": "film-animation-animsound-ledger-8",
@@ -1164,10 +1164,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a sound design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — film and animation sound design markets",
-      "sam": "$10B — sound design asset marketplaces",
-      "som": "$40M — NFT based sound design licensing portals"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a sound design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 film and animation sound design markets",
+      "sam": "$10B \u2014 sound design asset marketplaces",
+      "som": "$40M \u2014 NFT based sound design licensing portals"
     },
     {
       "id": "film-animation-storyboard-chain-9",
@@ -1178,10 +1178,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a visual storytelling demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — global story-driven media creation",
-      "sam": "$10B — digital storyboard and pre-visualization tools",
-      "som": "$25M — NFT storyboard ownership platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a visual storytelling demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 global story-driven media creation",
+      "sam": "$10B \u2014 digital storyboard and pre-visualization tools",
+      "som": "$25M \u2014 NFT storyboard ownership platforms"
     },
     {
       "id": "film-animation-animloop-provenance-10",
@@ -1192,10 +1192,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a animation loops demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — animation and motion design industry",
-      "sam": "$5B — looped animation marketplace",
-      "som": "$20M — NFT verified animation loop repositories"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a animation loops demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 animation and motion design industry",
+      "sam": "$5B \u2014 looped animation marketplace",
+      "som": "$20M \u2014 NFT verified animation loop repositories"
     },
     {
       "id": "film-animation-cuttoken-verify-11",
@@ -1206,10 +1206,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a film editing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — global film post-production",
-      "sam": "$30B — video editing software and services",
-      "som": "$150M — NFT authenticated film editing platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a film editing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 global film post-production",
+      "sam": "$30B \u2014 video editing software and services",
+      "som": "$150M \u2014 NFT authenticated film editing platforms"
     },
     {
       "id": "film-animation-storyboardchain-script-12",
@@ -1220,10 +1220,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a script development demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — film and animation scriptwriting markets",
-      "sam": "$8B — digital scriptwriting platforms",
-      "som": "$15M — NFT script ownership services"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a script development demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 film and animation scriptwriting markets",
+      "sam": "$8B \u2014 digital scriptwriting platforms",
+      "som": "$15M \u2014 NFT script ownership services"
     },
     {
       "id": "film-animation-moodboard-token-13",
@@ -1234,10 +1234,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a concept art demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — animation and filmmaking concept development",
-      "sam": "$12B — concept art and design tools",
-      "som": "$10M — NFT moodboard ownership platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a concept art demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 animation and filmmaking concept development",
+      "sam": "$12B \u2014 concept art and design tools",
+      "som": "$10M \u2014 NFT moodboard ownership platforms"
     },
     {
       "id": "film-animation-animframe-tag-14",
@@ -1248,10 +1248,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a frame-by-frame animation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — traditional and digital animation",
-      "sam": "$20B — frame-by-frame animation software",
-      "som": "$25M — NFT keyframe asset marketplaces"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a frame-by-frame animation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 traditional and digital animation",
+      "sam": "$20B \u2014 frame-by-frame animation software",
+      "som": "$25M \u2014 NFT keyframe asset marketplaces"
     },
     {
       "id": "film-animation-storyboardclip-token-15",
@@ -1262,10 +1262,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a animatic creation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — animation production pipelines",
-      "sam": "$5B — animatic and previsualization tools",
-      "som": "$8M — NFT animatic ownership services"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a animatic creation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 animation production pipelines",
+      "sam": "$5B \u2014 animatic and previsualization tools",
+      "som": "$8M \u2014 NFT animatic ownership services"
     },
     {
       "id": "film-animation-charactermint-badge-16",
@@ -1276,10 +1276,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a character design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — character-driven media and animation",
-      "sam": "$25B — character art and design software",
-      "som": "$50M — NFT character design trading platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a character design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 character-driven media and animation",
+      "sam": "$25B \u2014 character art and design software",
+      "som": "$50M \u2014 NFT character design trading platforms"
     },
     {
       "id": "film-animation-animvoice-ledger-17",
@@ -1290,10 +1290,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a voice acting demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — animated film and TV voice talent markets",
-      "sam": "$12B — voice recording and distribution tools",
-      "som": "$25M — NFT voice performance registries"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a voice acting demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 animated film and TV voice talent markets",
+      "sam": "$12B \u2014 voice recording and distribution tools",
+      "som": "$25M \u2014 NFT voice performance registries"
     },
     {
       "id": "film-animation-propchain-license-18",
@@ -1304,10 +1304,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a virtual prop rental demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — filmmaking virtual asset rentals",
-      "sam": "$5B — 3D prop rental services",
-      "som": "$10M — NFT powered prop rental platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a virtual prop rental demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 filmmaking virtual asset rentals",
+      "sam": "$5B \u2014 3D prop rental services",
+      "som": "$10M \u2014 NFT powered prop rental platforms"
     },
     {
       "id": "film-animation-animtext-token-19",
@@ -1318,10 +1318,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a animated typography demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — animated content and design market",
-      "sam": "$3B — animated text software tools",
-      "som": "$8M — NFT animated typography platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a animated typography demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 animated content and design market",
+      "sam": "$3B \u2014 animated text software tools",
+      "som": "$8M \u2014 NFT animated typography platforms"
     },
     {
       "id": "film-animation-sceneaccess-pass-20",
@@ -1332,10 +1332,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a virtual production demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — virtual production and filmmaking tech",
-      "sam": "$15B — virtual production platforms",
-      "som": "$5M — NFT gated scene access solutions"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a virtual production demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 virtual production and filmmaking tech",
+      "sam": "$15B \u2014 virtual production platforms",
+      "som": "$5M \u2014 NFT gated scene access solutions"
     },
     {
       "id": "film-animation-animsketch-token-21",
@@ -1346,10 +1346,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a animator sketchbooks demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — animation industry creative workflows",
-      "sam": "$7B — digital sketch and drawing tools",
-      "som": "$3M — NFT animator process archives"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a animator sketchbooks demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 animation industry creative workflows",
+      "sam": "$7B \u2014 digital sketch and drawing tools",
+      "som": "$3M \u2014 NFT animator process archives"
     },
     {
       "id": "film-animation-storyboardsync-ledger-22",
@@ -1360,10 +1360,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a collaborative storyboarding demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — collaborative animation and film creation",
-      "sam": "$5B — digital collaboration storyboard tools",
-      "som": "$12M — NFT based collaborative ownership platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a collaborative storyboarding demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 collaborative animation and film creation",
+      "sam": "$5B \u2014 digital collaboration storyboard tools",
+      "som": "$12M \u2014 NFT based collaborative ownership platforms"
     },
     {
       "id": "film-animation-animpitch-token-23",
@@ -1374,10 +1374,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a project pitching demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — animation project financing and pitching",
-      "sam": "$4B — digital pitch and proposal tools",
-      "som": "$2M — NFT verified animation pitches"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a project pitching demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 animation project financing and pitching",
+      "sam": "$4B \u2014 digital pitch and proposal tools",
+      "som": "$2M \u2014 NFT verified animation pitches"
     },
     {
       "id": "film-animation-animcycle-provenance-24",
@@ -1388,10 +1388,1510 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a loop cycles demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$400B — animation lifecycle asset market",
-      "sam": "$3B — animation loop asset marketplaces",
-      "som": "$7M — NFT loop animation ownership platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a loop cycles demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$400B \u2014 animation lifecycle asset market",
+      "sam": "$3B \u2014 animation loop asset marketplaces",
+      "som": "$7M \u2014 NFT loop animation ownership platforms"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-000-indie-film-distribution-negotiate-lane",
+      "theme": "film-animation",
+      "title": "Indie-Film Distribution \u2014 negotiate lane",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: sourcing agent. Vertical: indie-film distribution. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-001-agentic-match-storyboard-commissions",
+      "theme": "film-animation",
+      "title": "Agentic match: storyboard commissions",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: pricing agent. Vertical: storyboard commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-002-agentic-broker-animator-for-hire-gigs",
+      "theme": "film-animation",
+      "title": "Agentic broker: animator-for-hire gigs",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: recommender agent. Vertical: animator-for-hire gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-003-negotiate-asset-pack-licensing",
+      "theme": "film-animation",
+      "title": "Negotiate \u00b7 asset-pack licensing",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: arbitrator agent. Vertical: asset-pack licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-004-escrow-voice-over-bookings-via-curator-a",
+      "theme": "film-animation",
+      "title": "Escrow voice-over bookings via curator agent",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: curator agent. Vertical: voice-over bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-005-rigging-service-gigs-escrow-lane",
+      "theme": "film-animation",
+      "title": "Rigging-Service Gigs \u2014 escrow lane",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: escrow agent. Vertical: rigging-service gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-006-festival-submission-escrows-rebalance-la",
+      "theme": "film-animation",
+      "title": "Festival-Submission Escrows \u2014 rebalance lane",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: aggregator agent. Vertical: festival-submission escrows. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-007-split-co-production-splits",
+      "theme": "film-animation",
+      "title": "Split \u00b7 co-production splits",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: aggregator agent. Vertical: co-production splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-008-post-production-bookings-delegate-lane",
+      "theme": "film-animation",
+      "title": "Post-Production Bookings \u2014 delegate lane",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: buyer agent. Vertical: post-production bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-009-agentic-underwrite-screener-paywalls",
+      "theme": "film-animation",
+      "title": "Agentic underwrite: screener paywalls",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: recommender agent. Vertical: screener paywalls. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-010-match-indie-film-distribution",
+      "theme": "film-animation",
+      "title": "Match \u00b7 indie-film distribution",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: translator agent. Vertical: indie-film distribution. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-011-auction-storyboard-commissions-via-escro",
+      "theme": "film-animation",
+      "title": "Auction storyboard commissions via escrow agent",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: escrow agent. Vertical: storyboard commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-012-recommender-agent-for-animator-for-hire-",
+      "theme": "film-animation",
+      "title": "Recommender Agent for animator-for-hire gigs",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: recommender agent. Vertical: animator-for-hire gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-013-agentic-negotiate-asset-pack-licensing",
+      "theme": "film-animation",
+      "title": "Agentic negotiate: asset-pack licensing",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: escrow agent. Vertical: asset-pack licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-014-voice-over-bookings-underwrite-lane",
+      "theme": "film-animation",
+      "title": "Voice-Over Bookings \u2014 underwrite lane",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: buyer agent. Vertical: voice-over bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-015-agentic-aggregate-rigging-service-gigs",
+      "theme": "film-animation",
+      "title": "Agentic aggregate: rigging-service gigs",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: buyer agent. Vertical: rigging-service gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-016-curator-agent-for-festival-submission-es",
+      "theme": "film-animation",
+      "title": "Curator Agent for festival-submission escrows",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: curator agent. Vertical: festival-submission escrows. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-017-aggregate-co-production-splits",
+      "theme": "film-animation",
+      "title": "Aggregate \u00b7 co-production splits",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: pricing agent. Vertical: co-production splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-018-agentic-aggregate-post-production-bookin",
+      "theme": "film-animation",
+      "title": "Agentic aggregate: post-production bookings",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: buyer agent. Vertical: post-production bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-019-agentic-broker-screener-paywalls",
+      "theme": "film-animation",
+      "title": "Agentic broker: screener paywalls",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: recommender agent. Vertical: screener paywalls. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-020-sourcing-agent-for-indie-film-distributi",
+      "theme": "film-animation",
+      "title": "Sourcing Agent for indie-film distribution",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: sourcing agent. Vertical: indie-film distribution. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-021-storyboard-commissions-split-lane",
+      "theme": "film-animation",
+      "title": "Storyboard Commissions \u2014 split lane",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: escrow agent. Vertical: storyboard commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-022-escrow-agent-for-animator-for-hire-gigs",
+      "theme": "film-animation",
+      "title": "Escrow Agent for animator-for-hire gigs",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: escrow agent. Vertical: animator-for-hire gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-023-asset-pack-licensing-aggregate-lane",
+      "theme": "film-animation",
+      "title": "Asset-Pack Licensing \u2014 aggregate lane",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: sourcing agent. Vertical: asset-pack licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-024-agentic-broker-voice-over-bookings",
+      "theme": "film-animation",
+      "title": "Agentic broker: voice-over bookings",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: sourcing agent. Vertical: voice-over bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-025-match-rigging-service-gigs-via-recommend",
+      "theme": "film-animation",
+      "title": "Match rigging-service gigs via recommender agent",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: recommender agent. Vertical: rigging-service gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-026-sourcing-agent-for-festival-submission-e",
+      "theme": "film-animation",
+      "title": "Sourcing Agent for festival-submission escrows",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: sourcing agent. Vertical: festival-submission escrows. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-027-negotiate-co-production-splits-via-curat",
+      "theme": "film-animation",
+      "title": "Negotiate co-production splits via curator agent",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: curator agent. Vertical: co-production splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-028-agentic-underwrite-post-production-booki",
+      "theme": "film-animation",
+      "title": "Agentic underwrite: post-production bookings",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: sourcing agent. Vertical: post-production bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-029-delegate-screener-paywalls",
+      "theme": "film-animation",
+      "title": "Delegate \u00b7 screener paywalls",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: pricing agent. Vertical: screener paywalls. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-030-indie-film-distribution-escrow-lane",
+      "theme": "film-animation",
+      "title": "Indie-Film Distribution \u2014 escrow lane",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: arbitrator agent. Vertical: indie-film distribution. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-031-negotiate-storyboard-commissions",
+      "theme": "film-animation",
+      "title": "Negotiate \u00b7 storyboard commissions",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: aggregator agent. Vertical: storyboard commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-032-underwrite-animator-for-hire-gigs",
+      "theme": "film-animation",
+      "title": "Underwrite \u00b7 animator-for-hire gigs",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: aggregator agent. Vertical: animator-for-hire gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-033-asset-pack-licensing-auction-lane",
+      "theme": "film-animation",
+      "title": "Asset-Pack Licensing \u2014 auction lane",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: arbitrator agent. Vertical: asset-pack licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-034-agentic-aggregate-voice-over-bookings",
+      "theme": "film-animation",
+      "title": "Agentic aggregate: voice-over bookings",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: arbitrator agent. Vertical: voice-over bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-035-agentic-delegate-rigging-service-gigs",
+      "theme": "film-animation",
+      "title": "Agentic delegate: rigging-service gigs",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: aggregator agent. Vertical: rigging-service gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-036-rebalance-festival-submission-escrows",
+      "theme": "film-animation",
+      "title": "Rebalance \u00b7 festival-submission escrows",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: seller agent. Vertical: festival-submission escrows. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-037-agentic-rebalance-co-production-splits",
+      "theme": "film-animation",
+      "title": "Agentic rebalance: co-production splits",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: buyer agent. Vertical: co-production splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-038-negotiate-post-production-bookings-via-a",
+      "theme": "film-animation",
+      "title": "Negotiate post-production bookings via arbitrator agent",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: arbitrator agent. Vertical: post-production bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-039-agentic-rebalance-screener-paywalls",
+      "theme": "film-animation",
+      "title": "Agentic rebalance: screener paywalls",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: pricing agent. Vertical: screener paywalls. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-040-aggregate-indie-film-distribution-via-re",
+      "theme": "film-animation",
+      "title": "Aggregate indie-film distribution via recommender agent",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: recommender agent. Vertical: indie-film distribution. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-041-storyboard-commissions-aggregate-lane",
+      "theme": "film-animation",
+      "title": "Storyboard Commissions \u2014 aggregate lane",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: buyer agent. Vertical: storyboard commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-042-agentic-escrow-animator-for-hire-gigs",
+      "theme": "film-animation",
+      "title": "Agentic escrow: animator-for-hire gigs",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: curator agent. Vertical: animator-for-hire gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-043-asset-pack-licensing-broker-lane",
+      "theme": "film-animation",
+      "title": "Asset-Pack Licensing \u2014 broker lane",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: seller agent. Vertical: asset-pack licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-044-buyer-agent-for-voice-over-bookings",
+      "theme": "film-animation",
+      "title": "Buyer Agent for voice-over bookings",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: buyer agent. Vertical: voice-over bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-045-negotiate-rigging-service-gigs-via-aggre",
+      "theme": "film-animation",
+      "title": "Negotiate rigging-service gigs via aggregator agent",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: aggregator agent. Vertical: rigging-service gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-046-agentic-aggregate-festival-submission-es",
+      "theme": "film-animation",
+      "title": "Agentic aggregate: festival-submission escrows",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: curator agent. Vertical: festival-submission escrows. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-047-agentic-negotiate-co-production-splits",
+      "theme": "film-animation",
+      "title": "Agentic negotiate: co-production splits",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: arbitrator agent. Vertical: co-production splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-048-delegate-post-production-bookings-via-bu",
+      "theme": "film-animation",
+      "title": "Delegate post-production bookings via buyer agent",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: buyer agent. Vertical: post-production bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-a2a-ap2-049-screener-paywalls-match-lane",
+      "theme": "film-animation",
+      "title": "Screener Paywalls \u2014 match lane",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: buyer agent. Vertical: screener paywalls. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "film-animation-agentic-ucp-000-artist-co-operative-for-indie-film-distr",
+      "theme": "film-animation",
+      "title": "Artist Co-Operative for indie-film distribution",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: artist co-operative. Vertical: indie-film distribution. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-001-storyboard-commissions-refund-lane",
+      "theme": "film-animation",
+      "title": "Storyboard Commissions \u2014 refund lane",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: gig-worker collective. Vertical: storyboard commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-002-signed-receipt-animator-for-hire-gigs",
+      "theme": "film-animation",
+      "title": "Signed Receipt \u00b7 animator-for-hire gigs",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: gig-worker collective. Vertical: animator-for-hire gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-003-zk-checkout-asset-pack-licensing",
+      "theme": "film-animation",
+      "title": "ZK Checkout \u00b7 asset-pack licensing",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: co-op member. Vertical: asset-pack licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-004-agentic-self-test-voice-over-bookings",
+      "theme": "film-animation",
+      "title": "Agentic self-test: voice-over bookings",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: creator DAO. Vertical: voice-over bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-005-discovery-rigging-service-gigs",
+      "theme": "film-animation",
+      "title": "Discovery \u00b7 rigging-service gigs",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: creator DAO. Vertical: rigging-service gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-006-artist-co-operative-for-festival-submiss",
+      "theme": "film-animation",
+      "title": "Artist Co-Operative for festival-submission escrows",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: artist co-operative. Vertical: festival-submission escrows. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-007-self-test-co-production-splits-via-whole",
+      "theme": "film-animation",
+      "title": "Self-Test co-production splits via wholesale desk",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: wholesale desk. Vertical: co-production splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-008-post-production-bookings-bulk-order-lane",
+      "theme": "film-animation",
+      "title": "Post-Production Bookings \u2014 bulk order lane",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: buyer. Vertical: post-production bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-009-agentic-bulk-order-screener-paywalls",
+      "theme": "film-animation",
+      "title": "Agentic bulk order: screener paywalls",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: wholesale desk. Vertical: screener paywalls. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-010-self-test-indie-film-distribution-via-co",
+      "theme": "film-animation",
+      "title": "Self-Test indie-film distribution via co-op member",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: co-op member. Vertical: indie-film distribution. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-011-storyboard-commissions-bulk-order-lane",
+      "theme": "film-animation",
+      "title": "Storyboard Commissions \u2014 bulk order lane",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: merchant. Vertical: storyboard commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-012-affiliate-for-animator-for-hire-gigs",
+      "theme": "film-animation",
+      "title": "Affiliate for animator-for-hire gigs",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: affiliate. Vertical: animator-for-hire gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-013-asset-pack-licensing-refund-lane",
+      "theme": "film-animation",
+      "title": "Asset-Pack Licensing \u2014 refund lane",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: artist co-operative. Vertical: asset-pack licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-014-buyer-for-voice-over-bookings",
+      "theme": "film-animation",
+      "title": "Buyer for voice-over bookings",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: buyer. Vertical: voice-over bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-015-zk-checkout-rigging-service-gigs",
+      "theme": "film-animation",
+      "title": "ZK Checkout \u00b7 rigging-service gigs",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: affiliate. Vertical: rigging-service gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-016-festival-submission-escrows-discovery-la",
+      "theme": "film-animation",
+      "title": "Festival-Submission Escrows \u2014 discovery lane",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: merchant. Vertical: festival-submission escrows. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-017-co-production-splits-discovery-lane",
+      "theme": "film-animation",
+      "title": "Co-Production Splits \u2014 discovery lane",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: wholesale desk. Vertical: co-production splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-018-self-test-post-production-bookings",
+      "theme": "film-animation",
+      "title": "Self-Test \u00b7 post-production bookings",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: merchant. Vertical: post-production bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-019-agentic-signed-receipt-screener-paywalls",
+      "theme": "film-animation",
+      "title": "Agentic signed receipt: screener paywalls",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: creator DAO. Vertical: screener paywalls. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-020-merchant-for-indie-film-distribution",
+      "theme": "film-animation",
+      "title": "Merchant for indie-film distribution",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: merchant. Vertical: indie-film distribution. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-021-storyboard-commissions-discovery-lane",
+      "theme": "film-animation",
+      "title": "Storyboard Commissions \u2014 discovery lane",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: wholesale desk. Vertical: storyboard commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-022-buyer-for-animator-for-hire-gigs",
+      "theme": "film-animation",
+      "title": "Buyer for animator-for-hire gigs",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: buyer. Vertical: animator-for-hire gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-023-agentic-discovery-asset-pack-licensing",
+      "theme": "film-animation",
+      "title": "Agentic discovery: asset-pack licensing",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: creator DAO. Vertical: asset-pack licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-ucp-024-self-test-voice-over-bookings-via-wholes",
+      "theme": "film-animation",
+      "title": "Self-Test voice-over bookings via wholesale desk",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: wholesale desk. Vertical: voice-over bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "film-animation-agentic-x402-000-agentic-prepaid-indie-film-distribution",
+      "theme": "film-animation",
+      "title": "Agentic prepaid: indie-film distribution",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: translator microservice. Vertical: indie-film distribution. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-001-storyboard-commissions-tiered-lane",
+      "theme": "film-animation",
+      "title": "Storyboard Commissions \u2014 tiered lane",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: high-resolution asset. Vertical: storyboard commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-002-animator-for-hire-gigs-metered-api-lane",
+      "theme": "film-animation",
+      "title": "Animator-For-Hire Gigs \u2014 metered api lane",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: search-tool webhook. Vertical: animator-for-hire gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-003-refund-asset-pack-licensing",
+      "theme": "film-animation",
+      "title": "Refund \u00b7 asset-pack licensing",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: premium content feed. Vertical: asset-pack licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-004-voice-over-bookings-refund-lane",
+      "theme": "film-animation",
+      "title": "Voice-Over Bookings \u2014 refund lane",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: premium content feed. Vertical: voice-over bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-005-agentic-streaming-rigging-service-gigs",
+      "theme": "film-animation",
+      "title": "Agentic streaming: rigging-service gigs",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: private analytics endpoint. Vertical: rigging-service gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-006-festival-submission-escrows-paywall-lane",
+      "theme": "film-animation",
+      "title": "Festival-Submission Escrows \u2014 paywall lane",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: AI-model API. Vertical: festival-submission escrows. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-007-search-tool-webhook-for-co-production-sp",
+      "theme": "film-animation",
+      "title": "Search-Tool Webhook for co-production splits",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: search-tool webhook. Vertical: co-production splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-008-post-production-bookings-prepaid-lane",
+      "theme": "film-animation",
+      "title": "Post-Production Bookings \u2014 prepaid lane",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: code-audit LLM route. Vertical: post-production bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-009-screener-paywalls-streaming-lane",
+      "theme": "film-animation",
+      "title": "Screener Paywalls \u2014 streaming lane",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: AI-model API. Vertical: screener paywalls. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-010-metered-api-indie-film-distribution-via-",
+      "theme": "film-animation",
+      "title": "Metered API indie-film distribution via AI-model API",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: AI-model API. Vertical: indie-film distribution. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-011-prepaid-storyboard-commissions-via-premi",
+      "theme": "film-animation",
+      "title": "Prepaid storyboard commissions via premium content feed",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: premium content feed. Vertical: storyboard commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-012-agentic-paywall-animator-for-hire-gigs",
+      "theme": "film-animation",
+      "title": "Agentic paywall: animator-for-hire gigs",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: on-demand transcription API. Vertical: animator-for-hire gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-013-asset-pack-licensing-paywall-lane",
+      "theme": "film-animation",
+      "title": "Asset-Pack Licensing \u2014 paywall lane",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: private analytics endpoint. Vertical: asset-pack licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-014-private-analytics-endpoint-for-voice-ove",
+      "theme": "film-animation",
+      "title": "Private Analytics Endpoint for voice-over bookings",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: private analytics endpoint. Vertical: voice-over bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-015-agentic-prepaid-rigging-service-gigs",
+      "theme": "film-animation",
+      "title": "Agentic prepaid: rigging-service gigs",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: on-demand transcription API. Vertical: rigging-service gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-016-refund-festival-submission-escrows-via-p",
+      "theme": "film-animation",
+      "title": "Refund festival-submission escrows via premium content feed",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: premium content feed. Vertical: festival-submission escrows. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-017-code-audit-llm-route-for-co-production-s",
+      "theme": "film-animation",
+      "title": "Code-Audit Llm Route for co-production splits",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: code-audit LLM route. Vertical: co-production splits. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-018-agentic-refund-post-production-bookings",
+      "theme": "film-animation",
+      "title": "Agentic refund: post-production bookings",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: moderator LLM. Vertical: post-production bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-019-prepaid-screener-paywalls-via-on-demand-",
+      "theme": "film-animation",
+      "title": "Prepaid screener paywalls via on-demand transcription API",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: on-demand transcription API. Vertical: screener paywalls. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-020-tiered-indie-film-distribution",
+      "theme": "film-animation",
+      "title": "Tiered \u00b7 indie-film distribution",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: premium content feed. Vertical: indie-film distribution. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-021-agentic-refund-storyboard-commissions",
+      "theme": "film-animation",
+      "title": "Agentic refund: storyboard commissions",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: AI-model API. Vertical: storyboard commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-022-tiered-animator-for-hire-gigs-via-modera",
+      "theme": "film-animation",
+      "title": "Tiered animator-for-hire gigs via moderator LLM",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: moderator LLM. Vertical: animator-for-hire gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-023-agentic-paywall-asset-pack-licensing",
+      "theme": "film-animation",
+      "title": "Agentic paywall: asset-pack licensing",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: search-tool webhook. Vertical: asset-pack licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "film-animation-agentic-x402-024-agentic-prepaid-voice-over-bookings",
+      "theme": "film-animation",
+      "title": "Agentic prepaid: voice-over bookings",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: high-resolution asset. Vertical: voice-over bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
     }
   ]
 }
