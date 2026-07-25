@@ -1,43 +1,92 @@
 #!/usr/bin/env python3
-"""Generate the three agentic theme JSON files.
+"""Generate agentic-commerce ideas keyed to each of the 10 creative themes.
 
-  agentic-a2a-ap2.json  -> 500 ideas
-  agentic-ucp.json      -> 250 ideas
-  agentic-x402.json     -> 250 ideas
+For every theme we add:
+  50 A2A/AP2 ideas
+  25 UCP ideas
+  25 x402 ideas
+= 100 agentic ideas per theme, appended to the existing 100 base ideas.
 
-Each idea gets a `protocol` field so the prompt builder can append the
+Each idea gets a `protocol` field so the prompt builder can inject the
 right on-chain block. Everything is deterministic (seeded)."""
 
-import json, os, random, re
+import json, random, re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "src" / "data" / "ideas"
-OUT.mkdir(parents=True, exist_ok=True)
 
-VERTICALS = [
-    "music streaming", "indie film distribution", "digital art licensing",
-    "podcast paywalls", "AI dataset marketplaces", "photography rights",
-    "dance choreography IP", "esports tournament payouts", "translation gigs",
-    "3D-model marketplaces", "font licensing", "typography stock",
-    "stock footage sales", "science-preprint tips", "open-source bounties",
-    "citizen-journalism payouts", "streaming split payments",
-    "creator-fan micro-tips", "AI voice-model rentals", "code-review bounties",
-    "tabletop-game asset sales", "beat-drop sample licensing",
-    "generative-art prompt sales", "recipe-book royalties",
-    "moodboard curation", "product-review reputation", "carbon-credit retirement",
-    "supply-chain provenance", "second-hand fashion resale", "vintage vinyl trade",
-    "wine-cellar provenance", "coffee-bean traceability",
-    "handmade-jewellery sales", "poetry chapbook royalties",
-    "yoga-class replay access", "meditation-audio libraries",
-    "cooking-class replays", "language-tutor bookings",
-    "science-experiment reproducibility", "peer-review reputation",
-    "citizen-science telemetry", "field-recording archives",
-    "sample-pack sales", "AI-agent hire marketplaces",
-    "on-demand data-labelling", "cross-agent negotiation",
-    "delivery-drone waypoints", "IoT-sensor readings", "smart-lock rentals",
-    "shared-workspace bookings",
-]
+# Theme-specific verticals so titles feel native to each house.
+THEME_VERTICALS = {
+    "dance": [
+        "choreography licensing", "rehearsal footage rentals",
+        "movement-notation resale", "dance-class replay access",
+        "festival ticket splits", "choreographer commissions",
+        "studio-time bookings", "dance-competition payouts",
+        "guest-instructor bookings", "movement-IP registrations",
+    ],
+    "music": [
+        "streaming split payments", "beat-drop sample licensing",
+        "sync-license negotiation", "producer commissions",
+        "session-musician bookings", "royalty splits", "stem sales",
+        "playlist placements", "concert ticket splits", "album pre-orders",
+    ],
+    "visual-art": [
+        "digital-art licensing", "gallery commissions", "print-on-demand runs",
+        "generative-art prompt sales", "commission-request auctions",
+        "collector-provenance passports", "edition drops",
+        "critique-agent hire", "residency stipends", "moodboard curation",
+    ],
+    "video": [
+        "stock-footage sales", "editor-for-hire gigs",
+        "colour-grade LUT licensing", "sync-license negotiation",
+        "creator-fan micro-tips", "shoot-day bookings",
+        "b-roll marketplace", "captioning gigs", "thumbnail commissions",
+        "streaming split payments",
+    ],
+    "photography": [
+        "photo-rights licensing", "shoot-day bookings",
+        "retouching gigs", "print sales", "editorial commissions",
+        "stock-photo sales", "wedding-album deliveries",
+        "location-scout bookings", "model-release attestations",
+        "photojournalism payouts",
+    ],
+    "writing": [
+        "ghostwriting gigs", "poetry-chapbook royalties",
+        "translation gigs", "screenplay options",
+        "developmental-edit bookings", "serialised-fiction subscriptions",
+        "newsletter split payments", "critique-agent hire",
+        "manuscript-appraisal fees", "author-collab splits",
+    ],
+    "film-animation": [
+        "indie-film distribution", "storyboard commissions",
+        "animator-for-hire gigs", "asset-pack licensing",
+        "voice-over bookings", "rigging-service gigs",
+        "festival-submission escrows", "co-production splits",
+        "post-production bookings", "screener paywalls",
+    ],
+    "games": [
+        "3D-model marketplaces", "tabletop-game asset sales",
+        "playtester bookings", "esports tournament payouts",
+        "mod licensing", "level-design commissions",
+        "voice-actor bookings", "narrative-writer gigs",
+        "asset-bundle drops", "speedrun-verification tips",
+    ],
+    "theater": [
+        "playwright commissions", "rehearsal-space bookings",
+        "director-for-hire gigs", "lighting-design commissions",
+        "cast-splits payouts", "touring-royalty splits",
+        "streaming-performance paywalls", "understudy bookings",
+        "costume-rental agreements", "script-licensing deals",
+    ],
+    "fashion": [
+        "textile-pattern licensing", "sample-run commissions",
+        "second-hand fashion resale", "stylist bookings",
+        "runway-clip licensing", "costume-rental agreements",
+        "capsule-drop pre-orders", "made-to-measure bookings",
+        "supply-chain provenance", "designer-collab splits",
+    ],
+}
 
 PERSONAS_A2A = [
     "buyer agent", "seller agent", "curator agent", "aggregator agent",
@@ -49,7 +98,7 @@ PERSONAS_UCP = [
     "artist co-operative", "gig-worker collective", "creator DAO",
 ]
 PERSONAS_X402 = [
-    "AI-model API", "premium news feed", "high-resolution asset",
+    "AI-model API", "premium content feed", "high-resolution asset",
     "private analytics endpoint", "search-tool webhook",
     "on-demand transcription API", "code-audit LLM route",
     "translator microservice", "moderator LLM", "embedding-search endpoint",
@@ -92,45 +141,50 @@ TAM_SEEDS = [
     ("$310B — cross-border settlement", "$22B — stablecoin rails", "$120M — mimic-token PoC bracket"),
 ]
 
-# ---------- helpers ----------
-def slugify(s: str) -> str:
-    s = re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
-    return re.sub(r"-+", "-", s)
+# Rotate across all four hooks so the theme-page hook chips keep filtering.
+HOOK_ROTATION = [
+    ("compact-deploy",  "Compact ZK contract",         "onchain logic"),
+    ("private-witness", "Private witness proof",       "zero-knowledge"),
+    ("lace-wallet",     "Lace wallet + tDUST",         "wallet UX"),
+    ("ipfs-content",    "IPFS content + on-chain CID", "decentralized storage"),
+]
 
-# hook mapping so the prompt block generator has something to grab.
-# We reuse existing hook ids so buildVariant doesn't blow up.
-HOOK_BY_PROTOCOL = {
-    "a2a-ap2": ("compact-deploy", "Compact ZK contract", "onchain logic"),
-    "ucp":     ("compact-deploy", "Compact ZK contract", "onchain logic"),
-    "x402":    ("compact-deploy", "Compact ZK contract", "onchain logic"),
+PROTOCOL_LABEL = {
+    "a2a-ap2": "A2A + AP2",
+    "ucp": "UCP",
+    "x402": "x402 · mUSDC",
 }
 
-def make_idea(protocol, slug_prefix, idx, action_pool, persona_pool, vertical, rng):
+def slugify(s: str) -> str:
+    s = re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
+    return re.sub(r"-+", "-", s)[:40]
+
+def make_idea(theme_slug, protocol, idx, action_pool, persona_pool, verticals, rng):
     action, why = rng.choice(action_pool)
     persona = rng.choice(persona_pool)
+    vertical = verticals[idx % len(verticals)]
     title_bank = [
-        f"{action} {vertical}",
+        f"{action} · {vertical}",
         f"Agentic {action.lower()}: {vertical}",
         f"{persona.title()} for {vertical}",
-        f"{action} · {vertical} via {persona}",
         f"{vertical.title()} — {action.lower()} lane",
+        f"{action} {vertical} via {persona}",
     ]
     title = rng.choice(title_bank)
     pitch = f"{why} Persona: {persona}. Vertical: {vertical}. Every write ends with a Midnight tx."
     tam, sam, som = rng.choice(TAM_SEEDS)
-    hook_id, hook_name, hook_tag = HOOK_BY_PROTOCOL[protocol]
-    sub = f"agentic · {protocol}"
+    hook_id, hook_name, hook_tag = HOOK_ROTATION[idx % len(HOOK_ROTATION)]
     return {
-        "id": f"{slug_prefix}-{idx:04d}-{slugify(title)[:40]}",
-        "theme": slug_prefix,
+        "id": f"{theme_slug}-agentic-{protocol}-{idx:03d}-{slugify(title)}",
+        "theme": theme_slug,
         "title": title,
         "pitch": pitch,
-        "subDiscipline": sub,
+        "subDiscipline": f"agentic · {PROTOCOL_LABEL[protocol]}",
         "quantumHook": hook_name,
         "quantumHookId": hook_id,
         "quantumTag": hook_tag,
         "quantumRationale": (
-            f"This idea uses the {protocol.upper()} protocol layer on top of a Compact contract: "
+            f"This idea uses the {PROTOCOL_LABEL[protocol]} protocol overlay on top of a Compact contract: "
             f"the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain."
         ),
         "tam": tam,
@@ -139,55 +193,45 @@ def make_idea(protocol, slug_prefix, idx, action_pool, persona_pool, vertical, r
         "protocol": protocol,
     }
 
-def build(protocol, count, slug, name, emoji, audience, market_anchor, action_pool, persona_pool):
-    rng = random.Random(f"agentic:{protocol}:v1")
-    ideas = []
-    seen = set()
-    # Cycle through verticals + personas to spread coverage.
-    for i in range(count):
-        vertical = VERTICALS[i % len(VERTICALS)]
-        idea = make_idea(protocol, slug, i, action_pool, persona_pool, vertical, rng)
-        # nudge to avoid duplicate titles
-        n = 0
-        while idea["title"] in seen and n < 5:
-            idea = make_idea(protocol, slug, i, action_pool, persona_pool, vertical, rng)
-            n += 1
-        seen.add(idea["title"])
-        ideas.append(idea)
-    payload = {
-        "theme": {
-            "slug": slug,
-            "name": name,
-            "emoji": emoji,
-            "audience": audience,
-            "market_anchor": market_anchor,
-        },
-        "ideas": ideas,
-    }
-    path = OUT / f"{slug}.json"
-    path.write_text(json.dumps(payload, indent=2))
-    print(f"wrote {path} — {len(ideas)} ideas")
+def build_theme(theme_slug):
+    theme_file = OUT / f"{theme_slug}.json"
+    data = json.loads(theme_file.read_text())
+    base_ideas = [i for i in data["ideas"] if not i.get("protocol")]
 
-build(
-    protocol="a2a-ap2", count=500,
-    slug="agentic-a2a-ap2", name="Agent Negotiation", emoji="🤝",
-    audience="agent-builders, marketplace teams",
-    market_anchor="$28B agentic-commerce SAM by 2028 (Gartner)",
-    action_pool=ACTIONS_A2A_AP2, persona_pool=PERSONAS_A2A,
-)
-build(
-    protocol="ucp", count=250,
-    slug="agentic-ucp", name="ZK Checkout (UCP)", emoji="🧾",
-    audience="merchants, creator co-ops",
-    market_anchor="RFC 9421 signed-checkout adoption in 2026",
-    action_pool=ACTIONS_UCP, persona_pool=PERSONAS_UCP,
-)
-build(
-    protocol="x402", count=250,
-    slug="agentic-x402", name="x402 · mUSDC Paywall", emoji="🪙",
-    audience="API providers, LLM route operators",
-    market_anchor="Pay-per-call API market, mimic-USDC on Midnight",
-    action_pool=ACTIONS_X402, persona_pool=PERSONAS_X402,
-)
+    verticals = THEME_VERTICALS[theme_slug]
+    rng = random.Random(f"agentic:v2:{theme_slug}")
 
-print("done")
+    new_ideas = []
+    plan = [
+        ("a2a-ap2", 50, ACTIONS_A2A_AP2, PERSONAS_A2A),
+        ("ucp",     25, ACTIONS_UCP,     PERSONAS_UCP),
+        ("x402",    25, ACTIONS_X402,    PERSONAS_X402),
+    ]
+    seen_titles = {i["title"] for i in base_ideas}
+    for protocol, count, actions, personas in plan:
+        for i in range(count):
+            idea = make_idea(theme_slug, protocol, i, actions, personas, verticals, rng)
+            tries = 0
+            while idea["title"] in seen_titles and tries < 6:
+                idea = make_idea(theme_slug, protocol, i, actions, personas, verticals, rng)
+                tries += 1
+            seen_titles.add(idea["title"])
+            new_ideas.append(idea)
+
+    data["ideas"] = base_ideas + new_ideas
+    theme_file.write_text(json.dumps(data, indent=2))
+    print(f"{theme_slug}: {len(base_ideas)} base + {len(new_ideas)} agentic = {len(data['ideas'])}")
+
+def main():
+    for slug in THEME_VERTICALS:
+        build_theme(slug)
+    # Remove the three standalone agentic theme files.
+    for stale in ("agentic-a2a-ap2.json", "agentic-ucp.json", "agentic-x402.json"):
+        p = OUT / stale
+        if p.exists():
+            p.unlink()
+            print(f"removed {stale}")
+    print("done")
+
+if __name__ == "__main__":
+    main()
