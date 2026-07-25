@@ -216,6 +216,9 @@ function Index() {
                 <Link to="/known-issues" className="text-primary hover:text-foreground transition-colors">
                   Known issues →
                 </Link>
+                <Link to="/mobile" className="text-primary hover:text-foreground transition-colors">
+                  Mobile dev →
+                </Link>
                 <a
                   href="https://midnight-skills.netlify.app"
                   target="_blank"
