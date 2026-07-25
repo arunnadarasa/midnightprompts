@@ -9,12 +9,13 @@ import { getPlainProposition } from "@/lib/plain-language";
 
 
 const VARIANT_META: Record<NetworkVariant, { label: string; caption: string; explorer: string | null }> = {
-  preview:    { label: "Preview",             caption: "Fastest to demo. Testnet resets often. Faucet: nethermind.dev preview.", explorer: "https://preview.midnightexplorer.com/" },
-  preprod:    { label: "Preprod",             caption: "Closer to mainnet parameters. Stable but occasional DUST-sync quirks.", explorer: "https://preprod.midnightexplorer.com/" },
-  undeployed: { label: "Undeployed (local)",  caption: "Run the standalone stack on your own machine. No faucet, unlimited tDUST. DevRel-advised.", explorer: null },
-  mainnet:    { label: "Mainnet ⚠️",           caption: "REAL VALUE. Buy NIGHT from an official exchange partner. Vibe-coded, no audit — bragging-right proof-of-deploy only.", explorer: "https://midnightexplorer.com/" },
+  preview:          { label: "Preview",             caption: "Fastest to demo. Testnet resets often. Faucet: nethermind.dev preview.", explorer: "https://preview.midnightexplorer.com/" },
+  preprod:          { label: "Preprod",             caption: "Closer to mainnet parameters. Stable but occasional DUST-sync quirks.", explorer: "https://preprod.midnightexplorer.com/" },
+  undeployed:       { label: "Undeployed (local)",  caption: "Run the standalone stack on your own machine. No faucet, unlimited tDUST. DevRel-advised.", explorer: null },
+  "undeployed-fly": { label: "Undeployed (Fly.io)", caption: "Publish the Undeployed stack as a hosted 4-app Fly topology. Any visitor with Lace can try it — no Docker on their machine. ~$15–25/mo.", explorer: null },
+  mainnet:          { label: "Mainnet ⚠️",           caption: "REAL VALUE. Buy NIGHT from an official exchange partner. Vibe-coded, no audit — bragging-right proof-of-deploy only.", explorer: "https://midnightexplorer.com/" },
 };
-const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed"];
+const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed", "undeployed-fly"];
 const OS_KEYS: OSTarget[] = ["macos", "windows", "linux"];
 
 function detectOS(): OSTarget {
@@ -155,7 +156,7 @@ function IdeaPage() {
           </div>
 
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <div className="grid grid-cols-3 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
               {VARIANT_KEYS.map((k) => {
                 const active = k === variant;
                 return (
@@ -225,6 +226,16 @@ function IdeaPage() {
               </Link>{" "}
               <Link to="/known-issues" className="story-gold text-primary">
                 known issues →
+              </Link>
+            </p>
+          )}
+          {variant === "undeployed-fly" && (
+            <p className="mt-2 text-xs text-primary/80 font-light leading-relaxed max-w-3xl">
+              This variant bundles the full four-app Fly.io topology (node · indexer · proof · faucet),
+              the readiness-check fix for WalletFacade 4.1.1, and the flymidnight
+              hard-won lessons (public HTTPS proof URL, contract-address override, faucet cold-boot retry).{" "}
+              <Link to="/undeployed" hash="flyio" className="story-gold text-primary">
+                Fly.io hosting guide →
               </Link>
             </p>
           )}

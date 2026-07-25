@@ -356,12 +356,37 @@ function localStackSetup(os: OSTarget): string {
   return `${LOCAL_STACK_INTRO}\n\n${LOCAL_STACK_DOCKER_BY_OS[os]}\n\n${LOCAL_STACK_OUTRO}`;
 }
 
-const NETWORK_LABELS: Record<NetworkVariant, string> = {"preview": "Preview testnet", "preprod": "Preprod testnet (closer to mainnet)", "undeployed": "Undeployed / local standalone stack (no faucet needed)", "mainnet": "Mainnet (REAL VALUE — experimental / vibe-coded, use at your own risk)"};
+const NETWORK_LABELS: Record<NetworkVariant, string> = {"preview": "Preview testnet", "preprod": "Preprod testnet (closer to mainnet)", "undeployed": "Undeployed / local standalone stack (no faucet needed)", "undeployed-fly": "Undeployed hosted on Fly.io (public demo — no Docker for visitors)", "mainnet": "Mainnet (REAL VALUE — experimental / vibe-coded, use at your own risk)"};
 
 const NETWORK_SECRETS: Record<NetworkVariant, string> = {
   preview: "REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **PREVIEW** target:\n- VITE_NETWORK_ID           preview\n- VITE_INDEXER_URL          https://indexer.preview.midnight.network/api/v4/graphql\n- VITE_INDEXER_WS_URL       wss://indexer.preview.midnight.network/api/v4/graphql/ws\n- VITE_PROOF_SERVER_URL     http://localhost:6300   (run the matrix proof server: `docker run -p 6300:6300 midnightntwrk/proof-server:8.1.0 midnight-proof-server -v`)\n- VITE_DEFAULT_CONTRACT     hex address printed by your first deploy \u2014 paste it here so users skip the deploy step\n\ntNIGHT \u2260 tDUST \u2014 the #1 support question. Faucet dispenses tNIGHT; deploys spend tDUST. Every user hits this once:\n  1. Copy your UNSHIELDED address (`mn_addr_undeployed1\u2026` on Preview; Lace labels the network \"Preview\").\n  2. Paste into https://midnight-tmnight-preview.nethermind.dev/ \u2192 Request \u2192 tNIGHT arrives.\n  3. In Lace, click \"Generate tDUST\" to delegate tNIGHT \u2192 tDUST appears after a block.\n  4. Only NOW can you deploy \u2014 the deploy script errors with `Insufficient Funds: could not balance dust` otherwise.\nExplorer: https://preview.midnightexplorer.com/\nNotes:    Preview is the fastest network to demo on but resets frequently. Best for iterative dev + hackathon judges.\n          If you don't want to babysit the faucet, use the **Undeployed** variant of this prompt instead.",
   preprod: "REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **PREPROD** target:\n- VITE_NETWORK_ID           preprod\n- VITE_INDEXER_URL          https://indexer.preprod.midnight.network/api/v4/graphql\n- VITE_INDEXER_WS_URL       wss://indexer.preprod.midnight.network/api/v4/graphql/ws\n- VITE_PROOF_SERVER_URL     http://localhost:6300   (run the matrix proof server: `docker run -p 6300:6300 midnightntwrk/proof-server:8.1.0 midnight-proof-server -v`)\n- VITE_DEFAULT_CONTRACT     hex address printed by your first deploy \u2014 paste it here so users skip the deploy step\n\ntNIGHT \u2260 tDUST \u2014 same trap as Preview. On Preprod the unshielded address prefix is `mn_addr_test1\u2026`\n(NetworkId.TestNet, NOT NetworkId.Undeployed \u2014 use the right one in the deploy script).\n  1. Copy your UNSHIELDED address (`mn_addr_test1\u2026`).\n  2. Paste into https://midnight-tmnight-preprod.nethermind.dev/ \u2192 Request \u2192 tNIGHT arrives.\n  3. In Lace, click \"Generate tDUST\" to delegate \u2192 tDUST appears after a block.\n  4. Only NOW can you deploy.\nExplorer: https://preprod.midnightexplorer.com/\nNotes:    Preprod is closer to mainnet parameters but has known DUST-sync and ZKIR 0.31 quirks. If your\n          demo stalls at \"Balancing\u2026\", switch to the Undeployed local stack variant of this prompt.",
   undeployed: "REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **UNDEPLOYED / LOCAL** target:\n- VITE_NETWORK_ID           undeployed\n- VITE_INDEXER_URL          http://localhost:8088/api/v4/graphql   (standalone indexer uses v4, like the hosted indexers)\n- VITE_INDEXER_WS_URL       ws://localhost:8088/api/v4/graphql/ws\n- VITE_PROOF_SERVER_URL     http://localhost:6300   (local-dev image: `midnightntwrk/proof-server:8.0.3`)\n- VITE_NODE_WS              ws://localhost:9944\n- VITE_DEFAULT_CONTRACT     hex address printed by your local deploy (written to src/data/midnight-contract.undeployed.json)\n\nNo faucet needed \u2014 the local standalone chain mints unlimited tDUST to the genesis seed\n`0x000\u20260002` (yes, the SECOND slot \u2014 seed `\u20260001` is empty). The deploy script uses that seed\ndirectly via `WalletBuilder.buildFromSeed(..., NetworkId.Undeployed)`.\nExplorer: not applicable (chain is local); browse state via the local Indexer GraphQL at\n          http://localhost:8088/api/v4/graphql \u2014 the app's `/undeployed-preflight` page hits it too.\nNotes:    This is the **DevRel-advised** path for hackathon work. It bypasses every Preprod\n          tDUST-sync + `/check 400` ZKIR issue by pinning the SDK and node to the same version.",
+  "undeployed-fly": `REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **UNDEPLOYED on FLY.IO** target:
+- VITE_NETWORK_ID           undeployed
+- VITE_INDEXER_URL          https://choreo-indexer.fly.dev/api/v4/graphql
+- VITE_INDEXER_WS_URL       wss://choreo-indexer.fly.dev/api/v4/graphql/ws
+- VITE_PROOF_SERVER_URL     https://choreo-proof.fly.dev
+- VITE_NODE_WS              (leave unset in the browser \u2014 the node is 6PN-internal only, never public)
+- VITE_FAUCET_URL           https://choreo-faucet.fly.dev
+- VITE_DEFAULT_CONTRACT     hex address printed by \`scripts/fly-deploy-contract.sh\` (from a 6PN Fly machine)
+
+Rename the four Fly apps to whatever you like; the URLs above are the reference topology from
+"Tokenized Choreo Kits" (~\\$15\u201325/mo). Fly \\_publicly\\_ exposes indexer + proof-server + faucet;
+the node stays 6PN-internal only. Every visitor uses their own Lace on \`NetworkId.Undeployed\` and
+gets tDUST from the in-app faucet button that POSTs to \`\${VITE_FAUCET_URL}/grant\`.
+
+Explorer: not applicable (chain lives on your Fly node). Browse state via the public Indexer
+GraphQL at \`\${VITE_INDEXER_URL}\`.
+Notes:    Same NetworkId, same seed logic, same Lace UX as local Undeployed \u2014 no Docker on the
+          visitor's machine. First mint after redeploy is still \u223c4 min cold (proving-key load).
+Readiness (WalletFacade 4.1.1): the correct sync check is
+          \`state.dust.state.progress.isStrictlyComplete()\`, NOT \`state.progress?.isSynced\` and NOT
+          a plain \`state.progress\` boolean. Getting this wrong makes the "warming up" toast stick
+          forever after the wallet is actually ready.
+Proof-server URL: use \`https://choreo-proof.fly.dev\` (public, HTTPS via Fly edge). Never wire the
+          browser to \`choreo-proof.internal:6300\` \u2014 the proof server binds IPv4, 6PN is IPv6-only,
+          and mixed-content also blocks it.`,
   mainnet: `REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **MAINNET** target (\u26a0\ufe0f REAL VALUE):
 - VITE_NETWORK_ID           mainnet
 - VITE_INDEXER_URL          https://indexer.mainnet.midnight.network/api/v4/graphql
@@ -1142,6 +1167,58 @@ FAILURE-MODE TABLE (new rows from Choreo Kits, copy the fixes verbatim):
 Full skill reference: https://midnightprompts.lovable.app/undeployed (Fly.io section).`;
 
 
+const FLYMIDNIGHT_LESSONS = `FLY.IO STACK — HARD-WON LESSONS FROM \`flymidnight\` (2026-07):
+
+These are the fixes that turned a red-across-the-board \`/undeployed-preflight\` into 4 green pills
+on a live Fly-hosted stack. All of them are non-obvious; skip any one and hours evaporate.
+
+1. **Readiness = \`state.dust.state.progress.isStrictlyComplete()\`.** WalletFacade 4.1.1 shape.
+   Do NOT check \`state.progress?.isSynced\`, \`state.progress === true\`, or the older
+   \`walletReady\` boolean \u2014 those never flip on 4.1.1 and the app hangs on "warming up" forever
+   even after DUST is fully synced. Log the raw \`state.dust.state.progress\` object once when
+   debugging; it exposes \`applyGap\`, \`sourceGap\`, and \`isStrictlyComplete()\`.
+
+2. **Browser \u2192 proof server MUST use the public HTTPS URL.** \`https://choreo-proof.fly.dev\`.
+   The proof-server binary listens on IPv4 only, Fly 6PN is IPv6-only, and the browser is
+   HTTPS \u2014 \`choreo-proof.internal:6300\` fails on all three counts. Do NOT wrap it with socat;
+   the distroless image has no shell (\`exec: 127\`) and public IPv4 through Fly's edge is the
+   supported path. Only server-to-server 6PN calls need the \`.internal\` name (indexer \u2192 node,
+   faucet \u2192 node); proof server is always public.
+
+3. **\`VITE_DEFAULT_CONTRACT\` must OVERRIDE cached localStorage on load.** After a Fly redeploy
+   the volume can rotate, and yesterday's contract address is dead \u2014 but the SPA cached it in
+   \`localStorage["midnight-contract-address"]\`. On boot: prefer \`import.meta.env.VITE_DEFAULT_CONTRACT\`
+   when set, otherwise fall back to localStorage. Symptom if you invert the priority:
+   \`Couldn't find template \u2026\` on every write after redeploy, even though the site was just built.
+
+4. **Health probe order matters.** \`/undeployed-preflight\` must probe node WS FIRST, then
+   indexer HTTP, then indexer WS, then proof HTTP. If the node is stuck at #0 (see the Fly
+   failure-mode table above), every other probe returns misleading errors and users chase
+   phantom bugs. Fail fast on node before painting the rest of the grid.
+
+5. **Fund each Lace visitor from an in-app \`Get tDUST\` button.** The genesis seed \`\u20260002\`
+   funds ONLY the deploy wallet; every Lace visitor on Undeployed starts with 0 tDUST and
+   writes fail with a cryptic \`Unexpected error submitting scoped transaction\` after signing.
+   Wire a Faucet button that POSTs \`{ address: laceUnshieldedAddress }\` to
+   \`\${VITE_FAUCET_URL}/grant\`. Poll the Lace \`getDustBalance()\` afterwards; disable the mint
+   button until balance > 0.
+
+6. **Retry the faucet with backoff for the first 90 s after redeploy.** \`choreo-faucet\` cold
+   boot: \`wallet.start()\` needs 10\u201390 s to sync a non-zero balance. During that window,
+   \`/grant\` returns \`503 warming up\`. Show a "faucet warming up (~90 s)" toast, retry
+   automatically every 10 s, and don't set \`min_machines_running=0\` on the faucet unless you
+   accept that first-request delay.
+
+7. **When you rebuild the node volume, refund the faucet.** Destroying \`chain_data\` on the
+   node wipes every previously-minted tDUST, including the faucet wallet. Follow the volume
+   destroy with: \`bun scripts/fund-faucet.mjs\` (which uses the genesis \`\u20260002\` seed to send
+   tDUST to the faucet's \`/health\` address). Otherwise the next visitor's \`/grant\` returns
+   500 \`Insufficient Funds\` and the demo silently breaks.
+
+Cross-reference: the \`flymidnight\` repo (github.com/arunnadarasa/flymidnight) is the canonical
+working example \u2014 mirror the file layout when in doubt.`;
+
+
 function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
   const dockerInstall: Record<OSTarget, string> = {
     macos: "Install Docker Desktop for Mac (`brew install --cask docker`, then `open -a Docker`).",
@@ -1178,7 +1255,38 @@ function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
 6. Reload this page. Preflight:
    https://midnightprompts.lovable.app/undeployed-preflight`;
 
-  const steps = network === "undeployed" ? undeployed : previewPreprod;
+  const undeployedFly = `1. This target expects the FOUR-app Fly.io stack already deployed
+   (choreo-node / choreo-indexer / choreo-proof / choreo-faucet). If it isn't
+   yet, follow the HOSTING ON FLY.IO block above end-to-end first — the node
+   must be authoring blocks (\`flyctl logs -a choreo-node | grep "Imported #[1-9]"\`)
+   before any visitor can use the demo.
+2. Point Lace at NetworkId.Undeployed (Settings → Network → Custom → RPC.
+   Leave the RPC blank or point at the FLY node only if you're the operator;
+   ordinary visitors use their existing Undeployed setting). Prefix confirmation:
+   mn_addr_undeployed1… on Lace after switching.
+3. Click the in-app "Get tDUST" button (wired to \`\${VITE_FAUCET_URL}/grant\`)
+   to fund your Lace visitor wallet. The genesis seed only funds the deploy
+   wallet; every visitor needs their own tDUST or writes fail with a cryptic
+   submission error. Poll Lace.getDustBalance() and disable the mint button
+   until balance > 0. If /grant returns 503, retry every 10 s (faucet cold
+   boot is 10–90 s).
+4. Deploy the contract FROM a 6PN Fly Machine, not the Lovable sandbox or
+   your laptop:
+   ./scripts/fly-deploy-contract.sh
+   (Ephemeral machine \`flyctl machine run\`-s a tiny image containing
+   scripts/deploy-midnight.mjs + compiled artefacts, prints the address.)
+5. Paste the printed hex into VITE_DEFAULT_CONTRACT (Lovable env vars) and
+   republish. VITE_DEFAULT_CONTRACT must OVERRIDE any localStorage-cached
+   contract address on boot — otherwise the SPA keeps calling yesterday's
+   dead address after a redeploy.
+6. Verify the readiness check in wallet code is
+   \`state.dust.state.progress.isStrictlyComplete()\` (WalletFacade 4.1.1),
+   NOT \`state.progress?.isSynced\`. Wrong shape = "warming up" toast stuck
+   forever even after DUST is synced.
+7. Preflight the deployed site: it should show 4 green pills for
+   node / indexer / proof / faucet — probe order matters, node first.`;
+
+  const steps = network === "undeployed" ? undeployed : network === "undeployed-fly" ? undeployedFly : previewPreprod;
 
   return `IN-APP SETUP PANEL — MANDATORY (render on the primary page):
 
@@ -1789,9 +1897,12 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, 
 
   const netLabel = NETWORK_LABELS[network] ?? network;
   const netSecrets = NETWORK_SECRETS[network] ?? NETWORK_SECRETS.preview;
-  const localBlock = network === "undeployed" ? `\n\n${localStackSetup(os)}\n` : "";
-  const undeployedFundBlock = network === "undeployed" ? `\n${UNDEPLOYED_FUND_LACE}\n` : "";
-  const flyioBlock = network === "undeployed" ? `\n${HOSTING_FLYIO}\n` : "";
+  const isUndeployedLocal = network === "undeployed";
+  const isUndeployedFly = network === "undeployed-fly";
+  const localBlock = isUndeployedLocal ? `\n\n${localStackSetup(os)}\n` : "";
+  const undeployedFundBlock = isUndeployedLocal ? `\n${UNDEPLOYED_FUND_LACE}\n` : "";
+  const flyioBlock = isUndeployedLocal || isUndeployedFly ? `\n${HOSTING_FLYIO}\n` : "";
+  const flyLessonsBlock = isUndeployedFly ? `\n${FLYMIDNIGHT_LESSONS}\n` : "";
   const mainnetBlock = network === "mainnet" ? `\n${MAINNET_ACQUIRE}\n` : "";
   const protocolBlock = idea.protocol ? `\n\n${PROTOCOL_BLOCKS[idea.protocol]}\n` : "";
 
@@ -1821,7 +1932,7 @@ STACK
 ${PACKAGES}
 
 ${TOOLCHAIN_BY_OS[os]}
-${localBlock}${undeployedFundBlock}${flyioBlock}${mainnetBlock}
+${localBlock}${undeployedFundBlock}${flyioBlock}${flyLessonsBlock}${mainnetBlock}
 ${EXPERIMENTAL_DISCLAIMER}
 
 ${SCRIPTS_FOLDER}
