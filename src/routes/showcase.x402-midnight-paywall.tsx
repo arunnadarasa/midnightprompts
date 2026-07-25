@@ -53,7 +53,7 @@ function X402Page() {
           </p>
           <p>
             The full protocol block for x402 is embedded in every prompt tagged with{" "}
-            <Link to="/themes/agentic-x402" className="underline hover:text-primary">agentic · x402</Link>.
+            <Link to="/themes" className="underline hover:text-primary">agentic · x402</Link>.
           </p>
         </section>
       </article>

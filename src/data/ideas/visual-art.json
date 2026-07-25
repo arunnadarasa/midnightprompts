@@ -2,7 +2,7 @@
   "theme": {
     "slug": "visual-art",
     "name": "Visual Art",
-    "emoji": "🎨",
+    "emoji": "\ud83c\udfa8",
     "audience": "painters, illustrators, generative artists, gallerists",
     "market_anchor": "the global art market (~$65B; >300K working visual artists)"
   },
@@ -17,9 +17,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a art ownership tracking demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$65B — global art market needing ownership verification",
-      "sam": "$10B — marketplace for authenticated paintings worldwide",
-      "som": "$500M — early adopters using blockchain provenance solutions"
+      "tam": "$65B \u2014 global art market needing ownership verification",
+      "sam": "$10B \u2014 marketplace for authenticated paintings worldwide",
+      "som": "$500M \u2014 early adopters using blockchain provenance solutions"
     },
     {
       "id": "visual-art-generative-mint-studio-1",
@@ -31,9 +31,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a generative art minting demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1B — blockchain-based generative art market",
-      "sam": "$150M — active generative artists minting NFTs",
-      "som": "$20M — users adopting Sepolia for minting"
+      "tam": "$1B \u2014 blockchain-based generative art market",
+      "sam": "$150M \u2014 active generative artists minting NFTs",
+      "som": "$20M \u2014 users adopting Sepolia for minting"
     },
     {
       "id": "visual-art-exhibit-chain-ledger-2",
@@ -45,9 +45,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a gallery exhibition tracking demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$5B — global gallery and exhibition market",
-      "sam": "$1B — art galleries integrating digital tracking",
-      "som": "$100M — digital provenance adopters in galleries"
+      "tam": "$5B \u2014 global gallery and exhibition market",
+      "sam": "$1B \u2014 art galleries integrating digital tracking",
+      "som": "$100M \u2014 digital provenance adopters in galleries"
     },
     {
       "id": "visual-art-colorcode-certifier-3",
@@ -59,9 +59,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a color authenticity validation demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$65B — art market reliant on color fidelity",
-      "sam": "$500M — artists and collectors valuing color authenticity",
-      "som": "$30M — initial blockchain-based color certification users"
+      "tam": "$65B \u2014 art market reliant on color fidelity",
+      "sam": "$500M \u2014 artists and collectors valuing color authenticity",
+      "som": "$30M \u2014 initial blockchain-based color certification users"
     },
     {
       "id": "visual-art-auction-trust-chain-4",
@@ -73,23 +73,23 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a art auction transparency demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$15B — global art auction market volume",
-      "sam": "$3B — online art auction platforms",
-      "som": "$250M — blockchain auction services adoption"
+      "tam": "$15B \u2014 global art auction market volume",
+      "sam": "$3B \u2014 online art auction platforms",
+      "som": "$250M \u2014 blockchain auction services adoption"
     },
     {
       "id": "visual-art-brushstroke-timestamp-5",
       "theme": "visual-art",
       "title": "Brushstroke Timestamp",
-      "pitch": "Document and timestamp artists’ brushstroke progress live onchain for proof of creation.",
+      "pitch": "Document and timestamp artists\u2019 brushstroke progress live onchain for proof of creation.",
       "subDiscipline": "creative process timestamping",
       "quantumHook": "Compact ZK contract",
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a creative process timestamping demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$65B — art market valuing originality proof",
-      "sam": "$200M — artists interested in process authentication",
-      "som": "$10M — early userbase for onchain creation logs"
+      "tam": "$65B \u2014 art market valuing originality proof",
+      "sam": "$200M \u2014 artists interested in process authentication",
+      "som": "$10M \u2014 early userbase for onchain creation logs"
     },
     {
       "id": "visual-art-licensing-ledger-6",
@@ -101,9 +101,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a artwork license management demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$2B — global art licensing market",
-      "sam": "$500M — digital art licensing platforms",
-      "som": "$50M — blockchain-based licensing solutions"
+      "tam": "$2B \u2014 global art licensing market",
+      "sam": "$500M \u2014 digital art licensing platforms",
+      "som": "$50M \u2014 blockchain-based licensing solutions"
     },
     {
       "id": "visual-art-interactive-canvas-dao-7",
@@ -115,9 +115,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a collaborative art governance demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$100M — collaborative digital art initiatives",
-      "sam": "$30M — artists using decentralized governance tools",
-      "som": "$5M — DAO experiment adopters in art"
+      "tam": "$100M \u2014 collaborative digital art initiatives",
+      "sam": "$30M \u2014 artists using decentralized governance tools",
+      "som": "$5M \u2014 DAO experiment adopters in art"
     },
     {
       "id": "visual-art-art-swap-protocol-8",
@@ -129,9 +129,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a peer-to-peer art exchange demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1B — peer-to-peer art trading market",
-      "sam": "$200M — active visual art traders",
-      "som": "$25M — early users adopting blockchain swaps"
+      "tam": "$1B \u2014 peer-to-peer art trading market",
+      "sam": "$200M \u2014 active visual art traders",
+      "som": "$25M \u2014 early users adopting blockchain swaps"
     },
     {
       "id": "visual-art-edition-tracker-9",
@@ -143,9 +143,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a limited print tracking demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$6B — limited edition print market",
-      "sam": "$1.2B — collectors focusing on print authenticity",
-      "som": "$80M — users transitioning to blockchain edition tracking"
+      "tam": "$6B \u2014 limited edition print market",
+      "sam": "$1.2B \u2014 collectors focusing on print authenticity",
+      "som": "$80M \u2014 users transitioning to blockchain edition tracking"
     },
     {
       "id": "visual-art-art-commission-chain-10",
@@ -157,9 +157,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a commission workflow management demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$3B — global art commission market",
-      "sam": "$800M — platforms facilitating digital commissions",
-      "som": "$60M — early blockchain adoption for commissions"
+      "tam": "$3B \u2014 global art commission market",
+      "sam": "$800M \u2014 platforms facilitating digital commissions",
+      "som": "$60M \u2014 early blockchain adoption for commissions"
     },
     {
       "id": "visual-art-dynamic-frame-nfts-11",
@@ -171,9 +171,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a programmable artwork framing demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$500M — programmable art NFT market",
-      "sam": "$150M — collectors seeking interactive art experiences",
-      "som": "$20M — initial adopters of dynamic NFTs"
+      "tam": "$500M \u2014 programmable art NFT market",
+      "sam": "$150M \u2014 collectors seeking interactive art experiences",
+      "som": "$20M \u2014 initial adopters of dynamic NFTs"
     },
     {
       "id": "visual-art-gallery-access-token-12",
@@ -185,9 +185,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a event admission tokens demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$2B — global gallery event ticket market",
-      "sam": "$600M — digital ticketing for art events",
-      "som": "$40M — blockchain-enabled ticket users"
+      "tam": "$2B \u2014 global gallery event ticket market",
+      "sam": "$600M \u2014 digital ticketing for art events",
+      "som": "$40M \u2014 blockchain-enabled ticket users"
     },
     {
       "id": "visual-art-art-critique-chain-13",
@@ -199,9 +199,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a peer review logging demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$500M — peer review platforms globally",
-      "sam": "$120M — digital visual art communities",
-      "som": "$10M — blockchain critique tool users"
+      "tam": "$500M \u2014 peer review platforms globally",
+      "sam": "$120M \u2014 digital visual art communities",
+      "som": "$10M \u2014 blockchain critique tool users"
     },
     {
       "id": "visual-art-signature-stamp-14",
@@ -213,9 +213,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a artist signature authentication demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$65B — art authentication services",
-      "sam": "$2B — signature verification market",
-      "som": "$100M — blockchain adoption for signature validation"
+      "tam": "$65B \u2014 art authentication services",
+      "sam": "$2B \u2014 signature verification market",
+      "som": "$100M \u2014 blockchain adoption for signature validation"
     },
     {
       "id": "visual-art-interactive-auction-game-15",
@@ -227,9 +227,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a gamified art auctions demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$15B — art auction global market",
-      "sam": "$500M — gamified auction platforms",
-      "som": "$40M — users engaging in blockchain auctions"
+      "tam": "$15B \u2014 art auction global market",
+      "sam": "$500M \u2014 gamified auction platforms",
+      "som": "$40M \u2014 users engaging in blockchain auctions"
     },
     {
       "id": "visual-art-material-usage-ledger-16",
@@ -241,9 +241,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a supply chain transparency demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$3B — ethical art material market",
-      "sam": "$700M — collectors prioritizing ethical sourcing",
-      "som": "$30M — blockchain material traceability adopters"
+      "tam": "$3B \u2014 ethical art material market",
+      "sam": "$700M \u2014 collectors prioritizing ethical sourcing",
+      "som": "$30M \u2014 blockchain material traceability adopters"
     },
     {
       "id": "visual-art-visual-royalties-manager-17",
@@ -255,9 +255,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a artist royalty automation demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.5B — global art royalty market",
-      "sam": "$400M — digital art sales platforms",
-      "som": "$50M — blockchain royalty users"
+      "tam": "$1.5B \u2014 global art royalty market",
+      "sam": "$400M \u2014 digital art sales platforms",
+      "som": "$50M \u2014 blockchain royalty users"
     },
     {
       "id": "visual-art-moodboard-dao-18",
@@ -269,9 +269,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a collective inspiration curation demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$120M — collaborative art projects",
-      "sam": "$25M — digital collaboration tools for artists",
-      "som": "$3M — DAO tools adoption in art"
+      "tam": "$120M \u2014 collaborative art projects",
+      "sam": "$25M \u2014 digital collaboration tools for artists",
+      "som": "$3M \u2014 DAO tools adoption in art"
     },
     {
       "id": "visual-art-sketch-snapshot-chain-19",
@@ -283,9 +283,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a digital sketch archiving demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1B — digital art tools market",
-      "sam": "$200M — digital sketch app users",
-      "som": "$15M — early blockchain integration adopters"
+      "tam": "$1B \u2014 digital art tools market",
+      "sam": "$200M \u2014 digital sketch app users",
+      "som": "$15M \u2014 early blockchain integration adopters"
     },
     {
       "id": "visual-art-canvas-rental-token-20",
@@ -297,9 +297,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a art space access demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$500M — global artist workspace market",
-      "sam": "$120M — short term art space rentals",
-      "som": "$8M — blockchain-based rental platform users"
+      "tam": "$500M \u2014 global artist workspace market",
+      "sam": "$120M \u2014 short term art space rentals",
+      "som": "$8M \u2014 blockchain-based rental platform users"
     },
     {
       "id": "visual-art-nft-curation-index-21",
@@ -311,9 +311,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a curated NFT collections demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$2B — NFT art collectible market",
-      "sam": "$600M — active curators and collectors",
-      "som": "$50M — users onchain curation platforms"
+      "tam": "$2B \u2014 NFT art collectible market",
+      "sam": "$600M \u2014 active curators and collectors",
+      "som": "$50M \u2014 users onchain curation platforms"
     },
     {
       "id": "visual-art-brushstroke-dao-vault-22",
@@ -325,9 +325,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a collective art funding demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$500M — art crowd-funding market",
-      "sam": "$150M — decentralized funding adopters",
-      "som": "$12M — early DAO art fund users"
+      "tam": "$500M \u2014 art crowd-funding market",
+      "sam": "$150M \u2014 decentralized funding adopters",
+      "som": "$12M \u2014 early DAO art fund users"
     },
     {
       "id": "visual-art-art-swap-escrow-23",
@@ -339,9 +339,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a secure art trades demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1B — art trading market",
-      "sam": "$300M — online art trade platforms",
-      "som": "$30M — blockchain escrow adopters in art"
+      "tam": "$1B \u2014 art trading market",
+      "sam": "$300M \u2014 online art trade platforms",
+      "som": "$30M \u2014 blockchain escrow adopters in art"
     },
     {
       "id": "visual-art-visual-art-rewards-24",
@@ -353,9 +353,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a artist incentivization demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$200M — artist monetization platforms",
-      "sam": "$50M — community-driven artist platforms",
-      "som": "$5M — initial blockchain reward users"
+      "tam": "$200M \u2014 artist monetization platforms",
+      "sam": "$50M \u2014 community-driven artist platforms",
+      "som": "$5M \u2014 initial blockchain reward users"
     },
     {
       "id": "visual-art-permacolor-archive-0",
@@ -367,9 +367,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a color palette curation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — global digital artist tools market",
-      "sam": "$250M — color-centric art resource platforms",
-      "som": "$50M — paid subscriptions for curated palette archives"
+      "tam": "$1B \u2014 global digital artist tools market",
+      "sam": "$250M \u2014 color-centric art resource platforms",
+      "som": "$50M \u2014 paid subscriptions for curated palette archives"
     },
     {
       "id": "visual-art-generative-art-vault-1",
@@ -381,9 +381,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a algorithmic artwork storage demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$3B — global generative art market",
-      "sam": "$700M — platforms hosting generative art",
-      "som": "$150M — premium archival and licensing services"
+      "tam": "$3B \u2014 global generative art market",
+      "sam": "$700M \u2014 platforms hosting generative art",
+      "som": "$150M \u2014 premium archival and licensing services"
     },
     {
       "id": "visual-art-gallery-manifest-hub-2",
@@ -395,9 +395,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a exhibition cataloging demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$5B — global gallery management software",
-      "sam": "$1.2B — digital exhibition catalog platforms",
-      "som": "$300M — galleries adopting blockchain provenance"
+      "tam": "$5B \u2014 global gallery management software",
+      "sam": "$1.2B \u2014 digital exhibition catalog platforms",
+      "som": "$300M \u2014 galleries adopting blockchain provenance"
     },
     {
       "id": "visual-art-illustrator-portfolio-lock-3",
@@ -409,9 +409,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a portfolio archiving demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.5B — digital portfolio platforms",
-      "sam": "$400M — illustrator-specific portfolio tools",
-      "som": "$80M — paid portfolio permanence services"
+      "tam": "$1.5B \u2014 digital portfolio platforms",
+      "sam": "$400M \u2014 illustrator-specific portfolio tools",
+      "som": "$80M \u2014 paid portfolio permanence services"
     },
     {
       "id": "visual-art-digital-canvas-ledger-4",
@@ -423,9 +423,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a painting provenance tracking demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$10B — global art provenance solutions",
-      "sam": "$2.7B — provenance platforms for painters",
-      "som": "$500M — subscription provenance verification"
+      "tam": "$10B \u2014 global art provenance solutions",
+      "sam": "$2.7B \u2014 provenance platforms for painters",
+      "som": "$500M \u2014 subscription provenance verification"
     },
     {
       "id": "visual-art-nft-manifest-generator-5",
@@ -437,9 +437,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a digital asset packaging demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$7B — NFT marketplace infrastructure",
-      "sam": "$1.6B — NFT metadata management tools",
-      "som": "$350M — NFT authenticity services"
+      "tam": "$7B \u2014 NFT marketplace infrastructure",
+      "sam": "$1.6B \u2014 NFT metadata management tools",
+      "som": "$350M \u2014 NFT authenticity services"
     },
     {
       "id": "visual-art-interactive-art-pinning-6",
@@ -451,9 +451,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a multimedia art preservation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$800M — multimedia art platforms",
-      "sam": "$200M — interactive digital art tools",
-      "som": "$45M — premium preservation subscriptions"
+      "tam": "$800M \u2014 multimedia art platforms",
+      "sam": "$200M \u2014 interactive digital art tools",
+      "som": "$45M \u2014 premium preservation subscriptions"
     },
     {
       "id": "visual-art-exhibit-provenance-chain-7",
@@ -465,23 +465,23 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a art exposition verification demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$4B — global exhibition services market",
-      "sam": "$1B — digital exhibit verification tools",
-      "som": "$250M — paid provenance verification services"
+      "tam": "$4B \u2014 global exhibition services market",
+      "sam": "$1B \u2014 digital exhibit verification tools",
+      "som": "$250M \u2014 paid provenance verification services"
     },
     {
       "id": "visual-art-painter-s-time-capsule-8",
       "theme": "visual-art",
-      "title": "Painter’s Time Capsule",
+      "title": "Painter\u2019s Time Capsule",
       "pitch": "Permanently archive each painting stage as images and notes pinned immutably on IPFS.",
       "subDiscipline": "artistic process documentation",
       "quantumHook": "IPFS content + on-chain CID",
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a artistic process documentation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$600M — artist education and documentation",
-      "sam": "$150M — process archiving platforms",
-      "som": "$30M — paid archival service usage"
+      "tam": "$600M \u2014 artist education and documentation",
+      "sam": "$150M \u2014 process archiving platforms",
+      "som": "$30M \u2014 paid archival service usage"
     },
     {
       "id": "visual-art-visual-art-supply-chain-9",
@@ -493,23 +493,23 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a art materials tracking demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$850M — art supplier certification market",
-      "sam": "$210M — digital supply chain traceability",
-      "som": "$40M — transparent certification subscriptions"
+      "tam": "$850M \u2014 art supplier certification market",
+      "sam": "$210M \u2014 digital supply chain traceability",
+      "som": "$40M \u2014 transparent certification subscriptions"
     },
     {
       "id": "visual-art-auto-manifest-builder-10",
       "theme": "visual-art",
       "title": "Auto-Manifest Builder",
-      "pitch": "Automatically generate and pin complete IPFS manifests for artists’ works with minimal effort.",
+      "pitch": "Automatically generate and pin complete IPFS manifests for artists\u2019 works with minimal effort.",
       "subDiscipline": "metadata automation",
       "quantumHook": "IPFS content + on-chain CID",
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a metadata automation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$2B — creative automation software",
-      "sam": "$500M — metadata management solutions",
-      "som": "$100M — paid automation feature adoption"
+      "tam": "$2B \u2014 creative automation software",
+      "sam": "$500M \u2014 metadata management solutions",
+      "som": "$100M \u2014 paid automation feature adoption"
     },
     {
       "id": "visual-art-collaborative-art-archive-11",
@@ -521,9 +521,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a group project documentation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.5B — collaborative art tool market",
-      "sam": "$350M — team project archiving platforms",
-      "som": "$75M — subscription for collaborative archiving"
+      "tam": "$1.5B \u2014 collaborative art tool market",
+      "sam": "$350M \u2014 team project archiving platforms",
+      "som": "$75M \u2014 subscription for collaborative archiving"
     },
     {
       "id": "visual-art-style-transfer-keeper-12",
@@ -535,9 +535,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a AI style preservation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$900M — AI art tools market",
-      "sam": "$220M — style transfer application users",
-      "som": "$45M — paid style preservation services"
+      "tam": "$900M \u2014 AI art tools market",
+      "sam": "$220M \u2014 style transfer application users",
+      "som": "$45M \u2014 paid style preservation services"
     },
     {
       "id": "visual-art-art-fair-digital-catalog-13",
@@ -549,9 +549,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a event art listings demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$3B — global art event management",
-      "sam": "$750M — digital catalog solutions",
-      "som": "$160M — event catalog subscription usage"
+      "tam": "$3B \u2014 global art event management",
+      "sam": "$750M \u2014 digital catalog solutions",
+      "som": "$160M \u2014 event catalog subscription usage"
     },
     {
       "id": "visual-art-generative-token-gallery-14",
@@ -563,9 +563,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a tokenized generative art demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$4B — tokenized art market",
-      "sam": "$1B — token gallery platforms",
-      "som": "$210M — paid generative token services"
+      "tam": "$4B \u2014 tokenized art market",
+      "sam": "$1B \u2014 token gallery platforms",
+      "som": "$210M \u2014 paid generative token services"
     },
     {
       "id": "visual-art-illustration-rights-ledger-15",
@@ -577,9 +577,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a digital rights management demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.8B — digital rights platforms",
-      "sam": "$450M — illustration rights management",
-      "som": "$90M — subscription licensing verification"
+      "tam": "$1.8B \u2014 digital rights platforms",
+      "sam": "$450M \u2014 illustration rights management",
+      "som": "$90M \u2014 subscription licensing verification"
     },
     {
       "id": "visual-art-augmented-art-archive-16",
@@ -591,9 +591,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a AR art content storage demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$2.5B — AR content creation market",
-      "sam": "$600M — AR art publishing",
-      "som": "$130M — paid AR archival"
+      "tam": "$2.5B \u2014 AR content creation market",
+      "sam": "$600M \u2014 AR art publishing",
+      "som": "$130M \u2014 paid AR archival"
     },
     {
       "id": "visual-art-permanent-sketchbook-hub-17",
@@ -605,9 +605,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a digital sketch archiving demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — digital artist journaling tools",
-      "sam": "$270M — sketch archiving apps",
-      "som": "$60M — paid archival storage"
+      "tam": "$1B \u2014 digital artist journaling tools",
+      "sam": "$270M \u2014 sketch archiving apps",
+      "som": "$60M \u2014 paid archival storage"
     },
     {
       "id": "visual-art-visual-storyboard-chain-18",
@@ -619,23 +619,23 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a narrative art sequencing demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$850M — visual storytelling tools",
-      "sam": "$210M — storyboard digital platforms",
-      "som": "$45M — subscriptions for sequence permanence"
+      "tam": "$850M \u2014 visual storytelling tools",
+      "sam": "$210M \u2014 storyboard digital platforms",
+      "som": "$45M \u2014 subscriptions for sequence permanence"
     },
     {
       "id": "visual-art-curator-s-immutable-log-19",
       "theme": "visual-art",
-      "title": "Curator’s Immutable Log",
+      "title": "Curator\u2019s Immutable Log",
       "pitch": "Pin curator notes, selections, and art metadata immutably to IPFS ensuring exhibition integrity.",
       "subDiscipline": "art exhibition curation",
       "quantumHook": "IPFS content + on-chain CID",
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a art exhibition curation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.2B — digital curation software",
-      "sam": "$320M — online exhibition tools",
-      "som": "$70M — curator service subscriptions"
+      "tam": "$1.2B \u2014 digital curation software",
+      "sam": "$320M \u2014 online exhibition tools",
+      "som": "$70M \u2014 curator service subscriptions"
     },
     {
       "id": "visual-art-visual-remix-repository-20",
@@ -647,9 +647,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a art remix documentation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.1B — remix art marketplaces",
-      "sam": "$280M — remix attribution tools",
-      "som": "$55M — paid transparency services"
+      "tam": "$1.1B \u2014 remix art marketplaces",
+      "sam": "$280M \u2014 remix attribution tools",
+      "som": "$55M \u2014 paid transparency services"
     },
     {
       "id": "visual-art-unique-print-provenance-21",
@@ -661,9 +661,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a limited edition prints demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$6B — global print art market",
-      "sam": "$1.5B — print provenance platforms",
-      "som": "$350M — certification and archival subscriptions"
+      "tam": "$6B \u2014 global print art market",
+      "sam": "$1.5B \u2014 print provenance platforms",
+      "som": "$350M \u2014 certification and archival subscriptions"
     },
     {
       "id": "visual-art-artistic-collaboration-chain-22",
@@ -675,23 +675,23 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a joint creation records demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.4B — collaborative art tools",
-      "sam": "$360M — joint creative project platforms",
-      "som": "$75M — paid collaboration archiving"
+      "tam": "$1.4B \u2014 collaborative art tools",
+      "sam": "$360M \u2014 joint creative project platforms",
+      "som": "$75M \u2014 paid collaboration archiving"
     },
     {
       "id": "visual-art-visual-rights-archive-23",
       "theme": "visual-art",
       "title": "Visual Rights Archive",
-      "pitch": "Pin copyright registration data and proofs permanently for artists’ legal protection.",
+      "pitch": "Pin copyright registration data and proofs permanently for artists\u2019 legal protection.",
       "subDiscipline": "copyright preservation",
       "quantumHook": "IPFS content + on-chain CID",
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a copyright preservation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$3B — copyright registration market",
-      "sam": "$800M — digital copyright services",
-      "som": "$180M — subscription copyright storage"
+      "tam": "$3B \u2014 copyright registration market",
+      "sam": "$800M \u2014 digital copyright services",
+      "som": "$180M \u2014 subscription copyright storage"
     },
     {
       "id": "visual-art-dynamic-exhibit-snapshot-24",
@@ -703,9 +703,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a exhibit state recording demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — exhibit documentation solutions",
-      "sam": "$260M — art show documentation tools",
-      "som": "$55M — paid exhibit snapshot services"
+      "tam": "$1B \u2014 exhibit documentation solutions",
+      "sam": "$260M \u2014 art show documentation tools",
+      "som": "$55M \u2014 paid exhibit snapshot services"
     },
     {
       "id": "visual-art-canvas-collaborate-0",
@@ -717,9 +717,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a collaborative painting demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$8B — global collaborative art platforms",
-      "sam": "$2B — digital collaboration tools for painters",
-      "som": "$100M — early adopters in gasless art collaboration"
+      "tam": "$8B \u2014 global collaborative art platforms",
+      "sam": "$2B \u2014 digital collaboration tools for painters",
+      "som": "$100M \u2014 early adopters in gasless art collaboration"
     },
     {
       "id": "visual-art-illustrator-guild-1",
@@ -731,9 +731,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a illustrator community demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$4B — global illustration market",
-      "sam": "$1B — digital sales of illustrations",
-      "som": "$50M — networks enabling gasless art transactions"
+      "tam": "$4B \u2014 global illustration market",
+      "sam": "$1B \u2014 digital sales of illustrations",
+      "som": "$50M \u2014 networks enabling gasless art transactions"
     },
     {
       "id": "visual-art-generative-canvas-2",
@@ -745,9 +745,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a generative art demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$3B — generative digital art sales",
-      "sam": "$800M — code-based art platforms",
-      "som": "$40M — gasless onboarding for generative artists"
+      "tam": "$3B \u2014 generative digital art sales",
+      "sam": "$800M \u2014 code-based art platforms",
+      "som": "$40M \u2014 gasless onboarding for generative artists"
     },
     {
       "id": "visual-art-gallery-ledger-3",
@@ -759,9 +759,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a art provenance tracking demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$15B — global art provenance solutions",
-      "sam": "$4B — provenance tools for galleries",
-      "som": "$200M — gasless provenance management users"
+      "tam": "$15B \u2014 global art provenance solutions",
+      "sam": "$4B \u2014 provenance tools for galleries",
+      "som": "$200M \u2014 gasless provenance management users"
     },
     {
       "id": "visual-art-palette-swap-4",
@@ -773,9 +773,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a color exchange demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$500M — digital color licensing market",
-      "sam": "$120M — palette trading platforms",
-      "som": "$10M — early palette exchange adopters"
+      "tam": "$500M \u2014 digital color licensing market",
+      "sam": "$120M \u2014 palette trading platforms",
+      "som": "$10M \u2014 early palette exchange adopters"
     },
     {
       "id": "visual-art-sketchstream-5",
@@ -787,9 +787,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a live drawing streams demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.5B — live streaming art markets",
-      "sam": "$400M — live tip-enabled drawing platforms",
-      "som": "$25M — gasless tipping users"
+      "tam": "$1.5B \u2014 live streaming art markets",
+      "sam": "$400M \u2014 live tip-enabled drawing platforms",
+      "som": "$25M \u2014 gasless tipping users"
     },
     {
       "id": "visual-art-nft-splitter-6",
@@ -801,9 +801,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a fractional art ownership demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$10B — art fractionalization market",
-      "sam": "$3B — digital sharing of artwork equity",
-      "som": "$150M — gasless split ownership users"
+      "tam": "$10B \u2014 art fractionalization market",
+      "sam": "$3B \u2014 digital sharing of artwork equity",
+      "som": "$150M \u2014 gasless split ownership users"
     },
     {
       "id": "visual-art-artswap-social-7",
@@ -815,9 +815,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a art barter communities demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1B — global art barter economy",
-      "sam": "$350M — illustrator barter platforms",
-      "som": "$20M — gasless transaction swap users"
+      "tam": "$1B \u2014 global art barter economy",
+      "sam": "$350M \u2014 illustrator barter platforms",
+      "som": "$20M \u2014 gasless transaction swap users"
     },
     {
       "id": "visual-art-sketchvault-8",
@@ -829,9 +829,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a secure sketch storage demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$700M — secure digital art storage",
-      "sam": "$200M — sketch archival platforms",
-      "som": "$12M — gasless storage adopters"
+      "tam": "$700M \u2014 secure digital art storage",
+      "sam": "$200M \u2014 sketch archival platforms",
+      "som": "$12M \u2014 gasless storage adopters"
     },
     {
       "id": "visual-art-brushstroke-rights-9",
@@ -843,9 +843,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a digital rights management demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$5B — digital art licensing market",
-      "sam": "$1.5B — licensing platforms for illustrators",
-      "som": "$80M — gasless DRM users"
+      "tam": "$5B \u2014 digital art licensing market",
+      "sam": "$1.5B \u2014 licensing platforms for illustrators",
+      "som": "$80M \u2014 gasless DRM users"
     },
     {
       "id": "visual-art-artchain-auctions-10",
@@ -857,9 +857,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a auction facilitation demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$12B — global art auctions",
-      "sam": "$3.5B — digital art auction platforms",
-      "som": "$180M — gasless auction users"
+      "tam": "$12B \u2014 global art auctions",
+      "sam": "$3.5B \u2014 digital art auction platforms",
+      "som": "$180M \u2014 gasless auction users"
     },
     {
       "id": "visual-art-framefi-marketplace-11",
@@ -871,9 +871,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a digital framing services demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$600M — digital art framing market",
-      "sam": "$150M — framing add-on buyers",
-      "som": "$10M — gasless framing service users"
+      "tam": "$600M \u2014 digital art framing market",
+      "sam": "$150M \u2014 framing add-on buyers",
+      "som": "$10M \u2014 gasless framing service users"
     },
     {
       "id": "visual-art-mural-mesh-12",
@@ -885,9 +885,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a public mural collaboration demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1B — public mural funding",
-      "sam": "$300M — collaborative mural initiatives",
-      "som": "$18M — gasless onchain mural participants"
+      "tam": "$1B \u2014 public mural funding",
+      "sam": "$300M \u2014 collaborative mural initiatives",
+      "som": "$18M \u2014 gasless onchain mural participants"
     },
     {
       "id": "visual-art-colorstory-13",
@@ -899,9 +899,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a color narrative art demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$350M — digital narrative art market",
-      "sam": "$90M — color story platforms",
-      "som": "$7M — gasless narrative update users"
+      "tam": "$350M \u2014 digital narrative art market",
+      "sam": "$90M \u2014 color story platforms",
+      "som": "$7M \u2014 gasless narrative update users"
     },
     {
       "id": "visual-art-token-tapestry-14",
@@ -913,9 +913,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a textile pattern art demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$2B — digital textile art market",
-      "sam": "$500M — pattern tokenization",
-      "som": "$30M — gasless textile pattern buyers"
+      "tam": "$2B \u2014 digital textile art market",
+      "sam": "$500M \u2014 pattern tokenization",
+      "som": "$30M \u2014 gasless textile pattern buyers"
     },
     {
       "id": "visual-art-gallery-ghost-15",
@@ -927,9 +927,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a virtual gallery hosting demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$5B — virtual gallery ticket sales",
-      "sam": "$1.2B — digital gallery hosting platforms",
-      "som": "$70M — gasless ticket user base"
+      "tam": "$5B \u2014 virtual gallery ticket sales",
+      "sam": "$1.2B \u2014 digital gallery hosting platforms",
+      "som": "$70M \u2014 gasless ticket user base"
     },
     {
       "id": "visual-art-brushbot-16",
@@ -941,9 +941,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a AI-assisted painting demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$3.5B — AI art tool market",
-      "sam": "$900M — AI painter subscriptions",
-      "som": "$45M — gasless AI tool users"
+      "tam": "$3.5B \u2014 AI art tool market",
+      "sam": "$900M \u2014 AI painter subscriptions",
+      "som": "$45M \u2014 gasless AI tool users"
     },
     {
       "id": "visual-art-sketchset-swap-17",
@@ -955,9 +955,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a brush preset exchange demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$400M — digital brush market",
-      "sam": "$100M — brush preset trading",
-      "som": "$8M — gasless brush exchange users"
+      "tam": "$400M \u2014 digital brush market",
+      "sam": "$100M \u2014 brush preset trading",
+      "som": "$8M \u2014 gasless brush exchange users"
     },
     {
       "id": "visual-art-artchain-critique-18",
@@ -969,9 +969,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a peer review platform demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$700M — digital art critique services",
-      "sam": "$180M — peer review platforms for artists",
-      "som": "$12M — gasless critique users"
+      "tam": "$700M \u2014 digital art critique services",
+      "sam": "$180M \u2014 peer review platforms for artists",
+      "som": "$12M \u2014 gasless critique users"
     },
     {
       "id": "visual-art-illustrate-impact-19",
@@ -983,9 +983,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a art philanthropy demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$2.5B — art philanthropy market",
-      "sam": "$600M — donations to illustrators",
-      "som": "$35M — gasless charity transaction users"
+      "tam": "$2.5B \u2014 art philanthropy market",
+      "sam": "$600M \u2014 donations to illustrators",
+      "som": "$35M \u2014 gasless charity transaction users"
     },
     {
       "id": "visual-art-colorchain-auctions-20",
@@ -997,9 +997,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a color-themed art auctions demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1B — color art auction market",
-      "sam": "$250M — color themed auction platforms",
-      "som": "$15M — gasless bidders"
+      "tam": "$1B \u2014 color art auction market",
+      "sam": "$250M \u2014 color themed auction platforms",
+      "som": "$15M \u2014 gasless bidders"
     },
     {
       "id": "visual-art-illustrator-ink-21",
@@ -1011,9 +1011,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a digital ink art demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.5B — digital ink art market",
-      "sam": "$400M — limited edition ink artworks",
-      "som": "$22M — gasless minting users"
+      "tam": "$1.5B \u2014 digital ink art market",
+      "sam": "$400M \u2014 limited edition ink artworks",
+      "som": "$22M \u2014 gasless minting users"
     },
     {
       "id": "visual-art-generative-gallery-22",
@@ -1025,9 +1025,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a algorithmic art exhibition demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.8B — digital generative art events",
-      "sam": "$500M — ticketing for generative exhibits",
-      "som": "$28M — gasless event participants"
+      "tam": "$1.8B \u2014 digital generative art events",
+      "sam": "$500M \u2014 ticketing for generative exhibits",
+      "som": "$28M \u2014 gasless event participants"
     },
     {
       "id": "visual-art-artswap-network-23",
@@ -1039,9 +1039,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a visual art trades demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$2B — global art swap market",
-      "sam": "$550M — digital artwork trade platforms",
-      "som": "$33M — gasless swap users"
+      "tam": "$2B \u2014 global art swap market",
+      "sam": "$550M \u2014 digital artwork trade platforms",
+      "som": "$33M \u2014 gasless swap users"
     },
     {
       "id": "visual-art-canvas-chronicles-0",
@@ -1052,10 +1052,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a painting portfolios demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$2.5B — online artist portfolio services",
-      "som": "$50M — NFT-based artist portfolio adopters"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a painting portfolios demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$2.5B \u2014 online artist portfolio services",
+      "som": "$50M \u2014 NFT-based artist portfolio adopters"
     },
     {
       "id": "visual-art-sketch-stamp-1",
@@ -1066,10 +1066,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a illustration drafts demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$800M — digital illustration sector",
-      "som": "$10M — provenance-tracked illustration sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a illustration drafts demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$800M \u2014 digital illustration sector",
+      "som": "$10M \u2014 provenance-tracked illustration sales"
     },
     {
       "id": "visual-art-generative-genesis-2",
@@ -1080,10 +1080,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a generative art iterations demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$400M — generative art niche",
-      "som": "$5M — NFT generative art collectors"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a generative art iterations demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$400M \u2014 generative art niche",
+      "som": "$5M \u2014 NFT generative art collectors"
     },
     {
       "id": "visual-art-gallery-gatekeeper-3",
@@ -1094,10 +1094,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a gallery asset curation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$7B — global gallery sales",
-      "som": "$100M — digital provenance certified artworks"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a gallery asset curation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$7B \u2014 global gallery sales",
+      "som": "$100M \u2014 digital provenance certified artworks"
     },
     {
       "id": "visual-art-color-ledger-4",
@@ -1108,10 +1108,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a color palette preservation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$300M — digital art toolsets",
-      "som": "$4M — color-palette licensing via NFTs"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a color palette preservation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$300M \u2014 digital art toolsets",
+      "som": "$4M \u2014 color-palette licensing via NFTs"
     },
     {
       "id": "visual-art-brushstroke-chain-5",
@@ -1122,10 +1122,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a brush technique archives demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$150M — visual art teaching content",
-      "som": "$3M — brushstroke NFT sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a brush technique archives demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$150M \u2014 visual art teaching content",
+      "som": "$3M \u2014 brushstroke NFT sales"
     },
     {
       "id": "visual-art-minted-murals-6",
@@ -1136,10 +1136,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a public mural documentation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$500M — public art projects",
-      "som": "$8M — NFT mural provenance fees"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a public mural documentation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$500M \u2014 public art projects",
+      "som": "$8M \u2014 NFT mural provenance fees"
     },
     {
       "id": "visual-art-framechain-7",
@@ -1150,24 +1150,24 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a art reproduction control demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$3B — art reproduction licensing",
-      "som": "$50M — provenance NFT reproduction licenses"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a art reproduction control demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$3B \u2014 art reproduction licensing",
+      "som": "$50M \u2014 provenance NFT reproduction licenses"
     },
     {
       "id": "visual-art-illustrator-s-imprint-8",
       "theme": "visual-art",
-      "title": "Illustrator’s Imprint",
+      "title": "Illustrator\u2019s Imprint",
       "pitch": "Mint signed digital prints with verifiable creator provenance directly on the blockchain.",
       "subDiscipline": "signed digital prints",
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a signed digital prints demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$1B — digital print sales",
-      "som": "$15M — NFT print provenance market"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a signed digital prints demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$1B \u2014 digital print sales",
+      "som": "$15M \u2014 NFT print provenance market"
     },
     {
       "id": "visual-art-provenance-palette-9",
@@ -1178,10 +1178,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a artist palette provenance demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$50M — artist tools & collectibles",
-      "som": "$1.5M — NFT-verified palette auctions"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a artist palette provenance demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$50M \u2014 artist tools & collectibles",
+      "som": "$1.5M \u2014 NFT-verified palette auctions"
     },
     {
       "id": "visual-art-pixel-provenance-10",
@@ -1192,10 +1192,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a pixel art authentication demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$250M — pixel art market",
-      "som": "$5M — NFT pixel art provenance"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a pixel art authentication demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$250M \u2014 pixel art market",
+      "som": "$5M \u2014 NFT pixel art provenance"
     },
     {
       "id": "visual-art-exhibit-echo-11",
@@ -1206,10 +1206,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a virtual exhibition records demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$1B — virtual exhibition revenues",
-      "som": "$12M — NFT exhibit provenance buyers"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a virtual exhibition records demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$1B \u2014 virtual exhibition revenues",
+      "som": "$12M \u2014 NFT exhibit provenance buyers"
     },
     {
       "id": "visual-art-storyboard-stamp-12",
@@ -1220,10 +1220,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a concept art progression demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$350M — concept art services",
-      "som": "$6M — provenance NFT storyboards"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a concept art progression demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$350M \u2014 concept art services",
+      "som": "$6M \u2014 provenance NFT storyboards"
     },
     {
       "id": "visual-art-masterstroke-mint-13",
@@ -1234,10 +1234,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a signature artwork certs demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$9B — art certification services",
-      "som": "$100M — NFT-based authenticity certificates"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a signature artwork certs demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$9B \u2014 art certification services",
+      "som": "$100M \u2014 NFT-based authenticity certificates"
     },
     {
       "id": "visual-art-layer-ledger-14",
@@ -1248,10 +1248,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a digital painting layers demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$400M — digital art creation tools",
-      "som": "$7M — provenance NFTs of layers"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a digital painting layers demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$400M \u2014 digital art creation tools",
+      "som": "$7M \u2014 provenance NFTs of layers"
     },
     {
       "id": "visual-art-artchain-auction-15",
@@ -1262,10 +1262,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a secondary art sales demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$15B — secondary art market",
-      "som": "$300M — NFT provenance auction fees"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a secondary art sales demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$15B \u2014 secondary art market",
+      "som": "$300M \u2014 NFT provenance auction fees"
     },
     {
       "id": "visual-art-color-code-vault-16",
@@ -1276,10 +1276,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a digital color codes demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$200M — digital color tool market",
-      "som": "$3M — NFT color code licenses"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a digital color codes demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$200M \u2014 digital color tool market",
+      "som": "$3M \u2014 NFT color code licenses"
     },
     {
       "id": "visual-art-art-mentor-mark-17",
@@ -1290,10 +1290,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a art mentorship proof demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$500M — art education platforms",
-      "som": "$8M — NFT mentorship certificates"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a art mentorship proof demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$500M \u2014 art education platforms",
+      "som": "$8M \u2014 NFT mentorship certificates"
     },
     {
       "id": "visual-art-signature-seal-18",
@@ -1304,10 +1304,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a digital signature minting demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$1B — digital signature services",
-      "som": "$12M — NFT signature deployments"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a digital signature minting demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$1B \u2014 digital signature services",
+      "som": "$12M \u2014 NFT signature deployments"
     },
     {
       "id": "visual-art-nft-mirror-19",
@@ -1318,10 +1318,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a artistic reflection sets demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$250M — contemporary art niche",
-      "som": "$4M — NFT paired artwork sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a artistic reflection sets demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$250M \u2014 contemporary art niche",
+      "som": "$4M \u2014 NFT paired artwork sales"
     },
     {
       "id": "visual-art-art-rewind-20",
@@ -1332,10 +1332,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a creative process playback demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$350M — digital art tutorials",
-      "som": "$6M — NFT creative process records"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a creative process playback demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$350M \u2014 digital art tutorials",
+      "som": "$6M \u2014 NFT creative process records"
     },
     {
       "id": "visual-art-gallery-provenance-21",
@@ -1346,10 +1346,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a physical gallery tracking demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$6B — gallery exhibited artwork",
-      "som": "$90M — NFT gallery provenance usage"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a physical gallery tracking demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$6B \u2014 gallery exhibited artwork",
+      "som": "$90M \u2014 NFT gallery provenance usage"
     },
     {
       "id": "visual-art-nft-colorgram-22",
@@ -1360,10 +1360,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a chromatic art NFTs demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$500M — color-focused art collectors",
-      "som": "$7M — NFT color art trading"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a chromatic art NFTs demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$500M \u2014 color-focused art collectors",
+      "som": "$7M \u2014 NFT color art trading"
     },
     {
       "id": "visual-art-motion-mint-23",
@@ -1374,10 +1374,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a animated illustration ownership demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$600M — animated illustration market",
-      "som": "$9M — NFT animated art sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a animated illustration ownership demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$600M \u2014 animated illustration market",
+      "som": "$9M \u2014 NFT animated art sales"
     },
     {
       "id": "visual-art-provenance-palette-24",
@@ -1388,10 +1388,1510 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a physical palette digitization demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$65B — global visual art market",
-      "sam": "$50M — art collector memorabilia",
-      "som": "$1.2M — NFT palette collector sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a physical palette digitization demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$65B \u2014 global visual art market",
+      "sam": "$50M \u2014 art collector memorabilia",
+      "som": "$1.2M \u2014 NFT palette collector sales"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-000-curator-agent-for-digital-art-licensing",
+      "theme": "visual-art",
+      "title": "Curator Agent for digital-art licensing",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: curator agent. Vertical: digital-art licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-001-auction-gallery-commissions",
+      "theme": "visual-art",
+      "title": "Auction \u00b7 gallery commissions",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: translator agent. Vertical: gallery commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-002-arbitrator-agent-for-print-on-demand-run",
+      "theme": "visual-art",
+      "title": "Arbitrator Agent for print-on-demand runs",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: arbitrator agent. Vertical: print-on-demand runs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-003-buyer-agent-for-generative-art-prompt-sa",
+      "theme": "visual-art",
+      "title": "Buyer Agent for generative-art prompt sales",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: buyer agent. Vertical: generative-art prompt sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-004-arbitrator-agent-for-commission-request-",
+      "theme": "visual-art",
+      "title": "Arbitrator Agent for commission-request auctions",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: arbitrator agent. Vertical: commission-request auctions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-005-agentic-aggregate-collector-provenance-p",
+      "theme": "visual-art",
+      "title": "Agentic aggregate: collector-provenance passports",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: curator agent. Vertical: collector-provenance passports. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-006-agentic-escrow-edition-drops",
+      "theme": "visual-art",
+      "title": "Agentic escrow: edition drops",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: recommender agent. Vertical: edition drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-007-delegate-critique-agent-hire-via-pricing",
+      "theme": "visual-art",
+      "title": "Delegate critique-agent hire via pricing agent",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: pricing agent. Vertical: critique-agent hire. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-008-recommender-agent-for-residency-stipends",
+      "theme": "visual-art",
+      "title": "Recommender Agent for residency stipends",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: recommender agent. Vertical: residency stipends. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-009-buyer-agent-for-moodboard-curation",
+      "theme": "visual-art",
+      "title": "Buyer Agent for moodboard curation",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: buyer agent. Vertical: moodboard curation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-010-match-digital-art-licensing-via-pricing-",
+      "theme": "visual-art",
+      "title": "Match digital-art licensing via pricing agent",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: pricing agent. Vertical: digital-art licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-011-agentic-auction-gallery-commissions",
+      "theme": "visual-art",
+      "title": "Agentic auction: gallery commissions",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: pricing agent. Vertical: gallery commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-012-auction-print-on-demand-runs-via-pricing",
+      "theme": "visual-art",
+      "title": "Auction print-on-demand runs via pricing agent",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: pricing agent. Vertical: print-on-demand runs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-013-agentic-underwrite-generative-art-prompt",
+      "theme": "visual-art",
+      "title": "Agentic underwrite: generative-art prompt sales",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: recommender agent. Vertical: generative-art prompt sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-014-commission-request-auctions-rebalance-la",
+      "theme": "visual-art",
+      "title": "Commission-Request Auctions \u2014 rebalance lane",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: seller agent. Vertical: commission-request auctions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-015-collector-provenance-passports-underwrit",
+      "theme": "visual-art",
+      "title": "Collector-Provenance Passports \u2014 underwrite lane",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: arbitrator agent. Vertical: collector-provenance passports. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-016-agentic-aggregate-edition-drops",
+      "theme": "visual-art",
+      "title": "Agentic aggregate: edition drops",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: recommender agent. Vertical: edition drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-017-auction-critique-agent-hire-via-sourcing",
+      "theme": "visual-art",
+      "title": "Auction critique-agent hire via sourcing agent",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: sourcing agent. Vertical: critique-agent hire. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-018-translator-agent-for-residency-stipends",
+      "theme": "visual-art",
+      "title": "Translator Agent for residency stipends",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: translator agent. Vertical: residency stipends. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-019-agentic-negotiate-moodboard-curation",
+      "theme": "visual-art",
+      "title": "Agentic negotiate: moodboard curation",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: sourcing agent. Vertical: moodboard curation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-020-digital-art-licensing-auction-lane",
+      "theme": "visual-art",
+      "title": "Digital-Art Licensing \u2014 auction lane",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: curator agent. Vertical: digital-art licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-021-sourcing-agent-for-gallery-commissions",
+      "theme": "visual-art",
+      "title": "Sourcing Agent for gallery commissions",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: sourcing agent. Vertical: gallery commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-022-agentic-match-print-on-demand-runs",
+      "theme": "visual-art",
+      "title": "Agentic match: print-on-demand runs",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: sourcing agent. Vertical: print-on-demand runs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-023-agentic-aggregate-generative-art-prompt-",
+      "theme": "visual-art",
+      "title": "Agentic aggregate: generative-art prompt sales",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: pricing agent. Vertical: generative-art prompt sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-024-auction-commission-request-auctions",
+      "theme": "visual-art",
+      "title": "Auction \u00b7 commission-request auctions",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: arbitrator agent. Vertical: commission-request auctions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-025-collector-provenance-passports-match-lan",
+      "theme": "visual-art",
+      "title": "Collector-Provenance Passports \u2014 match lane",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: sourcing agent. Vertical: collector-provenance passports. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-026-edition-drops-negotiate-lane",
+      "theme": "visual-art",
+      "title": "Edition Drops \u2014 negotiate lane",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: seller agent. Vertical: edition drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-027-critique-agent-hire-underwrite-lane",
+      "theme": "visual-art",
+      "title": "Critique-Agent Hire \u2014 underwrite lane",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: arbitrator agent. Vertical: critique-agent hire. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-028-agentic-negotiate-residency-stipends",
+      "theme": "visual-art",
+      "title": "Agentic negotiate: residency stipends",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: arbitrator agent. Vertical: residency stipends. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-029-broker-moodboard-curation",
+      "theme": "visual-art",
+      "title": "Broker \u00b7 moodboard curation",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: pricing agent. Vertical: moodboard curation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-030-escrow-agent-for-digital-art-licensing",
+      "theme": "visual-art",
+      "title": "Escrow Agent for digital-art licensing",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: escrow agent. Vertical: digital-art licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-031-curator-agent-for-gallery-commissions",
+      "theme": "visual-art",
+      "title": "Curator Agent for gallery commissions",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: curator agent. Vertical: gallery commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-032-agentic-negotiate-print-on-demand-runs",
+      "theme": "visual-art",
+      "title": "Agentic negotiate: print-on-demand runs",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: curator agent. Vertical: print-on-demand runs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-033-delegate-generative-art-prompt-sales-via",
+      "theme": "visual-art",
+      "title": "Delegate generative-art prompt sales via curator agent",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: curator agent. Vertical: generative-art prompt sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-034-match-commission-request-auctions",
+      "theme": "visual-art",
+      "title": "Match \u00b7 commission-request auctions",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: translator agent. Vertical: commission-request auctions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-035-agentic-escrow-collector-provenance-pass",
+      "theme": "visual-art",
+      "title": "Agentic escrow: collector-provenance passports",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: sourcing agent. Vertical: collector-provenance passports. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-036-edition-drops-split-lane",
+      "theme": "visual-art",
+      "title": "Edition Drops \u2014 split lane",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: curator agent. Vertical: edition drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-037-agentic-broker-critique-agent-hire",
+      "theme": "visual-art",
+      "title": "Agentic broker: critique-agent hire",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: translator agent. Vertical: critique-agent hire. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-038-match-residency-stipends",
+      "theme": "visual-art",
+      "title": "Match \u00b7 residency stipends",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: seller agent. Vertical: residency stipends. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-039-split-moodboard-curation",
+      "theme": "visual-art",
+      "title": "Split \u00b7 moodboard curation",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: seller agent. Vertical: moodboard curation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-040-digital-art-licensing-escrow-lane",
+      "theme": "visual-art",
+      "title": "Digital-Art Licensing \u2014 escrow lane",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: sourcing agent. Vertical: digital-art licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-041-escrow-gallery-commissions-via-buyer-age",
+      "theme": "visual-art",
+      "title": "Escrow gallery commissions via buyer agent",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: buyer agent. Vertical: gallery commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-042-print-on-demand-runs-split-lane",
+      "theme": "visual-art",
+      "title": "Print-On-Demand Runs \u2014 split lane",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: buyer agent. Vertical: print-on-demand runs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-043-generative-art-prompt-sales-aggregate-la",
+      "theme": "visual-art",
+      "title": "Generative-Art Prompt Sales \u2014 aggregate lane",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: seller agent. Vertical: generative-art prompt sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-044-agentic-split-commission-request-auction",
+      "theme": "visual-art",
+      "title": "Agentic split: commission-request auctions",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: pricing agent. Vertical: commission-request auctions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-045-match-collector-provenance-passports-via",
+      "theme": "visual-art",
+      "title": "Match collector-provenance passports via translator agent",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: translator agent. Vertical: collector-provenance passports. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-046-auction-edition-drops",
+      "theme": "visual-art",
+      "title": "Auction \u00b7 edition drops",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: recommender agent. Vertical: edition drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-047-critique-agent-hire-aggregate-lane",
+      "theme": "visual-art",
+      "title": "Critique-Agent Hire \u2014 aggregate lane",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: pricing agent. Vertical: critique-agent hire. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-048-agentic-underwrite-residency-stipends",
+      "theme": "visual-art",
+      "title": "Agentic underwrite: residency stipends",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: pricing agent. Vertical: residency stipends. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-a2a-ap2-049-arbitrator-agent-for-moodboard-curation",
+      "theme": "visual-art",
+      "title": "Arbitrator Agent for moodboard curation",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: arbitrator agent. Vertical: moodboard curation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "visual-art-agentic-ucp-000-digital-art-licensing-refund-lane",
+      "theme": "visual-art",
+      "title": "Digital-Art Licensing \u2014 refund lane",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: co-op member. Vertical: digital-art licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-001-agentic-zk-checkout-gallery-commissions",
+      "theme": "visual-art",
+      "title": "Agentic zk checkout: gallery commissions",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: co-op member. Vertical: gallery commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-002-bulk-order-print-on-demand-runs-via-arti",
+      "theme": "visual-art",
+      "title": "Bulk Order print-on-demand runs via artist co-operative",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: artist co-operative. Vertical: print-on-demand runs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-003-artist-co-operative-for-generative-art-p",
+      "theme": "visual-art",
+      "title": "Artist Co-Operative for generative-art prompt sales",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: artist co-operative. Vertical: generative-art prompt sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-004-zk-checkout-commission-request-auctions-",
+      "theme": "visual-art",
+      "title": "ZK Checkout commission-request auctions via buyer",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: buyer. Vertical: commission-request auctions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-005-agentic-zk-checkout-collector-provenance",
+      "theme": "visual-art",
+      "title": "Agentic zk checkout: collector-provenance passports",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: merchant. Vertical: collector-provenance passports. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-006-co-op-member-for-edition-drops",
+      "theme": "visual-art",
+      "title": "Co-Op Member for edition drops",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: co-op member. Vertical: edition drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-007-gig-worker-collective-for-critique-agent",
+      "theme": "visual-art",
+      "title": "Gig-Worker Collective for critique-agent hire",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: gig-worker collective. Vertical: critique-agent hire. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-008-agentic-discovery-residency-stipends",
+      "theme": "visual-art",
+      "title": "Agentic discovery: residency stipends",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: artist co-operative. Vertical: residency stipends. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-009-agentic-bulk-order-moodboard-curation",
+      "theme": "visual-art",
+      "title": "Agentic bulk order: moodboard curation",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: merchant. Vertical: moodboard curation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-010-self-test-digital-art-licensing-via-affi",
+      "theme": "visual-art",
+      "title": "Self-Test digital-art licensing via affiliate",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: affiliate. Vertical: digital-art licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-011-bulk-order-gallery-commissions",
+      "theme": "visual-art",
+      "title": "Bulk Order \u00b7 gallery commissions",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: buyer. Vertical: gallery commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-012-agentic-bulk-order-print-on-demand-runs",
+      "theme": "visual-art",
+      "title": "Agentic bulk order: print-on-demand runs",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: merchant. Vertical: print-on-demand runs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-013-bulk-order-generative-art-prompt-sales",
+      "theme": "visual-art",
+      "title": "Bulk Order \u00b7 generative-art prompt sales",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: co-op member. Vertical: generative-art prompt sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-014-self-test-commission-request-auctions-vi",
+      "theme": "visual-art",
+      "title": "Self-Test commission-request auctions via creator DAO",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: creator DAO. Vertical: commission-request auctions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-015-zk-checkout-collector-provenance-passpor",
+      "theme": "visual-art",
+      "title": "ZK Checkout \u00b7 collector-provenance passports",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: co-op member. Vertical: collector-provenance passports. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-016-creator-dao-for-edition-drops",
+      "theme": "visual-art",
+      "title": "Creator Dao for edition drops",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: creator DAO. Vertical: edition drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-017-critique-agent-hire-self-test-lane",
+      "theme": "visual-art",
+      "title": "Critique-Agent Hire \u2014 self-test lane",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: affiliate. Vertical: critique-agent hire. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-018-residency-stipends-refund-lane",
+      "theme": "visual-art",
+      "title": "Residency Stipends \u2014 refund lane",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: wholesale desk. Vertical: residency stipends. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-019-signed-receipt-moodboard-curation-via-wh",
+      "theme": "visual-art",
+      "title": "Signed Receipt moodboard curation via wholesale desk",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: wholesale desk. Vertical: moodboard curation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-020-signed-receipt-digital-art-licensing-via",
+      "theme": "visual-art",
+      "title": "Signed Receipt digital-art licensing via co-op member",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: co-op member. Vertical: digital-art licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-021-self-test-gallery-commissions-via-buyer",
+      "theme": "visual-art",
+      "title": "Self-Test gallery commissions via buyer",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: buyer. Vertical: gallery commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-022-discovery-print-on-demand-runs",
+      "theme": "visual-art",
+      "title": "Discovery \u00b7 print-on-demand runs",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: affiliate. Vertical: print-on-demand runs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-023-generative-art-prompt-sales-self-test-la",
+      "theme": "visual-art",
+      "title": "Generative-Art Prompt Sales \u2014 self-test lane",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: co-op member. Vertical: generative-art prompt sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-ucp-024-commission-request-auctions-refund-lane",
+      "theme": "visual-art",
+      "title": "Commission-Request Auctions \u2014 refund lane",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: artist co-operative. Vertical: commission-request auctions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "visual-art-agentic-x402-000-digital-art-licensing-metered-api-lane",
+      "theme": "visual-art",
+      "title": "Digital-Art Licensing \u2014 metered api lane",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: premium content feed. Vertical: digital-art licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-001-agentic-tiered-gallery-commissions",
+      "theme": "visual-art",
+      "title": "Agentic tiered: gallery commissions",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: on-demand transcription API. Vertical: gallery commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-002-high-resolution-asset-for-print-on-deman",
+      "theme": "visual-art",
+      "title": "High-Resolution Asset for print-on-demand runs",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: high-resolution asset. Vertical: print-on-demand runs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-003-on-demand-transcription-api-for-generati",
+      "theme": "visual-art",
+      "title": "On-Demand Transcription Api for generative-art prompt sales",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: on-demand transcription API. Vertical: generative-art prompt sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-004-agentic-refund-commission-request-auctio",
+      "theme": "visual-art",
+      "title": "Agentic refund: commission-request auctions",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: code-audit LLM route. Vertical: commission-request auctions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-005-tiered-collector-provenance-passports-vi",
+      "theme": "visual-art",
+      "title": "Tiered collector-provenance passports via code-audit LLM route",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: code-audit LLM route. Vertical: collector-provenance passports. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-006-prepaid-edition-drops-via-search-tool-we",
+      "theme": "visual-art",
+      "title": "Prepaid edition drops via search-tool webhook",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: search-tool webhook. Vertical: edition drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-007-metered-api-critique-agent-hire-via-sear",
+      "theme": "visual-art",
+      "title": "Metered API critique-agent hire via search-tool webhook",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: search-tool webhook. Vertical: critique-agent hire. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-008-tiered-residency-stipends-via-on-demand-",
+      "theme": "visual-art",
+      "title": "Tiered residency stipends via on-demand transcription API",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: on-demand transcription API. Vertical: residency stipends. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-009-paywall-moodboard-curation-via-private-a",
+      "theme": "visual-art",
+      "title": "Paywall moodboard curation via private analytics endpoint",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: private analytics endpoint. Vertical: moodboard curation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-010-agentic-tiered-digital-art-licensing",
+      "theme": "visual-art",
+      "title": "Agentic tiered: digital-art licensing",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: on-demand transcription API. Vertical: digital-art licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-011-agentic-paywall-gallery-commissions",
+      "theme": "visual-art",
+      "title": "Agentic paywall: gallery commissions",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: moderator LLM. Vertical: gallery commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-012-print-on-demand-runs-metered-api-lane",
+      "theme": "visual-art",
+      "title": "Print-On-Demand Runs \u2014 metered api lane",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: translator microservice. Vertical: print-on-demand runs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-013-refund-generative-art-prompt-sales-via-e",
+      "theme": "visual-art",
+      "title": "Refund generative-art prompt sales via embedding-search endpoint",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: embedding-search endpoint. Vertical: generative-art prompt sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-014-agentic-prepaid-commission-request-aucti",
+      "theme": "visual-art",
+      "title": "Agentic prepaid: commission-request auctions",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: translator microservice. Vertical: commission-request auctions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-015-metered-api-collector-provenance-passpor",
+      "theme": "visual-art",
+      "title": "Metered API \u00b7 collector-provenance passports",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: moderator LLM. Vertical: collector-provenance passports. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-016-paywall-edition-drops-via-private-analyt",
+      "theme": "visual-art",
+      "title": "Paywall edition drops via private analytics endpoint",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: private analytics endpoint. Vertical: edition drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-017-metered-api-critique-agent-hire-via-tran",
+      "theme": "visual-art",
+      "title": "Metered API critique-agent hire via translator microservice",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: translator microservice. Vertical: critique-agent hire. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-018-streaming-residency-stipends-via-private",
+      "theme": "visual-art",
+      "title": "Streaming residency stipends via private analytics endpoint",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: private analytics endpoint. Vertical: residency stipends. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-019-paywall-moodboard-curation-via-ai-model-",
+      "theme": "visual-art",
+      "title": "Paywall moodboard curation via AI-model API",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: AI-model API. Vertical: moodboard curation. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-020-embedding-search-endpoint-for-digital-ar",
+      "theme": "visual-art",
+      "title": "Embedding-Search Endpoint for digital-art licensing",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: embedding-search endpoint. Vertical: digital-art licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-021-metered-api-gallery-commissions",
+      "theme": "visual-art",
+      "title": "Metered API \u00b7 gallery commissions",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: private analytics endpoint. Vertical: gallery commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-022-prepaid-print-on-demand-runs-via-code-au",
+      "theme": "visual-art",
+      "title": "Prepaid print-on-demand runs via code-audit LLM route",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: code-audit LLM route. Vertical: print-on-demand runs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-023-metered-api-generative-art-prompt-sales",
+      "theme": "visual-art",
+      "title": "Metered API \u00b7 generative-art prompt sales",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: embedding-search endpoint. Vertical: generative-art prompt sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "visual-art-agentic-x402-024-code-audit-llm-route-for-commission-requ",
+      "theme": "visual-art",
+      "title": "Code-Audit Llm Route for commission-request auctions",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: code-audit LLM route. Vertical: commission-request auctions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
     }
   ]
 }

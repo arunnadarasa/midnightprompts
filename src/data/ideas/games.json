@@ -2,7 +2,7 @@
   "theme": {
     "slug": "games",
     "name": "Game Design & Interactive Media",
-    "emoji": "🎮",
+    "emoji": "\ud83c\udfae",
     "audience": "game designers, interactive artists, XR creators",
     "market_anchor": "the game industry (~$200B) and >3M indie developers"
   },
@@ -17,9 +17,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a quest tracking demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.2B — global RPG market valuing player progression features",
-      "sam": "$300M — blockchain-enhanced gaming platforms",
-      "som": "$25M — indie RPG developers integrating onchain tracking"
+      "tam": "$1.2B \u2014 global RPG market valuing player progression features",
+      "sam": "$300M \u2014 blockchain-enhanced gaming platforms",
+      "som": "$25M \u2014 indie RPG developers integrating onchain tracking"
     },
     {
       "id": "games-tokenized-loot-drops-1",
@@ -31,9 +31,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a item distribution demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$2.5B — global loot box and item trading market",
-      "sam": "$800M — NFT-powered gaming assets",
-      "som": "$40M — indie multiplayer games with tokenized economies"
+      "tam": "$2.5B \u2014 global loot box and item trading market",
+      "sam": "$800M \u2014 NFT-powered gaming assets",
+      "som": "$40M \u2014 indie multiplayer games with tokenized economies"
     },
     {
       "id": "games-player-reputation-ledger-2",
@@ -45,9 +45,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a community trust demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$900M — global online multiplayer market needing trust systems",
-      "sam": "$200M — blockchain reputation management in games",
-      "som": "$15M — indie developers building social trust features"
+      "tam": "$900M \u2014 global online multiplayer market needing trust systems",
+      "sam": "$200M \u2014 blockchain reputation management in games",
+      "som": "$15M \u2014 indie developers building social trust features"
     },
     {
       "id": "games-onchain-puzzle-locks-3",
@@ -59,9 +59,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a interactive puzzles demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$700M — global puzzle game revenue including ARGs",
-      "sam": "$180M — blockchain-integrated puzzle experiences",
-      "som": "$12M — indie puzzle creators exploring cryptographic challenges"
+      "tam": "$700M \u2014 global puzzle game revenue including ARGs",
+      "sam": "$180M \u2014 blockchain-integrated puzzle experiences",
+      "som": "$12M \u2014 indie puzzle creators exploring cryptographic challenges"
     },
     {
       "id": "games-immutable-scoreboards-4",
@@ -73,9 +73,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a competitive scoring demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.1B — esports and competitive gaming markets",
-      "sam": "$350M — blockchain-based scoreboard solutions",
-      "som": "$22M — indie competitive game developers"
+      "tam": "$1.1B \u2014 esports and competitive gaming markets",
+      "sam": "$350M \u2014 blockchain-based scoreboard solutions",
+      "som": "$22M \u2014 indie competitive game developers"
     },
     {
       "id": "games-collectible-avatars-5",
@@ -87,9 +87,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a character customization demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$3B — global avatar accessory market",
-      "sam": "$1B — blockchain-customizable in-game assets",
-      "som": "$60M — indie games specializing in avatar economies"
+      "tam": "$3B \u2014 global avatar accessory market",
+      "sam": "$1B \u2014 blockchain-customizable in-game assets",
+      "som": "$60M \u2014 indie games specializing in avatar economies"
     },
     {
       "id": "games-onchain-narrative-branches-6",
@@ -101,9 +101,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a storytelling demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$900M — interactive story-driven games market",
-      "sam": "$250M — blockchain-enabled narrative games",
-      "som": "$18M — indie narrative game developers"
+      "tam": "$900M \u2014 interactive story-driven games market",
+      "sam": "$250M \u2014 blockchain-enabled narrative games",
+      "som": "$18M \u2014 indie narrative game developers"
     },
     {
       "id": "games-decentralized-game-voting-7",
@@ -115,9 +115,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a community governance demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$500M — player-driven game feature development market",
-      "sam": "$150M — blockchain governance in games",
-      "som": "$10M — indie developers using onchain voting"
+      "tam": "$500M \u2014 player-driven game feature development market",
+      "sam": "$150M \u2014 blockchain governance in games",
+      "som": "$10M \u2014 indie developers using onchain voting"
     },
     {
       "id": "games-proof-of-play-events-8",
@@ -129,9 +129,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a event verification demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$450M — global online event gaming market",
-      "sam": "$120M — blockchain-based event verification",
-      "som": "$8M — indie event-centric games"
+      "tam": "$450M \u2014 global online event gaming market",
+      "sam": "$120M \u2014 blockchain-based event verification",
+      "som": "$8M \u2014 indie event-centric games"
     },
     {
       "id": "games-onchain-multiplayer-matchmaking-9",
@@ -143,9 +143,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a match coordination demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$2B — global online multiplayer market",
-      "sam": "$600M — blockchain-enhanced matchmaking solutions",
-      "som": "$30M — indie multiplayer developers exploring onchain matching"
+      "tam": "$2B \u2014 global online multiplayer market",
+      "sam": "$600M \u2014 blockchain-enhanced matchmaking solutions",
+      "som": "$30M \u2014 indie multiplayer developers exploring onchain matching"
     },
     {
       "id": "games-rare-achievement-tokens-10",
@@ -157,9 +157,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a achievement systems demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1B — game achievements and rewards market",
-      "sam": "$400M — blockchain achievement token markets",
-      "som": "$25M — indie developers integrating unique achievements"
+      "tam": "$1B \u2014 game achievements and rewards market",
+      "sam": "$400M \u2014 blockchain achievement token markets",
+      "som": "$25M \u2014 indie developers integrating unique achievements"
     },
     {
       "id": "games-onchain-virtual-economies-11",
@@ -171,9 +171,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a economy management demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$5B — global in-game economy market",
-      "sam": "$1.5B — blockchain virtual economy platforms",
-      "som": "$75M — indie developers building decentralized economies"
+      "tam": "$5B \u2014 global in-game economy market",
+      "sam": "$1.5B \u2014 blockchain virtual economy platforms",
+      "som": "$75M \u2014 indie developers building decentralized economies"
     },
     {
       "id": "games-dynamic-nft-game-assets-12",
@@ -185,9 +185,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a asset evolution demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$2B — NFT gaming assets market",
-      "sam": "$700M — dynamic NFT implementations",
-      "som": "$35M — indie NFT game studios"
+      "tam": "$2B \u2014 NFT gaming assets market",
+      "sam": "$700M \u2014 dynamic NFT implementations",
+      "som": "$35M \u2014 indie NFT game studios"
     },
     {
       "id": "games-onchain-scavenger-hunts-13",
@@ -199,9 +199,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a interactive exploration demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$600M — augmented reality game market",
-      "sam": "$180M — blockchain location-based games",
-      "som": "$15M — indie AR game creators"
+      "tam": "$600M \u2014 augmented reality game market",
+      "sam": "$180M \u2014 blockchain location-based games",
+      "som": "$15M \u2014 indie AR game creators"
     },
     {
       "id": "games-transparent-rng-mechanics-14",
@@ -213,9 +213,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a game fairness demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.3B — global gaming fairness and anti-cheat market",
-      "sam": "$400M — blockchain RNG services",
-      "som": "$28M — indie developers needing trustworthy RNG"
+      "tam": "$1.3B \u2014 global gaming fairness and anti-cheat market",
+      "sam": "$400M \u2014 blockchain RNG services",
+      "som": "$28M \u2014 indie developers needing trustworthy RNG"
     },
     {
       "id": "games-onchain-skill-trees-15",
@@ -227,9 +227,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a character progression demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1B — skill progression system market",
-      "sam": "$350M — blockchain-based progression tracking",
-      "som": "$20M — indie RPG and strategy developers"
+      "tam": "$1B \u2014 skill progression system market",
+      "sam": "$350M \u2014 blockchain-based progression tracking",
+      "som": "$20M \u2014 indie RPG and strategy developers"
     },
     {
       "id": "games-decentralized-story-co-creation-16",
@@ -241,9 +241,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a collaborative narrative demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$800M — interactive storytelling market",
-      "sam": "$220M — blockchain narrative collaboration",
-      "som": "$14M — indie interactive media creators"
+      "tam": "$800M \u2014 interactive storytelling market",
+      "sam": "$220M \u2014 blockchain narrative collaboration",
+      "som": "$14M \u2014 indie interactive media creators"
     },
     {
       "id": "games-onchain-game-jam-scores-17",
@@ -255,9 +255,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a competition scoring demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$400M — game jam and indie competition market",
-      "sam": "$90M — blockchain-based competition platforms",
-      "som": "$7M — indie game jam organizers"
+      "tam": "$400M \u2014 game jam and indie competition market",
+      "sam": "$90M \u2014 blockchain-based competition platforms",
+      "som": "$7M \u2014 indie game jam organizers"
     },
     {
       "id": "games-player-created-onchain-items-18",
@@ -269,9 +269,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a user-generated content demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.7B — user-generated content monetization",
-      "sam": "$500M — blockchain-based content marketplaces",
-      "som": "$30M — indie games with UGC economies"
+      "tam": "$1.7B \u2014 user-generated content monetization",
+      "sam": "$500M \u2014 blockchain-based content marketplaces",
+      "som": "$30M \u2014 indie games with UGC economies"
     },
     {
       "id": "games-onchain-vr-experience-logs-19",
@@ -283,9 +283,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a immersive interaction demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.5B — VR software and content market",
-      "sam": "$450M — blockchain-enhanced VR applications",
-      "som": "$25M — indie VR creators needing trustable logs"
+      "tam": "$1.5B \u2014 VR software and content market",
+      "sam": "$450M \u2014 blockchain-enhanced VR applications",
+      "som": "$25M \u2014 indie VR creators needing trustable logs"
     },
     {
       "id": "games-blockchain-dialogue-trees-20",
@@ -297,9 +297,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a interactive dialogue demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$850M — interactive narrative dialogue market",
-      "sam": "$300M — blockchain dialogue integration",
-      "som": "$16M — indie narrative game developers"
+      "tam": "$850M \u2014 interactive narrative dialogue market",
+      "sam": "$300M \u2014 blockchain dialogue integration",
+      "som": "$16M \u2014 indie narrative game developers"
     },
     {
       "id": "games-onchain-speedrun-verification-21",
@@ -311,9 +311,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a challenge validation demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$600M — speedrunning and challenge gaming market",
-      "sam": "$150M — blockchain-based verification services",
-      "som": "$9M — indie speedrun community tools"
+      "tam": "$600M \u2014 speedrunning and challenge gaming market",
+      "sam": "$150M \u2014 blockchain-based verification services",
+      "som": "$9M \u2014 indie speedrun community tools"
     },
     {
       "id": "games-decentralized-game-mods-22",
@@ -325,9 +325,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a mod distribution demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$1.1B — game modding market",
-      "sam": "$350M — blockchain-based content distribution",
-      "som": "$22M — indie modding tool developers"
+      "tam": "$1.1B \u2014 game modding market",
+      "sam": "$350M \u2014 blockchain-based content distribution",
+      "som": "$22M \u2014 indie modding tool developers"
     },
     {
       "id": "games-token-gated-game-access-23",
@@ -339,9 +339,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a access control demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$2.2B — premium and gated game content market",
-      "sam": "$700M — blockchain access control solutions",
-      "som": "$40M — indie developers experimenting with token gating"
+      "tam": "$2.2B \u2014 premium and gated game content market",
+      "sam": "$700M \u2014 blockchain access control solutions",
+      "som": "$40M \u2014 indie developers experimenting with token gating"
     },
     {
       "id": "games-onchain-interactive-artpieces-24",
@@ -353,9 +353,9 @@
       "quantumHookId": "compact-deploy",
       "quantumTag": "onchain logic",
       "quantumRationale": "This idea fits Compact ZK contract because onchain logic is exactly what a generative art demo needs: a Compact `.compact` contract compiled to ZK proving/verifying keys and deployed to the Midnight preview testnet, with p...",
-      "tam": "$600M — digital and interactive art market",
-      "sam": "$200M — blockchain-enabled generative art",
-      "som": "$12M — indie interactive media artists"
+      "tam": "$600M \u2014 digital and interactive art market",
+      "sam": "$200M \u2014 blockchain-enabled generative art",
+      "som": "$12M \u2014 indie interactive media artists"
     },
     {
       "id": "games-pixel-lore-vault-0",
@@ -367,9 +367,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a game narrative archiving demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — narrative tools for game studios globally",
-      "sam": "$200M — indie narrative design tools market",
-      "som": "$10M — early adopters in community-driven storytelling"
+      "tam": "$1B \u2014 narrative tools for game studios globally",
+      "sam": "$200M \u2014 indie narrative design tools market",
+      "som": "$10M \u2014 early adopters in community-driven storytelling"
     },
     {
       "id": "games-avatar-trait-forge-1",
@@ -381,9 +381,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a character customization data demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$3B — avatar customization market in gaming",
-      "sam": "$400M — indie avatar tool users",
-      "som": "$25M — avatar trait NFT collectors"
+      "tam": "$3B \u2014 avatar customization market in gaming",
+      "sam": "$400M \u2014 indie avatar tool users",
+      "som": "$25M \u2014 avatar trait NFT collectors"
     },
     {
       "id": "games-quest-chain-archive-2",
@@ -395,9 +395,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a interactive quest design demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$800M — global interactive quest tools",
-      "sam": "$120M — indie game narrative tools",
-      "som": "$8M — experimental quest designers"
+      "tam": "$800M \u2014 global interactive quest tools",
+      "sam": "$120M \u2014 indie game narrative tools",
+      "som": "$8M \u2014 experimental quest designers"
     },
     {
       "id": "games-xr-scene-snapshot-3",
@@ -409,9 +409,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a extended reality content storage demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$2B — XR content creation software",
-      "sam": "$350M — indie XR artists",
-      "som": "$20M — XR scene archivists"
+      "tam": "$2B \u2014 XR content creation software",
+      "sam": "$350M \u2014 indie XR artists",
+      "som": "$20M \u2014 XR scene archivists"
     },
     {
       "id": "games-procedural-map-depository-4",
@@ -423,9 +423,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a map generation and sharing demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.2B — game level design tools",
-      "sam": "$250M — indie map creators",
-      "som": "$15M — collaborative map builders"
+      "tam": "$1.2B \u2014 game level design tools",
+      "sam": "$250M \u2014 indie map creators",
+      "som": "$15M \u2014 collaborative map builders"
     },
     {
       "id": "games-artifact-provenance-ledger-5",
@@ -437,9 +437,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a in-game item history tracking demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$4B — virtual item marketplaces",
-      "sam": "$500M — indie collectible creators",
-      "som": "$35M — artifact provenance enthusiasts"
+      "tam": "$4B \u2014 virtual item marketplaces",
+      "sam": "$500M \u2014 indie collectible creators",
+      "som": "$35M \u2014 artifact provenance enthusiasts"
     },
     {
       "id": "games-audio-loop-library-6",
@@ -451,9 +451,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a sound asset curation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$900M — game audio markets worldwide",
-      "sam": "$180M — indie audio designers",
-      "som": "$12M — loop remixers"
+      "tam": "$900M \u2014 game audio markets worldwide",
+      "sam": "$180M \u2014 indie audio designers",
+      "som": "$12M \u2014 loop remixers"
     },
     {
       "id": "games-interactive-comic-archive-7",
@@ -465,9 +465,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a visual storytelling demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$600M — interactive storytelling market",
-      "sam": "$130M — indie comic creators",
-      "som": "$7M — narrative experimenters"
+      "tam": "$600M \u2014 interactive storytelling market",
+      "sam": "$130M \u2014 indie comic creators",
+      "som": "$7M \u2014 narrative experimenters"
     },
     {
       "id": "games-ai-npc-memory-hub-8",
@@ -479,9 +479,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a non-player character data demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.5B — AI-driven game content",
-      "sam": "$300M — indie AI game devs",
-      "som": "$18M — persistent world builders"
+      "tam": "$1.5B \u2014 AI-driven game content",
+      "sam": "$300M \u2014 indie AI game devs",
+      "som": "$18M \u2014 persistent world builders"
     },
     {
       "id": "games-glyph-pattern-codex-9",
@@ -493,9 +493,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a symbol and icon design demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$400M — UI/UX design assets",
-      "sam": "$90M — indie icon artists",
-      "som": "$6M — symbol reuse communities"
+      "tam": "$400M \u2014 UI/UX design assets",
+      "sam": "$90M \u2014 indie icon artists",
+      "som": "$6M \u2014 symbol reuse communities"
     },
     {
       "id": "games-mod-manifest-vault-10",
@@ -507,9 +507,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a game modification metadata demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1B — game modding ecosystem",
-      "sam": "$220M — indie mod developers",
-      "som": "$14M — mod distribution networks"
+      "tam": "$1B \u2014 game modding ecosystem",
+      "sam": "$220M \u2014 indie mod developers",
+      "som": "$14M \u2014 mod distribution networks"
     },
     {
       "id": "games-dynamic-ui-blueprint-11",
@@ -521,9 +521,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a interface state storage demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$700M — game UI tool market",
-      "sam": "$150M — indie UI designers",
-      "som": "$9M — dynamic interface users"
+      "tam": "$700M \u2014 game UI tool market",
+      "sam": "$150M \u2014 indie UI designers",
+      "som": "$9M \u2014 dynamic interface users"
     },
     {
       "id": "games-lore-collaboration-board-12",
@@ -535,9 +535,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a community storytelling demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$500M — collaborative content platforms",
-      "sam": "$100M — indie lore builders",
-      "som": "$5M — fan-driven stories"
+      "tam": "$500M \u2014 collaborative content platforms",
+      "sam": "$100M \u2014 indie lore builders",
+      "som": "$5M \u2014 fan-driven stories"
     },
     {
       "id": "games-playable-prop-archive-13",
@@ -549,9 +549,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a asset permanence demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$2B — 3D asset marketplace",
-      "sam": "$400M — indie asset creators",
-      "som": "$28M — reusable prop users"
+      "tam": "$2B \u2014 3D asset marketplace",
+      "sam": "$400M \u2014 indie asset creators",
+      "som": "$28M \u2014 reusable prop users"
     },
     {
       "id": "games-speedrun-data-ledger-14",
@@ -563,9 +563,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a game performance recording demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$300M — esports and speedrunning communities",
-      "sam": "$50M — indie speedrun organizers",
-      "som": "$3M — verified leaderboard users"
+      "tam": "$300M \u2014 esports and speedrunning communities",
+      "sam": "$50M \u2014 indie speedrun organizers",
+      "som": "$3M \u2014 verified leaderboard users"
     },
     {
       "id": "games-virtual-stage-archives-15",
@@ -577,9 +577,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a interactive performance spaces demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.8B — virtual events and XR",
-      "sam": "$320M — indie event creators",
-      "som": "$22M — archived stage designers"
+      "tam": "$1.8B \u2014 virtual events and XR",
+      "sam": "$320M \u2014 indie event creators",
+      "som": "$22M \u2014 archived stage designers"
     },
     {
       "id": "games-emotion-filter-pack-16",
@@ -591,9 +591,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a visual effect assets demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$600M — game visual effects market",
-      "sam": "$140M — indie effect designers",
-      "som": "$9M — emotional filter users"
+      "tam": "$600M \u2014 game visual effects market",
+      "sam": "$140M \u2014 indie effect designers",
+      "som": "$9M \u2014 emotional filter users"
     },
     {
       "id": "games-puzzle-logic-cache-17",
@@ -605,9 +605,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a game mechanic storage demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$400M — casual puzzle games market",
-      "sam": "$85M — indie puzzle creators",
-      "som": "$6M — puzzle sharing communities"
+      "tam": "$400M \u2014 casual puzzle games market",
+      "sam": "$85M \u2014 indie puzzle creators",
+      "som": "$6M \u2014 puzzle sharing communities"
     },
     {
       "id": "games-lore-token-index-18",
@@ -619,9 +619,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a metadata indexing demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$3B — game NFT ecosystems",
-      "sam": "$450M — indie token creators",
-      "som": "$30M — lore-token collectors"
+      "tam": "$3B \u2014 game NFT ecosystems",
+      "sam": "$450M \u2014 indie token creators",
+      "som": "$30M \u2014 lore-token collectors"
     },
     {
       "id": "games-multiplayer-mod-sync-19",
@@ -633,9 +633,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a cross-user asset distribution demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.5B — multiplayer game tools",
-      "sam": "$350M — indie multiplayer devs",
-      "som": "$25M — synchronized mod users"
+      "tam": "$1.5B \u2014 multiplayer game tools",
+      "sam": "$350M \u2014 indie multiplayer devs",
+      "som": "$25M \u2014 synchronized mod users"
     },
     {
       "id": "games-interactive-soundscapes-20",
@@ -647,9 +647,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a ambient audio curation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$700M — game audio ambient market",
-      "sam": "$170M — indie sound designers",
-      "som": "$11M — immersive audio users"
+      "tam": "$700M \u2014 game audio ambient market",
+      "sam": "$170M \u2014 indie sound designers",
+      "som": "$11M \u2014 immersive audio users"
     },
     {
       "id": "games-immersive-narrative-nodes-21",
@@ -661,9 +661,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a branching story data demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$900M — interactive fiction market",
-      "sam": "$200M — indie narrative devs",
-      "som": "$13M — branching story authors"
+      "tam": "$900M \u2014 interactive fiction market",
+      "sam": "$200M \u2014 indie narrative devs",
+      "som": "$13M \u2014 branching story authors"
     },
     {
       "id": "games-xr-artifact-library-22",
@@ -675,9 +675,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a 3D object preservation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.5B — XR content archive market",
-      "sam": "$300M — indie XR artists",
-      "som": "$20M — virtual artifact curators"
+      "tam": "$1.5B \u2014 XR content archive market",
+      "sam": "$300M \u2014 indie XR artists",
+      "som": "$20M \u2014 virtual artifact curators"
     },
     {
       "id": "games-game-jam-showcase-23",
@@ -689,9 +689,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a project preservation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$500M — game jam ecosystem",
-      "sam": "$120M — indie participants",
-      "som": "$7M — showcased projects"
+      "tam": "$500M \u2014 game jam ecosystem",
+      "sam": "$120M \u2014 indie participants",
+      "som": "$7M \u2014 showcased projects"
     },
     {
       "id": "games-tokenized-lore-boards-24",
@@ -703,9 +703,9 @@
       "quantumHookId": "ipfs-content",
       "quantumTag": "decentralized storage",
       "quantumRationale": "This idea fits IPFS content + on-chain CID because decentralized storage is exactly what a community content curation demo needs: pin creative artefacts to IPFS via Pinata, then commit the CID to the public ledger through the Compact contract so prov...",
-      "tam": "$1.3B — tokenized creative platforms",
-      "sam": "$320M — indie storytellers",
-      "som": "$18M — collaborative lore communities"
+      "tam": "$1.3B \u2014 tokenized creative platforms",
+      "sam": "$320M \u2014 indie storytellers",
+      "som": "$18M \u2014 collaborative lore communities"
     },
     {
       "id": "games-gasless-guilds-0",
@@ -717,9 +717,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a multiplayer coordination demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$8B — global MMOG social features market",
-      "sam": "$1.5B — guild and clan management tools",
-      "som": "$300M — gasless onboarding solutions for indie MMOGs"
+      "tam": "$8B \u2014 global MMOG social features market",
+      "sam": "$1.5B \u2014 guild and clan management tools",
+      "som": "$300M \u2014 gasless onboarding solutions for indie MMOGs"
     },
     {
       "id": "games-sponsored-loot-drops-1",
@@ -731,9 +731,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a reward distribution demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$12B — global game rewards market",
-      "sam": "$2.8B — indie game token economies",
-      "som": "$600M — gasless reward systems for digital collectibles"
+      "tam": "$12B \u2014 global game rewards market",
+      "sam": "$2.8B \u2014 indie game token economies",
+      "som": "$600M \u2014 gasless reward systems for digital collectibles"
     },
     {
       "id": "games-privy-vr-lobby-2",
@@ -745,9 +745,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a XR social spaces demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$7B — XR social platform market",
-      "sam": "$1.2B — immersive multiplayer spaces",
-      "som": "$250M — gasless onboarding in XR games"
+      "tam": "$7B \u2014 XR social platform market",
+      "sam": "$1.2B \u2014 immersive multiplayer spaces",
+      "som": "$250M \u2014 gasless onboarding in XR games"
     },
     {
       "id": "games-onchain-avatar-store-3",
@@ -759,9 +759,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a digital fashion demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$5B — virtual fashion and avatar market",
-      "sam": "$900M — indie avatar customization",
-      "som": "$200M — gasless avatar item transactions"
+      "tam": "$5B \u2014 virtual fashion and avatar market",
+      "sam": "$900M \u2014 indie avatar customization",
+      "som": "$200M \u2014 gasless avatar item transactions"
     },
     {
       "id": "games-social-quest-chains-4",
@@ -773,9 +773,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a interactive storytelling demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$4B — narrative-driven gaming market",
-      "sam": "$750M — collaborative storytelling tools",
-      "som": "$150M — gasless transaction systems for quests"
+      "tam": "$4B \u2014 narrative-driven gaming market",
+      "sam": "$750M \u2014 collaborative storytelling tools",
+      "som": "$150M \u2014 gasless transaction systems for quests"
     },
     {
       "id": "games-gasless-xr-art-swap-5",
@@ -787,9 +787,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a interactive art exchange demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$3B — XR art marketplace",
-      "sam": "$600M — indie interactive art platforms",
-      "som": "$120M — gasless NFT art swaps"
+      "tam": "$3B \u2014 XR art marketplace",
+      "sam": "$600M \u2014 indie interactive art platforms",
+      "som": "$120M \u2014 gasless NFT art swaps"
     },
     {
       "id": "games-privy-game-jam-6",
@@ -801,9 +801,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a developer community demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$2B — game development event market",
-      "sam": "$400M — indie game jam platforms",
-      "som": "$80M — gasless participant transactions"
+      "tam": "$2B \u2014 game development event market",
+      "sam": "$400M \u2014 indie game jam platforms",
+      "som": "$80M \u2014 gasless participant transactions"
     },
     {
       "id": "games-sponsored-beta-access-7",
@@ -815,9 +815,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a user testing demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$1.5B — game beta testing services",
-      "sam": "$300M — indie testing platforms",
-      "som": "$60M — gasless invite systems"
+      "tam": "$1.5B \u2014 game beta testing services",
+      "sam": "$300M \u2014 indie testing platforms",
+      "som": "$60M \u2014 gasless invite systems"
     },
     {
       "id": "games-privy-scoreboard-8",
@@ -829,9 +829,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a competitive ranking demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$4.5B — esports and leaderboard market",
-      "sam": "$850M — indie competitive platforms",
-      "som": "$170M — gasless leaderboard update tools"
+      "tam": "$4.5B \u2014 esports and leaderboard market",
+      "sam": "$850M \u2014 indie competitive platforms",
+      "som": "$170M \u2014 gasless leaderboard update tools"
     },
     {
       "id": "games-instant-nft-trades-9",
@@ -843,9 +843,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a marketplace integration demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$20B — global NFT gaming market",
-      "sam": "$4B — indie NFT marketplaces",
-      "som": "$800M — gasless NFT trading services"
+      "tam": "$20B \u2014 global NFT gaming market",
+      "sam": "$4B \u2014 indie NFT marketplaces",
+      "som": "$800M \u2014 gasless NFT trading services"
     },
     {
       "id": "games-gasless-avatar-gifting-10",
@@ -857,9 +857,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a social gifting demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$3.5B — virtual gifting market",
-      "sam": "$700M — indie avatar economies",
-      "som": "$140M — gasless social gifting platforms"
+      "tam": "$3.5B \u2014 virtual gifting market",
+      "sam": "$700M \u2014 indie avatar economies",
+      "som": "$140M \u2014 gasless social gifting platforms"
     },
     {
       "id": "games-sponsored-skill-boosts-11",
@@ -871,9 +871,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a in-game perks demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$6B — in-game purchase market",
-      "sam": "$1.1B — indie game power-ups",
-      "som": "$220M — gasless boost delivery systems"
+      "tam": "$6B \u2014 in-game purchase market",
+      "sam": "$1.1B \u2014 indie game power-ups",
+      "som": "$220M \u2014 gasless boost delivery systems"
     },
     {
       "id": "games-privy-story-worlds-12",
@@ -885,9 +885,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a user-generated content demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$4B — UGC game market",
-      "sam": "$850M — indie narrative platforms",
-      "som": "$170M — gasless content publishing"
+      "tam": "$4B \u2014 UGC game market",
+      "sam": "$850M \u2014 indie narrative platforms",
+      "som": "$170M \u2014 gasless content publishing"
     },
     {
       "id": "games-gas-free-co-op-play-13",
@@ -899,9 +899,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a multiplayer mechanics demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$10B — co-op game market",
-      "sam": "$2B — indie multiplayer titles",
-      "som": "$400M — gasless multiplayer entry systems"
+      "tam": "$10B \u2014 co-op game market",
+      "sam": "$2B \u2014 indie multiplayer titles",
+      "som": "$400M \u2014 gasless multiplayer entry systems"
     },
     {
       "id": "games-sponsored-xr-avatars-14",
@@ -913,9 +913,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a virtual identity demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$5B — XR avatar market",
-      "sam": "$1B — indie XR developers",
-      "som": "$200M — gasless avatar upgrades"
+      "tam": "$5B \u2014 XR avatar market",
+      "sam": "$1B \u2014 indie XR developers",
+      "som": "$200M \u2014 gasless avatar upgrades"
     },
     {
       "id": "games-privy-puzzle-rewards-15",
@@ -927,9 +927,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a casual game incentives demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$3B — casual gaming reward market",
-      "sam": "$600M — indie puzzle games",
-      "som": "$120M — gasless reward claim platforms"
+      "tam": "$3B \u2014 casual gaming reward market",
+      "sam": "$600M \u2014 indie puzzle games",
+      "som": "$120M \u2014 gasless reward claim platforms"
     },
     {
       "id": "games-gasless-avatar-battles-16",
@@ -941,9 +941,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a competitive avatars demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$7B — avatar battle games market",
-      "sam": "$1.3B — indie competitive avatars",
-      "som": "$260M — gasless battle transaction systems"
+      "tam": "$7B \u2014 avatar battle games market",
+      "sam": "$1.3B \u2014 indie competitive avatars",
+      "som": "$260M \u2014 gasless battle transaction systems"
     },
     {
       "id": "games-sponsored-xr-exhibits-17",
@@ -955,9 +955,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a virtual galleries demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$2.5B — virtual exhibit market",
-      "sam": "$500M — indie XR galleries",
-      "som": "$100M — gasless visitor interaction tools"
+      "tam": "$2.5B \u2014 virtual exhibit market",
+      "sam": "$500M \u2014 indie XR galleries",
+      "som": "$100M \u2014 gasless visitor interaction tools"
     },
     {
       "id": "games-privy-crafting-market-18",
@@ -969,9 +969,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a player economies demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$6B — in-game crafting markets",
-      "sam": "$1.2B — indie player economies",
-      "som": "$240M — gasless item trading platforms"
+      "tam": "$6B \u2014 in-game crafting markets",
+      "sam": "$1.2B \u2014 indie player economies",
+      "som": "$240M \u2014 gasless item trading platforms"
     },
     {
       "id": "games-gasless-streaming-rewards-19",
@@ -983,9 +983,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a viewer incentives demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$8B — game streaming economy",
-      "sam": "$1.6B — indie streamer rewards",
-      "som": "$320M — gasless viewer tipping platforms"
+      "tam": "$8B \u2014 game streaming economy",
+      "sam": "$1.6B \u2014 indie streamer rewards",
+      "som": "$320M \u2014 gasless viewer tipping platforms"
     },
     {
       "id": "games-sponsored-fan-tokens-20",
@@ -997,9 +997,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a community engagement demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$5B — fan token market",
-      "sam": "$1B — indie community tokens",
-      "som": "$200M — gasless token issuance"
+      "tam": "$5B \u2014 fan token market",
+      "sam": "$1B \u2014 indie community tokens",
+      "som": "$200M \u2014 gasless token issuance"
     },
     {
       "id": "games-privy-challenge-leaderboards-21",
@@ -1011,9 +1011,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a competitive tracking demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$4B — challenge-based gaming market",
-      "sam": "$800M — indie competitive platforms",
-      "som": "$160M — gasless leaderboard maintenance"
+      "tam": "$4B \u2014 challenge-based gaming market",
+      "sam": "$800M \u2014 indie competitive platforms",
+      "som": "$160M \u2014 gasless leaderboard maintenance"
     },
     {
       "id": "games-gas-free-level-sharing-22",
@@ -1025,9 +1025,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a user content demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$3B — user-generated level market",
-      "sam": "$600M — indie game modding",
-      "som": "$120M — gasless content distribution"
+      "tam": "$3B \u2014 user-generated level market",
+      "sam": "$600M \u2014 indie game modding",
+      "som": "$120M \u2014 gasless content distribution"
     },
     {
       "id": "games-sponsored-multiplayer-drops-23",
@@ -1039,9 +1039,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a event rewards demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$7B — live multiplayer events market",
-      "sam": "$1.3B — indie multiplayer events",
-      "som": "$260M — gasless event reward systems"
+      "tam": "$7B \u2014 live multiplayer events market",
+      "sam": "$1.3B \u2014 indie multiplayer events",
+      "som": "$260M \u2014 gasless event reward systems"
     },
     {
       "id": "games-privy-interactive-ads-24",
@@ -1053,9 +1053,9 @@
       "quantumHookId": "lace-wallet",
       "quantumTag": "wallet UX",
       "quantumRationale": "This idea fits Lace wallet + tDUST because wallet UX is exactly what a ad integration demo needs: detect `window.midnight`, call `initialAPI.connect('preview')`, let Lace balance the transaction with tDUST and submit i...",
-      "tam": "$10B — in-game advertising market",
-      "sam": "$2B — indie ad reward platforms",
-      "som": "$400M — gasless ad reward distribution"
+      "tam": "$10B \u2014 in-game advertising market",
+      "sam": "$2B \u2014 indie ad reward platforms",
+      "som": "$400M \u2014 gasless ad reward distribution"
     },
     {
       "id": "games-provenance-playbooks-0",
@@ -1066,10 +1066,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game narrative design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$3B — narrative-driven game market",
-      "sam": "$500M — indie narrative game developers",
-      "som": "$50M — studios adopting blockchain for storytelling"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game narrative design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$3B \u2014 narrative-driven game market",
+      "sam": "$500M \u2014 indie narrative game developers",
+      "som": "$50M \u2014 studios adopting blockchain for storytelling"
     },
     {
       "id": "games-pixel-provenance-1",
@@ -1080,10 +1080,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a pixel art creation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$2B — digital art assets in gaming",
-      "sam": "$300M — indie pixel art creators",
-      "som": "$30M — blockchain-enabled art marketplaces"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a pixel art creation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$2B \u2014 digital art assets in gaming",
+      "sam": "$300M \u2014 indie pixel art creators",
+      "som": "$30M \u2014 blockchain-enabled art marketplaces"
     },
     {
       "id": "games-sound-slice-chain-2",
@@ -1094,10 +1094,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game audio sampling demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.5B — game sound asset market",
-      "sam": "$250M — independent sound designers",
-      "som": "$25M — blockchain-based audio licensing"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game audio sampling demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.5B \u2014 game sound asset market",
+      "sam": "$250M \u2014 independent sound designers",
+      "som": "$25M \u2014 blockchain-based audio licensing"
     },
     {
       "id": "games-vr-provenance-hub-3",
@@ -1108,10 +1108,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a XR environment design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$12B — VR content creation",
-      "sam": "$2B — XR indie developers",
-      "som": "$200M — blockchain-verified VR experiences"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a XR environment design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$12B \u2014 VR content creation",
+      "sam": "$2B \u2014 XR indie developers",
+      "som": "$200M \u2014 blockchain-verified VR experiences"
     },
     {
       "id": "games-avatar-dna-chain-4",
@@ -1122,10 +1122,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a custom avatar creation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$4B — avatar customization market",
-      "sam": "$600M — indie avatar designers",
-      "som": "$60M — blockchain avatar platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a custom avatar creation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$4B \u2014 avatar customization market",
+      "sam": "$600M \u2014 indie avatar designers",
+      "som": "$60M \u2014 blockchain avatar platforms"
     },
     {
       "id": "games-procedural-provenance-5",
@@ -1136,10 +1136,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a algorithmic game art demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1B — procedural art in games",
-      "sam": "$150M — indie procedural artists",
-      "som": "$15M — blockchain procedural asset sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a algorithmic game art demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1B \u2014 procedural art in games",
+      "sam": "$150M \u2014 indie procedural artists",
+      "som": "$15M \u2014 blockchain procedural asset sales"
     },
     {
       "id": "games-interactive-comics-chain-6",
@@ -1150,10 +1150,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a interactive storytelling demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$2B — interactive comics market",
-      "sam": "$350M — indie comic creators",
-      "som": "$35M — blockchain-backed story platforms"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a interactive storytelling demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$2B \u2014 interactive comics market",
+      "sam": "$350M \u2014 indie comic creators",
+      "som": "$35M \u2014 blockchain-backed story platforms"
     },
     {
       "id": "games-game-mod-provenance-7",
@@ -1164,10 +1164,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a modding community tools demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$3B — game mod market",
-      "sam": "$500M — indie modders",
-      "som": "$50M — blockchain mod distribution"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a modding community tools demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$3B \u2014 game mod market",
+      "sam": "$500M \u2014 indie modders",
+      "som": "$50M \u2014 blockchain mod distribution"
     },
     {
       "id": "games-level-chain-creator-8",
@@ -1178,10 +1178,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game level design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$2.5B — user-generated game levels",
-      "sam": "$400M — indie level designers",
-      "som": "$40M — blockchain level marketplaces"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game level design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$2.5B \u2014 user-generated game levels",
+      "sam": "$400M \u2014 indie level designers",
+      "som": "$40M \u2014 blockchain level marketplaces"
     },
     {
       "id": "games-replay-provenance-9",
@@ -1192,10 +1192,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game replay sharing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.2B — game streaming and replay",
-      "sam": "$200M — replay content creators",
-      "som": "$20M — blockchain replay archives"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game replay sharing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.2B \u2014 game streaming and replay",
+      "sam": "$200M \u2014 replay content creators",
+      "som": "$20M \u2014 blockchain replay archives"
     },
     {
       "id": "games-xr-gesture-tokens-10",
@@ -1206,10 +1206,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a motion capture NFTs demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$800M — XR motion capture market",
-      "sam": "$150M — indie motion artists",
-      "som": "$15M — blockchain gesture asset sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a motion capture NFTs demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$800M \u2014 XR motion capture market",
+      "sam": "$150M \u2014 indie motion artists",
+      "som": "$15M \u2014 blockchain gesture asset sales"
     },
     {
       "id": "games-lore-chain-artifacts-11",
@@ -1220,10 +1220,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game lore documentation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1B — game lore markets",
-      "sam": "$200M — indie lore creators",
-      "som": "$20M — blockchain lore collectibles"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game lore documentation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1B \u2014 game lore markets",
+      "sam": "$200M \u2014 indie lore creators",
+      "som": "$20M \u2014 blockchain lore collectibles"
     },
     {
       "id": "games-ar-filter-provenance-12",
@@ -1234,10 +1234,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a augmented reality effects demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$3B — AR filter market",
-      "sam": "$400M — indie AR creators",
-      "som": "$40M — blockchain AR asset sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a augmented reality effects demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$3B \u2014 AR filter market",
+      "sam": "$400M \u2014 indie AR creators",
+      "som": "$40M \u2014 blockchain AR asset sales"
     },
     {
       "id": "games-interactive-music-nfts-13",
@@ -1248,10 +1248,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game soundtrack remixing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$2B — game music remix market",
-      "sam": "$300M — indie remix artists",
-      "som": "$30M — blockchain music licensing"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game soundtrack remixing demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$2B \u2014 game music remix market",
+      "sam": "$300M \u2014 indie remix artists",
+      "som": "$30M \u2014 blockchain music licensing"
     },
     {
       "id": "games-tokenized-game-guides-14",
@@ -1262,10 +1262,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a strategy content demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.5B — game walkthrough market",
-      "sam": "$250M — independent guide authors",
-      "som": "$25M — blockchain guide sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a strategy content demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.5B \u2014 game walkthrough market",
+      "sam": "$250M \u2014 independent guide authors",
+      "som": "$25M \u2014 blockchain guide sales"
     },
     {
       "id": "games-dynamic-npc-tokens-15",
@@ -1276,10 +1276,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a procedural character design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$2B — NPC asset market",
-      "sam": "$350M — indie character designers",
-      "som": "$35M — blockchain NPC marketplaces"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a procedural character design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$2B \u2014 NPC asset market",
+      "sam": "$350M \u2014 indie character designers",
+      "som": "$35M \u2014 blockchain NPC marketplaces"
     },
     {
       "id": "games-haptic-asset-chain-16",
@@ -1290,10 +1290,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a tactile feedback design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$700M — haptic feedback market",
-      "sam": "$120M — indie haptic designers",
-      "som": "$12M — blockchain haptic asset sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a tactile feedback design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$700M \u2014 haptic feedback market",
+      "sam": "$120M \u2014 indie haptic designers",
+      "som": "$12M \u2014 blockchain haptic asset sales"
     },
     {
       "id": "games-ai-art-provenance-17",
@@ -1304,10 +1304,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a AI-generated game art demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.8B — AI art in gaming",
-      "sam": "$300M — indie AI artists",
-      "som": "$30M — blockchain AI art sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a AI-generated game art demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.8B \u2014 AI art in gaming",
+      "sam": "$300M \u2014 indie AI artists",
+      "som": "$30M \u2014 blockchain AI art sales"
     },
     {
       "id": "games-multiplayer-skin-chain-18",
@@ -1318,10 +1318,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a cosmetic item creation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$4B — cosmetic skin market",
-      "sam": "$700M — indie skin designers",
-      "som": "$70M — blockchain skin marketplaces"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a cosmetic item creation demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$4B \u2014 cosmetic skin market",
+      "sam": "$700M \u2014 indie skin designers",
+      "som": "$70M \u2014 blockchain skin marketplaces"
     },
     {
       "id": "games-puzzle-chain-creator-19",
@@ -1332,10 +1332,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a interactive puzzle design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1B — puzzle game market",
-      "sam": "$200M — indie puzzle designers",
-      "som": "$20M — blockchain puzzle asset sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a interactive puzzle design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1B \u2014 puzzle game market",
+      "sam": "$200M \u2014 indie puzzle designers",
+      "som": "$20M \u2014 blockchain puzzle asset sales"
     },
     {
       "id": "games-narrative-voice-tokens-20",
@@ -1346,10 +1346,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a voice acting assets demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.3B — voice asset market",
-      "sam": "$220M — indie voice actors",
-      "som": "$22M — blockchain voice clip sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a voice acting assets demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.3B \u2014 voice asset market",
+      "sam": "$220M \u2014 indie voice actors",
+      "som": "$22M \u2014 blockchain voice clip sales"
     },
     {
       "id": "games-interactive-map-nfts-21",
@@ -1360,10 +1360,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game world mapping demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$1.7B — game map asset market",
-      "sam": "$280M — indie map creators",
-      "som": "$28M — blockchain map marketplaces"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a game world mapping demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$1.7B \u2014 game map asset market",
+      "sam": "$280M \u2014 indie map creators",
+      "som": "$28M \u2014 blockchain map marketplaces"
     },
     {
       "id": "games-collectible-lore-cards-22",
@@ -1374,10 +1374,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a digital collectible design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$2B — collectible card market",
-      "sam": "$400M — indie collectible designers",
-      "som": "$40M — blockchain card marketplaces"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a digital collectible design demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$2B \u2014 collectible card market",
+      "sam": "$400M \u2014 indie collectible designers",
+      "som": "$40M \u2014 blockchain card marketplaces"
     },
     {
       "id": "games-gesture-control-assets-23",
@@ -1388,10 +1388,10 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a XR gesture interaction demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$900M — XR interaction assets",
-      "sam": "$150M — indie gesture creators",
-      "som": "$15M — blockchain gesture sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a XR gesture interaction demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$900M \u2014 XR interaction assets",
+      "sam": "$150M \u2014 indie gesture creators",
+      "som": "$15M \u2014 blockchain gesture sales"
     },
     {
       "id": "games-game-font-provenance-24",
@@ -1402,10 +1402,1510 @@
       "quantumHook": "Private witness proof",
       "quantumHookId": "private-witness",
       "quantumTag": "zero-knowledge",
-      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a typography for games demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it — the proof lands ...",
-      "tam": "$600M — game font market",
-      "sam": "$100M — indie typographers",
-      "som": "$10M — blockchain font sales"
+      "quantumRationale": "This idea fits Private witness proof because zero-knowledge is exactly what a typography for games demo needs: a Compact `witness` callback that keeps a user secret local while a ZK proof asserts a property of it \u2014 the proof lands ...",
+      "tam": "$600M \u2014 game font market",
+      "sam": "$100M \u2014 indie typographers",
+      "som": "$10M \u2014 blockchain font sales"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-000-agentic-broker-3d-model-marketplaces",
+      "theme": "games",
+      "title": "Agentic broker: 3D-model marketplaces",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: recommender agent. Vertical: 3D-model marketplaces. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-001-escrow-tabletop-game-asset-sales-via-pri",
+      "theme": "games",
+      "title": "Escrow tabletop-game asset sales via pricing agent",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: pricing agent. Vertical: tabletop-game asset sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-002-rebalance-playtester-bookings",
+      "theme": "games",
+      "title": "Rebalance \u00b7 playtester bookings",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: pricing agent. Vertical: playtester bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-003-arbitrator-agent-for-esports-tournament-",
+      "theme": "games",
+      "title": "Arbitrator Agent for esports tournament payouts",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: arbitrator agent. Vertical: esports tournament payouts. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-004-mod-licensing-negotiate-lane",
+      "theme": "games",
+      "title": "Mod Licensing \u2014 negotiate lane",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: sourcing agent. Vertical: mod licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-005-delegate-level-design-commissions-via-pr",
+      "theme": "games",
+      "title": "Delegate level-design commissions via pricing agent",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: pricing agent. Vertical: level-design commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-006-agentic-auction-voice-actor-bookings",
+      "theme": "games",
+      "title": "Agentic auction: voice-actor bookings",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: sourcing agent. Vertical: voice-actor bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-007-aggregate-narrative-writer-gigs",
+      "theme": "games",
+      "title": "Aggregate \u00b7 narrative-writer gigs",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: aggregator agent. Vertical: narrative-writer gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-008-curator-agent-for-asset-bundle-drops",
+      "theme": "games",
+      "title": "Curator Agent for asset-bundle drops",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: curator agent. Vertical: asset-bundle drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-009-match-speedrun-verification-tips-via-sel",
+      "theme": "games",
+      "title": "Match speedrun-verification tips via seller agent",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: seller agent. Vertical: speedrun-verification tips. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-010-agentic-split-3d-model-marketplaces",
+      "theme": "games",
+      "title": "Agentic split: 3D-model marketplaces",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: pricing agent. Vertical: 3D-model marketplaces. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-011-escrow-tabletop-game-asset-sales-via-tra",
+      "theme": "games",
+      "title": "Escrow tabletop-game asset sales via translator agent",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: translator agent. Vertical: tabletop-game asset sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-012-agentic-rebalance-playtester-bookings",
+      "theme": "games",
+      "title": "Agentic rebalance: playtester bookings",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: escrow agent. Vertical: playtester bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-013-esports-tournament-payouts-aggregate-lan",
+      "theme": "games",
+      "title": "Esports Tournament Payouts \u2014 aggregate lane",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: curator agent. Vertical: esports tournament payouts. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-014-recommender-agent-for-mod-licensing",
+      "theme": "games",
+      "title": "Recommender Agent for mod licensing",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: recommender agent. Vertical: mod licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-015-arbitrator-agent-for-level-design-commis",
+      "theme": "games",
+      "title": "Arbitrator Agent for level-design commissions",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: arbitrator agent. Vertical: level-design commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-016-translator-agent-for-voice-actor-booking",
+      "theme": "games",
+      "title": "Translator Agent for voice-actor bookings",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: translator agent. Vertical: voice-actor bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-017-rebalance-narrative-writer-gigs",
+      "theme": "games",
+      "title": "Rebalance \u00b7 narrative-writer gigs",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: seller agent. Vertical: narrative-writer gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-018-sourcing-agent-for-asset-bundle-drops",
+      "theme": "games",
+      "title": "Sourcing Agent for asset-bundle drops",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: sourcing agent. Vertical: asset-bundle drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-019-speedrun-verification-tips-broker-lane",
+      "theme": "games",
+      "title": "Speedrun-Verification Tips \u2014 broker lane",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: curator agent. Vertical: speedrun-verification tips. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-020-3d-model-marketplaces-match-lane",
+      "theme": "games",
+      "title": "3D-Model Marketplaces \u2014 match lane",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: recommender agent. Vertical: 3D-model marketplaces. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-021-match-tabletop-game-asset-sales",
+      "theme": "games",
+      "title": "Match \u00b7 tabletop-game asset sales",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: arbitrator agent. Vertical: tabletop-game asset sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-022-agentic-underwrite-playtester-bookings",
+      "theme": "games",
+      "title": "Agentic underwrite: playtester bookings",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: translator agent. Vertical: playtester bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-023-auction-esports-tournament-payouts-via-r",
+      "theme": "games",
+      "title": "Auction esports tournament payouts via recommender agent",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: recommender agent. Vertical: esports tournament payouts. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-024-mod-licensing-escrow-lane",
+      "theme": "games",
+      "title": "Mod Licensing \u2014 escrow lane",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: translator agent. Vertical: mod licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-025-auction-level-design-commissions-via-sel",
+      "theme": "games",
+      "title": "Auction level-design commissions via seller agent",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: seller agent. Vertical: level-design commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-026-broker-voice-actor-bookings-via-escrow-a",
+      "theme": "games",
+      "title": "Broker voice-actor bookings via escrow agent",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: escrow agent. Vertical: voice-actor bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-027-broker-narrative-writer-gigs",
+      "theme": "games",
+      "title": "Broker \u00b7 narrative-writer gigs",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: arbitrator agent. Vertical: narrative-writer gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-028-agentic-rebalance-asset-bundle-drops",
+      "theme": "games",
+      "title": "Agentic rebalance: asset-bundle drops",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: translator agent. Vertical: asset-bundle drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-029-escrow-speedrun-verification-tips",
+      "theme": "games",
+      "title": "Escrow \u00b7 speedrun-verification tips",
+      "pitch": "A2A negotiation ends in an escrowed mandate; funds unlock after a second CartMandate signs the delivery receipt. Persona: escrow agent. Vertical: speedrun-verification tips. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-030-3d-model-marketplaces-auction-lane",
+      "theme": "games",
+      "title": "3D-Model Marketplaces \u2014 auction lane",
+      "pitch": "Multiple seller agents respond to a buyer RFP; highest signed offer is anchored to `MandateVault` as the winning cart. Persona: buyer agent. Vertical: 3D-model marketplaces. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-031-negotiate-tabletop-game-asset-sales-via-",
+      "theme": "games",
+      "title": "Negotiate tabletop-game asset sales via curator agent",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: curator agent. Vertical: tabletop-game asset sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-032-playtester-bookings-negotiate-lane",
+      "theme": "games",
+      "title": "Playtester Bookings \u2014 negotiate lane",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: arbitrator agent. Vertical: playtester bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-033-rebalance-esports-tournament-payouts",
+      "theme": "games",
+      "title": "Rebalance \u00b7 esports tournament payouts",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: aggregator agent. Vertical: esports tournament payouts. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-034-aggregate-mod-licensing-via-aggregator-a",
+      "theme": "games",
+      "title": "Aggregate mod licensing via aggregator agent",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: aggregator agent. Vertical: mod licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-035-agentic-underwrite-level-design-commissi",
+      "theme": "games",
+      "title": "Agentic underwrite: level-design commissions",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: pricing agent. Vertical: level-design commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-036-match-voice-actor-bookings",
+      "theme": "games",
+      "title": "Match \u00b7 voice-actor bookings",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: arbitrator agent. Vertical: voice-actor bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-037-split-narrative-writer-gigs-via-arbitrat",
+      "theme": "games",
+      "title": "Split narrative-writer gigs via arbitrator agent",
+      "pitch": "Revenue-split CartMandate signs the payout table; the mandate hash pins the split on Midnight so downstream transfers can be verified. Persona: arbitrator agent. Vertical: narrative-writer gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-038-rebalance-asset-bundle-drops",
+      "theme": "games",
+      "title": "Rebalance \u00b7 asset-bundle drops",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: pricing agent. Vertical: asset-bundle drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-039-speedrun-verification-tips-underwrite-la",
+      "theme": "games",
+      "title": "Speedrun-Verification Tips \u2014 underwrite lane",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: escrow agent. Vertical: speedrun-verification tips. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-040-3d-model-marketplaces-negotiate-lane",
+      "theme": "games",
+      "title": "3D-Model Marketplaces \u2014 negotiate lane",
+      "pitch": "Two agents haggle price and terms via A2A `message/send`; the final CartMandate is signed off-chain then anchored on Midnight. Persona: sourcing agent. Vertical: 3D-model marketplaces. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-041-arbitrator-agent-for-tabletop-game-asset",
+      "theme": "games",
+      "title": "Arbitrator Agent for tabletop-game asset sales",
+      "pitch": "Two agents renegotiate an existing anchored mandate; a new CartMandate supersedes the old one on-chain via `anchorMandate`. Persona: arbitrator agent. Vertical: tabletop-game asset sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-042-sourcing-agent-for-playtester-bookings",
+      "theme": "games",
+      "title": "Sourcing Agent for playtester bookings",
+      "pitch": "Matching agent pairs buyer and seller intents from a public queue; the resulting CartMandate is anchored under both intent hashes. Persona: sourcing agent. Vertical: playtester bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-043-aggregate-esports-tournament-payouts-via",
+      "theme": "games",
+      "title": "Aggregate esports tournament payouts via recommender agent",
+      "pitch": "A curator agent bundles offers from many sellers into one CartMandate the buyer signs once, then anchors on Midnight. Persona: recommender agent. Vertical: esports tournament payouts. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-044-delegate-mod-licensing",
+      "theme": "games",
+      "title": "Delegate \u00b7 mod licensing",
+      "pitch": "An AP2 IntentMandate delegates authority to an agent; every CartMandate the agent produces is anchored under the intent hash. Persona: aggregator agent. Vertical: mod licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-045-underwrite-level-design-commissions",
+      "theme": "games",
+      "title": "Underwrite \u00b7 level-design commissions",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: aggregator agent. Vertical: level-design commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-046-broker-voice-actor-bookings",
+      "theme": "games",
+      "title": "Broker \u00b7 voice-actor bookings",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: seller agent. Vertical: voice-actor bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-047-narrative-writer-gigs-broker-lane",
+      "theme": "games",
+      "title": "Narrative-Writer Gigs \u2014 broker lane",
+      "pitch": "A broker agent collects competing offers, selects a winner, signs an AP2 CartMandate and calls `anchorMandate`. Persona: pricing agent. Vertical: narrative-writer gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-048-escrow-agent-for-asset-bundle-drops",
+      "theme": "games",
+      "title": "Escrow Agent for asset-bundle drops",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: escrow agent. Vertical: asset-bundle drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-a2a-ap2-049-underwrite-speedrun-verification-tips-vi",
+      "theme": "games",
+      "title": "Underwrite speedrun-verification tips via curator agent",
+      "pitch": "Underwriter agent co-signs a CartMandate; the anchored mandate carries both signatures so payout is contingent on both. Persona: curator agent. Vertical: speedrun-verification tips. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 A2A + AP2",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the A2A + AP2 protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "a2a-ap2"
+    },
+    {
+      "id": "games-agentic-ucp-000-signed-receipt-3d-model-marketplaces",
+      "theme": "games",
+      "title": "Signed Receipt \u00b7 3D-model marketplaces",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: wholesale desk. Vertical: 3D-model marketplaces. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-001-self-test-tabletop-game-asset-sales-via-",
+      "theme": "games",
+      "title": "Self-Test tabletop-game asset sales via gig-worker collective",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: gig-worker collective. Vertical: tabletop-game asset sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-002-playtester-bookings-self-test-lane",
+      "theme": "games",
+      "title": "Playtester Bookings \u2014 self-test lane",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: affiliate. Vertical: playtester bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-003-bulk-order-esports-tournament-payouts-vi",
+      "theme": "games",
+      "title": "Bulk Order esports tournament payouts via affiliate",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: affiliate. Vertical: esports tournament payouts. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-004-agentic-self-test-mod-licensing",
+      "theme": "games",
+      "title": "Agentic self-test: mod licensing",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: affiliate. Vertical: mod licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-005-merchant-for-level-design-commissions",
+      "theme": "games",
+      "title": "Merchant for level-design commissions",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: merchant. Vertical: level-design commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-006-creator-dao-for-voice-actor-bookings",
+      "theme": "games",
+      "title": "Creator Dao for voice-actor bookings",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: creator DAO. Vertical: voice-actor bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-007-signed-receipt-narrative-writer-gigs",
+      "theme": "games",
+      "title": "Signed Receipt \u00b7 narrative-writer gigs",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: wholesale desk. Vertical: narrative-writer gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-008-bulk-order-asset-bundle-drops",
+      "theme": "games",
+      "title": "Bulk Order \u00b7 asset-bundle drops",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: creator DAO. Vertical: asset-bundle drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-009-speedrun-verification-tips-zk-checkout-l",
+      "theme": "games",
+      "title": "Speedrun-Verification Tips \u2014 zk checkout lane",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: wholesale desk. Vertical: speedrun-verification tips. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-010-agentic-signed-receipt-3d-model-marketpl",
+      "theme": "games",
+      "title": "Agentic signed receipt: 3D-model marketplaces",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: buyer. Vertical: 3D-model marketplaces. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-011-agentic-discovery-tabletop-game-asset-sa",
+      "theme": "games",
+      "title": "Agentic discovery: tabletop-game asset sales",
+      "pitch": "UCP discovery is signed with the merchant's key; the signing-key fingerprint is anchored on Midnight for pinning. Persona: buyer. Vertical: tabletop-game asset sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-012-signed-receipt-playtester-bookings",
+      "theme": "games",
+      "title": "Signed Receipt \u00b7 playtester bookings",
+      "pitch": "UCP checkout returns an RFC 9421-signed receipt; the receipt hash is recorded to `OrderLedger` for public audit. Persona: buyer. Vertical: playtester bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-013-esports-tournament-payouts-self-test-lan",
+      "theme": "games",
+      "title": "Esports Tournament Payouts \u2014 self-test lane",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: affiliate. Vertical: esports tournament payouts. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-014-agentic-zk-checkout-mod-licensing",
+      "theme": "games",
+      "title": "Agentic zk checkout: mod licensing",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: buyer. Vertical: mod licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-015-zk-checkout-level-design-commissions",
+      "theme": "games",
+      "title": "ZK Checkout \u00b7 level-design commissions",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: creator DAO. Vertical: level-design commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-016-voice-actor-bookings-bulk-order-lane",
+      "theme": "games",
+      "title": "Voice-Actor Bookings \u2014 bulk order lane",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: gig-worker collective. Vertical: voice-actor bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-017-merchant-for-narrative-writer-gigs",
+      "theme": "games",
+      "title": "Merchant for narrative-writer gigs",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: merchant. Vertical: narrative-writer gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-018-agentic-bulk-order-asset-bundle-drops",
+      "theme": "games",
+      "title": "Agentic bulk order: asset-bundle drops",
+      "pitch": "One UCP checkout call anchors a whole basket to `OrderLedger` with one Midnight tx. Persona: wholesale desk. Vertical: asset-bundle drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-019-creator-dao-for-speedrun-verification-ti",
+      "theme": "games",
+      "title": "Creator Dao for speedrun-verification tips",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: creator DAO. Vertical: speedrun-verification tips. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-020-agentic-refund-3d-model-marketplaces",
+      "theme": "games",
+      "title": "Agentic refund: 3D-model marketplaces",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: wholesale desk. Vertical: 3D-model marketplaces. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-021-zk-checkout-tabletop-game-asset-sales-vi",
+      "theme": "games",
+      "title": "ZK Checkout tabletop-game asset sales via wholesale desk",
+      "pitch": "Merchant serves a UCP `discovery` doc, buyer runs the collapsed checkout, and the merchant records the order on `OrderLedger` on Midnight. Persona: wholesale desk. Vertical: tabletop-game asset sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-022-refund-playtester-bookings",
+      "theme": "games",
+      "title": "Refund \u00b7 playtester bookings",
+      "pitch": "A UCP refund op re-anchors the order with a `refunded` flag; the ledger keeps both the original and refund order hash. Persona: creator DAO. Vertical: playtester bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-023-self-test-esports-tournament-payouts-via",
+      "theme": "games",
+      "title": "Self-Test esports tournament payouts via gig-worker collective",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: gig-worker collective. Vertical: esports tournament payouts. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-ucp-024-co-op-member-for-mod-licensing",
+      "theme": "games",
+      "title": "Co-Op Member for mod licensing",
+      "pitch": "Merchant exposes UCP `selfTest`; a passing run anchors the conformance hash to `OrderLedger` as a public attestation. Persona: co-op member. Vertical: mod licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 UCP",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the UCP protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "ucp"
+    },
+    {
+      "id": "games-agentic-x402-000-agentic-metered-api-3d-model-marketplace",
+      "theme": "games",
+      "title": "Agentic metered api: 3D-model marketplaces",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: code-audit LLM route. Vertical: 3D-model marketplaces. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-001-tabletop-game-asset-sales-prepaid-lane",
+      "theme": "games",
+      "title": "Tabletop-Game Asset Sales \u2014 prepaid lane",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: moderator LLM. Vertical: tabletop-game asset sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-002-playtester-bookings-refund-lane",
+      "theme": "games",
+      "title": "Playtester Bookings \u2014 refund lane",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: private analytics endpoint. Vertical: playtester bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-003-prepaid-esports-tournament-payouts-via-p",
+      "theme": "games",
+      "title": "Prepaid esports tournament payouts via private analytics endpoint",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: private analytics endpoint. Vertical: esports tournament payouts. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-004-refund-mod-licensing",
+      "theme": "games",
+      "title": "Refund \u00b7 mod licensing",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: search-tool webhook. Vertical: mod licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-005-tiered-level-design-commissions",
+      "theme": "games",
+      "title": "Tiered \u00b7 level-design commissions",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: premium content feed. Vertical: level-design commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-006-agentic-metered-api-voice-actor-bookings",
+      "theme": "games",
+      "title": "Agentic metered api: voice-actor bookings",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: private analytics endpoint. Vertical: voice-actor bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-007-prepaid-narrative-writer-gigs",
+      "theme": "games",
+      "title": "Prepaid \u00b7 narrative-writer gigs",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: embedding-search endpoint. Vertical: narrative-writer gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-008-tiered-asset-bundle-drops",
+      "theme": "games",
+      "title": "Tiered \u00b7 asset-bundle drops",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: search-tool webhook. Vertical: asset-bundle drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-009-ai-model-api-for-speedrun-verification-t",
+      "theme": "games",
+      "title": "Ai-Model Api for speedrun-verification tips",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: AI-model API. Vertical: speedrun-verification tips. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-010-prepaid-3d-model-marketplaces-via-ai-mod",
+      "theme": "games",
+      "title": "Prepaid 3D-model marketplaces via AI-model API",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: AI-model API. Vertical: 3D-model marketplaces. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-011-agentic-prepaid-tabletop-game-asset-sale",
+      "theme": "games",
+      "title": "Agentic prepaid: tabletop-game asset sales",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: high-resolution asset. Vertical: tabletop-game asset sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-012-playtester-bookings-tiered-lane",
+      "theme": "games",
+      "title": "Playtester Bookings \u2014 tiered lane",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: code-audit LLM route. Vertical: playtester bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-013-metered-api-esports-tournament-payouts-v",
+      "theme": "games",
+      "title": "Metered API esports tournament payouts via private analytics endpoint",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: private analytics endpoint. Vertical: esports tournament payouts. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-014-on-demand-transcription-api-for-mod-lice",
+      "theme": "games",
+      "title": "On-Demand Transcription Api for mod licensing",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: on-demand transcription API. Vertical: mod licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-015-level-design-commissions-tiered-lane",
+      "theme": "games",
+      "title": "Level-Design Commissions \u2014 tiered lane",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: moderator LLM. Vertical: level-design commissions. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-016-private-analytics-endpoint-for-voice-act",
+      "theme": "games",
+      "title": "Private Analytics Endpoint for voice-actor bookings",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: private analytics endpoint. Vertical: voice-actor bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-017-narrative-writer-gigs-paywall-lane",
+      "theme": "games",
+      "title": "Narrative-Writer Gigs \u2014 paywall lane",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: high-resolution asset. Vertical: narrative-writer gigs. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$1.2T \u2014 creator economy",
+      "sam": "$180B \u2014 programmable payouts",
+      "som": "$220M \u2014 ZK-anchored splits",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-018-agentic-paywall-asset-bundle-drops",
+      "theme": "games",
+      "title": "Agentic paywall: asset-bundle drops",
+      "pitch": "Client hits a 402, signs an mUSDC authorization for the amount, the facilitator submits `MidnightUSDC.transfer`, and the endpoint returns the payload. Persona: search-tool webhook. Vertical: asset-bundle drops. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-019-streaming-speedrun-verification-tips",
+      "theme": "games",
+      "title": "Streaming \u00b7 speedrun-verification tips",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: translator microservice. Vertical: speedrun-verification tips. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$47B \u2014 B2B negotiation software",
+      "sam": "$5B \u2014 agent-to-agent SaaS",
+      "som": "$85M \u2014 anchored-mandate SAM",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-020-refund-3d-model-marketplaces-via-search-",
+      "theme": "games",
+      "title": "Refund 3D-model marketplaces via search-tool webhook",
+      "pitch": "Endpoint refunds the paid mUSDC if the response fails a schema check; refund goes back through `MidnightUSDC` on Midnight. Persona: search-tool webhook. Vertical: 3D-model marketplaces. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$88B \u2014 API-first economy",
+      "sam": "$9B \u2014 pay-per-call APIs",
+      "som": "$45M \u2014 mUSDC-metered early adopters",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-021-tabletop-game-asset-sales-metered-api-la",
+      "theme": "games",
+      "title": "Tabletop-Game Asset Sales \u2014 metered api lane",
+      "pitch": "Per-call mUSDC billing via x402; the facilitator batches settled transfers into `MidnightUSDC` on Midnight. Persona: search-tool webhook. Vertical: tabletop-game asset sales. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Private witness proof",
+      "quantumHookId": "private-witness",
+      "quantumTag": "zero-knowledge",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-022-embedding-search-endpoint-for-playtester",
+      "theme": "games",
+      "title": "Embedding-Search Endpoint for playtester bookings",
+      "pitch": "Different `accepts[]` entries for free / basic / pro tiers, each settled through `MidnightUSDC.transfer`. Persona: embedding-search endpoint. Vertical: playtester bookings. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Lace wallet + tDUST",
+      "quantumHookId": "lace-wallet",
+      "quantumTag": "wallet UX",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$210B \u2014 global e-commerce",
+      "sam": "$28B \u2014 agentic commerce SAM by 2028",
+      "som": "$140M \u2014 early-adopter mandate flows",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-023-agentic-prepaid-esports-tournament-payou",
+      "theme": "games",
+      "title": "Agentic prepaid: esports tournament payouts",
+      "pitch": "Client pre-tops mUSDC to an escrow contract; x402 challenges are checked against the escrow balance before serving. Persona: moderator LLM. Vertical: esports tournament payouts. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "IPFS content + on-chain CID",
+      "quantumHookId": "ipfs-content",
+      "quantumTag": "decentralized storage",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
+    },
+    {
+      "id": "games-agentic-x402-024-agentic-streaming-mod-licensing",
+      "theme": "games",
+      "title": "Agentic streaming: mod licensing",
+      "pitch": "Long-poll endpoint charges per chunk; each chunk is a separate x402 challenge settled on Midnight. Persona: code-audit LLM route. Vertical: mod licensing. Every write ends with a Midnight tx.",
+      "subDiscipline": "agentic \u00b7 x402 \u00b7 mUSDC",
+      "quantumHook": "Compact ZK contract",
+      "quantumHookId": "compact-deploy",
+      "quantumTag": "onchain logic",
+      "quantumRationale": "This idea uses the x402 \u00b7 mUSDC protocol overlay on top of a Compact contract: the off-chain agent flow ends by calling a Midnight circuit so state is auditable on-chain.",
+      "tam": "$310B \u2014 cross-border settlement",
+      "sam": "$22B \u2014 stablecoin rails",
+      "som": "$120M \u2014 mimic-token PoC bracket",
+      "protocol": "x402"
     }
   ]
 }

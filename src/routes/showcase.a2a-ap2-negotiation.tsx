@@ -57,7 +57,7 @@ function A2AAP2Page() {
           </p>
           <p>
             The full protocol block for A2A + AP2 is embedded in every prompt tagged with{" "}
-            <Link to="/themes/agentic-a2a-ap2" className="underline hover:text-primary">agentic · a2a-ap2</Link>.
+            <Link to="/themes" className="underline hover:text-primary">agentic · a2a-ap2</Link>.
           </p>
         </section>
       </article>

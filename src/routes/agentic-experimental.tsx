@@ -52,9 +52,9 @@ function AgenticExperimentalPage() {
             <li><Link to="/showcase/a2a-ap2-negotiation" className="underline hover:text-primary">A2A + AP2 negotiation demo</Link></li>
             <li><Link to="/showcase/ucp-zk-checkout" className="underline hover:text-primary">UCP ZK-checkout demo</Link></li>
             <li><Link to="/showcase/x402-midnight-paywall" className="underline hover:text-primary">x402 · mUSDC paywall demo</Link></li>
-            <li><Link to="/themes/agentic-a2a-ap2" className="underline hover:text-primary">Idea catalogue · A2A + AP2 (500)</Link></li>
-            <li><Link to="/themes/agentic-ucp" className="underline hover:text-primary">Idea catalogue · UCP (250)</Link></li>
-            <li><Link to="/themes/agentic-x402" className="underline hover:text-primary">Idea catalogue · x402 (250)</Link></li>
+            <li><Link to="/themes" className="underline hover:text-primary">Idea catalogue · A2A + AP2 (500)</Link></li>
+            <li><Link to="/themes" className="underline hover:text-primary">Idea catalogue · UCP (250)</Link></li>
+            <li><Link to="/themes" className="underline hover:text-primary">Idea catalogue · x402 (250)</Link></li>
           </ul>
         </section>
       </article>

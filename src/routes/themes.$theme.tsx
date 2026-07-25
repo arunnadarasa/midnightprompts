@@ -2,7 +2,10 @@ import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-rout
 import { useMemo, useState } from "react";
 import { SiteShell } from "@/components/site-shell";
 import { IdeaCard } from "@/components/idea-card";
-import { getTheme, IDEAS_BY_THEME, HOOKS } from "@/data/ideas";
+import { getTheme, IDEAS_BY_THEME, HOOKS, PROTOCOL_LABELS, type Protocol } from "@/data/ideas";
+
+type ProtocolFilter = Protocol | "base" | null;
+
 
 export const Route = createFileRoute("/themes/$theme")({
   head: ({ params }) => {
@@ -35,11 +38,14 @@ function ThemePage() {
   const ideas = IDEAS_BY_THEME[theme.slug];
   const [q, setQ] = useState("");
   const [hookFilter, setHookFilter] = useState<string | null>(null);
+  const [protocolFilter, setProtocolFilter] = useState<ProtocolFilter>(null);
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     return ideas.filter((i) => {
       if (hookFilter && i.quantumHookId !== hookFilter) return false;
+      if (protocolFilter === "base" && i.protocol) return false;
+      if (protocolFilter && protocolFilter !== "base" && i.protocol !== protocolFilter) return false;
       if (!needle) return true;
       return (
         i.title.toLowerCase().includes(needle) ||
@@ -47,7 +53,8 @@ function ThemePage() {
         i.subDiscipline.toLowerCase().includes(needle)
       );
     });
-  }, [ideas, q, hookFilter]);
+  }, [ideas, q, hookFilter, protocolFilter]);
+
 
   return (
     <SiteShell>
@@ -106,6 +113,30 @@ function ThemePage() {
             <span className="shrink-0 w-2" aria-hidden />
           </div>
         </div>
+        <div
+          className="mt-3 flex md:flex-wrap gap-2 overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0 md:overflow-visible pb-1 md:pb-0"
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(to right, black 0, black calc(100% - 24px), transparent 100%)",
+            maskImage:
+              "linear-gradient(to right, black 0, black calc(100% - 24px), transparent 100%)",
+          }}
+          aria-label="Protocol overlay filter"
+        >
+          <FilterChip active={protocolFilter === null} onClick={() => setProtocolFilter(null)}>
+            All protocols
+          </FilterChip>
+          <FilterChip active={protocolFilter === "base"} onClick={() => setProtocolFilter("base")}>
+            Base only
+          </FilterChip>
+          {(Object.keys(PROTOCOL_LABELS) as Protocol[]).map((p) => (
+            <FilterChip key={p} active={protocolFilter === p} onClick={() => setProtocolFilter(p)}>
+              {PROTOCOL_LABELS[p]}
+            </FilterChip>
+          ))}
+          <span className="shrink-0 w-2" aria-hidden />
+        </div>
+
       </section>
 
       <section className="max-w-7xl mx-auto px-5 sm:px-8 py-10 sm:py-14">

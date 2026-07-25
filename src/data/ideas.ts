@@ -9,9 +9,6 @@ import gamesData from "./ideas/games.json";
 import theaterData from "./ideas/theater.json";
 import fashionData from "./ideas/fashion.json";
 import hooksData from "./ideas/hooks.json";
-import agenticA2AAP2Data from "./ideas/agentic-a2a-ap2.json";
-import agenticUcpData from "./ideas/agentic-ucp.json";
-import agenticX402Data from "./ideas/agentic-x402.json";
 
 export type NetworkVariant = "preview" | "preprod" | "undeployed" | "mainnet";
 export type Protocol = "a2a-ap2" | "ucp" | "x402";
@@ -69,17 +66,7 @@ const files: ThemeFile[] = [
   gamesData as ThemeFile,
   theaterData as ThemeFile,
   fashionData as ThemeFile,
-  agenticA2AAP2Data as ThemeFile,
-  agenticUcpData as ThemeFile,
-  agenticX402Data as ThemeFile,
 ];
-
-/** Theme slugs whose ideas carry a `protocol` field — used for filtering. */
-export const AGENTIC_THEME_SLUGS = new Set([
-  "agentic-a2a-ap2",
-  "agentic-ucp",
-  "agentic-x402",
-]);
 
 export const THEMES: Theme[] = files.map((f) => f.theme);
 export const HOOKS: Hook[] = hooksData as Hook[];
@@ -95,6 +82,7 @@ export const IDEAS_BY_PROTOCOL: Record<Protocol, Idea[]> = {
   "ucp":     ALL_IDEAS.filter((i) => i.protocol === "ucp"),
   "x402":    ALL_IDEAS.filter((i) => i.protocol === "x402"),
 };
+
 
 const IDEA_INDEX: Record<string, Idea> = Object.fromEntries(
   ALL_IDEAS.map((i) => [i.id, i]),

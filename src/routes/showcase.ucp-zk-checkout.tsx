@@ -58,7 +58,7 @@ function UCPPage() {
           </p>
           <p>
             The full protocol block for UCP is embedded in every prompt tagged with{" "}
-            <Link to="/themes/agentic-ucp" className="underline hover:text-primary">agentic · ucp</Link>.
+            <Link to="/themes" className="underline hover:text-primary">agentic · ucp</Link>.
           </p>
         </section>
       </article>
