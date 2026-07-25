@@ -1259,20 +1259,178 @@ agentic overlay. Copy (do NOT reword):
 The banner is non-dismissible on Mainnet. On other networks it may be collapsible
 but must persist between sessions (localStorage key "agentic-banner-ack").`;
 
+// ---------------------------------------------------------------------------
+// AGENTIC_INFRA_LESSONS — 2026-08 hard-won lessons from three working repos:
+//   • agenticmidnight  (A2A + AP2 anchor on Undeployed)
+//   • ucpmidnight      (UCP appendEntry on Undeployed)
+//   • x402midnight     (mUSDC facilitator + EffectStream Sepolia overlay)
+// This appendix is included verbatim at the end of every overlay block so a
+// hackathon participant pasting a single mega-prompt never needs the skill.
+// ---------------------------------------------------------------------------
+const AGENTIC_INFRA_LESSONS = `AGENTIC INFRA — NON-NEGOTIABLES (learned from three working repos, do NOT deviate)
+
+1) SDK ↔ INDEXER ALIGNMENT (this is the #1 time-sink):
+   Local \`indexer-standalone:4.0.2\` accepts ONLY the pinned stack:
+     @midnight-ntwrk/midnight-js-contracts@4.1.1
+     @midnight-ntwrk/midnight-js-http-client-proof-provider@4.1.1
+     @midnight-ntwrk/midnight-js-indexer-public-data-provider@4.1.1
+     @midnight-ntwrk/midnight-js-node-zk-config-provider@4.1.1
+     @midnight-ntwrk/midnight-js-level-private-state-provider@4.1.1
+     @midnight-ntwrk/midnight-js-network-id@4.1.1
+     @midnight-ntwrk/midnight-js-utils@4.1.1
+     @midnight-ntwrk/wallet-sdk@1.2.0
+     @midnight-ntwrk/testkit-js@4.1.1
+     @midnight-ntwrk/zswap@4.0.0
+     ws
+   NEVER use @midnight-ntwrk/wallet@5 against this indexer — its GraphQL subs
+   (\`wallet\`, \`ProgressUpdate\`, \`ViewingUpdate\`) don't exist on 4.0.2 and every
+   deploy fails: \`Unknown field "wallet" on type "Subscription"\`.
+   Deploy must use \`MidnightWalletProvider\` + \`testkit-js\`, NOT \`WalletBuilder\`.
+   Every Node deploy script MUST polyfill: \`globalThis.WebSocket = ws\`.
+   Every deploy import above MUST be \`bun add\`-ed into package.json — Vite dep
+   resolution does NOT apply to Node scripts under scripts/.
+
+2) NetworkId is TYPE-ONLY at 4.1.1:
+   \`import { NetworkId } from "@midnight-ntwrk/midnight-js-network-id"\` returns
+   a TS type, not a runtime value. Use \`setNetworkId("undeployed")\` (string).
+   The wallet-sdk runtime enum is namespace-nested: \`NetworkId.NetworkId.Undeployed\`.
+
+3) Compiled artefact resolution:
+   Compact 0.31 emits ESM \`contracts/managed/<name>/contract/index.js\`.
+   Deploy scripts MUST resolve \`.js\` first, \`.cjs\` only as fallback.
+   Symptom of getting this wrong: \`MODULE_NOT_FOUND\` on \`contract/index.cjs\`.
+
+4) Full \`midnight-local-dev/standalone.yml\` compose env — NOT just NODE_URL:
+   \`\`\`yaml
+   indexer:
+     image: midnightntwrk/indexer-standalone:4.0.2
+     environment:
+       APP__INFRA__NODE__URL: ws://node:9944
+       APP__APPLICATION__NETWORK_ID: undeployed
+       APP__INFRA__STORAGE__PASSWORD: indexer
+       APP__INFRA__PUB_SUB__PASSWORD: indexer
+       APP__INFRA__LEDGER_STATE_STORAGE__PASSWORD: indexer
+       APP__INFRA__SECRET: "303132333435363738393031323334353637383930313233343536373839303132"
+       APP__INFRA__SPO_NODE__BLOCKFROST_ID: "placeholder-not-used-standalone"
+     ports: ["8088:8088"]
+   \`\`\`
+   Missing \`APP__INFRA__SECRET\` → indexer exits at boot with
+   \`missing field 'secret' for key "INFRA" in \`APP__\` environment variable(s)\`.
+   Readiness check MUST be POST to /api/v4/graphql (GET returns 405).
+   Available subscriptions on 4.0.2: blocks, contractActions, dustLedgerEvents,
+   shieldedTransactions, unshieldedTransactions, zswapLedgerEvents. NO \`wallet\`.
+
+5) SERVER-APPEND ARCHITECTURE (mandatory on Undeployed):
+   \`\`\`
+   Undeployed:  UI → POST /api/public/<verb> → genesis wallet (server) → chain
+   Other nets:  UI → Lace publishKit → chain
+   Reads:       indexer GraphQL, no wallet needed
+   \`\`\`
+   Lace CANNOT sign on Undeployed. To make server-append reload the deploy-time
+   witness (avoid RpcError 117), put shared constants in \`src/lib/midnight-shared.ts\`
+   and import them from BOTH \`scripts/deploy-midnight.mjs\` and every \`*.server.ts\`:
+     • \`GENESIS_SEED = "0000…0002"\` — genesis-funds live on 0002, NOT 0001.
+     • \`PRIVATE_STATE_ID\` — stable string, NEVER \`Date.now()\`.
+     • \`PRIVATE_STATE_STORE\` — shared LevelDB store name.
+     • \`PRIVATE_STORAGE_PASSWORD\` — ≥ 3 char classes.
+     • \`DEPLOYER_SECRET_HEX\` — DETERMINISTIC, never \`crypto.getRandomValues\`.
+     • Deterministic buyer/merchant PK via:
+       \`persistentHash<Vector<2, Bytes<32>>>([pad(32, "<domain>:v1"), sk])\`
+
+6) \`providers.privateStateProvider.setContractAddress(contractAddress)\` MUST be
+   called BEFORE any get/set on every server route. Skipping this =
+   \`RpcError 117: cannot find private state\` at append time.
+
+7) Persist deploy metadata to \`src/data/midnight-contract.undeployed.json\`:
+   \`{ contractAddress, deployTxId, privateStateId, buyerPk, network, deployedAt }\`.
+   Server routes read this to bind \`findDeployedContract\` at request time.
+
+8) \`levelPrivateStateProvider\` at 4.1.1 requires:
+   • A **function** password provider (NOT the outdated \`{ get: async () => … }\`).
+   • An explicit \`accountId\`.
+   The old shape on the outer providers bag fails silently.
+
+9) VITE CONFIG (\`vite.config.ts\`):
+   • Any plugin that swaps \`@midnight-ntwrk/*\` or \`*.server.ts\` for SSR stubs
+     MUST set \`apply: "build"\`. Without this, \`vite dev\` local API handlers hit
+     the stub and \`/api/public/<verb>\` silently returns
+     \`{ simulated: true, midnightTxHash: "0xSIMULATED" }\`.
+     A UI that shows "ANCHORED" from \`0xSIMULATED\` is a bug, not a demo mode —
+     fail loudly in the server route when the contract JSON is missing or
+     \`VITE_NETWORK_ID !== "undeployed"\`.
+   • \`optimizeDeps.exclude\` MUST include (missing entries hang dev on "Loading…"):
+     "@midnight-ntwrk/testkit-js", "@midnight-ntwrk/wallet-sdk",
+     "@midnight-ntwrk/midnight-js-contracts",
+     "@midnight-ntwrk/midnight-js-http-client-proof-provider",
+     "@midnight-ntwrk/midnight-js-indexer-public-data-provider",
+     "@midnight-ntwrk/midnight-js-node-zk-config-provider",
+     "@midnight-ntwrk/midnight-js-level-private-state-provider",
+     "@midnight-ntwrk/midnight-js-network-id",
+     "@midnight-ntwrk/midnight-js-utils", "@midnight-ntwrk/wallet",
+     "@midnight-ntwrk/compact-runtime", "@midnight-ntwrk/onchain-runtime-v3",
+     "pino", "ws", "ssh2", "cpu-features"
+
+10) COMPACT GOTCHAS:
+    • \`pad(32, "<domain>:v1")\` — the string MUST be ≤ 32 UTF-8 bytes.
+      Approved short separators: "ap2:buyer:v1", "ucp:merchant:v1",
+      "musdc:signer:v1", "abodc:author:v1". Longer names fail with
+      \`cannot pad "…" to length 32 since its utf8-equivalent already exceeds\`.
+    • Never initialise an \`Opaque<"string">\` ledger field with a string literal
+      in \`constructor()\` — literals are \`Bytes<N>\` and the compiler rejects
+      the assignment. Drop the init; set from a circuit param via \`disclose()\`.
+
+11) UI STABILITY:
+    NEVER call parent \`setState\` during render in a wallet-bubble panel.
+    Chrome "Page Unresponsive" is the tell. Bubble via \`useEffect\` only.
+    Symptom: Connect Lace button "does nothing" — main thread dead from a
+    React infinite-update loop, not a Lace bug.
+
+12) ACCEPTANCE RULE (source of truth = the indexer, NOT the SDK):
+    Verify every Undeployed write via GraphQL POST to /api/v4/graphql:
+    \`\`\`graphql
+    query($a: HexEncoded!) {
+      contractAction(address: $a) {
+        ... on ContractCall {
+          entryPoint
+          transaction { hash block { height } }
+        }
+      }
+    }
+    \`\`\`
+    The midnight-js \`txId\` returned by \`callTx\` and the indexer ledger \`hash\`
+    are DIFFERENT strings — both are real. Never string-match one against the
+    other. Never accept \`0xSIMULATED\` as success in the UI.
+    After every \`midnight:down\`/\`up\`: redeploy AND restart Vite (LevelDB is
+    wiped, and \`ctxPromise\` is cached in-process).`;
+
+
 const A2A_AP2_BLOCK = `AGENTIC OVERLAY — A2A + AP2 (Google Agent-to-Agent + Agent Payments Protocol)
 
-This idea sits on the A2A negotiation loop and closes with an AP2 CartMandate
+This idea sits on the A2A 0.3 negotiation loop and closes with an AP2 CartMandate
 anchored on Midnight. Reference: https://a2a.dev · https://github.com/google-agentic-commerce/AP2
+
+A2A ENVELOPE (JSON-RPC 2.0, transport = HTTPS):
+  POST /agent   { "jsonrpc":"2.0", "id":"<uuid>", "method":"message/send",
+                  "params": { "message": { "parts": [
+                    { "kind": "data",
+                      "mimeType": "application/vnd.ap2.intent-mandate+json",
+                      "data": { … } } ] } } }
+  Status machine: submitted → working → input-required → completed | rejected | failed
+  Buyer/seller MIME types (do NOT drift — verifiers key off these strings):
+    • application/vnd.ap2.intent-mandate+json
+    • application/vnd.ap2.cart-mandate+json
+    • application/vnd.ap2.payment-mandate+json
 
 FLOW (implement exactly this shape):
   1) Buyer agent POSTs an A2A "message/send" with an IntentMandate DataPart.
-  2) Seller agent replies with one or more CartMandate offers as DataParts.
-     MIME: application/vnd.ap2.cart-mandate+json
-  3) Buyer signs the chosen CartMandate (EIP-712-style over the mandate hash).
-     For Midnight we use Compact-witness signing — the buyer runs a local circuit
-     that produces { proof, publicInputs } binding the cart hash to their address.
-  4) Server calls /api/public/ap2-anchor which submits anchorMandate(...) on the
-     MandateVault Compact contract deployed for this project.
+  2) Seller agent replies with one or more CartMandate offers as DataParts
+     (MIME: application/vnd.ap2.cart-mandate+json).
+  3) Buyer signs the chosen CartMandate with a Compact-witness proof binding
+     the cart hash to their buyer public key. This is NOT EIP-712 — cross-
+     verifying AP2 mandates from this stack against EVM verifiers will NOT work.
+     Buyer public keys are Compact-witness derived (see contract below).
+  4) Server calls /api/public/ap2-anchor which submits anchorMandate(...) on
+     the MandateVault Compact contract deployed for this project.
   5) UI displays the negotiation transcript AND the resulting Midnight tx hash
      with a link to the Indexer.
 
@@ -1303,6 +1461,8 @@ export circuit anchorMandate(
 ): [] {
   // Bind the anchor to the buyer's private key (witness) to prove the buyer
   // authorised THIS mandate, without revealing the key itself.
+  // Domain separator "ap2:buyer:v1" is 12 UTF-8 bytes — safely under pad(32).
+  // NEVER reuse "ucp:merchant:v1" here — cross-verifier failures otherwise.
   const sk = buyerSecret();
   const pk = persistentHash<Vector<2, Bytes<32>>>([pad(32, "ap2:buyer:v1"), sk]);
   assert(pk == buyer, "buyer signature invalid");
@@ -1318,16 +1478,26 @@ export circuit anchorMandate(
 REQUIRED SERVER ROUTE — src/routes/api/public/ap2-anchor.ts
 
 - POST { mandateHash, buyer, seller, amount, proof, publicInputs }
-- Verifies proof against MandateVault's verifier key
-- On Undeployed: submits via the genesis wallet (…0002) reusing scripts/deploy-midnight.mjs
-  provider setup and /api/append-entry pattern.
+- On Undeployed:
+    • Uses the SHARED src/lib/midnight-shared.ts constants (GENESIS_SEED "…0002",
+      deterministic DEPLOYER_SECRET_HEX, stable PRIVATE_STATE_ID, shared store).
+    • Instantiates providers via src/lib/midnight-providers.server.ts.
+    • Calls providers.privateStateProvider.setContractAddress(contractAddress).
+    • Uses findDeployedContract + callTx.anchorMandate(...).
+    • Returns { midnightTxHash, network: "undeployed", indexerUrl, simulated: false }.
 - On Preview/Preprod: uses the caller's Lace \`publishKit\` — server just validates.
-- Returns { midnightTxHash, network, indexerUrl, simulated }
-- If no contract is deployed for the selected network, return { simulated: true } and
-  a stub tx hash — the UI must show a clear "simulated" chip.
+- On missing contract JSON or VITE_NETWORK_ID !== "undeployed" for the Undeployed
+  path: return HTTP 500 with a clear error. NEVER return midnightTxHash "0xSIMULATED"
+  with success:true — a lying success is worse than a hard failure.
+
+BUYER PK DERIVATION (client-side, must match the circuit EXACTLY):
+  \`persistentHash<Vector<2, Bytes<32>>>([pad(32, "ap2:buyer:v1"), sk])\`
+  No extra fields, no different order, no reused domain separator.
 
 REFERENCE SHOWCASE: /showcase/a2a-ap2-negotiation on this site is the canonical
 buyer↔seller negotiation demo with an anchored CartMandate.
+
+${AGENTIC_INFRA_LESSONS}
 
 ${EXPERIMENTAL_AGENTIC}`;
 
@@ -1342,11 +1512,18 @@ FLOW:
      on OrderLedger.recordSigningKey when the app first boots.
   2) Buyer POSTs to /api/public/ucp/checkout with { items, buyer, currency }.
   3) Server validates the checkout with Zod, computes itemHash = keccak256(items),
-     assigns an orderId, and calls recordOrder(orderId, itemHash, buyer, amount)
-     on the OrderLedger Compact contract.
+     assigns an orderId, and calls appendEntry / recordOrder(orderId, itemHash,
+     buyer, amount) on the OrderLedger Compact contract.
   4) Server returns a UCP-shaped order receipt signed with RFC 9421 including a
      "Midnight-Tx" custom header carrying the tx hash.
   5) UI shows the signed-headers view side-by-side with the Midnight tx hash.
+
+BOOTSTRAP RULE (do not skip):
+  recordSigningKey MUST be called EXACTLY ONCE — either from a bootstrap route
+  or the deploy script — before the first UCP checkout. If a receipt's RFC 9421
+  signature verifies but the on-chain \`signing_key_fpr\` is still the zero value,
+  the app skipped bootstrap. Callers verify RFC 9421 signatures against the
+  on-chain fingerprint, NOT just the discovery doc.
 
 REQUIRED CONTRACT — contracts/OrderLedger.compact
 \`\`\`compact
@@ -1367,7 +1544,8 @@ constructor() {
 }
 
 // Pin the merchant's UCP signing-key fingerprint on-chain. Callers can verify
-// signatures against this record instead of trusting the discovery doc alone.
+// RFC 9421 signatures against this record instead of trusting discovery alone.
+// Domain separator "ucp:merchant:v1" is 15 UTF-8 bytes — safe under pad(32).
 export circuit recordSigningKey(fpr: Bytes<32>): [] {
   const sk = merchantSecret();
   const pk = persistentHash<Vector<2, Bytes<32>>>([pad(32, "ucp:merchant:v1"), sk]);
@@ -1392,25 +1570,42 @@ export circuit recordOrder(
 
 REQUIRED SERVER ROUTES — src/routes/api/public/
   - ucp-discovery.ts   → GET; returns the discovery document, RFC 9421 signed
-  - ucp-checkout.ts    → POST; validates, records order, returns signed receipt
-  - ucp-self-test.ts   → GET; runs the UCP conformance self-test (off-chain)
+                         over covered components (@method, @path, @authority,
+                         content-digest, date). Include \`keyid\` = the SHA-256
+                         fingerprint that was recorded on-chain.
+  - ucp-checkout.ts    → POST; validates with Zod, calls recordOrder via the
+                         shared Undeployed provider bag (see AGENTIC INFRA
+                         section §5 — same pattern as anchorMandate).
+  - ucp-self-test.ts   → GET; runs the UCP conformance self-test off-chain:
+                         verifies its own discovery signature, round-trips a
+                         Zod-validated checkout envelope, asserts on-chain
+                         \`signing_key_fpr\` matches the discovery keyid, and
+                         returns { pass: boolean, checks: [...] }.
+
+MERCHANT PK DERIVATION (must match the circuit):
+  \`persistentHash<Vector<2, Bytes<32>>>([pad(32, "ucp:merchant:v1"), sk])\`
 
 REFERENCE SHOWCASE: /showcase/ucp-zk-checkout on this site.
 
+${AGENTIC_INFRA_LESSONS}
+
 ${EXPERIMENTAL_AGENTIC}`;
 
-const X402_BLOCK = `AGENTIC OVERLAY — x402 with mUSDC (mimic USDC) on Midnight
+const X402_BLOCK = `AGENTIC OVERLAY — x402 with mUSDC (mimic USDC) on Midnight + EffectStream Sepolia overlay
 
 This idea ports the x402 v2 pay-per-call protocol (originally EVM-only) to
-Midnight. USDC is not native to Midnight, so we ship a mimic token: MidnightUSDC.
+Midnight. USDC is NOT native to Midnight — we ship a mimic token, MidnightUSDC.
 No peg, no value — hackathon experiment. The prompt MUST make this loud and clear.
 
 BASELINE (ported from the Optimism Blockchain Catalyst project — same envelope,
 same header casing):
   - v2 envelope: { x402Version: 2, accepted, payload: { signature, authorization } }
+    (v1 shape { scheme, network, payload } at the top level is REJECTED as
+     \`invalid_payload\`. Wrap the chosen PaymentRequirement under \`accepted\`.)
   - Literal-cased headers: PAYMENT-SIGNATURE (request) / PAYMENT-RESPONSE (response)
   - Same-origin proxy route to sidestep CORS on external facilitators
   - Per-request random 32-byte nonce; validAfter=now-60s; validBefore=now+300s
+  - Idempotent per nonce: concurrent retries return the first result.
 
 MIDNIGHT-SPECIFIC ADAPTATIONS:
   - Scheme = "midnight-mUSDC" (NOT "exact")
@@ -1422,6 +1617,30 @@ MIDNIGHT-SPECIFIC ADAPTATIONS:
   - Settlement = facilitator submits MidnightUSDC.transfer(from, to, amount) as
     a real tx on Midnight. Returns the Midnight tx hash in PAYMENT-RESPONSE.
 
+MULTI-ACCEPT CHALLENGE (mandatory for the EffectStream demo):
+  /api/public/x402-challenge MUST advertise BOTH rails so the client picks one:
+  \`\`\`json
+  { "x402Version": 2,
+    "accepts": [
+      { "scheme": "midnight-mUSDC", "network": "midnight:undeployed",
+        "asset": "<MidnightUSDC address>", "amount": "10000",
+        "maxTimeoutSeconds": 300 },
+      { "scheme": "exact", "network": "eip155:11155111",
+        "asset": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",  // USDC Sepolia
+        "amount": "10000", "extra": { "name": "USD Coin", "version": "2" },
+        "maxTimeoutSeconds": 300 },
+      { "scheme": "exact", "network": "eip155:11155111",
+        "asset": "0x08210F9170F89Ab7658F0B5E3fF39b0E03C594D4",  // EURC Sepolia
+        "amount": "10000", "extra": { "name": "EURC", "version": "1" },
+        "maxTimeoutSeconds": 300 },
+      { "scheme": "exact", "network": "eip155:11155111",
+        "asset": "0x3a3fe695F684Bf9b9e43CF43C2b895Ea5e392bB3",  // cirBTC Sepolia
+        "amount": "1000",  "extra": { "name": "cirBTC", "version": "1" },
+        "maxTimeoutSeconds": 300 } ] }
+  \`\`\`
+  Per-asset decimals: USDC = 6, EURC = 6, cirBTC = 8.
+  Use a helper: \`priceMicroUsdToTokenAtomic(asset, priceMicroUsd)\`.
+
 REQUIRED CONTRACT — contracts/MidnightUSDC.compact
 \`\`\`compact
 pragma language_version 0.23;
@@ -1430,7 +1649,8 @@ import CompactStandardLibrary;
 // mUSDC — mimic USDC. 6 decimals like real USDC.
 export ledger total_supply: Uint<64>;
 export ledger balances: Map<Bytes<32>, Uint<64>>;
-// Anti-replay: spent nonces
+// Anti-replay: spent nonces on-chain (client MUST also generate a fresh
+// crypto.getRandomValues(new Uint8Array(32)) per attempt — never reuse).
 export ledger spent_nonces: Set<Bytes<32>>;
 
 witness senderSecret(): Bytes<32>;
@@ -1448,6 +1668,7 @@ export circuit faucet(to: Bytes<32>, amount: Uint<64>): [] {
 }
 
 // EIP-3009-style transfer with authorization. Nonce prevents replay.
+// Domain separator "musdc:signer:v1" is 15 UTF-8 bytes — safe under pad(32).
 export circuit transfer(
   from: Bytes<32>,
   to: Bytes<32>,
@@ -1470,16 +1691,81 @@ export circuit transfer(
 \`\`\`
 
 REQUIRED SERVER ROUTES — src/routes/api/public/
-  - x402-challenge.ts  → returns 402 with accepts[] describing the mUSDC price
-  - x402-verify.ts     → verifies the mUSDC proof against the contract's verifier
-  - x402-settle.ts     → submits MidnightUSDC.transfer, returns Midnight tx hash
-  - x402-proxy.ts      → same-origin proxy for CORS (mirrors the Optimism recipe)
+  - x402-challenge.ts    → 402 with the multi-accept accepts[] above
+  - x402-verify.ts       → verifies the mUSDC proof against the contract's verifier
+  - x402-settle.ts       → submits MidnightUSDC.transfer, returns Midnight tx hash
+  - x402-proxy.ts        → same-origin CORS proxy that forwards PAYMENT-SIGNATURE
+                           (request) + PAYMENT-RESPONSE (response) verbatim
+  - sepolia-fulfill.ts   → after a successful Sepolia payment, triggers the
+                           Midnight \`anchorChunk\` overlay (see EffectStream)
 
 PAYMENT-RESPONSE payload (base64 JSON):
   { "success": true, "network": "midnight:<net>", "payer": "mn_addr…",
     "midnightTxHash": "0x…", "indexerUrl": "https://…" }
 
+EFFECTSTREAM — SEPOLIA OVERLAY (not a bridge):
+  EffectStream syncs a Sepolia Circle-asset payment into a Midnight
+  \`anchorChunk(chunkHash)\` call on a \`StreamingChoreographyIP\` contract.
+  Assets STAY on Sepolia — Midnight only stores the chunk anchor.
+  UI copy MUST NOT describe this as "bridging USDC onto Midnight".
+  Repo reference: https://github.com/effectstream/effectstream
+
+  Sepolia paywall requirements:
+    • \`ChunkPaywall.sol\` with \`pay(token, chunkHash, amount)\`, an allowlist of
+      Circle tokens, and a \`ChunkPaid\` event.
+    • Deploy with \`forge create --broadcast\`. WITHOUT \`--broadcast\`, forge
+      silently dry-runs and reports success while nothing lands on-chain —
+      always confirm on Sepolia Etherscan via \`cast receipt\` before continuing.
+    • Verify with Etherscan V2 (V1 hosts are deprecated):
+        --verifier-url https://api.etherscan.io/v2/api?chainid=11155111
+        --skip-is-verified-check
+      (V1's is-verified preflight misreports valid V2 keys as \`Invalid API Key\`.)
+    • Also verify on Sourcify — Sourcify ≠ Etherscan.
+
+  Wallet + RPC failure modes to plan for BEFORE writeContract:
+    • Infura rejects any gas > 2²⁴ = 16 777 216. When \`eth_estimateGas\` fails
+      (usually 0 token balance / no allowance / simulation revert), MetaMask
+      falls back to 21 000 000 → Infura rejects → viem wraps as if it were a
+      contract revert. Fix by funding + approving first, then relying on
+      \`estimateContractGas\` output. Map RPC gas-cap errors in the UI to a
+      clear "estimation failed; check balance & allowance" message.
+    • Surface \`balance ≥ required\` + allowance side-by-side with the pay
+      button, including a link to https://faucet.circle.com/ for Sepolia
+      Circle tokens.
+
+  \`/api/public/sepolia-fulfill\` FAIL-LOUD contract:
+    Return HTTP error (not 200) when either:
+      - the SCIP contract JSON is missing, OR
+      - \`VITE_NETWORK_ID !== "undeployed"\`.
+    NEVER return \`midnightTxHash: "0xSIMULATED"\` with \`success: true\`.
+
+TWO WALLETS, TWO NETWORKS (do not conflate in code or UI copy):
+  • Sepolia   → MetaMask + Circle-faucet-funded USDC/EURC/cirBTC.
+  • Undeployed → server-side genesis wallet (see AGENTIC INFRA §5).
+  Lace on Undeployed still needs tDUST if the user signs client-side;
+  server-append uses genesis funds instead — do NOT force Lace here.
+
 REFERENCE SHOWCASE: /showcase/x402-midnight-paywall on this site.
+
+FAILURE MODES (self-diagnostic table — copy into README):
+  | Symptom                                                                       | Cause                                                       | Fix                                                              |
+  |-------------------------------------------------------------------------------|-------------------------------------------------------------|------------------------------------------------------------------|
+  | \`Unknown field "wallet" on type "Subscription"\`                              | wallet@5 against indexer 4.0.2                              | Pin the stack in AGENTIC INFRA §1                                |
+  | \`missing field 'secret' for key "INFRA"\`                                     | Compose only sets NODE_URL                                  | Adopt the full standalone.yml env in AGENTIC INFRA §4            |
+  | \`cannot pad "…" to length 32\`                                                | Domain separator > 32 UTF-8 bytes                           | Use short separators — AGENTIC INFRA §10                         |
+  | \`disclose("(empty)")\` compile error                                          | Literal assigned to \`Opaque<"string">\` field                | Drop constructor init                                            |
+  | \`MODULE_NOT_FOUND\` on \`contract/index.cjs\`                                  | Compact 0.31 emits ESM \`.js\`                               | Resolve \`.js\` first — AGENTIC INFRA §3                          |
+  | \`NetworkId is not defined\` at runtime                                        | Type-only at 4.1.1                                          | \`setNetworkId("undeployed")\` — AGENTIC INFRA §2                 |
+  | \`/api/public/<verb>\` always returns \`simulated: true\` in dev                | \`midnightSsrStub()\` runs on all SSR                        | Gate with \`apply: "build"\` — AGENTIC INFRA §9                   |
+  | \`RpcError 117\`                                                               | Random deployerSecret / privateStateId / store between deploy and server | Shared \`src/lib/midnight-shared.ts\` — AGENTIC INFRA §5    |
+  | Indexer POST returns 405                                                      | Sent GET                                                    | GraphQL requires POST — AGENTIC INFRA §12                        |
+  | Chrome "Page Unresponsive" on wallet-connect                                  | Parent \`setState\` during render                             | Bubble via \`useEffect\` only — AGENTIC INFRA §11                 |
+  | UI shows "ANCHORED" with \`0xSIMULATED\`                                       | Server silently returned fake hash                          | Fail loudly; verify via indexer \`contractAction\` — §12          |
+  | Etherscan verify: \`Invalid API Key\` on a valid key                           | Foundry hit V1 host                                         | V2 with \`--skip-is-verified-check\`                              |
+  | \`gas limit too high (cap: 16777216, tx: 21000000)\`                           | estimateGas failed → MetaMask 21M fallback → Infura cap     | Fund + approve first; surface balance vs required                |
+  | \`forge create\` "succeeded" but nothing on-chain                              | Missing \`--broadcast\`                                       | Add \`--broadcast\`; verify explorer receipt                      |
+
+${AGENTIC_INFRA_LESSONS}
 
 ${EXPERIMENTAL_AGENTIC}`;
 
