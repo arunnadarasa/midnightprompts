@@ -97,7 +97,54 @@ function MobileDev() {
           </div>
         </section>
 
-        {/* HACKATHON ANGLES */}
+        {/* VERIFIED REFERENCE BUILD */}
+        <section className="mt-16 border-t border-border pt-12">
+          <span className="eyebrow">Verified reference build</span>
+          <h2 className="font-display text-3xl sm:text-4xl mt-3 italic">
+            mobilemidnight — Tokenized Choreo Kits.
+          </h2>
+          <p className="mt-4 text-sm text-muted-foreground max-w-2xl leading-relaxed">
+            The first verified end-to-end Kuira dApp on Undeployed: passkey Sigil forge, 10,000 NIGHT
+            airdrop, dust registered, catalog deployed, and two kits published on-chain with a
+            ~25s warm on-device prove.
+          </p>
+          <div className="mt-6 p-6 border border-primary/40 bg-card">
+            <div className="grid gap-4 sm:grid-cols-[1fr_auto] items-start">
+              <div>
+                <span className="eyebrow text-primary">Pinned stack</span>
+                <div className="font-display text-lg mt-2 leading-tight">
+                  Kuira SDK <code>0.1.0-alpha05</code> · Compact <code>0.31.1</code> ·{" "}
+                  <code>mn localnet</code> · on-device proving
+                </div>
+                <ul className="mt-4 text-sm text-muted-foreground leading-relaxed space-y-1.5 list-disc pl-5">
+                  <li>Passkey Sigil forge (WebAuthn / Credential Manager)</li>
+                  <li>NIGHT funded via <code>mn airdrop … --network undeployed</code></li>
+                  <li>Dust registered in-app (not via <code>mn dust register</code>)</li>
+                  <li>Compact catalog deployed, 2 kits published (~25s warm prove)</li>
+                </ul>
+              </div>
+              <a
+                href={MOBILEMIDNIGHT_REPO}
+                target="_blank"
+                rel="noreferrer"
+                className="px-5 py-2.5 bg-primary text-primary-foreground hover:bg-foreground transition-colors duration-500 text-[11px] uppercase tracking-[0.24em] whitespace-nowrap"
+              >
+                Repo ↗
+              </a>
+            </div>
+            <p className="mt-5 text-xs text-muted-foreground/80 leading-relaxed">
+              Every hard-won lesson from this build — passkey rpId + assetlinks, emulator
+              prerequisites, `mn airdrop` funding path, address-checksum pitfalls, `FLAG_SECURE`
+              screencap workarounds — is folded into the{" "}
+              <Link to="/llms" className="underline hover:text-primary">
+                Lovable Midnight skill
+              </Link>{" "}
+              you can download for your own Lovable projects.
+            </p>
+          </div>
+        </section>
+
+
         <section className="mt-16 border-t border-border pt-12">
           <span className="eyebrow">Hackathon angles</span>
           <h2 className="font-display text-3xl sm:text-4xl mt-3 italic">
