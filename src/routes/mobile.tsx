@@ -344,7 +344,7 @@ function Angle({ title, body }: { title: string; body: string }) {
   );
 }
 
-function MapRow({ from, to, cta }: { from: string; to: string; cta?: React.ReactNode }) {
+function MapRow({ from, to, cta }: { from: string; to: React.ReactNode; cta?: React.ReactNode }) {
   return (
     <div className="grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-6 px-5 sm:px-6 py-4 border-b border-border last:border-b-0 text-sm">
       <div className="text-muted-foreground">{from}</div>
