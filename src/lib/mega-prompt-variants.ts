@@ -416,6 +416,81 @@ NEVER:
 - Ask the user for a recovery phrase / seed / private key. Signing is Lace-only on Mainnet.
 - Route Mainnet writes through a server \`/api/mint\`. There is no genesis wallet on Mainnet.
 - Auto-deposit user funds. Every write must be explicitly initiated by the user in Lace.`,
+  "undeployed-mobile": `REQUIRED SECRETS + PREREQS \u2014 **UNDEPLOYED (MOBILE \u00b7 ANDROID)** target \u26a0\ufe0f EXPERIMENTAL:
+
+\u26a0\ufe0f READ FIRST \u2014 Lovable does NOT generate native Android apps. This prompt is a
+STARTING SCAFFOLD to paste into Cursor / Android Studio (Kotlin + Jetpack Compose)
+alongside the Kuira Android SDK. Expect breakage. Web tooling won't compile it.
+Use this only if you already have Android Studio Ladybug+, JDK 21, and Kotlin 2.0+.
+
+CREDIT: native Android integration is powered by the Kuira Android SDK.
+        https://kuiralabs.github.io/kuira-sdk-android/
+        Reference build: https://github.com/arunnadarasa/mobilemidnight
+
+TARGET STACK (verified):
+- Kuira Android SDK  0.1.0-alpha05  (embedded wallet + on-device ZK proving + Passkey identity)
+- Compact language   0.31.1         (matches Kuira's bundled runtime; do NOT downgrade to 0.23)
+- Midnight devnet:   \`mn localnet\`  (Kuira CLI \u2014 replaces Docker Compose)
+- Min SDK 26 / target 34, Kotlin 2.0.20, AGP 8.5+, Compose BOM 2024.09+.
+
+NO WEB SECRETS. Configuration lives in \`local.properties\` and \`AndroidManifest.xml\`:
+- MIDNIGHT_NETWORK           undeployed
+- MIDNIGHT_NODE_URL          ws://10.0.2.2:9944          (emulator loopback to host)
+- MIDNIGHT_INDEXER_URL       http://10.0.2.2:8088/api/v4/graphql
+- MIDNIGHT_INDEXER_WS_URL    ws://10.0.2.2:8088/api/v4/graphql/ws
+- KUIRA_RP_ID                <your.real.domain>          (MUST be a real, HTTPS-reachable domain \u2014
+                                                          Passkey / Credential Manager rejects localhost)
+- KUIRA_ASSETLINKS_URL       https://<your.real.domain>/.well-known/assetlinks.json
+- CONTRACT_ADDRESS_UNDEPLOYED hex printed by \`mn deploy\` (paste after first deploy)
+
+NON-NEGOTIABLES (each of these has cost teams a full day):
+1. \`rpId\` MUST be a REAL domain with a LIVE, publicly reachable
+   \`/.well-known/assetlinks.json\` matching your app's package name + SHA-256
+   signing cert fingerprint. localhost / 10.0.2.2 / IP addresses fail with
+   \`CreateCredentialProviderConfigurationException\`. No workaround.
+2. After changing \`rpId\` you MUST fully uninstall the app (\`adb uninstall <pkg>\`),
+   NOT just reinstall \u2014 Credential Manager caches the old rpId per-package and
+   silently rejects the new one.
+3. Emulator MUST be signed into a Google account AND have a screen lock (PIN/pattern),
+   or Passkey creation throws \`NoCreateCredentialException\`. Physical devices
+   need the same, plus Google Play Services \u2265 24.0.
+4. \`mn localnet\` (NOT Docker Compose) is the Kuira-native devnet. It boots node +
+   indexer + proof-server together on 9944 / 8088 / 6300. If you also have this
+   project's Docker stack running, \`docker compose down\` first \u2014 same ports.
+5. Fund NIGHT via \`mn airdrop <mn_addr_undeployed1\u2026>\` (Kuira CLI). Do NOT try to
+   register DUST from the CLI \u2014 delegate NIGHT \u2192 DUST from INSIDE the app once,
+   using the Kuira SDK's \`wallet.registerDust()\` call. CLI dust registration is
+   currently broken on Undeployed.
+6. Screenshots are blocked by \`FLAG_SECURE\` on Kuira screens. Use
+   \`adb exec-out uiautomator dump /dev/tty\` to inspect UI state for tests \u2014
+   \`adb exec-out screencap\` returns a black frame.
+7. Soft-keyboard on emulator: \`adb shell settings put secure show_ime_with_hard_keyboard 1\`
+   or every text field is dead.
+
+CONTRACT DEPLOY (from your dev host, not the phone):
+   mn localnet up
+   mn compile contracts/MyContract.compact
+   mn deploy contracts/managed/my-contract --network undeployed
+   # Paste the printed hex into local.properties CONTRACT_ADDRESS_UNDEPLOYED,
+   # then \`./gradlew :app:installDebug\`.
+
+FORM-ENABLEMENT PATTERN (single biggest UI bug on Kuira):
+   Compose state written to a ViewModel via a plain \`by mutableStateOf\` sometimes
+   doesn't re-trigger \`enabled = ...\` on Buttons after wallet sync. The fix is
+   \`rememberSaveable\` in the composable PLUS a \`LaunchedEffect(walletReady)\` that
+   writes the readiness flag through to the ViewModel:
+      var ready by rememberSaveable { mutableStateOf(false) }
+      LaunchedEffect(wallet.stateFlow.collectAsState().value.ready) {
+        ready = it; vm.setReady(it)
+      }
+
+Explorer: none (local chain). Inspect state via the Indexer GraphQL at
+          http://<host-ip>:8088/api/v4/graphql from your laptop.
+
+Notes:    Lovable will NOT compile this project. Copy the generated Kotlin +
+          Compact files into a fresh Android Studio project. Keep the web
+          companion (if any) as a separate Lovable app pointed at the SAME
+          local Undeployed chain \u2014 web + mobile share one contract address.`,
 };
 
 type Hook = { id: string; name: string; tag: string; kernel: string; ui: string };
