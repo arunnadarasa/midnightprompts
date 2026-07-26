@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
+import emulatorAsset from "@/assets/mobilemidnight-emulator.png.asset.json";
 
 export const Route = createFileRoute("/mobile")({
   head: () => ({
