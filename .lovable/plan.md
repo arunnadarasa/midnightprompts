@@ -1,62 +1,47 @@
-## Update Lovable Midnight skill + Mobile Dev page with mobilemidnight learnings
+## Goal
 
-Source material: `arunnadarasa/mobilemidnight` (Tokenized Choreo Kits Android build) + attached Cursor session notes. First verified end-to-end Kuira dApp on Undeployed — real passkey forge, `mn airdrop` funding, on-device ZK proving, 2 kits published.
+Add a 5th mega-prompt variant **Undeployed (Mobile)** targeting native Android via the Kuira SDK, marked Experimental, credited to kuiralabs. Adds ~3,000 prompts (1,000 ideas × 3 OS tabs — though Android is the only real target, we'll keep the OS tab to match the existing UI and note that "Your Machine" refers to the *dev host*, not the runtime).
 
-### 1. Lovable Midnight skill — new "Mobile / Kuira Android" section
+## Scope
 
-Append to both `.agents/skills/lovable-midnight/SKILL.md` and `public/skills/lovable-midnight/SKILL.md` (kept identical). New H2 section placed after the current Fly.io block, before "Anti-patterns".
+Presentation + prompt-builder only. No contract or backend changes.
 
-Content:
+### 1. `src/data/ideas.ts`
+- Extend `NetworkVariant` union with `"undeployed-mobile"`.
 
-- **When to reach for Kuira** vs the web/Lace path: mobile-first hackathon lanes, passkey biometric identity, no browser extension. Not a drop-in replacement — different toolchain (Gradle/Kotlin/AVD), different funding path.
-- **Verified stack** (from mobilemidnight): Kuira SDK `0.1.0-alpha05`, Compact `0.31.1`, `mn localnet` (CLI), on-device proving. Not the Docker `midnight-node:0.22.5` stack — Kuira targets `mn localnet` directly.
-- **Non-negotiables** (hard rules, mirror the tone of the existing skill):
-  - Passkey `rpId` MUST be a real hosted domain with a live `assetlinks.json` matching the package name + debug SHA-256. `REPLACE_ME` / `.example` fails forge with `CreateCredentialNoCreateOptionException`.
-  - After any `rpId` / assetlinks change: **uninstall then reinstall** — `adb install -r` leaves Credential Manager in stale state.
-  - Emulator needs a **signed-in Google account** AND a screen lock before passkey create will offer any options. DAL correctness alone is insufficient.
-  - Force soft keyboard on emulator: `adb shell settings put secure show_ime_with_hard_keyboard 1` + Gboard. Hardware keyboard silently fails on Compose + WebView fields.
-  - NIGHT on Undeployed = `mn airdrop 10000 --wallet <addr> --network undeployed`. There is no in-app faucet. Then **Register dust in-app** (not `mn dust register` for the Kuira flow).
-  - Copy addresses from device UI/uiautomator, never OCR/screenshots — `l`↔`1` in bech32 kills the checksum (`Invalid checksum… expected "2xmr28"`).
-  - Kuira wallet UI uses `FLAG_SECURE` → `screencap` returns black frames. Use `uiautomator dump` for automation.
-- **Form-enablement pattern** (real app bug we hit): Publish/Deploy buttons must derive `enabled` from the same state the TextFields write to. Local `rememberSaveable` form state with write-through to ViewModel via `LaunchedEffect`; don't gate UI on a fire-and-forget VM helper that only reads `.value`.
-- **Verified happy path** (bash snippet): `mn localnet up` → `./gradlew :app:installDebug` → forge → receive address → `mn airdrop` → register dust → deploy catalog → publish kit (30–120s cold prove).
-- **Failure modes table** (new rows, same style as the Fly table):
-  - `CreateCredentialNoCreateOptionException` → no signed-in Google account / no screen lock
-  - `packageMatchesRpAssetlinks: false` → DAL not hosted or SHA mismatch or `.example` rpId
-  - Passkey create silently canceled after "correct" DAL fix → forgot to uninstall/reinstall
-  - `Invalid checksum expected "…"` on `mn airdrop` → address retyped from screenshot; use device copy
-  - Screencap comes back black → `FLAG_SECURE`; switch to `uiautomator dump /dev/tty`
-  - `adb input text` fills field but Google/JS validation still says empty → use on-screen Gboard
-  - Publish button stays disabled with all fields visibly filled → enablement reads different state than TextField
-- **Anti-patterns** (append bullets):
-  - Don't automate Google account recovery / security codes through chat — codes expire in ~60s, "Code 1/Code 2" prompts are number-match, not the 10-digit field.
-  - Don't try to substitute Docker `midnight-node:0.22.5` for `mn localnet` under Kuira — the SDK expects the `mn` toolchain.
-  - Don't leave `emulator-*.png`, debug ingest scripts, or `.cursor/debug-*.log` in the tree.
-- **Cross-references**: link back to the existing `midnight-environment-setup` skill for the `mn` CLI install; note that the four-app Fly.io topology from the Fly section is still valid as the proof/indexer backend if you'd rather host than run `mn localnet` on a laptop.
+### 2. `src/lib/mega-prompt-variants.ts`
+- Add `undeployed-mobile` entry to the network variants map:
+  - Label: **Undeployed (Mobile)**
+  - Sublabel/badge: **Experimental · Android only**
+  - Description mentions Lovable does not build native Android apps, so this prompt is a starting scaffold for Cursor/Android Studio, expect breakage.
+  - Body composed of: existing Undeployed local infra lessons + a new `MOBILE_KURA_BLOCK` covering:
+    - Kuira SDK `0.1.0-alpha05`, Compact `0.31.1`, `mn localnet` CLI (not Docker), `mn airdrop` for NIGHT, in-app dust registration.
+    - Passkey / `rpId` non-negotiables, `assetlinks.json`, full reinstall after rpId change, emulator needs Google account + screen lock.
+    - `adb shell settings put secure show_ime_with_hard_keyboard 1`, `uiautomator dump` (screencap blocked by FLAG_SECURE).
+    - `rememberSaveable` + `LaunchedEffect` write-through form-enablement pattern.
+    - Reference repo: `github.com/arunnadarasa/mobilemidnight`.
+    - Credit + link: `https://kuiralabs.github.io/kuira-sdk-android/`.
+  - Experimental disclaimer banner text (reused by UI).
 
-### 2. `src/routes/mobile.tsx` — expand with verified-build content
+### 3. `src/routes/ideas.$id.tsx`
+- Add the 5th tab **Undeployed (Mobile)** with an "Experimental" pill.
+- Above the copy button (when this tab is active), render an amber warning banner:
+  - "Experimental · Android only. Lovable doesn't generate native Android apps — use this prompt as a starting scaffold in Cursor / Android Studio with the Kuira SDK. Expect breakage."
+  - Credit line linking to `https://kuiralabs.github.io/kuira-sdk-android/`.
+- Keep the existing OS (macOS/Windows/Linux) toggle — clarify it means "dev host for `mn localnet` + Android Studio".
 
-Additive changes only; keep the current Hero, Opportunity, Angles, Stack Mapping, Getting Started, References sections. Insertions and one edit:
+### 4. `src/routes/mobile.tsx`
+- Add a small callout linking to the new **Undeployed (Mobile)** prompt tab so mobile-dev visitors discover the 1,000 prompts.
 
-- **Above "Hackathon angles", add a new "Verified reference build" section**: card block for `mobilemidnight` / Tokenized Choreo Kits, with:
-  - Live repo link: `https://github.com/arunnadarasa/mobilemidnight`
-  - Pinned stack line: Kuira SDK `0.1.0-alpha05`, Compact `0.31.1`, Undeployed via `mn localnet`, on-device proving.
-  - "What was shipped" bullets: passkey Sigil forge, 10,000 NIGHT airdrop, dust registered, catalog deployed, 2 kits published (~25s warm prove).
-  - "Learnings extracted into the Lovable Midnight skill" callout with link to `/llms` (skill download card).
-- **Update "Getting started"** — reword step 1 to mention `mn localnet up` (not Docker) as the Kuira-native local devnet, and step 3 to add the `mn airdrop … --network undeployed` + in-app Register dust funding path. Keep the existing indexer/proof-URL guidance for teams choosing to point at Fly.io instead.
-- **New "Passkey setup checklist" subsection** (short, 5 bullets) under Getting started: real domain rpId, hosted `assetlinks.json` with package + debug SHA-256, signed-in Google account on the AVD, screen lock set, soft keyboard forced on. One line: "Skipping any of these turns into a multi-hour Credential Manager rabbit hole — see the skill's Mobile section for the full failure-mode table."
-- **Add one row to the Stack Mapping table**: `mn airdrop --network undeployed` → same CLI as web demos; the mobile app just consumes the funded address.
-- **References section**: add a card for `mobilemidnight` repo alongside the existing Kuira SDK + Docs cards; keep the "no mobile demo yet" showcase card copy but change wording to "first *hosted* mobile demo yet — mobilemidnight is the reference build".
+### 5. Skill sync (docs only)
+- No skill edit needed; mobile/Kuira lessons already landed in a prior turn. This plan only reuses them inside the new prompt block.
 
-### 3. Out of scope
+## Non-goals
 
-- No new mega-prompt variant for Android (would need Gradle/Kotlin scaffolding — different generator).
-- No changes to `showcase.index.tsx` — mobilemidnight is a repo-only reference, no hosted preview URL.
-- No changes to `site-shell.tsx` navigation.
-- No changes to ideas JSON or theme filters.
+- No changes to Preview / Preprod / Undeployed / Undeployed (Fly.io) tabs.
+- Mainnet stays hidden.
+- No new showcase entry (mobilemidnight is already referenced on `/mobile`).
 
-### Files touched
+## Math
 
-- `.agents/skills/lovable-midnight/SKILL.md` — append Mobile/Kuira section
-- `public/skills/lovable-midnight/SKILL.md` — same content, keep in sync
-- `src/routes/mobile.tsx` — insertions + Getting-started edits described above
+1,000 ideas × 1 new network variant = **1,000 new prompts per OS**, ×3 OS tabs = **3,000 additional prompt permutations**, consistent with the user's estimate.
