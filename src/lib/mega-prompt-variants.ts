@@ -356,7 +356,7 @@ function localStackSetup(os: OSTarget): string {
   return `${LOCAL_STACK_INTRO}\n\n${LOCAL_STACK_DOCKER_BY_OS[os]}\n\n${LOCAL_STACK_OUTRO}`;
 }
 
-const NETWORK_LABELS: Record<NetworkVariant, string> = {"preview": "Preview testnet", "preprod": "Preprod testnet (closer to mainnet)", "undeployed": "Undeployed / local standalone stack (no faucet needed)", "undeployed-fly": "Undeployed hosted on Fly.io (public demo — no Docker for visitors)", "mainnet": "Mainnet (REAL VALUE — experimental / vibe-coded, use at your own risk)"};
+const NETWORK_LABELS: Record<NetworkVariant, string> = {"preview": "Preview testnet", "preprod": "Preprod testnet (closer to mainnet)", "undeployed": "Undeployed / local standalone stack (no faucet needed)", "undeployed-fly": "Undeployed hosted on Fly.io (public demo — no Docker for visitors)", "undeployed-mobile": "Undeployed (Mobile · Android via Kuira SDK · EXPERIMENTAL)", "mainnet": "Mainnet (REAL VALUE — experimental / vibe-coded, use at your own risk)"};
 
 const NETWORK_SECRETS: Record<NetworkVariant, string> = {
   preview: "REQUIRED SECRETS (Lovable \u2192 Project Settings \u2192 Secrets) \u2014 **PREVIEW** target:\n- VITE_NETWORK_ID           preview\n- VITE_INDEXER_URL          https://indexer.preview.midnight.network/api/v4/graphql\n- VITE_INDEXER_WS_URL       wss://indexer.preview.midnight.network/api/v4/graphql/ws\n- VITE_PROOF_SERVER_URL     http://localhost:6300   (run the matrix proof server: `docker run -p 6300:6300 midnightntwrk/proof-server:8.1.0 midnight-proof-server -v`)\n- VITE_DEFAULT_CONTRACT     hex address printed by your first deploy \u2014 paste it here so users skip the deploy step\n\ntNIGHT \u2260 tDUST \u2014 the #1 support question. Faucet dispenses tNIGHT; deploys spend tDUST. Every user hits this once:\n  1. Copy your UNSHIELDED address (`mn_addr_undeployed1\u2026` on Preview; Lace labels the network \"Preview\").\n  2. Paste into https://midnight-tmnight-preview.nethermind.dev/ \u2192 Request \u2192 tNIGHT arrives.\n  3. In Lace, click \"Generate tDUST\" to delegate tNIGHT \u2192 tDUST appears after a block.\n  4. Only NOW can you deploy \u2014 the deploy script errors with `Insufficient Funds: could not balance dust` otherwise.\nExplorer: https://preview.midnightexplorer.com/\nNotes:    Preview is the fastest network to demo on but resets frequently. Best for iterative dev + hackathon judges.\n          If you don't want to babysit the faucet, use the **Undeployed** variant of this prompt instead.",
@@ -416,6 +416,81 @@ NEVER:
 - Ask the user for a recovery phrase / seed / private key. Signing is Lace-only on Mainnet.
 - Route Mainnet writes through a server \`/api/mint\`. There is no genesis wallet on Mainnet.
 - Auto-deposit user funds. Every write must be explicitly initiated by the user in Lace.`,
+  "undeployed-mobile": `REQUIRED SECRETS + PREREQS \u2014 **UNDEPLOYED (MOBILE \u00b7 ANDROID)** target \u26a0\ufe0f EXPERIMENTAL:
+
+\u26a0\ufe0f READ FIRST \u2014 Lovable does NOT generate native Android apps. This prompt is a
+STARTING SCAFFOLD to paste into Cursor / Android Studio (Kotlin + Jetpack Compose)
+alongside the Kuira Android SDK. Expect breakage. Web tooling won't compile it.
+Use this only if you already have Android Studio Ladybug+, JDK 21, and Kotlin 2.0+.
+
+CREDIT: native Android integration is powered by the Kuira Android SDK.
+        https://kuiralabs.github.io/kuira-sdk-android/
+        Reference build: https://github.com/arunnadarasa/mobilemidnight
+
+TARGET STACK (verified):
+- Kuira Android SDK  0.1.0-alpha05  (embedded wallet + on-device ZK proving + Passkey identity)
+- Compact language   0.31.1         (matches Kuira's bundled runtime; do NOT downgrade to 0.23)
+- Midnight devnet:   \`mn localnet\`  (Kuira CLI \u2014 replaces Docker Compose)
+- Min SDK 26 / target 34, Kotlin 2.0.20, AGP 8.5+, Compose BOM 2024.09+.
+
+NO WEB SECRETS. Configuration lives in \`local.properties\` and \`AndroidManifest.xml\`:
+- MIDNIGHT_NETWORK           undeployed
+- MIDNIGHT_NODE_URL          ws://10.0.2.2:9944          (emulator loopback to host)
+- MIDNIGHT_INDEXER_URL       http://10.0.2.2:8088/api/v4/graphql
+- MIDNIGHT_INDEXER_WS_URL    ws://10.0.2.2:8088/api/v4/graphql/ws
+- KUIRA_RP_ID                <your.real.domain>          (MUST be a real, HTTPS-reachable domain \u2014
+                                                          Passkey / Credential Manager rejects localhost)
+- KUIRA_ASSETLINKS_URL       https://<your.real.domain>/.well-known/assetlinks.json
+- CONTRACT_ADDRESS_UNDEPLOYED hex printed by \`mn deploy\` (paste after first deploy)
+
+NON-NEGOTIABLES (each of these has cost teams a full day):
+1. \`rpId\` MUST be a REAL domain with a LIVE, publicly reachable
+   \`/.well-known/assetlinks.json\` matching your app's package name + SHA-256
+   signing cert fingerprint. localhost / 10.0.2.2 / IP addresses fail with
+   \`CreateCredentialProviderConfigurationException\`. No workaround.
+2. After changing \`rpId\` you MUST fully uninstall the app (\`adb uninstall <pkg>\`),
+   NOT just reinstall \u2014 Credential Manager caches the old rpId per-package and
+   silently rejects the new one.
+3. Emulator MUST be signed into a Google account AND have a screen lock (PIN/pattern),
+   or Passkey creation throws \`NoCreateCredentialException\`. Physical devices
+   need the same, plus Google Play Services \u2265 24.0.
+4. \`mn localnet\` (NOT Docker Compose) is the Kuira-native devnet. It boots node +
+   indexer + proof-server together on 9944 / 8088 / 6300. If you also have this
+   project's Docker stack running, \`docker compose down\` first \u2014 same ports.
+5. Fund NIGHT via \`mn airdrop <mn_addr_undeployed1\u2026>\` (Kuira CLI). Do NOT try to
+   register DUST from the CLI \u2014 delegate NIGHT \u2192 DUST from INSIDE the app once,
+   using the Kuira SDK's \`wallet.registerDust()\` call. CLI dust registration is
+   currently broken on Undeployed.
+6. Screenshots are blocked by \`FLAG_SECURE\` on Kuira screens. Use
+   \`adb exec-out uiautomator dump /dev/tty\` to inspect UI state for tests \u2014
+   \`adb exec-out screencap\` returns a black frame.
+7. Soft-keyboard on emulator: \`adb shell settings put secure show_ime_with_hard_keyboard 1\`
+   or every text field is dead.
+
+CONTRACT DEPLOY (from your dev host, not the phone):
+   mn localnet up
+   mn compile contracts/MyContract.compact
+   mn deploy contracts/managed/my-contract --network undeployed
+   # Paste the printed hex into local.properties CONTRACT_ADDRESS_UNDEPLOYED,
+   # then \`./gradlew :app:installDebug\`.
+
+FORM-ENABLEMENT PATTERN (single biggest UI bug on Kuira):
+   Compose state written to a ViewModel via a plain \`by mutableStateOf\` sometimes
+   doesn't re-trigger \`enabled = ...\` on Buttons after wallet sync. The fix is
+   \`rememberSaveable\` in the composable PLUS a \`LaunchedEffect(walletReady)\` that
+   writes the readiness flag through to the ViewModel:
+      var ready by rememberSaveable { mutableStateOf(false) }
+      LaunchedEffect(wallet.stateFlow.collectAsState().value.ready) {
+        ready = it; vm.setReady(it)
+      }
+
+Explorer: none (local chain). Inspect state via the Indexer GraphQL at
+          http://<host-ip>:8088/api/v4/graphql from your laptop.
+
+Notes:    Lovable will NOT compile this project. Copy the generated Kotlin +
+          Compact files into a fresh Android Studio project. Keep the web
+          companion (if any) as a separate Lovable app pointed at the SAME
+          local Undeployed chain \u2014 web + mobile share one contract address.`,
 };
 
 type Hook = { id: string; name: string; tag: string; kernel: string; ui: string };
@@ -1286,7 +1361,41 @@ function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
 7. Preflight the deployed site: it should show 4 green pills for
    node / indexer / proof / faucet — probe order matters, node first.`;
 
-  const steps = network === "undeployed" ? undeployed : network === "undeployed-fly" ? undeployedFly : previewPreprod;
+  const undeployedMobile = `1. Install Android Studio (Ladybug or newer) + JDK 21 + Android SDK 34.
+   Enable an emulator (Pixel 7, API 34, Google Play image) signed into a
+   Google account with a screen lock, OR pair a physical Android device.
+   THIS PROMPT IS ANDROID-ONLY. Lovable can't build the APK \u2014 open the
+   generated folder in Android Studio / Cursor.
+2. Install the Kuira CLI (\`mn\`) from https://kuiralabs.github.io/kuira-sdk-android/
+   and boot the local Midnight devnet:
+      mn localnet up
+   This starts node (9944) + indexer (8088) + proof-server (6300) with
+   Kuira-compatible pinned versions. Do NOT run this project's Docker
+   Compose stack at the same time \u2014 same ports.
+3. Compile + deploy the Compact contract from your dev host:
+      mn compile contracts/MyContract.compact
+      mn deploy contracts/managed/my-contract --network undeployed
+   Paste the printed hex into \`local.properties\` under
+   \`CONTRACT_ADDRESS_UNDEPLOYED\`.
+4. Publish your \`assetlinks.json\` at
+   \`https://<your.real.domain>/.well-known/assetlinks.json\` \u2014 Passkey
+   Credential Manager rejects any rpId without a live assetlinks match.
+   localhost / 10.0.2.2 / IP addresses will NOT work.
+5. Fund NIGHT once from the Kuira CLI:
+      mn airdrop <mn_addr_undeployed1\u2026>
+   Then open the app, tap "Register DUST" once inside the wallet screen
+   (Kuira SDK's \`wallet.registerDust()\`). CLI dust registration is
+   broken on Undeployed \u2014 you must do this in-app.
+6. If keyboard doesn't appear on the emulator:
+      adb shell settings put secure show_ime_with_hard_keyboard 1
+7. \`./gradlew :app:installDebug\` \u2014 the app boots straight to the Passkey
+   sign-in flow. If it throws \`NoCreateCredentialException\`, the
+   emulator is missing a Google account or screen lock.
+
+For UI tests, use \`adb exec-out uiautomator dump /dev/tty\` \u2014 \`screencap\`
+returns a black frame because Kuira screens set \`FLAG_SECURE\`.`;
+
+  const steps = network === "undeployed" ? undeployed : network === "undeployed-fly" ? undeployedFly : network === "undeployed-mobile" ? undeployedMobile : previewPreprod;
 
   return `IN-APP SETUP PANEL — MANDATORY (render on the primary page):
 
@@ -1884,6 +1993,129 @@ const PROTOCOL_BLOCKS: Record<Protocol, string> = {
 };
 
 
+function buildMobileVariant(args: {
+  title: string; pitch: string; sub: string; theme: Theme;
+  hookName: string; hookTag: string; rationale: string;
+  netSecrets: string; contract: string;
+}): string {
+  const { title, pitch, sub, theme, hookName, hookTag, rationale, netSecrets, contract } = args;
+  return `⚠️  EXPERIMENTAL · ANDROID-ONLY · KURA SDK STARTING SCAFFOLD ⚠️
+
+Lovable does NOT build native Android apps. Paste the output of this prompt
+into Cursor or Android Studio (Kotlin + Jetpack Compose) alongside the
+Kuira Android SDK. Expect breakage. This scaffold gets you 60–70% of the
+way to a working local Undeployed mobile dApp — the rest is Android-native
+work you will finish outside Lovable.
+
+Credit: Kuira Labs · https://kuiralabs.github.io/kuira-sdk-android/
+Reference build: https://github.com/arunnadarasa/mobilemidnight
+Ships-on-Lovable web companion: use one of the OTHER four network variants
+(Preview / Preprod / Undeployed / Undeployed-Fly) pointed at the SAME
+contract address for a cross-platform demo.
+
+Build "${title}" as a native Android dApp on Midnight Undeployed.
+
+CONCEPT
+${pitch}
+Discipline: ${theme.name} (${sub}).
+Onchain primitive: ${hookName} (${hookTag}). Why this primitive: ${rationale}
+
+TARGET STACK (verified — do NOT downgrade)
+- Kuira Android SDK  0.1.0-alpha05  (embedded wallet + on-device ZK proving + Passkey identity)
+- Compact language   0.31.1         (Kuira ships its own runtime; MUST match)
+- Devnet             \`mn localnet\`  (Kuira CLI — NOT Docker Compose)
+- Kotlin 2.0.20 · AGP 8.5+ · Compose BOM 2024.09+
+- Min SDK 26 · Target SDK 34
+- JDK 21 · Android Studio Ladybug+
+
+PROJECT LAYOUT
+- app/src/main/java/…/MainActivity.kt      Passkey sign-in + wallet bootstrap
+- app/src/main/java/…/WalletViewModel.kt   StateFlow<WalletState> from Kuira SDK
+- app/src/main/java/…/ContractClient.kt    Wraps the deployed contract's circuits
+- app/src/main/compact/MyContract.compact  Compact 0.31 source
+- contracts/managed/my-contract/           Output of \`mn compile\`
+- local.properties                         Non-git-tracked keys/URLs
+
+COMPACT CONTRACT (compile with \`mn compile\`, deploy with \`mn deploy\`):
+${contract}
+
+NON-NEGOTIABLES — each of these has cost teams a full day:
+
+1. rpId must be a REAL domain with a LIVE /.well-known/assetlinks.json
+   matching your app's package name + SHA-256 signing cert. localhost /
+   10.0.2.2 / IP addresses fail with CreateCredentialProviderConfigurationException.
+   No workaround. Use a domain you already own or a temporary
+   Cloudflare Pages / Netlify redirect.
+
+2. After changing rpId, FULLY uninstall the app (\`adb uninstall <pkg>\`).
+   Credential Manager caches the previous rpId per-package and silently
+   rejects the new one on reinstall. This is the #1 confused-user report.
+
+3. Emulator MUST be signed into a Google account AND have a screen lock
+   (PIN or pattern), or Passkey creation throws NoCreateCredentialException.
+   Physical device needs Google Play Services ≥ 24.0.
+
+4. Use \`mn localnet up\` (Kuira CLI) — NOT the Docker Compose stack from
+   the web variants. Same ports (9944 / 8088 / 6300) so \`docker compose down\`
+   first if the web stack is running.
+
+5. Fund NIGHT once via \`mn airdrop <mn_addr_undeployed1…>\`.
+   Register DUST from INSIDE the app via \`wallet.registerDust()\` — CLI
+   dust registration is broken on Undeployed.
+
+6. FLAG_SECURE is on for every Kuira screen. \`adb exec-out screencap\`
+   returns a black frame. For UI tests / bug reports:
+       adb exec-out uiautomator dump /dev/tty
+
+7. Soft keyboard on emulator (blocks every text field until you do this):
+       adb shell settings put secure show_ime_with_hard_keyboard 1
+
+8. Form-enablement pattern — Compose sometimes doesn't re-evaluate
+   \`enabled = ...\` on Buttons when the ViewModel's readiness flag flips
+   after async wallet sync. Fix with rememberSaveable + LaunchedEffect
+   write-through:
+
+       var ready by rememberSaveable { mutableStateOf(false) }
+       val walletReady = wallet.stateFlow.collectAsState().value.ready
+       LaunchedEffect(walletReady) { ready = walletReady; vm.setReady(walletReady) }
+       Button(enabled = ready, onClick = { … })
+
+CONFIG (local.properties — never commit):
+${netSecrets}
+
+DEPLOY FLOW
+    mn localnet up
+    mn compile app/src/main/compact/MyContract.compact
+    mn deploy contracts/managed/my-contract --network undeployed
+    # paste the printed hex into local.properties CONTRACT_ADDRESS_UNDEPLOYED
+    ./gradlew :app:installDebug
+
+WEB ↔ MOBILE PARITY
+If you also want a web demo of the same contract, generate a second Lovable
+project using the "Undeployed (local)" tab for the SAME idea and paste the
+same CONTRACT_ADDRESS_UNDEPLOYED into VITE_DEFAULT_CONTRACT. Both clients
+speak to the same \`mn localnet\` stack.
+
+WHAT LOVABLE CANNOT DO FOR YOU HERE
+- Compile Kotlin / Jetpack Compose.
+- Sign the APK.
+- Generate + host \`assetlinks.json\` at your real domain.
+- Run \`gradlew\` or the Android emulator.
+
+You will finish these in Android Studio / Cursor after copying the
+generated files out of the Lovable workspace.
+
+CREDIT (must appear in the app's About screen AND as a header comment on
+every Compact contract file):
+
+- Powered by Kuira Android SDK · https://kuiralabs.github.io/kuira-sdk-android/
+- Reference build: https://github.com/arunnadarasa/mobilemidnight
+- Prompt scaffold: https://midnightprompts.lovable.app
+`.replace(/\s+$/, "");
+}
+
+
+
 export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, os: OSTarget = "macos"): string {
   const { title, pitch, subDiscipline: sub } = idea;
   const hid = idea.quantumHookId || "compact-deploy";
@@ -1897,6 +2129,11 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, 
 
   const netLabel = NETWORK_LABELS[network] ?? network;
   const netSecrets = NETWORK_SECRETS[network] ?? NETWORK_SECRETS.preview;
+
+  if (network === "undeployed-mobile") {
+    return buildMobileVariant({ title, pitch, sub, theme, hookName, hookTag: hook.tag, rationale, netSecrets, contract });
+  }
+
   const isUndeployedLocal = network === "undeployed";
   const isUndeployedFly = network === "undeployed-fly";
   const localBlock = isUndeployedLocal ? `\n\n${localStackSetup(os)}\n` : "";

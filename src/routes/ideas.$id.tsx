@@ -9,13 +9,14 @@ import { getPlainProposition } from "@/lib/plain-language";
 
 
 const VARIANT_META: Record<NetworkVariant, { label: string; caption: string; explorer: string | null }> = {
-  preview:          { label: "Preview",             caption: "Fastest to demo. Testnet resets often. Faucet: nethermind.dev preview.", explorer: "https://preview.midnightexplorer.com/" },
-  preprod:          { label: "Preprod",             caption: "Closer to mainnet parameters. Stable but occasional DUST-sync quirks.", explorer: "https://preprod.midnightexplorer.com/" },
-  undeployed:       { label: "Undeployed (local)",  caption: "Run the standalone stack on your own machine. No faucet, unlimited tDUST. DevRel-advised.", explorer: null },
-  "undeployed-fly": { label: "Undeployed (Fly.io)", caption: "Publish the Undeployed stack as a hosted 4-app Fly topology. Any visitor with Lace can try it — no Docker on their machine. ~$15–25/mo.", explorer: null },
-  mainnet:          { label: "Mainnet ⚠️",           caption: "REAL VALUE. Buy NIGHT from an official exchange partner. Vibe-coded, no audit — bragging-right proof-of-deploy only.", explorer: "https://midnightexplorer.com/" },
+  preview:             { label: "Preview",             caption: "Fastest to demo. Testnet resets often. Faucet: nethermind.dev preview.", explorer: "https://preview.midnightexplorer.com/" },
+  preprod:             { label: "Preprod",             caption: "Closer to mainnet parameters. Stable but occasional DUST-sync quirks.", explorer: "https://preprod.midnightexplorer.com/" },
+  undeployed:          { label: "Undeployed (local)",  caption: "Run the standalone stack on your own machine. No faucet, unlimited tDUST. DevRel-advised.", explorer: null },
+  "undeployed-fly":    { label: "Undeployed (Fly.io)", caption: "Publish the Undeployed stack as a hosted 4-app Fly topology. Any visitor with Lace can try it — no Docker on their machine. ~$15–25/mo.", explorer: null },
+  "undeployed-mobile": { label: "Undeployed (Mobile)", caption: "Experimental · Android only. Native Kotlin + Jetpack Compose scaffold for the Kuira Android SDK. Lovable can't build the APK — finish in Android Studio / Cursor.", explorer: null },
+  mainnet:             { label: "Mainnet ⚠️",           caption: "REAL VALUE. Buy NIGHT from an official exchange partner. Vibe-coded, no audit — bragging-right proof-of-deploy only.", explorer: "https://midnightexplorer.com/" },
 };
-const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed", "undeployed-fly"];
+const VARIANT_KEYS: NetworkVariant[] = ["preview", "preprod", "undeployed", "undeployed-fly", "undeployed-mobile"];
 const OS_KEYS: OSTarget[] = ["macos", "windows", "linux"];
 
 function detectOS(): OSTarget {
@@ -156,7 +157,7 @@ function IdeaPage() {
           </div>
 
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-px bg-border border border-border sm:inline-flex sm:w-auto">
               {VARIANT_KEYS.map((k) => {
                 const active = k === variant;
                 return (
@@ -238,6 +239,52 @@ function IdeaPage() {
                 Fly.io hosting guide →
               </Link>
             </p>
+          )}
+          {variant === "undeployed-mobile" && (
+            <div className="mt-4 p-4 border-l-2 border-amber-500 bg-amber-500/10 text-xs font-light leading-relaxed max-w-3xl">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="px-2 py-0.5 bg-amber-500 text-black text-[10px] tracking-[0.24em] uppercase font-semibold">
+                  Experimental
+                </span>
+                <span className="px-2 py-0.5 border border-amber-500 text-amber-200 text-[10px] tracking-[0.24em] uppercase">
+                  Android only
+                </span>
+              </div>
+              <p className="text-amber-100/90">
+                Lovable does <strong>not</strong> generate native Android apps. This prompt is a starting
+                scaffold to paste into Cursor or Android Studio (Kotlin + Jetpack Compose) alongside the
+                Kuira Android SDK. Expect breakage — you'll finish the last mile in Android Studio.
+              </p>
+              <p className="mt-2 text-amber-100/80">
+                Credit:{" "}
+                <a
+                  href="https://kuiralabs.github.io/kuira-sdk-android/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="story-gold text-primary"
+                >
+                  Kuira Android SDK ↗
+                </a>{" "}
+                · Reference build:{" "}
+                <a
+                  href="https://github.com/arunnadarasa/mobilemidnight"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="story-gold text-primary"
+                >
+                  mobilemidnight ↗
+                </a>{" "}
+                ·{" "}
+                <Link to="/mobile" className="story-gold text-primary">
+                  Mobile Dev guide →
+                </Link>
+              </p>
+              <p className="mt-2 text-amber-100/70">
+                iOS is not supported by Kuira today. The "Your machine" toggle below refers to your
+                <strong> dev host</strong> (where <code>mn localnet</code> and Android Studio run) — the
+                app itself always ships to Android.
+              </p>
+            </div>
           )}
 
           <p className="mt-4 text-sm text-muted-foreground mb-4 font-light leading-relaxed">
