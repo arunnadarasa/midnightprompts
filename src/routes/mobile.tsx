@@ -202,6 +202,11 @@ function MobileDev() {
               from="Indexer GraphQL over WSS"
               to="Same endpoint — SDK opens the WSS from the app process"
             />
+            <MapRow
+              from="Web faucet button / tDUST balance UI"
+              to={<><code>mn airdrop … --network undeployed</code> + in-app "Register dust"</>}
+            />
+
           </div>
         </section>
 
