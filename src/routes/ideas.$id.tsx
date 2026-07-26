@@ -240,6 +240,52 @@ function IdeaPage() {
               </Link>
             </p>
           )}
+          {variant === "undeployed-mobile" && (
+            <div className="mt-4 p-4 border-l-2 border-amber-500 bg-amber-500/10 text-xs font-light leading-relaxed max-w-3xl">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="px-2 py-0.5 bg-amber-500 text-black text-[10px] tracking-[0.24em] uppercase font-semibold">
+                  Experimental
+                </span>
+                <span className="px-2 py-0.5 border border-amber-500 text-amber-200 text-[10px] tracking-[0.24em] uppercase">
+                  Android only
+                </span>
+              </div>
+              <p className="text-amber-100/90">
+                Lovable does <strong>not</strong> generate native Android apps. This prompt is a starting
+                scaffold to paste into Cursor or Android Studio (Kotlin + Jetpack Compose) alongside the
+                Kuira Android SDK. Expect breakage — you'll finish the last mile in Android Studio.
+              </p>
+              <p className="mt-2 text-amber-100/80">
+                Credit:{" "}
+                <a
+                  href="https://kuiralabs.github.io/kuira-sdk-android/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="story-gold text-primary"
+                >
+                  Kuira Android SDK ↗
+                </a>{" "}
+                · Reference build:{" "}
+                <a
+                  href="https://github.com/arunnadarasa/mobilemidnight"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="story-gold text-primary"
+                >
+                  mobilemidnight ↗
+                </a>{" "}
+                ·{" "}
+                <Link to="/mobile" className="story-gold text-primary">
+                  Mobile Dev guide →
+                </Link>
+              </p>
+              <p className="mt-2 text-amber-100/70">
+                iOS is not supported by Kuira today. The "Your machine" toggle below refers to your
+                <strong> dev host</strong> (where <code>mn localnet</code> and Android Studio run) — the
+                app itself always ships to Android.
+              </p>
+            </div>
+          )}
 
           <p className="mt-4 text-sm text-muted-foreground mb-4 font-light leading-relaxed">
             Paste into a fresh Lovable project. Make sure the secrets for this target are set first.{" "}
