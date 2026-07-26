@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
+import emulatorAsset from "@/assets/mobilemidnight-emulator.png.asset.json";
 
 export const Route = createFileRoute("/mobile")({
   head: () => ({
@@ -148,7 +149,7 @@ function MobileDev() {
             ~25s warm on-device prove.
           </p>
           <div className="mt-6 p-6 border border-primary/40 bg-card">
-            <div className="grid gap-4 sm:grid-cols-[1fr_auto] items-start">
+            <div className="grid gap-6 md:grid-cols-[1fr_auto] items-start">
               <div>
                 <span className="eyebrow text-primary">Pinned stack</span>
                 <div className="font-display text-lg mt-2 leading-tight">
@@ -161,15 +162,27 @@ function MobileDev() {
                   <li>Dust registered in-app (not via <code>mn dust register</code>)</li>
                   <li>Compact catalog deployed, 2 kits published (~25s warm prove)</li>
                 </ul>
+                <a
+                  href={MOBILEMIDNIGHT_REPO}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-5 inline-block px-5 py-2.5 bg-primary text-primary-foreground hover:bg-foreground transition-colors duration-500 text-[11px] uppercase tracking-[0.24em]"
+                >
+                  Repo ↗
+                </a>
               </div>
-              <a
-                href={MOBILEMIDNIGHT_REPO}
-                target="_blank"
-                rel="noreferrer"
-                className="px-5 py-2.5 bg-primary text-primary-foreground hover:bg-foreground transition-colors duration-500 text-[11px] uppercase tracking-[0.24em] whitespace-nowrap"
-              >
-                Repo ↗
-              </a>
+              <figure className="mx-auto md:mx-0 w-full max-w-[240px]">
+                <img
+                  src={emulatorAsset.url}
+                  alt="mobilemidnight Android emulator — Tokenized Choreo Kits demo running on Midnight Undeployed"
+                  className="w-full rounded-lg border border-border shadow-lg"
+                  loading="lazy"
+                />
+                <figcaption className="mt-3 text-[11px] uppercase tracking-[0.2em] text-muted-foreground/80 text-center leading-relaxed">
+                  Android emulator · Kuira <code>0.1.0-alpha05</code><br />
+                  Midnight Undeployed · ~25.8s wall time / publish
+                </figcaption>
+              </figure>
             </div>
             <p className="mt-5 text-xs text-muted-foreground/80 leading-relaxed">
               Every hard-won lesson from this build — passkey rpId + assetlinks, emulator
