@@ -338,17 +338,31 @@ function MobileDev() {
                 Hosted API reference and guides for identity, wallet, and contract calls.
               </p>
             </a>
+            <a
+              href={MOBILEMIDNIGHT_REPO}
+              target="_blank"
+              rel="noreferrer"
+              className="block p-6 border border-primary/40 hover:border-primary transition-colors duration-500"
+            >
+              <span className="eyebrow text-primary">Reference build</span>
+              <div className="font-display text-xl mt-2">arunnadarasa/mobilemidnight ↗</div>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                Tokenized Choreo Kits — first verified Kuira dApp on Undeployed. Passkey Sigil,{" "}
+                <code>mn airdrop</code> funding, on-device prove, 2 kits published.
+              </p>
+            </a>
             <Link
               to="/showcase"
-              className="block p-6 border border-primary/30 hover:border-primary/60 transition-colors duration-500"
+              className="block p-6 border border-border hover:border-primary/60 transition-colors duration-500"
             >
               <span className="eyebrow text-primary">Showcase</span>
-              <div className="font-display text-xl mt-2">No mobile demo yet →</div>
+              <div className="font-display text-xl mt-2">No hosted mobile demo yet →</div>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                Every showcase entry today is a web build. The first hackathon team to ship a Kuira
-                reference demo gets featured here.
+                mobilemidnight is the reference repo; the first team to ship a{" "}
+                <em>hosted</em> Kuira demo gets featured on the showcase page.
               </p>
             </Link>
+
             <Link
               to="/undeployed"
               className="block p-6 border border-border hover:border-primary/60 transition-colors duration-500"
