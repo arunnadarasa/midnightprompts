@@ -1361,7 +1361,41 @@ function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
 7. Preflight the deployed site: it should show 4 green pills for
    node / indexer / proof / faucet — probe order matters, node first.`;
 
-  const steps = network === "undeployed" ? undeployed : network === "undeployed-fly" ? undeployedFly : previewPreprod;
+  const undeployedMobile = `1. Install Android Studio (Ladybug or newer) + JDK 21 + Android SDK 34.
+   Enable an emulator (Pixel 7, API 34, Google Play image) signed into a
+   Google account with a screen lock, OR pair a physical Android device.
+   THIS PROMPT IS ANDROID-ONLY. Lovable can't build the APK \u2014 open the
+   generated folder in Android Studio / Cursor.
+2. Install the Kuira CLI (\`mn\`) from https://kuiralabs.github.io/kuira-sdk-android/
+   and boot the local Midnight devnet:
+      mn localnet up
+   This starts node (9944) + indexer (8088) + proof-server (6300) with
+   Kuira-compatible pinned versions. Do NOT run this project's Docker
+   Compose stack at the same time \u2014 same ports.
+3. Compile + deploy the Compact contract from your dev host:
+      mn compile contracts/MyContract.compact
+      mn deploy contracts/managed/my-contract --network undeployed
+   Paste the printed hex into \`local.properties\` under
+   \`CONTRACT_ADDRESS_UNDEPLOYED\`.
+4. Publish your \`assetlinks.json\` at
+   \`https://<your.real.domain>/.well-known/assetlinks.json\` \u2014 Passkey
+   Credential Manager rejects any rpId without a live assetlinks match.
+   localhost / 10.0.2.2 / IP addresses will NOT work.
+5. Fund NIGHT once from the Kuira CLI:
+      mn airdrop <mn_addr_undeployed1\u2026>
+   Then open the app, tap "Register DUST" once inside the wallet screen
+   (Kuira SDK's \`wallet.registerDust()\`). CLI dust registration is
+   broken on Undeployed \u2014 you must do this in-app.
+6. If keyboard doesn't appear on the emulator:
+      adb shell settings put secure show_ime_with_hard_keyboard 1
+7. \`./gradlew :app:installDebug\` \u2014 the app boots straight to the Passkey
+   sign-in flow. If it throws \`NoCreateCredentialException\`, the
+   emulator is missing a Google account or screen lock.
+
+For UI tests, use \`adb exec-out uiautomator dump /dev/tty\` \u2014 \`screencap\`
+returns a black frame because Kuira screens set \`FLAG_SECURE\`.`;
+
+  const steps = network === "undeployed" ? undeployed : network === "undeployed-fly" ? undeployedFly : network === "undeployed-mobile" ? undeployedMobile : previewPreprod;
 
   return `IN-APP SETUP PANEL — MANDATORY (render on the primary page):
 
