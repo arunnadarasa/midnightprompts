@@ -2006,6 +2006,11 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, 
 
   const netLabel = NETWORK_LABELS[network] ?? network;
   const netSecrets = NETWORK_SECRETS[network] ?? NETWORK_SECRETS.preview;
+
+  if (network === "undeployed-mobile") {
+    return buildMobileVariant({ title, pitch, sub, theme, hookName, hookTag: hook.tag, rationale, netSecrets, contract });
+  }
+
   const isUndeployedLocal = network === "undeployed";
   const isUndeployedFly = network === "undeployed-fly";
   const localBlock = isUndeployedLocal ? `\n\n${localStackSetup(os)}\n` : "";
