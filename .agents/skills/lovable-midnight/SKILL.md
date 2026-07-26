@@ -502,3 +502,102 @@ Fly-hosted Undeployed stack. Skip any one and hours evaporate.
    with `bun scripts/fund-faucet.mjs` (uses genesis `…0002` seed → faucet `/health`
    address). Otherwise `/grant` returns 500 `Insufficient Funds` and the demo silently
    breaks.
+
+## 2026-07 update — mobilemidnight hard-won lessons (Kuira Android on Undeployed)
+
+Source: `arunnadarasa/mobilemidnight` (Tokenized Choreo Kits). First verified end-to-end Kuira dApp on Undeployed — passkey Sigil forge → `mn airdrop` funding → on-device ZK proving → 2 kits published (~25s warm prove).
+
+### When to reach for Kuira
+
+Mobile-first hackathon lanes (NFC tap-to-anchor, offline receipts, POS, wearables) where a browser + Lace extension is a non-starter. Passkey biometric identity replaces seed phrases. **Not a drop-in replacement** for the web/Lace path — different toolchain (Gradle/Kotlin/AVD), different local devnet (`mn localnet`, not Docker `midnight-node:0.22.5`), different funding path (`mn airdrop` CLI, no in-app browser faucet).
+
+### Verified stack
+
+| Piece | Version |
+| --- | --- |
+| Kuira SDK | `0.1.0-alpha05` |
+| Compact | `0.31.1` |
+| Local devnet | `mn localnet` (CLI — NOT `midnightntwrk/midnight-node:0.22.5` Docker image) |
+| Proving | On-device |
+| Reference AVD | API 35 `google_apis` arm64, 8GB host |
+
+### Non-negotiables
+
+- **Passkey `rpId` must be a real hosted domain** with a live `assetlinks.json` matching the app's package name AND the debug (or release) signing certificate SHA-256. `REPLACE_ME` / `.example` fails forge with `CreateCredentialNoCreateOptionException`. Reference binding that worked: domain `arunnadarasa.github.io`, DAL at `https://arunnadarasa.github.io/.well-known/assetlinks.json`, package `com.choreokits.mobile`.
+- **After any `rpId` or assetlinks change: uninstall then reinstall.** `adb install -r` leaves Credential Manager in stale state and the Kuira docs are right — a fresh install is the only reliable reset.
+- **Emulator prerequisites BEFORE debugging Credential Manager exceptions:** a signed-in Google account on the device, a screen lock set, and DAL live + package/SHA matched. Skip any of these and passkey create silently cancels no matter how correct your app code is.
+- **Force the soft keyboard on:** `adb shell settings put secure show_ime_with_hard_keyboard 1` plus Gboard (`LatinIME`). Hardware/host keyboard input silently fails on Compose fields and Google WebView (`inputType=0`); `adb input text` paints characters that JS validation ignores.
+- **NIGHT funding on Undeployed is a CLI airdrop, not an in-app faucet.**
+  ```bash
+  mn airdrop 10000 --wallet <mn_addr_undeployed1…> --network undeployed
+  ```
+  Then **Register dust in-app** (the Kuira flow, NOT `mn dust register`).
+- **Never OCR / retype addresses from screenshots.** `l` vs `1` in bech32 breaks the checksum (`Invalid checksum… expected "2xmr28"`) and burns an airdrop. Copy from the app UI, or scrape via `adb exec-out uiautomator dump /dev/tty` and parse the `mn_addr_…` substring.
+- **Kuira wallet UI uses `FLAG_SECURE` — `screencap` returns black frames.** Use `uiautomator dump` for automation instead of screenshots.
+
+### Form-enablement pattern (real app bug we hit)
+
+Symptom: Publish/Deploy button stayed disabled with all TextFields visibly filled, showing "Enter a kit title" despite a title being typed. Cause: enablement gate read a different piece of state than the TextField `value`. Fire-and-forget `viewModel.foo()` that only reads `.value` doesn't observe recompositions.
+
+Fix pattern (used in `KitsCard.kt` / `KitsViewModel.kt`):
+
+```kotlin
+// Local rememberSaveable form state = source of truth
+var title by rememberSaveable { mutableStateOf("") }
+// Write-through to VM so business logic sees it
+LaunchedEffect(title) { vm.setTitle(title) }
+// Derive enabled from the SAME state the TextField writes
+val blocked = publishBlockedReason(title, steps, priceDust)
+Button(enabled = blocked == null, onClick = { vm.publish() }) { … }
+```
+
+### Verified happy path
+
+```bash
+# Host
+mn localnet up
+export JAVA_HOME="$(/usr/libexec/java_home 2>/dev/null || echo /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home)"
+export PATH="$ANDROID_HOME/platform-tools:$PATH"
+./gradlew :app:installDebug
+
+# Emulator (one-time)
+# - Sign into a Google account (type password on the soft keyboard)
+# - Set a screen lock
+# - adb shell settings put secure show_ime_with_hard_keyboard 1
+
+# In-app
+# 1. Forge Sigil (passkey create)
+# 2. Receive → copy mn_addr_undeployed1…
+mn airdrop 10000 --wallet <addr> --network undeployed
+# 3. Register dust in-app
+# 4. Deploy catalog (on-device prove, ~30–120s cold)
+# 5. Title / steps / priceDust → Publish kit
+```
+
+### Failure modes specific to Kuira / Android
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| `CreateCredentialNoCreateOptionException` on forge | No signed-in Google account, or no screen lock, or Password Manager unavailable on this image | Sign into Google on the AVD, set a screen lock, prefer a Play Store system image over bare `google_apis` |
+| DAL check reports `packageMatchesRpAssetlinks: false` | `assetlinks.json` not hosted, SHA-256 mismatch, or `rpId` still `REPLACE_ME`/`.example` | Publish DAL at `https://<rpId>/.well-known/assetlinks.json` with package + current debug signing SHA; set `PASSKEY_RP_ID` to that domain |
+| Passkey create silently canceled after "correct" DAL fix | Credential Manager cached old rpId | Full uninstall then reinstall — `adb install -r` is not enough |
+| `mn airdrop` returns `Invalid checksum… expected "…"` | Address retyped from screenshot; `l` vs `1` collision | Copy address from device UI or scrape with `uiautomator dump` |
+| Publish button stays disabled with fields visibly filled | Enablement reads different state than TextField writes | Local `rememberSaveable` + write-through `LaunchedEffect`; derive `enabled` from the same state |
+| `screencap` frames are black | Kuira wallet UI has `FLAG_SECURE` | Use `uiautomator dump /dev/tty` for automation |
+| `adb input text` fills email/password but Google says "empty" | JS/WebView validation doesn't fire on injected input | Use on-screen Gboard; do not script Google auth via adb |
+| `adb: command not found` on macOS | Unity's Android SDK `platform-tools` not on PATH | `export PATH="$ANDROID_HOME/platform-tools:$PATH"` (or Unity SDK path) |
+| Gradle fails with cryptic JAVA_HOME error | Stale Corretto/JDK path | `export JAVA_HOME="$(/usr/libexec/java_home)"` — this build was verified on Homebrew OpenJDK 17 |
+| Emulator OOM on 8GB host running headless | Kuira + AVD memory pressure | Run the emulator with GUI window; avoid `-no-window` on 8GB machines |
+
+### Anti-patterns (Kuira-specific, add to the main list)
+
+- Don't substitute the Docker `midnight-node:0.22.5` stack for `mn localnet` under Kuira — the SDK expects the `mn` CLI toolchain and its funding semantics.
+- Don't automate Google account recovery / security codes via chat. Codes expire in ~60s and "Code 1 / Code 2" on the phone is a **number-match tap**, not the 10-digit Security code field.
+- Don't ship `emulator-*.png`, `.cursor/debug-*.log`, or ad-hoc `scripts/emu-*.sh` helpers in the repo — clean before commit.
+- Don't rely on host-keyboard input for Compose or WebView fields. Force the soft keyboard on from day one.
+
+### Cross-references
+
+- `mn` CLI install and Undeployed prerequisites: see `midnight-environment-setup`.
+- The four-app Fly.io topology from the earlier flymidnight section is still valid as the indexer/proof backend if you'd rather host than run `mn localnet` on a laptop — point the Kuira SDK config at `https://choreo-indexer.fly.dev/api/v4/graphql` and `https://choreo-proof.fly.dev` the same way the web demos do.
+- Reference build: `https://github.com/arunnadarasa/mobilemidnight` (Tokenized Choreo Kits).
