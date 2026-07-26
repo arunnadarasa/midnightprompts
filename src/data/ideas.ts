@@ -10,7 +10,7 @@ import theaterData from "./ideas/theater.json";
 import fashionData from "./ideas/fashion.json";
 import hooksData from "./ideas/hooks.json";
 
-export type NetworkVariant = "preview" | "preprod" | "undeployed" | "undeployed-fly" | "mainnet";
+export type NetworkVariant = "preview" | "preprod" | "undeployed" | "undeployed-fly" | "undeployed-mobile" | "mainnet";
 export type Protocol = "a2a-ap2" | "ucp" | "x402";
 
 export const PROTOCOL_LABELS: Record<Protocol, string> = {
