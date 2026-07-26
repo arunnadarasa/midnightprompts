@@ -1993,6 +1993,129 @@ const PROTOCOL_BLOCKS: Record<Protocol, string> = {
 };
 
 
+function buildMobileVariant(args: {
+  title: string; pitch: string; sub: string; theme: Theme;
+  hookName: string; hookTag: string; rationale: string;
+  netSecrets: string; contract: string;
+}): string {
+  const { title, pitch, sub, theme, hookName, hookTag, rationale, netSecrets, contract } = args;
+  return `⚠️  EXPERIMENTAL · ANDROID-ONLY · KURA SDK STARTING SCAFFOLD ⚠️
+
+Lovable does NOT build native Android apps. Paste the output of this prompt
+into Cursor or Android Studio (Kotlin + Jetpack Compose) alongside the
+Kuira Android SDK. Expect breakage. This scaffold gets you 60–70% of the
+way to a working local Undeployed mobile dApp — the rest is Android-native
+work you will finish outside Lovable.
+
+Credit: Kuira Labs · https://kuiralabs.github.io/kuira-sdk-android/
+Reference build: https://github.com/arunnadarasa/mobilemidnight
+Ships-on-Lovable web companion: use one of the OTHER four network variants
+(Preview / Preprod / Undeployed / Undeployed-Fly) pointed at the SAME
+contract address for a cross-platform demo.
+
+Build "${title}" as a native Android dApp on Midnight Undeployed.
+
+CONCEPT
+${pitch}
+Discipline: ${theme.name} (${sub}).
+Onchain primitive: ${hookName} (${hookTag}). Why this primitive: ${rationale}
+
+TARGET STACK (verified — do NOT downgrade)
+- Kuira Android SDK  0.1.0-alpha05  (embedded wallet + on-device ZK proving + Passkey identity)
+- Compact language   0.31.1         (Kuira ships its own runtime; MUST match)
+- Devnet             \`mn localnet\`  (Kuira CLI — NOT Docker Compose)
+- Kotlin 2.0.20 · AGP 8.5+ · Compose BOM 2024.09+
+- Min SDK 26 · Target SDK 34
+- JDK 21 · Android Studio Ladybug+
+
+PROJECT LAYOUT
+- app/src/main/java/…/MainActivity.kt      Passkey sign-in + wallet bootstrap
+- app/src/main/java/…/WalletViewModel.kt   StateFlow<WalletState> from Kuira SDK
+- app/src/main/java/…/ContractClient.kt    Wraps the deployed contract's circuits
+- app/src/main/compact/MyContract.compact  Compact 0.31 source
+- contracts/managed/my-contract/           Output of \`mn compile\`
+- local.properties                         Non-git-tracked keys/URLs
+
+COMPACT CONTRACT (compile with \`mn compile\`, deploy with \`mn deploy\`):
+${contract}
+
+NON-NEGOTIABLES — each of these has cost teams a full day:
+
+1. rpId must be a REAL domain with a LIVE /.well-known/assetlinks.json
+   matching your app's package name + SHA-256 signing cert. localhost /
+   10.0.2.2 / IP addresses fail with CreateCredentialProviderConfigurationException.
+   No workaround. Use a domain you already own or a temporary
+   Cloudflare Pages / Netlify redirect.
+
+2. After changing rpId, FULLY uninstall the app (\`adb uninstall <pkg>\`).
+   Credential Manager caches the previous rpId per-package and silently
+   rejects the new one on reinstall. This is the #1 confused-user report.
+
+3. Emulator MUST be signed into a Google account AND have a screen lock
+   (PIN or pattern), or Passkey creation throws NoCreateCredentialException.
+   Physical device needs Google Play Services ≥ 24.0.
+
+4. Use \`mn localnet up\` (Kuira CLI) — NOT the Docker Compose stack from
+   the web variants. Same ports (9944 / 8088 / 6300) so \`docker compose down\`
+   first if the web stack is running.
+
+5. Fund NIGHT once via \`mn airdrop <mn_addr_undeployed1…>\`.
+   Register DUST from INSIDE the app via \`wallet.registerDust()\` — CLI
+   dust registration is broken on Undeployed.
+
+6. FLAG_SECURE is on for every Kuira screen. \`adb exec-out screencap\`
+   returns a black frame. For UI tests / bug reports:
+       adb exec-out uiautomator dump /dev/tty
+
+7. Soft keyboard on emulator (blocks every text field until you do this):
+       adb shell settings put secure show_ime_with_hard_keyboard 1
+
+8. Form-enablement pattern — Compose sometimes doesn't re-evaluate
+   \`enabled = ...\` on Buttons when the ViewModel's readiness flag flips
+   after async wallet sync. Fix with rememberSaveable + LaunchedEffect
+   write-through:
+
+       var ready by rememberSaveable { mutableStateOf(false) }
+       val walletReady = wallet.stateFlow.collectAsState().value.ready
+       LaunchedEffect(walletReady) { ready = walletReady; vm.setReady(walletReady) }
+       Button(enabled = ready, onClick = { … })
+
+CONFIG (local.properties — never commit):
+${netSecrets}
+
+DEPLOY FLOW
+    mn localnet up
+    mn compile app/src/main/compact/MyContract.compact
+    mn deploy contracts/managed/my-contract --network undeployed
+    # paste the printed hex into local.properties CONTRACT_ADDRESS_UNDEPLOYED
+    ./gradlew :app:installDebug
+
+WEB ↔ MOBILE PARITY
+If you also want a web demo of the same contract, generate a second Lovable
+project using the "Undeployed (local)" tab for the SAME idea and paste the
+same CONTRACT_ADDRESS_UNDEPLOYED into VITE_DEFAULT_CONTRACT. Both clients
+speak to the same \`mn localnet\` stack.
+
+WHAT LOVABLE CANNOT DO FOR YOU HERE
+- Compile Kotlin / Jetpack Compose.
+- Sign the APK.
+- Generate + host \`assetlinks.json\` at your real domain.
+- Run \`gradlew\` or the Android emulator.
+
+You will finish these in Android Studio / Cursor after copying the
+generated files out of the Lovable workspace.
+
+CREDIT (must appear in the app's About screen AND as a header comment on
+every Compact contract file):
+
+- Powered by Kuira Android SDK · https://kuiralabs.github.io/kuira-sdk-android/
+- Reference build: https://github.com/arunnadarasa/mobilemidnight
+- Prompt scaffold: https://midnightprompts.lovable.app
+`.replace(/\s+$/, "");
+}
+
+
+
 export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, os: OSTarget = "macos"): string {
   const { title, pitch, subDiscipline: sub } = idea;
   const hid = idea.quantumHookId || "compact-deploy";
