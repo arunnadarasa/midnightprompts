@@ -217,15 +217,18 @@ function MobileDev() {
           <ol className="mt-8 space-y-6">
             <Step
               n={1}
-              title="Deploy a contract with the existing tooling"
+              title="Start the Kuira-native local devnet"
               body={
                 <>
-                  Use <code>scripts/deploy-midnight.mjs</code> from any of the web demos to compile
-                  and deploy a Compact contract to Preview, Preprod, or the local Undeployed devnet.
-                  Nothing about the deploy pipeline changes.{" "}
-                  <Link to="/undeployed" className="underline hover:text-primary">
-                    See the Undeployed quick-start →
+                  Kuira targets the <code>mn</code> CLI toolchain, not the Docker{" "}
+                  <code>midnight-node:0.22.5</code> stack the web demos use. Run{" "}
+                  <code>mn localnet up</code> to bring up an Undeployed devnet the SDK understands
+                  natively. (You can still point Kuira at a Fly.io-hosted indexer + proof server if
+                  you'd rather not run a devnet on your laptop —{" "}
+                  <Link to="/undeployed" hash="fly" className="underline hover:text-primary">
+                    Fly.io recipe →
                   </Link>
+                  )
                 </>
               }
             />
@@ -250,18 +253,61 @@ function MobileDev() {
             />
             <Step
               n={3}
-              title="Point the SDK at your indexer + proof URLs"
+              title="Fund the Sigil with mn airdrop, then Register dust in-app"
               body={
                 <>
-                  Reuse the same <code>VITE_INDEXER_URL</code>, <code>VITE_INDEXER_WS_URL</code>, and{" "}
-                  <code>VITE_PROOF_SERVER_URL</code> values you use in the web demos. For Undeployed
-                  on a laptop, expose them on your LAN IP so the phone can reach them; for a public
-                  demo, use a Fly.io-hosted stack.
+                  There is no in-app browser faucet on mobile. Forge the passkey Sigil, copy the{" "}
+                  <code>mn_addr_undeployed1…</code> address from the app UI (do NOT retype from a
+                  screenshot — <code>l</code>/<code>1</code> collisions break the checksum), then:
+                  <pre className="mt-3 p-3 bg-muted/40 border border-border text-xs overflow-x-auto">
+                    <code>mn airdrop 10000 --wallet &lt;addr&gt; --network undeployed</code>
+                  </pre>
+                  Then tap <strong>Register dust</strong> in the app (NOT <code>mn dust register</code>{" "}
+                  — Kuira uses its own registration flow). Now Deploy the catalog and Publish a kit;
+                  expect ~30–120s cold on-device prove.
                 </>
               }
             />
           </ol>
+
+          <div className="mt-10 p-6 border border-border bg-card">
+            <span className="eyebrow text-primary">Passkey setup checklist</span>
+            <h3 className="font-display text-xl mt-2 italic leading-tight">
+              Skip any of these and you'll spend hours in Credential Manager exceptions.
+            </h3>
+            <ul className="mt-4 text-sm text-muted-foreground leading-relaxed space-y-2 list-disc pl-5">
+              <li>
+                <strong>Real domain <code>rpId</code></strong> — not <code>REPLACE_ME</code>,
+                not <code>.example</code>. GitHub Pages works (e.g.{" "}
+                <code>arunnadarasa.github.io</code>).
+              </li>
+              <li>
+                <strong>Hosted <code>assetlinks.json</code></strong> at{" "}
+                <code>https://&lt;rpId&gt;/.well-known/assetlinks.json</code> with your Android
+                package + debug (or release) signing SHA-256.
+              </li>
+              <li>
+                <strong>Signed-in Google account</strong> on the AVD or device — passkey create has
+                no options without it, DAL correctness alone is not enough.
+              </li>
+              <li>
+                <strong>Screen lock set</strong> — biometric/PIN. Password Manager refuses to offer
+                create otherwise.
+              </li>
+              <li>
+                <strong>Soft keyboard forced on:</strong>{" "}
+                <code>adb shell settings put secure show_ime_with_hard_keyboard 1</code> + Gboard.
+                Host-keyboard input silently fails on Compose and WebView fields.
+              </li>
+              <li>
+                <strong>After any <code>rpId</code>/assetlinks change: full uninstall then
+                reinstall.</strong> <code>adb install -r</code> leaves Credential Manager cached.
+              </li>
+            </ul>
+          </div>
         </section>
+
+
 
         {/* REFERENCES */}
         <section className="mt-16 border-t border-border pt-12">
