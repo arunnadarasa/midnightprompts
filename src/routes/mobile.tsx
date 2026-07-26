@@ -97,6 +97,45 @@ function MobileDev() {
           </div>
         </section>
 
+        {/* MEGA-PROMPT SCAFFOLD CALLOUT */}
+        <section className="mt-16 border-t border-border pt-12">
+          <div className="p-6 border-l-2 border-amber-500 bg-amber-500/10">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="px-2 py-0.5 bg-amber-500 text-black text-[10px] tracking-[0.24em] uppercase font-semibold">
+                Experimental
+              </span>
+              <span className="px-2 py-0.5 border border-amber-500 text-amber-200 text-[10px] tracking-[0.24em] uppercase">
+                Android only
+              </span>
+            </div>
+            <h3 className="font-display text-2xl italic text-foreground">
+              1,000 mobile-flavoured mega-prompts.
+            </h3>
+            <p className="mt-3 text-sm text-foreground/80 font-light leading-relaxed max-w-3xl">
+              Every idea on the site now has a fifth <strong>Undeployed (Mobile)</strong> tab — a
+              Kotlin + Jetpack Compose starting scaffold for the Kuira Android SDK. Lovable won't
+              build the APK; you'll paste the output into Cursor or Android Studio to finish.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.28em]">
+              <Link
+                to="/themes"
+                className="inline-flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground font-semibold hover:bg-foreground transition-colors duration-500"
+              >
+                Browse ideas →
+              </Link>
+              <a
+                href="https://kuiralabs.github.io/kuira-sdk-android/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2 border border-amber-500 text-amber-200 hover:bg-amber-500 hover:text-black transition-colors duration-500"
+              >
+                Kuira SDK ↗
+              </a>
+            </div>
+          </div>
+        </section>
+
+
         {/* VERIFIED REFERENCE BUILD */}
         <section className="mt-16 border-t border-border pt-12">
           <span className="eyebrow">Verified reference build</span>
