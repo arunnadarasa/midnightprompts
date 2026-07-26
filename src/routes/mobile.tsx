@@ -23,6 +23,9 @@ export const Route = createFileRoute("/mobile")({
 
 const KUIRA_REPO = "https://github.com/kuiralabs/kuira-sdk-android";
 const KUIRA_DOCS = "https://kuiralabs.github.io/kuira-sdk-android/";
+const MOBILEMIDNIGHT_REPO = "https://github.com/arunnadarasa/mobilemidnight";
+
+
 
 function MobileDev() {
   return (
@@ -94,7 +97,54 @@ function MobileDev() {
           </div>
         </section>
 
-        {/* HACKATHON ANGLES */}
+        {/* VERIFIED REFERENCE BUILD */}
+        <section className="mt-16 border-t border-border pt-12">
+          <span className="eyebrow">Verified reference build</span>
+          <h2 className="font-display text-3xl sm:text-4xl mt-3 italic">
+            mobilemidnight — Tokenized Choreo Kits.
+          </h2>
+          <p className="mt-4 text-sm text-muted-foreground max-w-2xl leading-relaxed">
+            The first verified end-to-end Kuira dApp on Undeployed: passkey Sigil forge, 10,000 NIGHT
+            airdrop, dust registered, catalog deployed, and two kits published on-chain with a
+            ~25s warm on-device prove.
+          </p>
+          <div className="mt-6 p-6 border border-primary/40 bg-card">
+            <div className="grid gap-4 sm:grid-cols-[1fr_auto] items-start">
+              <div>
+                <span className="eyebrow text-primary">Pinned stack</span>
+                <div className="font-display text-lg mt-2 leading-tight">
+                  Kuira SDK <code>0.1.0-alpha05</code> · Compact <code>0.31.1</code> ·{" "}
+                  <code>mn localnet</code> · on-device proving
+                </div>
+                <ul className="mt-4 text-sm text-muted-foreground leading-relaxed space-y-1.5 list-disc pl-5">
+                  <li>Passkey Sigil forge (WebAuthn / Credential Manager)</li>
+                  <li>NIGHT funded via <code>mn airdrop … --network undeployed</code></li>
+                  <li>Dust registered in-app (not via <code>mn dust register</code>)</li>
+                  <li>Compact catalog deployed, 2 kits published (~25s warm prove)</li>
+                </ul>
+              </div>
+              <a
+                href={MOBILEMIDNIGHT_REPO}
+                target="_blank"
+                rel="noreferrer"
+                className="px-5 py-2.5 bg-primary text-primary-foreground hover:bg-foreground transition-colors duration-500 text-[11px] uppercase tracking-[0.24em] whitespace-nowrap"
+              >
+                Repo ↗
+              </a>
+            </div>
+            <p className="mt-5 text-xs text-muted-foreground/80 leading-relaxed">
+              Every hard-won lesson from this build — passkey rpId + assetlinks, emulator
+              prerequisites, `mn airdrop` funding path, address-checksum pitfalls, `FLAG_SECURE`
+              screencap workarounds — is folded into the{" "}
+              <Link to="/llms" className="underline hover:text-primary">
+                Lovable Midnight skill
+              </Link>{" "}
+              you can download for your own Lovable projects.
+            </p>
+          </div>
+        </section>
+
+
         <section className="mt-16 border-t border-border pt-12">
           <span className="eyebrow">Hackathon angles</span>
           <h2 className="font-display text-3xl sm:text-4xl mt-3 italic">
@@ -152,6 +202,11 @@ function MobileDev() {
               from="Indexer GraphQL over WSS"
               to="Same endpoint — SDK opens the WSS from the app process"
             />
+            <MapRow
+              from="Web faucet button / tDUST balance UI"
+              to={<><code>mn airdrop … --network undeployed</code> + in-app "Register dust"</>}
+            />
+
           </div>
         </section>
 
@@ -162,15 +217,18 @@ function MobileDev() {
           <ol className="mt-8 space-y-6">
             <Step
               n={1}
-              title="Deploy a contract with the existing tooling"
+              title="Start the Kuira-native local devnet"
               body={
                 <>
-                  Use <code>scripts/deploy-midnight.mjs</code> from any of the web demos to compile
-                  and deploy a Compact contract to Preview, Preprod, or the local Undeployed devnet.
-                  Nothing about the deploy pipeline changes.{" "}
-                  <Link to="/undeployed" className="underline hover:text-primary">
-                    See the Undeployed quick-start →
+                  Kuira targets the <code>mn</code> CLI toolchain, not the Docker{" "}
+                  <code>midnight-node:0.22.5</code> stack the web demos use. Run{" "}
+                  <code>mn localnet up</code> to bring up an Undeployed devnet the SDK understands
+                  natively. (You can still point Kuira at a Fly.io-hosted indexer + proof server if
+                  you'd rather not run a devnet on your laptop —{" "}
+                  <Link to="/undeployed" hash="fly" className="underline hover:text-primary">
+                    Fly.io recipe →
                   </Link>
+                  )
                 </>
               }
             />
@@ -195,18 +253,61 @@ function MobileDev() {
             />
             <Step
               n={3}
-              title="Point the SDK at your indexer + proof URLs"
+              title="Fund the Sigil with mn airdrop, then Register dust in-app"
               body={
                 <>
-                  Reuse the same <code>VITE_INDEXER_URL</code>, <code>VITE_INDEXER_WS_URL</code>, and{" "}
-                  <code>VITE_PROOF_SERVER_URL</code> values you use in the web demos. For Undeployed
-                  on a laptop, expose them on your LAN IP so the phone can reach them; for a public
-                  demo, use a Fly.io-hosted stack.
+                  There is no in-app browser faucet on mobile. Forge the passkey Sigil, copy the{" "}
+                  <code>mn_addr_undeployed1…</code> address from the app UI (do NOT retype from a
+                  screenshot — <code>l</code>/<code>1</code> collisions break the checksum), then:
+                  <pre className="mt-3 p-3 bg-muted/40 border border-border text-xs overflow-x-auto">
+                    <code>mn airdrop 10000 --wallet &lt;addr&gt; --network undeployed</code>
+                  </pre>
+                  Then tap <strong>Register dust</strong> in the app (NOT <code>mn dust register</code>{" "}
+                  — Kuira uses its own registration flow). Now Deploy the catalog and Publish a kit;
+                  expect ~30–120s cold on-device prove.
                 </>
               }
             />
           </ol>
+
+          <div className="mt-10 p-6 border border-border bg-card">
+            <span className="eyebrow text-primary">Passkey setup checklist</span>
+            <h3 className="font-display text-xl mt-2 italic leading-tight">
+              Skip any of these and you'll spend hours in Credential Manager exceptions.
+            </h3>
+            <ul className="mt-4 text-sm text-muted-foreground leading-relaxed space-y-2 list-disc pl-5">
+              <li>
+                <strong>Real domain <code>rpId</code></strong> — not <code>REPLACE_ME</code>,
+                not <code>.example</code>. GitHub Pages works (e.g.{" "}
+                <code>arunnadarasa.github.io</code>).
+              </li>
+              <li>
+                <strong>Hosted <code>assetlinks.json</code></strong> at{" "}
+                <code>https://&lt;rpId&gt;/.well-known/assetlinks.json</code> with your Android
+                package + debug (or release) signing SHA-256.
+              </li>
+              <li>
+                <strong>Signed-in Google account</strong> on the AVD or device — passkey create has
+                no options without it, DAL correctness alone is not enough.
+              </li>
+              <li>
+                <strong>Screen lock set</strong> — biometric/PIN. Password Manager refuses to offer
+                create otherwise.
+              </li>
+              <li>
+                <strong>Soft keyboard forced on:</strong>{" "}
+                <code>adb shell settings put secure show_ime_with_hard_keyboard 1</code> + Gboard.
+                Host-keyboard input silently fails on Compose and WebView fields.
+              </li>
+              <li>
+                <strong>After any <code>rpId</code>/assetlinks change: full uninstall then
+                reinstall.</strong> <code>adb install -r</code> leaves Credential Manager cached.
+              </li>
+            </ul>
+          </div>
         </section>
+
+
 
         {/* REFERENCES */}
         <section className="mt-16 border-t border-border pt-12">
@@ -237,17 +338,31 @@ function MobileDev() {
                 Hosted API reference and guides for identity, wallet, and contract calls.
               </p>
             </a>
+            <a
+              href={MOBILEMIDNIGHT_REPO}
+              target="_blank"
+              rel="noreferrer"
+              className="block p-6 border border-primary/40 hover:border-primary transition-colors duration-500"
+            >
+              <span className="eyebrow text-primary">Reference build</span>
+              <div className="font-display text-xl mt-2">arunnadarasa/mobilemidnight ↗</div>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                Tokenized Choreo Kits — first verified Kuira dApp on Undeployed. Passkey Sigil,{" "}
+                <code>mn airdrop</code> funding, on-device prove, 2 kits published.
+              </p>
+            </a>
             <Link
               to="/showcase"
-              className="block p-6 border border-primary/30 hover:border-primary/60 transition-colors duration-500"
+              className="block p-6 border border-border hover:border-primary/60 transition-colors duration-500"
             >
               <span className="eyebrow text-primary">Showcase</span>
-              <div className="font-display text-xl mt-2">No mobile demo yet →</div>
+              <div className="font-display text-xl mt-2">No hosted mobile demo yet →</div>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                Every showcase entry today is a web build. The first hackathon team to ship a Kuira
-                reference demo gets featured here.
+                mobilemidnight is the reference repo; the first team to ship a{" "}
+                <em>hosted</em> Kuira demo gets featured on the showcase page.
               </p>
             </Link>
+
             <Link
               to="/undeployed"
               className="block p-6 border border-border hover:border-primary/60 transition-colors duration-500"
@@ -289,7 +404,7 @@ function Angle({ title, body }: { title: string; body: string }) {
   );
 }
 
-function MapRow({ from, to, cta }: { from: string; to: string; cta?: React.ReactNode }) {
+function MapRow({ from, to, cta }: { from: string; to: React.ReactNode; cta?: React.ReactNode }) {
   return (
     <div className="grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 sm:gap-6 px-5 sm:px-6 py-4 border-b border-border last:border-b-0 text-sm">
       <div className="text-muted-foreground">{from}</div>
