@@ -23,6 +23,9 @@ export const Route = createFileRoute("/mobile")({
 
 const KUIRA_REPO = "https://github.com/kuiralabs/kuira-sdk-android";
 const KUIRA_DOCS = "https://kuiralabs.github.io/kuira-sdk-android/";
+const MOBILEMIDNIGHT_REPO = "https://github.com/arunnadarasa/mobilemidnight";
+
+
 
 function MobileDev() {
   return (
