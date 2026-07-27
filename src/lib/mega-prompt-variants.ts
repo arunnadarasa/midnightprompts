@@ -974,6 +974,28 @@ indexer-standalone:4.0.2), brings up node + indexer + proof-server, and polls
 readiness. See https://midnightprompts.lovable.app/undeployed for a reference
 implementation that can be copied verbatim.`;
 
+const WALLET_CLI_BLOCK = `WALLET DERIVATION — use midnight-wallet-cli (fastest, recommended by Midnight dev-rel):
+
+Do NOT hand-roll seed → bech32 derivation with wallet-sdk + address encoders. Ship the community CLI as the one-liner path, keep a scripts/derive-unshielded-address.mjs offline fallback.
+
+\`\`\`bash
+npm i -g midnight-wallet-cli
+
+# --seed = 64-char HEX master seed (32 bytes), NOT a BIP-39 mnemonic
+mn address --seed <64-hex-master-seed> --network preprod
+# → mn_addr_preprod1…  (paste into the preprod faucet)
+
+mn balance <mn_addr_preprod1…> --network preprod
+\`\`\`
+
+Rules:
+- \`--network\` accepts \`preprod\`, \`preview\`, \`undeployed\`, \`mainnet\`.
+- Prints the UNSHIELDED bech32 address the faucet needs (\`mn_addr_…\`). Shielded (\`mn_shield-addr_…\`) is a different identity — the faucet rejects it.
+- Never accept a user's seed / mnemonic in chat or logs. Run this locally only.
+- Same output Lace produces from the same seed → safe to fund the printed address.
+
+References: https://www.npmjs.com/package/midnight-wallet-cli · https://github.com/nel349/midnight-wallet-cli`;
+
 const UNDEPLOYED_FUND_LACE = `FUND LACE ON UNDEPLOYED — the hidden gotcha (READ THIS, it saves hours):
 
 The genesis-funded seed \`0x000…0002\` (SECOND slot; seed \`…0001\` is empty) funds
