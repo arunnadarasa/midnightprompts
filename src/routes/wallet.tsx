@@ -214,6 +214,67 @@ function Wallet() {
       </section>
 
       <section className="max-w-3xl mx-auto px-5 pb-10">
+        <span className="eyebrow">fastest path · seed → bech32</span>
+        <h2 className="font-display text-3xl sm:text-4xl font-bold mt-2 text-foreground">
+          <span className="italic text-primary">midnight-wallet-cli</span> — one command.
+        </h2>
+        <p className="mt-3 text-sm text-muted-foreground font-light leading-relaxed max-w-2xl">
+          Skip wiring up derivation yourself. The community <code className="font-mono text-foreground">midnight-wallet-cli</code>{" "}
+          turns a 64-char hex master seed straight into the bech32 unshielded address the faucet wants.
+          Recommended by Midnight dev-rel (norm) in #dev-chat. Our{" "}
+          <code className="font-mono text-foreground">scripts/derive-unshielded-address.mjs</code> remains as an offline fallback.
+        </p>
+
+        <div className="mt-5 p-5 border border-primary/40 bg-card">
+          <div className="eyebrow text-primary">two commands</div>
+          <pre className="mt-3 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto whitespace-pre">
+{`npm i -g midnight-wallet-cli
+
+# 64-char hex master seed (32 bytes) — NOT your mnemonic
+mn address --seed <64-hex-master-seed> --network preprod
+# → mn_addr_preprod1…  (paste into the preprod faucet)
+
+# Verify funds landed
+mn balance <mn_addr_preprod1…> --network preprod`}
+          </pre>
+          <ul className="mt-4 text-[12px] text-muted-foreground font-light leading-relaxed list-disc pl-5 space-y-1">
+            <li>
+              <code className="font-mono text-foreground">--network</code> accepts{" "}
+              <code>preprod</code>, <code>preview</code>, <code>undeployed</code>, <code>mainnet</code>.
+            </li>
+            <li>
+              Seed must be the <strong>64-char hex master seed</strong> (32 bytes) — not the BIP-39 mnemonic.
+            </li>
+            <li>
+              Prints the <strong>unshielded</strong> address (<code>mn_addr_…</code>) the faucet needs. The shielded
+              address (<code>mn_shield-addr_…</code>) is a separate identity and is <em>not</em> what the faucet uses.
+            </li>
+            <li>
+              Run this locally — <strong>never paste a seed into chat</strong>, screenshots, or issue trackers.
+            </li>
+          </ul>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <a
+              href="https://www.npmjs.com/package/midnight-wallet-cli"
+              target="_blank"
+              rel="noreferrer"
+              className="px-4 py-2 border border-border text-foreground text-[10px] tracking-[0.28em] uppercase font-semibold hover:border-primary/60 transition-colors duration-500"
+            >
+              npm ↗
+            </a>
+            <a
+              href="https://github.com/nel349/midnight-wallet-cli"
+              target="_blank"
+              rel="noreferrer"
+              className="px-4 py-2 border border-border text-foreground text-[10px] tracking-[0.28em] uppercase font-semibold hover:border-primary/60 transition-colors duration-500"
+            >
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-3xl mx-auto px-5 pb-10">
         <span className="eyebrow">faucet · request tnight</span>
         <h2 className="font-display text-3xl sm:text-4xl font-bold mt-2 text-foreground">
           Fund the wallet <span className="italic text-primary">from the faucet.</span>
