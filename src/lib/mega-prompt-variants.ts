@@ -2191,6 +2191,8 @@ STACK
 ${PACKAGES}
 
 ${TOOLCHAIN_BY_OS[os]}
+
+${WALLET_CLI_BLOCK}
 ${localBlock}${undeployedFundBlock}${flyioBlock}${flyLessonsBlock}${mainnetBlock}
 ${EXPERIMENTAL_DISCLAIMER}
 
