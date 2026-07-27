@@ -80,6 +80,7 @@ mn balance <mn_addr_preprod1…> --network preprod`}
       { label: "GitHub ↗", href: "https://github.com/nel349/midnight-wallet-cli" },
     ],
   },
+  {
     id: "preprod-fresh-sync",
     title: "Preprod fresh-wallet sync never completes",
     symptom:
