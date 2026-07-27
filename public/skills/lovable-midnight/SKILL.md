@@ -681,10 +681,28 @@ Decode with the compiled contract's `ledger(state)` helper from `public/contract
 ## Funding (only if you insist on preview/preprod)
 
 tNIGHT ≠ tDUST. Faucet dispenses tNIGHT; deploys spend tDUST.
-1. Copy the **unshielded** address from Lace.
+
+**Preferred derivation path — `midnight-wallet-cli`** (community CLI, recommended by Midnight dev-rel in #dev-chat, 27 July 2026). Do NOT hand-roll `WalletSeeds` + `createKeystore` + address encoders when you just need a bech32 address for the faucet:
+
+```bash
+npm i -g midnight-wallet-cli
+
+# --seed is the 64-char HEX master seed (32 bytes), NOT a BIP-39 mnemonic
+mn address --seed <64-hex-master-seed> --network preprod
+# → mn_addr_preprod1…
+
+mn balance <mn_addr_preprod1…> --network preprod
+```
+
+`--network` accepts `preprod`, `preview`, `undeployed`, `mainnet`. Prints the UNSHIELDED bech32 (`mn_addr_…`) the faucet wants; shielded (`mn_shield-addr_…`) is a different identity the faucet rejects. Never accept a user's seed in chat — run locally only. Our `scripts/derive-unshielded-address.mjs` remains as an offline fallback for hosts without npm.
+
+Then:
+1. Copy the printed **unshielded** address (or read it from Lace).
 2. Paste into the faucet → tNIGHT arrives.
 3. In Lace, click **Generate tDUST** to delegate → tDUST appears.
 4. Only now can you deploy.
+
+References: https://www.npmjs.com/package/midnight-wallet-cli · https://github.com/nel349/midnight-wallet-cli
 
 ## Funding the Undeployed wallet — the hidden gotcha
 

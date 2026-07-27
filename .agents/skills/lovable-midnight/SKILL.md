@@ -73,12 +73,26 @@ Lace wallet ships from https://www.lace.io/ (Midnight-enabled build). Install �
 
 Deploys and shielded txs spend **tDUST**, but the faucet only dispenses **tNIGHT**. Every user hits this once.
 
-1. Copy your **unshielded** address (`mn_addr_preprod1…`) from Lace.
+**Preferred derivation path — `midnight-wallet-cli`** (community CLI, recommended by Midnight dev-rel in #dev-chat, 27 July 2026). Do NOT hand-roll seed → bech32 with `WalletSeeds` + `createKeystore` + address encoders when a one-liner does it:
+
+```bash
+npm i -g midnight-wallet-cli
+
+# --seed = 64-char HEX master seed (32 bytes), NOT a BIP-39 mnemonic
+mn address --seed <64-hex-master-seed> --network preprod   # → mn_addr_preprod1…
+mn balance <mn_addr_preprod1…> --network preprod
+```
+
+`--network` accepts `preprod`, `preview`, `undeployed`, `mainnet`. Prints the UNSHIELDED bech32 (`mn_addr_…`) the faucet wants; shielded (`mn_shield-addr_…`) is a different identity the faucet rejects. Never accept a user's seed in chat — run locally only. Keep `scripts/derive-unshielded-address.mjs` as an offline fallback.
+
+1. Copy your **unshielded** address (`mn_addr_preprod1…`) from Lace or `mn address`.
 2. Paste it into the preprod faucet, click Request → you now hold tNIGHT.
 3. In Lace, click **Generate tDUST** to delegate tNIGHT and mint tDUST.
 4. Refresh — the wallet page should show a tDUST balance. Only now can you deploy.
 
 If a deploy fails with "insufficient tDUST", step 3 was skipped.
+
+References: https://www.npmjs.com/package/midnight-wallet-cli · https://github.com/nel349/midnight-wallet-cli
 
 ## The four canonical primitives
 
