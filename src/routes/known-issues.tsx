@@ -39,6 +39,47 @@ type Issue = {
 
 const ISSUES: Issue[] = [
   {
+    id: "seed-to-bech32",
+    title: "How do I turn my seed into a bech32 preprod/preview address?",
+    symptom:
+      "You've generated a master seed via wallet-sdk (e.g. `7aaa436f…`) but the preprod/preview faucet wants a bech32 unshielded address (`mn_addr_preprod1…`). Wiring up `WalletSeeds` + `createKeystore` + the address encoders yourself is a full afternoon.",
+    cause:
+      "There's no need to derive it by hand. The community `midnight-wallet-cli` (npm) wraps the same derivation Lace uses and prints the bech32 address directly. Recommended by Midnight dev-rel (norm) in #dev-chat, 27 July 2026.",
+    fix: (
+      <>
+        <p>Two commands — same seed as Lace produces, same address the faucet accepts:</p>
+        <pre className="mt-2 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto whitespace-pre">
+{`npm i -g midnight-wallet-cli
+
+# --seed is the 64-char hex master seed (32 bytes), NOT the mnemonic
+mn address --seed <64-hex-master-seed> --network preprod
+# → prints your unshielded mn_addr_preprod1… (paste into the faucet)
+
+# Verify funds landed
+mn balance <mn_addr_preprod1…> --network preprod`}
+        </pre>
+        <ul className="list-disc pl-5 mt-3 space-y-1">
+          <li>
+            <code>--network</code> accepts <code>preprod</code>, <code>preview</code>, <code>undeployed</code>,{" "}
+            <code>mainnet</code>.
+          </li>
+          <li>
+            The seed MUST be the 64-hex master seed. If you have a BIP-39 mnemonic, derive the master seed first
+            (or use our <code>scripts/derive-unshielded-address.mjs</code> as an offline fallback).
+          </li>
+          <li>
+            The shielded address (<code>mn_shield-addr_…</code>) is a different identity — the faucet only accepts the
+            unshielded one.
+          </li>
+          <li>Never paste your seed into chat, screenshots, or issue trackers.</li>
+        </ul>
+      </>
+    ),
+    links: [
+      { label: "npm ↗", href: "https://www.npmjs.com/package/midnight-wallet-cli" },
+      { label: "GitHub ↗", href: "https://github.com/nel349/midnight-wallet-cli" },
+    ],
+  },
     id: "preprod-fresh-sync",
     title: "Preprod fresh-wallet sync never completes",
     symptom:
