@@ -196,14 +196,14 @@ function ShowcaseIndex() {
         {visible.map((demo) => {
           const card = (
             <>
-              <div className="flex items-center justify-between gap-4 flex-wrap">
-                <span className="eyebrow text-primary">{demo.tag}</span>
-                <span className="text-[10px] tracking-[0.28em] uppercase text-muted-foreground">{demo.badge} ↗</span>
+              <div className="flex items-center justify-between gap-x-4 gap-y-1 flex-wrap">
+                <span className="eyebrow text-primary break-words">{demo.tag}</span>
+                <span className="text-[10px] tracking-[0.28em] uppercase text-muted-foreground break-words">{demo.badge} ↗</span>
               </div>
-              <h2 className="font-display text-2xl sm:text-3xl mt-3 group-hover:text-primary transition-colors">
+              <h2 className="font-display text-2xl sm:text-3xl mt-3 group-hover:text-primary transition-colors break-words">
                 {demo.title}
               </h2>
-              <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-2xl">{demo.body}</p>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-2xl [overflow-wrap:anywhere] [&_code]:break-all">{demo.body}</p>
             </>
           );
           return demo.href ? (
@@ -212,7 +212,7 @@ function ShowcaseIndex() {
               href={demo.href}
               target="_blank"
               rel="noreferrer"
-              className="group block p-6 sm:p-8 border border-border hover:border-primary/60 transition-colors duration-500"
+              className="group block min-w-0 overflow-hidden p-6 sm:p-8 border border-border hover:border-primary/60 transition-colors duration-500"
             >
               {card}
             </a>
@@ -220,7 +220,7 @@ function ShowcaseIndex() {
             <Link
               key={demo.key}
               to={demo.to!}
-              className="group block p-6 sm:p-8 border border-border hover:border-primary/60 transition-colors duration-500"
+              className="group block min-w-0 overflow-hidden p-6 sm:p-8 border border-border hover:border-primary/60 transition-colors duration-500"
             >
               {card}
             </Link>
