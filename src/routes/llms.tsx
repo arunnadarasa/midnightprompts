@@ -19,6 +19,10 @@ import preprodLinux from "../../public/llms-prompts-preprod-linux.txt.asset.json
 import undeployedMacos from "../../public/llms-prompts-undeployed-macos.txt.asset.json";
 import undeployedWindows from "../../public/llms-prompts-undeployed-windows.txt.asset.json";
 import undeployedLinux from "../../public/llms-prompts-undeployed-linux.txt.asset.json";
+import flyMacos from "../../public/llms-prompts-undeployed-fly-macos.txt.asset.json";
+import flyWindows from "../../public/llms-prompts-undeployed-fly-windows.txt.asset.json";
+import flyLinux from "../../public/llms-prompts-undeployed-fly-linux.txt.asset.json";
+import mobileBundle from "../../public/llms-prompts-undeployed-mobile.txt.asset.json";
 // Mainnet prompt bundles are generated but hidden in the UI per Midnight DevRel guidance
 // (independent devs are currently blacklisted from publishing to mainnet).
 
@@ -26,16 +30,26 @@ const PROMPTS: Record<string, Record<string, { url: string; size: number }>> = {
   preview: { macos: previewMacos, windows: previewWindows, linux: previewLinux },
   preprod: { macos: preprodMacos, windows: preprodWindows, linux: preprodLinux },
   undeployed: { macos: undeployedMacos, windows: undeployedWindows, linux: undeployedLinux },
+  "undeployed-fly": { macos: flyMacos, windows: flyWindows, linux: flyLinux },
+  "undeployed-mobile": { any: mobileBundle },
 };
 
-const NET_LABEL: Record<string, string> = { preview: "Preview", preprod: "Preproduction", undeployed: "Undeployed" };
-const OS_LABEL: Record<string, string> = { macos: "macOS", windows: "Windows", linux: "Linux" };
+const NET_LABEL: Record<string, string> = {
+  preview: "Preview",
+  preprod: "Preproduction",
+  undeployed: "Undeployed (Local)",
+  "undeployed-fly": "Undeployed (Fly.io)",
+  "undeployed-mobile": "Undeployed (Mobile)",
+};
+const OS_LABEL: Record<string, string> = { macos: "macOS", windows: "Windows", linux: "Linux", any: "Android" };
+const FILE_COUNT = Object.values(PROMPTS).reduce((n, m) => n + Object.keys(m).length, 0);
 
 function humanSize(bytes: number) {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
+
 
 export const Route = createFileRoute("/llms")({
   head: () => ({
@@ -60,7 +74,10 @@ function LlmsPage() {
   const [network, setNetwork] = useState<string>("undeployed");
   const [os, setOs] = useState<string>("macos");
 
-  const selected = PROMPTS[network][os];
+  const isMobile = network === "undeployed-mobile";
+  const activeOs = isMobile ? "any" : os;
+  const selected = PROMPTS[network][activeOs];
+
 
   const copy = (url: string) => {
     const abs = typeof window !== "undefined" ? new URL(url, window.location.origin).toString() : url;
@@ -183,46 +200,73 @@ function LlmsPage() {
           <div className="space-y-1">
             <h2 className="font-display text-2xl">Prompts by network × OS</h2>
             <p className="text-sm text-muted-foreground">
-              Nine slimmer files, one per (network, host-OS) combination. Smaller context, same {meta.ideaCount.toLocaleString()} ideas.
+              {FILE_COUNT} slimmer files, one per (network, host-OS) combination — including Undeployed (Local),
+              Undeployed on Fly.io, and the experimental Android/mobile scaffold. Smaller context, same{" "}
+              {meta.ideaCount.toLocaleString()} ideas.
             </p>
           </div>
 
           <div className="space-y-4">
             <Tabs value={network} onValueChange={setNetwork}>
               <div className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Network</div>
-              <TabsList className="grid grid-cols-3 w-full h-auto">
-                <TabsTrigger value="preview">Preview</TabsTrigger>
-                <TabsTrigger value="preprod">Preproduction</TabsTrigger>
-                <TabsTrigger value="undeployed">Undeployed</TabsTrigger>
+              <TabsList className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 w-full h-auto gap-1">
+                <TabsTrigger value="preview" className="text-xs sm:text-sm whitespace-normal">Preview</TabsTrigger>
+                <TabsTrigger value="preprod" className="text-xs sm:text-sm whitespace-normal">Preproduction</TabsTrigger>
+                <TabsTrigger value="undeployed" className="text-xs sm:text-sm whitespace-normal">Undeployed (Local)</TabsTrigger>
+                <TabsTrigger value="undeployed-fly" className="text-xs sm:text-sm whitespace-normal">Undeployed (Fly.io)</TabsTrigger>
+                <TabsTrigger value="undeployed-mobile" className="text-xs sm:text-sm whitespace-normal">Undeployed (Mobile)</TabsTrigger>
               </TabsList>
               {Object.keys(PROMPTS).map((n) => (
                 <TabsContent key={n} value={n} />
               ))}
             </Tabs>
 
-            <Tabs value={os} onValueChange={setOs}>
-              <div className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Host OS</div>
-              <TabsList className="grid grid-cols-3 w-full">
-                <TabsTrigger value="macos">macOS</TabsTrigger>
-                <TabsTrigger value="windows">Windows</TabsTrigger>
-                <TabsTrigger value="linux">Linux</TabsTrigger>
-              </TabsList>
-            </Tabs>
+            {isMobile ? (
+              <div className="rounded-lg border border-amber-500/40 bg-amber-500/5 p-4 space-y-1">
+                <p className="text-sm font-semibold text-amber-500">Experimental · Android only</p>
+                <p className="text-xs text-muted-foreground">
+                  One host-OS-independent file: native Kotlin + Jetpack Compose scaffolds built on the{" "}
+                  <a
+                    href="https://kuiralabs.github.io/kuira-sdk-android/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    Kuira Android SDK
+                  </a>{" "}
+                  (credit: Kuira Labs). Lovable doesn't build native mobile apps, so treat these as a starting
+                  point — they can break.
+                </p>
+              </div>
+            ) : (
+              <Tabs value={os} onValueChange={setOs}>
+                <div className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Host OS</div>
+                <TabsList className="grid grid-cols-3 w-full">
+                  <TabsTrigger value="macos">macOS</TabsTrigger>
+                  <TabsTrigger value="windows">Windows</TabsTrigger>
+                  <TabsTrigger value="linux">Linux</TabsTrigger>
+                </TabsList>
+              </Tabs>
+            )}
 
-            <Card className="p-6 space-y-3">
-              <div className="flex items-baseline justify-between gap-3">
-                <h3 className="font-display text-lg">
-                  {NET_LABEL[network]} · {OS_LABEL[os]}
+            <Card className="p-6 space-y-3 min-w-0 overflow-hidden">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                <h3 className="font-display text-lg break-words">
+                  {NET_LABEL[network]} · {OS_LABEL[activeOs]}
                 </h3>
                 <span className="text-xs text-muted-foreground">{humanSize(selected.size)}</span>
               </div>
-              <p className="text-sm text-muted-foreground break-all">
+              <p className="text-sm text-muted-foreground break-words">
                 All {meta.ideaCount.toLocaleString()} ideas as mega-prompts tuned for{" "}
-                <strong>{NET_LABEL[network]}</strong> on <strong>{OS_LABEL[os]}</strong>.
+                <strong>{NET_LABEL[network]}</strong>
+                {isMobile ? " (Android)" : <> on <strong>{OS_LABEL[activeOs]}</strong></>}.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Button asChild size="sm">
-                  <a href={selected.url} download={`llms-prompts-${network}-${os}.txt`}>
+                  <a
+                    href={selected.url}
+                    download={isMobile ? "llms-prompts-undeployed-mobile.txt" : `llms-prompts-${network}-${activeOs}.txt`}
+                  >
                     <Download className="h-4 w-4 mr-2" /> Download
                   </a>
                 </Button>
@@ -233,6 +277,7 @@ function LlmsPage() {
             </Card>
           </div>
         </section>
+
 
         {/* Usage */}
         <section className="space-y-4">

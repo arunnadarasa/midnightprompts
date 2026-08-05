@@ -11,9 +11,17 @@ import { buildVariant, OS_LABELS } from "../src/lib/mega-prompt-variants.ts";
 const OUT = "public";
 mkdirSync(OUT, { recursive: true });
 
-const NETWORKS = ["preview", "preprod", "undeployed", "mainnet"];
+const NETWORKS = ["preview", "preprod", "undeployed", "undeployed-fly", "mainnet"];
 const OSES = ["macos", "windows", "linux"];
-const NET_LABEL = { preview: "Preview", preprod: "Preproduction", undeployed: "Undeployed", mainnet: "Mainnet" };
+const NET_LABEL = {
+  preview: "Preview",
+  preprod: "Preproduction",
+  undeployed: "Undeployed (Local)",
+  "undeployed-fly": "Undeployed (Fly.io)",
+  "undeployed-mobile": "Undeployed (Mobile · Android)",
+  mainnet: "Mainnet",
+};
+
 
 const themesById = Object.fromEntries(THEMES.map((t) => [t.slug, t]));
 
@@ -26,9 +34,15 @@ function coreDoc() {
 }
 
 function promptsDoc(filterNet, filterOs) {
+  const isMobile = filterNet === "undeployed-mobile";
   const lines = [];
-  lines.push(`# Mega-prompts — ${NET_LABEL[filterNet]} · ${OS_LABELS[filterOs]}\n`);
+  lines.push(`# Mega-prompts — ${NET_LABEL[filterNet]}${isMobile ? "" : ` · ${OS_LABELS[filterOs]}`}\n`);
   lines.push(`Generated ${new Date().toISOString()} from midnightprompts.lovable.app`);
+  if (isMobile) {
+    lines.push(
+      `EXPERIMENTAL · Android only. Native Kotlin + Jetpack Compose scaffolds built on the Kuira Android SDK (https://kuiralabs.github.io/kuira-sdk-android/). Host-OS independent.`,
+    );
+  }
   lines.push(`${ALL_IDEAS.length} ideas. Each prompt is a self-contained brief for Lovable.\n`);
   for (const idea of ALL_IDEAS) {
     const theme = themesById[idea.theme];
@@ -42,10 +56,12 @@ function promptsDoc(filterNet, filterOs) {
   return lines.join("\n");
 }
 
+const VARIANTS_PER_IDEA = NETWORKS.length * OSES.length + 1; // + 1 mobile (OS-independent)
+
 function fullDoc() {
   const parts = [coreDoc()];
-  parts.push(`\n\n===============================================================\n# Mega-prompts (all 9 variants per idea)\n===============================================================\n`);
-  parts.push(`${ALL_IDEAS.length} ideas × 3 networks × 3 OSes = ${ALL_IDEAS.length * 9} variants.\n`);
+  parts.push(`\n\n===============================================================\n# Mega-prompts (all ${VARIANTS_PER_IDEA} variants per idea)\n===============================================================\n`);
+  parts.push(`${ALL_IDEAS.length} ideas × (${NETWORKS.length} networks × 3 OSes + 1 Android/mobile) = ${ALL_IDEAS.length * VARIANTS_PER_IDEA} variants.\n`);
   for (const idea of ALL_IDEAS) {
     const theme = themesById[idea.theme];
     if (!theme) continue;
@@ -59,6 +75,8 @@ function fullDoc() {
         parts.push(buildVariant(idea, theme, net, os));
       }
     }
+    parts.push(`\n\n### ${NET_LABEL["undeployed-mobile"]}\n`);
+    parts.push(buildVariant(idea, theme, "undeployed-mobile", "macos"));
   }
   return parts.join("\n");
 }
@@ -82,16 +100,21 @@ for (const net of NETWORKS) {
   }
 }
 
-sizes.full = write("llms-full.txt", fullDoc());
+sizes["undeployed-mobile"] = write("llms-prompts-undeployed-mobile.txt", promptsDoc("undeployed-mobile", "macos"));
+
+// The all-variants bundle is ~2 GB and OOMs the generator; build it only on demand
+// (BUILD_FULL=1) on a big machine. The published llms-full.txt asset pointer is kept as-is.
+if (process.env.BUILD_FULL === "1") sizes.full = write("llms-full.txt", fullDoc());
 
 const meta = {
   generatedAt: new Date().toISOString(),
   ideaCount: ALL_IDEAS.length,
-  networks: NETWORKS,
+  networks: [...NETWORKS, "undeployed-mobile"],
   oses: OSES,
-  variantCount: ALL_IDEAS.length * NETWORKS.length * OSES.length,
+  variantCount: ALL_IDEAS.length * VARIANTS_PER_IDEA,
   sizes,
 };
 writeFileSync(join(OUT, "llms-full.meta.json"), JSON.stringify(meta, null, 2));
 console.log("\nWrote public/llms-full.meta.json");
+
 console.log(`Total ideas: ${meta.ideaCount}, total variants: ${meta.variantCount}`);

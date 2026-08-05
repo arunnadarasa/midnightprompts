@@ -1,32 +1,37 @@
 {
-  "generatedAt": "2026-07-23T10:15:28.836Z",
-  "ideaCount": 996,
+  "generatedAt": "2026-08-05T06:32:30.061Z",
+  "ideaCount": 1996,
   "networks": [
     "preview",
     "preprod",
     "undeployed",
-    "mainnet"
+    "undeployed-fly",
+    "mainnet",
+    "undeployed-mobile"
   ],
   "oses": [
     "macos",
     "windows",
     "linux"
   ],
-  "variantCount": 11952,
+  "variantCount": 31936,
   "sizes": {
     "core": 13646,
-    "preview-macos": 55730828,
-    "preview-windows": 56446954,
-    "preview-linux": 55610312,
-    "preprod-macos": 55682030,
-    "preprod-windows": 56398156,
-    "preprod-linux": 55561514,
-    "undeployed-macos": 74600051,
-    "undeployed-windows": 76533289,
-    "undeployed-linux": 74607023,
-    "mainnet-macos": 58697912,
-    "mainnet-windows": 59414038,
-    "mainnet-linux": 58577396,
-    "full": 735399784
+    "preview-macos": 127837211,
+    "preview-windows": 129272337,
+    "preview-linux": 127595695,
+    "preprod-macos": 127739413,
+    "preprod-windows": 129174539,
+    "preprod-linux": 127497897,
+    "undeployed-macos": 165651442,
+    "undeployed-windows": 169525680,
+    "undeployed-linux": 165665414,
+    "undeployed-fly-macos": 159042687,
+    "undeployed-fly-windows": 160477813,
+    "undeployed-fly-linux": 158801171,
+    "mainnet-macos": 133783295,
+    "mainnet-windows": 135218421,
+    "mainnet-linux": 133541779,
+    "undeployed-mobile": 22993180
   }
 }
