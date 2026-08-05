@@ -197,46 +197,73 @@ function LlmsPage() {
           <div className="space-y-1">
             <h2 className="font-display text-2xl">Prompts by network × OS</h2>
             <p className="text-sm text-muted-foreground">
-              Nine slimmer files, one per (network, host-OS) combination. Smaller context, same {meta.ideaCount.toLocaleString()} ideas.
+              {FILE_COUNT} slimmer files, one per (network, host-OS) combination — including Undeployed (Local),
+              Undeployed on Fly.io, and the experimental Android/mobile scaffold. Smaller context, same{" "}
+              {meta.ideaCount.toLocaleString()} ideas.
             </p>
           </div>
 
           <div className="space-y-4">
             <Tabs value={network} onValueChange={setNetwork}>
               <div className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Network</div>
-              <TabsList className="grid grid-cols-3 w-full h-auto">
-                <TabsTrigger value="preview">Preview</TabsTrigger>
-                <TabsTrigger value="preprod">Preproduction</TabsTrigger>
-                <TabsTrigger value="undeployed">Undeployed</TabsTrigger>
+              <TabsList className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 w-full h-auto gap-1">
+                <TabsTrigger value="preview" className="text-xs sm:text-sm whitespace-normal">Preview</TabsTrigger>
+                <TabsTrigger value="preprod" className="text-xs sm:text-sm whitespace-normal">Preproduction</TabsTrigger>
+                <TabsTrigger value="undeployed" className="text-xs sm:text-sm whitespace-normal">Undeployed (Local)</TabsTrigger>
+                <TabsTrigger value="undeployed-fly" className="text-xs sm:text-sm whitespace-normal">Undeployed (Fly.io)</TabsTrigger>
+                <TabsTrigger value="undeployed-mobile" className="text-xs sm:text-sm whitespace-normal">Undeployed (Mobile)</TabsTrigger>
               </TabsList>
               {Object.keys(PROMPTS).map((n) => (
                 <TabsContent key={n} value={n} />
               ))}
             </Tabs>
 
-            <Tabs value={os} onValueChange={setOs}>
-              <div className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Host OS</div>
-              <TabsList className="grid grid-cols-3 w-full">
-                <TabsTrigger value="macos">macOS</TabsTrigger>
-                <TabsTrigger value="windows">Windows</TabsTrigger>
-                <TabsTrigger value="linux">Linux</TabsTrigger>
-              </TabsList>
-            </Tabs>
+            {isMobile ? (
+              <div className="rounded-lg border border-amber-500/40 bg-amber-500/5 p-4 space-y-1">
+                <p className="text-sm font-semibold text-amber-500">Experimental · Android only</p>
+                <p className="text-xs text-muted-foreground">
+                  One host-OS-independent file: native Kotlin + Jetpack Compose scaffolds built on the{" "}
+                  <a
+                    href="https://kuiralabs.github.io/kuira-sdk-android/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    Kuira Android SDK
+                  </a>{" "}
+                  (credit: Kuira Labs). Lovable doesn't build native mobile apps, so treat these as a starting
+                  point — they can break.
+                </p>
+              </div>
+            ) : (
+              <Tabs value={os} onValueChange={setOs}>
+                <div className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Host OS</div>
+                <TabsList className="grid grid-cols-3 w-full">
+                  <TabsTrigger value="macos">macOS</TabsTrigger>
+                  <TabsTrigger value="windows">Windows</TabsTrigger>
+                  <TabsTrigger value="linux">Linux</TabsTrigger>
+                </TabsList>
+              </Tabs>
+            )}
 
-            <Card className="p-6 space-y-3">
-              <div className="flex items-baseline justify-between gap-3">
-                <h3 className="font-display text-lg">
-                  {NET_LABEL[network]} · {OS_LABEL[os]}
+            <Card className="p-6 space-y-3 min-w-0 overflow-hidden">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                <h3 className="font-display text-lg break-words">
+                  {NET_LABEL[network]} · {OS_LABEL[activeOs]}
                 </h3>
                 <span className="text-xs text-muted-foreground">{humanSize(selected.size)}</span>
               </div>
-              <p className="text-sm text-muted-foreground break-all">
+              <p className="text-sm text-muted-foreground break-words">
                 All {meta.ideaCount.toLocaleString()} ideas as mega-prompts tuned for{" "}
-                <strong>{NET_LABEL[network]}</strong> on <strong>{OS_LABEL[os]}</strong>.
+                <strong>{NET_LABEL[network]}</strong>
+                {isMobile ? " (Android)" : <> on <strong>{OS_LABEL[activeOs]}</strong></>}.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Button asChild size="sm">
-                  <a href={selected.url} download={`llms-prompts-${network}-${os}.txt`}>
+                  <a
+                    href={selected.url}
+                    download={isMobile ? "llms-prompts-undeployed-mobile.txt" : `llms-prompts-${network}-${activeOs}.txt`}
+                  >
                     <Download className="h-4 w-4 mr-2" /> Download
                   </a>
                 </Button>
@@ -247,6 +274,7 @@ function LlmsPage() {
             </Card>
           </div>
         </section>
+
 
         {/* Usage */}
         <section className="space-y-4">
