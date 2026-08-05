@@ -102,7 +102,9 @@ for (const net of NETWORKS) {
 
 sizes["undeployed-mobile"] = write("llms-prompts-undeployed-mobile.txt", promptsDoc("undeployed-mobile", "macos"));
 
-sizes.full = write("llms-full.txt", fullDoc());
+// The all-variants bundle is ~2 GB and OOMs the generator; build it only on demand
+// (BUILD_FULL=1) on a big machine. The published llms-full.txt asset pointer is kept as-is.
+if (process.env.BUILD_FULL === "1") sizes.full = write("llms-full.txt", fullDoc());
 
 const meta = {
   generatedAt: new Date().toISOString(),
