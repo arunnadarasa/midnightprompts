@@ -19,6 +19,10 @@ import preprodLinux from "../../public/llms-prompts-preprod-linux.txt.asset.json
 import undeployedMacos from "../../public/llms-prompts-undeployed-macos.txt.asset.json";
 import undeployedWindows from "../../public/llms-prompts-undeployed-windows.txt.asset.json";
 import undeployedLinux from "../../public/llms-prompts-undeployed-linux.txt.asset.json";
+import flyMacos from "../../public/llms-prompts-undeployed-fly-macos.txt.asset.json";
+import flyWindows from "../../public/llms-prompts-undeployed-fly-windows.txt.asset.json";
+import flyLinux from "../../public/llms-prompts-undeployed-fly-linux.txt.asset.json";
+import mobileBundle from "../../public/llms-prompts-undeployed-mobile.txt.asset.json";
 // Mainnet prompt bundles are generated but hidden in the UI per Midnight DevRel guidance
 // (independent devs are currently blacklisted from publishing to mainnet).
 
@@ -26,16 +30,26 @@ const PROMPTS: Record<string, Record<string, { url: string; size: number }>> = {
   preview: { macos: previewMacos, windows: previewWindows, linux: previewLinux },
   preprod: { macos: preprodMacos, windows: preprodWindows, linux: preprodLinux },
   undeployed: { macos: undeployedMacos, windows: undeployedWindows, linux: undeployedLinux },
+  "undeployed-fly": { macos: flyMacos, windows: flyWindows, linux: flyLinux },
+  "undeployed-mobile": { any: mobileBundle },
 };
 
-const NET_LABEL: Record<string, string> = { preview: "Preview", preprod: "Preproduction", undeployed: "Undeployed" };
-const OS_LABEL: Record<string, string> = { macos: "macOS", windows: "Windows", linux: "Linux" };
+const NET_LABEL: Record<string, string> = {
+  preview: "Preview",
+  preprod: "Preproduction",
+  undeployed: "Undeployed (Local)",
+  "undeployed-fly": "Undeployed (Fly.io)",
+  "undeployed-mobile": "Undeployed (Mobile)",
+};
+const OS_LABEL: Record<string, string> = { macos: "macOS", windows: "Windows", linux: "Linux", any: "Android" };
+const FILE_COUNT = Object.values(PROMPTS).reduce((n, m) => n + Object.keys(m).length, 0);
 
 function humanSize(bytes: number) {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
+
 
 export const Route = createFileRoute("/llms")({
   head: () => ({
