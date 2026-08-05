@@ -74,7 +74,10 @@ function LlmsPage() {
   const [network, setNetwork] = useState<string>("undeployed");
   const [os, setOs] = useState<string>("macos");
 
-  const selected = PROMPTS[network][os];
+  const isMobile = network === "undeployed-mobile";
+  const activeOs = isMobile ? "any" : os;
+  const selected = PROMPTS[network][activeOs];
+
 
   const copy = (url: string) => {
     const abs = typeof window !== "undefined" ? new URL(url, window.location.origin).toString() : url;
