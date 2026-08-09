@@ -219,6 +219,9 @@ function Index() {
                 <Link to="/mobile" className="text-primary hover:text-foreground transition-colors">
                   Mobile dev →
                 </Link>
+                <Link to="/blog" className="text-primary hover:text-foreground transition-colors">
+                  Field notes →
+                </Link>
                 <a
                   href="https://midnight-skills.netlify.app"
                   target="_blank"
