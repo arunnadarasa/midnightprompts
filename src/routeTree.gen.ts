@@ -25,6 +25,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ThemesIndexRouteImport } from './routes/themes.index'
 import { Route as ShowcaseIndexRouteImport } from './routes/showcase.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as ThemesThemeRouteImport } from './routes/themes.$theme'
 import { Route as ShowcaseX402MidnightPaywallRouteImport } from './routes/showcase.x402-midnight-paywall'
 import { Route as ShowcaseUcpZkCheckoutRouteImport } from './routes/showcase.ucp-zk-checkout'
@@ -34,6 +35,7 @@ import { Route as ShowcaseMidnightLedgerRouteImport } from './routes/showcase.mi
 import { Route as ShowcaseChoreoLedgerLocalRouteImport } from './routes/showcase.choreo-ledger-local'
 import { Route as ShowcaseA2aAp2NegotiationRouteImport } from './routes/showcase.a2a-ap2-negotiation'
 import { Route as IdeasIdRouteImport } from './routes/ideas.$id'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ApiPublicX402ProxyRouteImport } from './routes/api/public/x402-proxy'
 
 const WalletRoute = WalletRouteImport.update({
@@ -116,6 +118,11 @@ const ShowcaseIndexRoute = ShowcaseIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ShowcaseRoute,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ThemesThemeRoute = ThemesThemeRouteImport.update({
   id: '/$theme',
   path: '/$theme',
@@ -165,6 +172,11 @@ const IdeasIdRoute = IdeasIdRouteImport.update({
   path: '/ideas/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicX402ProxyRoute = ApiPublicX402ProxyRouteImport.update({
   id: '/api/public/x402-proxy',
   path: '/api/public/x402-proxy',
@@ -186,6 +198,7 @@ export interface FileRoutesByFullPath {
   '/undeployed': typeof UndeployedRoute
   '/undeployed-preflight': typeof UndeployedPreflightRoute
   '/wallet': typeof WalletRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/a2a-ap2-negotiation': typeof ShowcaseA2aAp2NegotiationRoute
   '/showcase/choreo-ledger-local': typeof ShowcaseChoreoLedgerLocalRoute
@@ -195,6 +208,7 @@ export interface FileRoutesByFullPath {
   '/showcase/ucp-zk-checkout': typeof ShowcaseUcpZkCheckoutRoute
   '/showcase/x402-midnight-paywall': typeof ShowcaseX402MidnightPaywallRoute
   '/themes/$theme': typeof ThemesThemeRoute
+  '/blog/': typeof BlogIndexRoute
   '/showcase/': typeof ShowcaseIndexRoute
   '/themes/': typeof ThemesIndexRoute
   '/api/public/x402-proxy': typeof ApiPublicX402ProxyRoute
@@ -212,6 +226,7 @@ export interface FileRoutesByTo {
   '/undeployed': typeof UndeployedRoute
   '/undeployed-preflight': typeof UndeployedPreflightRoute
   '/wallet': typeof WalletRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/a2a-ap2-negotiation': typeof ShowcaseA2aAp2NegotiationRoute
   '/showcase/choreo-ledger-local': typeof ShowcaseChoreoLedgerLocalRoute
@@ -221,6 +236,7 @@ export interface FileRoutesByTo {
   '/showcase/ucp-zk-checkout': typeof ShowcaseUcpZkCheckoutRoute
   '/showcase/x402-midnight-paywall': typeof ShowcaseX402MidnightPaywallRoute
   '/themes/$theme': typeof ThemesThemeRoute
+  '/blog': typeof BlogIndexRoute
   '/showcase': typeof ShowcaseIndexRoute
   '/themes': typeof ThemesIndexRoute
   '/api/public/x402-proxy': typeof ApiPublicX402ProxyRoute
@@ -241,6 +257,7 @@ export interface FileRoutesById {
   '/undeployed': typeof UndeployedRoute
   '/undeployed-preflight': typeof UndeployedPreflightRoute
   '/wallet': typeof WalletRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/ideas/$id': typeof IdeasIdRoute
   '/showcase/a2a-ap2-negotiation': typeof ShowcaseA2aAp2NegotiationRoute
   '/showcase/choreo-ledger-local': typeof ShowcaseChoreoLedgerLocalRoute
@@ -250,6 +267,7 @@ export interface FileRoutesById {
   '/showcase/ucp-zk-checkout': typeof ShowcaseUcpZkCheckoutRoute
   '/showcase/x402-midnight-paywall': typeof ShowcaseX402MidnightPaywallRoute
   '/themes/$theme': typeof ThemesThemeRoute
+  '/blog/': typeof BlogIndexRoute
   '/showcase/': typeof ShowcaseIndexRoute
   '/themes/': typeof ThemesIndexRoute
   '/api/public/x402-proxy': typeof ApiPublicX402ProxyRoute
@@ -271,6 +289,7 @@ export interface FileRouteTypes {
     | '/undeployed'
     | '/undeployed-preflight'
     | '/wallet'
+    | '/blog/$slug'
     | '/ideas/$id'
     | '/showcase/a2a-ap2-negotiation'
     | '/showcase/choreo-ledger-local'
@@ -280,6 +299,7 @@ export interface FileRouteTypes {
     | '/showcase/ucp-zk-checkout'
     | '/showcase/x402-midnight-paywall'
     | '/themes/$theme'
+    | '/blog/'
     | '/showcase/'
     | '/themes/'
     | '/api/public/x402-proxy'
@@ -297,6 +317,7 @@ export interface FileRouteTypes {
     | '/undeployed'
     | '/undeployed-preflight'
     | '/wallet'
+    | '/blog/$slug'
     | '/ideas/$id'
     | '/showcase/a2a-ap2-negotiation'
     | '/showcase/choreo-ledger-local'
@@ -306,6 +327,7 @@ export interface FileRouteTypes {
     | '/showcase/ucp-zk-checkout'
     | '/showcase/x402-midnight-paywall'
     | '/themes/$theme'
+    | '/blog'
     | '/showcase'
     | '/themes'
     | '/api/public/x402-proxy'
@@ -325,6 +347,7 @@ export interface FileRouteTypes {
     | '/undeployed'
     | '/undeployed-preflight'
     | '/wallet'
+    | '/blog/$slug'
     | '/ideas/$id'
     | '/showcase/a2a-ap2-negotiation'
     | '/showcase/choreo-ledger-local'
@@ -334,6 +357,7 @@ export interface FileRouteTypes {
     | '/showcase/ucp-zk-checkout'
     | '/showcase/x402-midnight-paywall'
     | '/themes/$theme'
+    | '/blog/'
     | '/showcase/'
     | '/themes/'
     | '/api/public/x402-proxy'
@@ -354,7 +378,9 @@ export interface RootRouteChildren {
   UndeployedRoute: typeof UndeployedRoute
   UndeployedPreflightRoute: typeof UndeployedPreflightRoute
   WalletRoute: typeof WalletRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   IdeasIdRoute: typeof IdeasIdRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   ApiPublicX402ProxyRoute: typeof ApiPublicX402ProxyRoute
 }
 
@@ -472,6 +498,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShowcaseIndexRouteImport
       parentRoute: typeof ShowcaseRoute
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/themes/$theme': {
       id: '/themes/$theme'
       path: '/$theme'
@@ -533,6 +566,13 @@ declare module '@tanstack/react-router' {
       path: '/ideas/$id'
       fullPath: '/ideas/$id'
       preLoaderRoute: typeof IdeasIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/x402-proxy': {
@@ -599,7 +639,9 @@ const rootRouteChildren: RootRouteChildren = {
   UndeployedRoute: UndeployedRoute,
   UndeployedPreflightRoute: UndeployedPreflightRoute,
   WalletRoute: WalletRoute,
+  BlogSlugRoute: BlogSlugRoute,
   IdeasIdRoute: IdeasIdRoute,
+  BlogIndexRoute: BlogIndexRoute,
   ApiPublicX402ProxyRoute: ApiPublicX402ProxyRoute,
 }
 export const routeTree = rootRouteImport
