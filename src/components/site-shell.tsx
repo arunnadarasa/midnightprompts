@@ -50,6 +50,7 @@ function SiteHeader() {
             items={[
               { to: "/strategy", label: "Strategy" },
               { to: "/quantum-primer", label: "Primer" },
+              { to: "/blog", label: "Field Notes" },
               { to: "/llms", label: "LLM Docs" },
               { to: "/about", label: "About" },
             ]}
@@ -110,6 +111,7 @@ function SiteHeader() {
               <MobileLink to="/mobile" onClick={close}>Mobile Dev</MobileLink>
               <MobileLink to="/strategy" onClick={close}>Strategy</MobileLink>
               <MobileLink to="/quantum-primer" onClick={close}>Primer</MobileLink>
+              <MobileLink to="/blog" onClick={close}>Field Notes</MobileLink>
               <MobileLink to="/llms" onClick={close}>LLM Docs</MobileLink>
               <MobileLink to="/known-issues" onClick={close}>Known Issues</MobileLink>
               <MobileLink to="/about" onClick={close}>About</MobileLink>
