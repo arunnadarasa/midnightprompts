@@ -1,0 +1,156 @@
+---
+title: "We generated ~32,000 self-contained build prompts for Midnight (and learned the hard way)"
+published: false
+tags: zeroknowledge, webdev, blockchain, ai
+---
+
+# We generated ~32,000 self-contained build prompts for Midnight
+
+Midnight is a zero-knowledge L1: private state stays on the user's device, public state lands on chain, and the bridge between them is a circuit you write in a language called Compact. It's genuinely interesting technology. It also has one of the harshest first hours I've met in web3.
+
+Not because the concepts are hard. Because the *environment* is. A hackathon dev sits down with a good idea and spends the next four hours on:
+
+- a package set where `@midnight-ntwrk/midnight-js-*`, the proof server Docker tag, the ledger, and the wallet SDK all have to agree on a version, or nothing works;
+- a local proof server that needs Docker, which on Windows needs WSL2, which needs virtualization enabled in BIOS;
+- WASM + top-level `await` + a missing `Buffer` polyfill, which together turn any SSR framework into a wall of stack traces;
+- a testnet wallet with no tDUST and no obvious way to get any.
+
+None of that is the idea. All of it is tax.
+
+So we built [Creative Midnight](https://midnightprompts.lovable.app/) — a site whose entire job is to collapse that first hour into a copy-paste. This post is about how the prompt generator works, what the numbers actually are, and the failure modes we hit in the reference builds, with the fix for each.
+
+## What the site is
+
+Three things, in order of usefulness:
+
+**1. 1,996 hackathon ideas.** Ten creative disciplines — dance, music, visual art, video, photography, writing, film & animation, games, theater, fashion — each with a market anchor and a "quantum hook" (the private-state mechanic that makes ZK actually load-bearing rather than decorative). 996 of those are base ideas; the other 1,000 are agentic-commerce overlays (A2A/AP2 agent negotiation, UCP ZK-checkout, x402 paywalls with a mimic USDC), distributed across the same themes so you can filter within a discipline.
+
+**2. A build prompt per idea, per network.** Not a stub — a multi-thousand-line, fully self-contained prompt that includes the pinned package set, the Compact toolchain commands, the Vite config, the wallet boot code, the deploy script, and a list of red flags. You pick an idea, pick a network target, pick your OS, copy, paste into an AI coding tool, and the environment tax is pre-paid.
+
+**3. The scar tissue.** Guides for the wallet, the proof server, the local (Undeployed) stack, Fly.io hosting, Android via the Kuira SDK, and a Known Issues page that exists purely so nobody re-debugs what we already debugged.
+
+## The interesting part: one idea, many prompts
+
+Each idea is a row in a per-theme JSON file:
+
+```ts
+export type Idea = {
+  id: string;
+  theme: string;
+  title: string;
+  pitch: string;
+  subDiscipline: string;
+  quantumHook: string;      // the private-state mechanic
+  quantumRationale: string; // why ZK is load-bearing here
+  tam: string; sam: string; som: string;
+  protocol?: "a2a-ap2" | "ucp" | "x402"; // agentic overlay, optional
+};
+```
+
+The prompt is not stored. It is *composed*, by a single function:
+
+```ts
+export function buildVariant(
+  idea: Idea,
+  theme: Theme,
+  network: NetworkVariant,
+  os: OSTarget = "macos",
+): string
+```
+
+`buildVariant` assembles shared blocks — `PACKAGES`, `TOOLCHAIN_BY_OS`, `VITE_CONFIG`, `MIDNIGHTJS_BOOT`, `SIGNING_STRATEGY`, `WALLET_CLI_BLOCK`, `REDFLAGS`, plus protocol blocks for the agentic overlays — around the idea's own text. That means a lesson learned once gets written once and appears in every prompt on the site.
+
+The multiplier is the **network variant**, because the network genuinely changes the architecture:
+
+| Variant | What changes |
+| --- | --- |
+| Preview | Public testnet, faucet tDUST, Lace signs everything |
+| Preproduction | Same shape, different node/indexer, different faucet |
+| Undeployed (Local) | Whole stack in Docker; writes are signed server-side by the genesis wallet |
+| Undeployed (Fly.io) | Four Fly apps (node, indexer, proof, faucet); public HTTPS proof server |
+| Undeployed (Mobile) | Kotlin + Jetpack Compose via the Kuira Android SDK, on-device proving |
+
+Five visible variants × 1,996 ideas = **9,980 prompts** in the UI. (A Mainnet variant exists in the codebase and is hidden — independent devs shouldn't be shipping vibe-coded contracts to a live chain.)
+
+The OS toggle (macOS / Windows / Linux) is deliberately *not* a UI multiplier: it swaps one block inside a prompt rather than creating a separate prompt. For the offline bundles, though, we do expand it — which is where the headline number comes from:
+
+```json
+{
+  "ideaCount": 1996,
+  "networks": ["preview","preprod","undeployed","undeployed-fly","mainnet","undeployed-mobile"],
+  "oses": ["macos","windows","linux"],
+  "variantCount": 31936
+}
+```
+
+31,936 prompt variants, ~2 GB of text, generated by a build script and downloadable as per-target `.txt` bundles so you can feed them to your own model.
+
+### One file pins every version
+
+Every prompt quotes the [Midnight support matrix](https://docs.midnight.network/relnotes/support-matrix), which is the actual source of truth for compatible versions. Rather than sprinkling version strings through 2,000 lines of template, they live in one module:
+
+```ts
+export const MIDNIGHT_MATRIX = {
+  snapshotDate: "2026-07-23",
+  compact: { language: "0.23", toolchain: "0.31.1", runtime: "0.16.0" },
+  midnightJs: "4.1.1",
+  dappConnectorApi: "4.0.1",
+  walletSdk: "1.2.0",
+  indexer: "4.3.3",
+  proofServer: "8.1.0",
+  localStack: { node: "0.22.5", indexer: "4.0.2", proofServer: "8.0.3" },
+  ledgerV8: "8.1.0",
+};
+```
+
+When the matrix moves, one edit propagates to ~10,000 prompts, the setup guides, and the downloadable bundles. Note `localStack.proofServer` is `8.0.3` while the public one is `8.1.0` — those are not interchangeable, and discovering that by trial and error costs an evening.
+
+### Don't ship 2 GB through a Worker
+
+First version of the download page imported the generated bundles as modules. The site is deployed on Cloudflare Workers and immediately returned **Error 1102: Worker exceeded resource limits** — the isolate has a hard memory ceiling and a multi-hundred-megabyte string blows straight through it.
+
+Fix: the bundles never enter the bundle. Each is uploaded to a CDN and the repo holds only a pointer:
+
+```ts
+import previewMacos from "../../public/llms-prompts-preview-macos.txt.asset.json";
+// { "url": "https://cdn.../llms-prompts-preview-macos.txt", "size": 127837211 }
+```
+
+The page renders a link and a human-readable size. The Worker stays small.
+
+## The failure modes, and the fixes
+
+These come from four reference builds ([choreokits](https://github.com/arunnadarasa/choreokits), [midnightfireside](https://github.com/arunnadarasa/midnightfireside), [flymidnight](https://github.com/arunnadarasa/flymidnight), and an Android one), and each fix is now baked into the prompts.
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| SSR build explodes on `@midnight-ntwrk/*` | MidnightJS needs `window`, `Buffer`, WASM top-level await | Stub the Midnight packages in the SSR pass; load them behind `ClientOnly` + `useEffect`. Never disable the server build to "escape SSR" — that emits chunks the Worker can't resolve at runtime |
+| `Buffer is not defined` in the browser | Polyfill imported after something that needs it | Async client entry that sets `globalThis.Buffer` before any Midnight import |
+| Local writes fail with wallet errors | The Undeployed genesis wallet isn't in the browser | Undeployed writes go server-side: UI → `POST /api/append-entry` → genesis wallet. Public nets go UI → wallet provider → on-chain submit |
+| Wallet "never ready" on Fly | Readiness shape changed in WalletFacade 4.1.1 | Check `state.dust.state.progress.isStrictlyComplete()` |
+| Proof server unreachable on Fly | The proof-server binary is IPv4-only; Fly's private network is IPv6-only | Point the browser at the app's **public HTTPS** proof-server URL |
+| App writes to a dead contract | Old address cached in `localStorage` | `VITE_DEFAULT_CONTRACT` must override `localStorage` on boot |
+| Wallet sync stalls forever | Transaction-history storage grinding on huge histories | Serialize/restore wallet state and use `NoOpTransactionHistoryStorage` |
+| Compact compile fails on a string field | Field widths are byte-bounded | Keep opaque strings inside their declared UTF-8 byte width (32 is the common one); no recursion, no I/O inside circuits |
+| "I have a seed, I need a bech32 address" | Deriving it by hand is fiddly | `npm i -g midnight-wallet-cli && mn address --seed --network preprod` (`mn balance` to check funding) |
+| Android passkey exceptions | Credential Manager needs a real relying party | Real domain `rpId` + a live `assetlinks.json`; full uninstall/reinstall after changing `rpId`; emulator needs a signed-in Google account and a screen lock |
+
+The one worth repeating: **proofs are slow**. A k=14 circuit takes 30–120 seconds. Every prompt therefore mandates a visible "Proving… this can take 30–120s" state that keeps the UI usable. Designing for sub-second finality is the single most common way a Midnight demo ends up feeling broken when it's actually working fine.
+
+## Using it
+
+1. Pick a discipline, then an idea (filter by protocol if you want an agentic overlay).
+2. Pick a network tab. If you don't know, pick **Undeployed (Local)** — no faucet, no waiting, and the genesis wallet is already funded.
+3. Pick your OS so the Docker/toolchain block matches your machine.
+4. Copy the prompt into your AI coding tool. Run the two toolchain commands it gives you in a terminal (installing Compact and starting the proof server are the only things a browser can't do for you).
+5. Ship.
+
+There's also a downloadable skill file if you'd rather give your own agent the whole knowledge base instead of one prompt at a time.
+
+## What I'd tell anyone building on a young ZK chain
+
+Write the environment down. Every hour we lost was recoverable exactly once — the second time it cost nothing, because the fix was in a template instead of in someone's memory. The prompt generator is, honestly, just a very elaborate way of refusing to debug the same thing twice.
+
+Links: [Creative Midnight](https://midnightprompts.lovable.app/) · [Midnight docs](https://docs.midnight.network/) · [support matrix](https://docs.midnight.network/relnotes/support-matrix)
+
+Built during the Creative AI & Quantum Hackathon organised by StreetKode Fam during Indian Krump Festival 14.
