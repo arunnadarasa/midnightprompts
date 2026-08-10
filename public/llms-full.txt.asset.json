@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "de3bb232-181e-4951-9e86-905976897125",
+  "asset_id": "52409cb9-37c6-4948-ab6e-15e8c647dccd",
   "project_id": "71d463f1-0973-4f3e-85ba-7f4fa6a73783",
-  "url": "/__l5e/assets-v1/de3bb232-181e-4951-9e86-905976897125/llms-full.txt",
-  "r2_key": "a/v1/71d463f1-0973-4f3e-85ba-7f4fa6a73783/de3bb232-181e-4951-9e86-905976897125/llms-full.txt",
+  "url": "/__l5e/assets-v1/52409cb9-37c6-4948-ab6e-15e8c647dccd/llms-full.txt",
+  "r2_key": "a/v1/71d463f1-0973-4f3e-85ba-7f4fa6a73783/52409cb9-37c6-4948-ab6e-15e8c647dccd/llms-full.txt",
   "original_filename": "llms-full.txt",
-  "size": 735399784,
+  "size": 2365156238,
   "content_type": "text/plain",
-  "created_at": "2026-07-23T10:16:49Z"
+  "created_at": "2026-08-10T06:32:22Z"
 }

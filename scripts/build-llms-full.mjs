@@ -2,7 +2,7 @@
 // Generate public/llms-full.txt, public/llms-core.txt, and per-combo prompt files.
 // Run with:  bun run scripts/build-llms-full.mjs
 
-import { writeFileSync, mkdirSync, createWriteStream } from "node:fs";
+import { writeFileSync, readFileSync, mkdirSync, createWriteStream } from "node:fs";
 import { once } from "node:events";
 import { join } from "node:path";
 import { SITE_HEADER, GUIDES } from "../src/data/llms-content.ts";
@@ -113,14 +113,23 @@ console.log("Building LLM bundles …");
 const sizes = {};
 sizes.core = write("llms-core.txt", coreDoc());
 
-for (const net of NETWORKS) {
-  for (const os of OSES) {
-    const name = `llms-prompts-${net}-${os}.txt`;
-    sizes[`${net}-${os}`] = write(name, promptsDoc(net, os));
+// SKIP_COMBOS=1 regenerates only the full bundle and keeps the previously recorded
+// per-combo sizes (their .txt files are already externalised as CDN assets).
+const skipCombos = process.env.SKIP_COMBOS === "1";
+if (skipCombos) {
+  try {
+    const prev = JSON.parse(readFileSync(join(OUT, "llms-full.meta.json"), "utf8"));
+    Object.assign(sizes, prev.sizes ?? {});
+  } catch {}
+} else {
+  for (const net of NETWORKS) {
+    for (const os of OSES) {
+      const name = `llms-prompts-${net}-${os}.txt`;
+      sizes[`${net}-${os}`] = write(name, promptsDoc(net, os));
+    }
   }
+  sizes["undeployed-mobile"] = write("llms-prompts-undeployed-mobile.txt", promptsDoc("undeployed-mobile", "macos"));
 }
-
-sizes["undeployed-mobile"] = write("llms-prompts-undeployed-mobile.txt", promptsDoc("undeployed-mobile", "macos"));
 
 // The all-variants bundle is multi-GB; it is streamed to disk (never held in memory)
 // and only built on demand with BUILD_FULL=1.
