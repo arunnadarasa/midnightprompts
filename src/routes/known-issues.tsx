@@ -423,6 +423,161 @@ const wallet = await WalletBuilder.buildFromSeed(
     ),
   },
   {
+    id: "inputs-signatures-length-mismatch-192",
+    title: "1010 Custom error: 192 = InputsSignaturesLengthMismatch",
+    symptom:
+      "A circuit that touches unshielded value (e.g. `receiveUnshielded` in a `deposit`) proves fine, then the node rejects it with `1010 Invalid Transaction: Custom error: 192`. Shielded-only calls (`deploy`, a pure shielded circuit) succeed from the same wallet, so it reads like a contract bug.",
+    cause:
+      "Any unshielded input pulls a NIGHT UTXO into the transaction, and UTXO inputs carry Schnorr signatures. `balanceUnboundTransaction` does NOT add them — the tx arrives with one input and zero signatures. Measured on Preview by the m402 team (Hack Buenos Aires open-track winner).",
+    fix: (
+      <>
+        <p>Sign the recipe between balancing and finalising:</p>
+        <pre className="mt-2 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto whitespace-pre">
+{`const recipe = await wallet.balanceUnboundTransaction(tx, keys, { ttl });
+const signed = await wallet.signRecipe(recipe, (p) => keystore.signData(p)); // required
+return wallet.finalizeRecipe(signed);`}
+        </pre>
+        <p className="mt-2">
+          Rule of thumb: the moment a circuit reads or sends NIGHT, <code>signRecipe</code> is mandatory.
+        </p>
+      </>
+    ),
+    links: [
+      { label: "m402 constraints ↗", href: "https://github.com/julianariel/m402/blob/main/docs/constraints.md" },
+    ],
+  },
+  {
+    id: "one-wallet-one-tx",
+    title: "One wallet cannot submit two transactions concurrently",
+    symptom:
+      "Two calls fired at once from a single wallet: the first lands, the second is rejected with `1010 Custom error: 170` (InvalidDustSpendProof) — or the test just hangs forever.",
+    cause:
+      "Both transactions build a DUST spend proof against the same wallet DUST state, and the node throws the second out before contract execution. A rejected submission also never settles its promise, so it waits for a confirmation that never arrives.",
+    fix: (
+      <ul className="list-disc pl-5 space-y-1">
+        <li>Serialize calls per wallet — an agent loop must queue, not fan out.</li>
+        <li>Wrap every submit in an explicit timeout so a rejection surfaces as a failure, not a hang.</li>
+        <li>
+          Contract-level write contention <em>cannot</em> be measured from a single-wallet harness: a low
+          "landed" count measures the wallet. Use a second funded wallet.
+        </li>
+      </ul>
+    ),
+    links: [
+      { label: "m402 constraints ↗", href: "https://github.com/julianariel/m402/blob/main/docs/constraints.md" },
+    ],
+  },
+  {
+    id: "leveldb-private-state-traps",
+    title: "LEVEL_LOCKED / \"No private state found\" / \"Contract address not set\"",
+    symptom:
+      "Local failures that look exactly like on-chain contention: `Error: Database failed to open … lock midnight-level-db/LOCK: already held by process { code: 'LEVEL_LOCKED' }`, or `submitCallTx` failing with \"No private state found at private state ID …\" / \"Contract address not set\", or `first argument 'location' must be a non-empty string`.",
+    cause:
+      "`levelPrivateStateProvider` takes two similarly-named options and only one is a directory: `midnightDbName` is the LevelDB directory on disk (default `midnight-level-db`), `privateStateStoreName` is an object store inside it (default `private-states`). LevelDB is single-writer.",
+    fix: (
+      <ul className="list-disc pl-5 space-y-1">
+        <li>
+          Concurrent callers need different <code>midnightDbName</code> values. Different{" "}
+          <code>privateStateStoreName</code> values change nothing — they still open the same directory.
+        </li>
+        <li>
+          A fresh store is empty: call <code>provider.setContractAddress(contractAddress)</code> first, then{" "}
+          <code>await provider.set(id, emptyPrivateState())</code>.
+        </li>
+        <li>
+          Passing <code>midnightDbName: undefined</code> is not the same as omitting it — the provider spreads
+          your config over its defaults, so an explicit <code>undefined</code> wipes the default. Spread the key
+          in only when it is set.
+        </li>
+        <li>Rule out all four local causes before reading any result as a property of the chain.</li>
+      </ul>
+    ),
+    links: [
+      { label: "m402 constraints ↗", href: "https://github.com/julianariel/m402/blob/main/docs/constraints.md" },
+    ],
+  },
+  {
+    id: "dead-sync-fibre",
+    title: "A sub-wallet's sync dies while the command keeps waiting",
+    symptom:
+      "A transient indexer WebSocket error kills one sub-wallet's sync fibre (observed on Preview as `Wallet.Sync: [object ErrorEvent]` from `wallet-sdk-dust-wallet`, seconds after start). The facade keeps emitting state that never becomes strictly complete, so the command looks slow rather than failing.",
+    cause:
+      "Nothing ends the wait except your deadline — so the deadline's value is the whole design. A 60-minute budget is indistinguishable from a hang for an operator.",
+    fix: (
+      <ul className="list-disc pl-5 space-y-1">
+        <li>
+          Use a <strong>10-minute</strong> sync deadline, overridable via an env var (m402 uses{" "}
+          <code>MIDNIGHT_SYNC_TIMEOUT_MS</code>).
+        </li>
+        <li>
+          Implement it as an explicit <code>Rx.race</code> against a timer, not{" "}
+          <code>Rx.timeout({"{"} each {"}"})</code> placed after a <code>filter</code> — emissions that fail the
+          filter never reach the timeout, so its semantics silently depend on pipe position.
+        </li>
+        <li>Restart the command after a deadline hit; a dead fibre never recovers.</li>
+      </ul>
+    ),
+    links: [
+      { label: "m402 constraints ↗", href: "https://github.com/julianariel/m402/blob/main/docs/constraints.md" },
+    ],
+  },
+  {
+    id: "node-version-exports",
+    title: "ERR_PACKAGE_PATH_NOT_EXPORTED inside a tsx stack trace",
+    symptom:
+      "The Midnight SDK fails to resolve its ESM exports and the error surfaces deep inside a `tsx` stack trace, reading like a dependency problem.",
+    cause:
+      "It is a runtime-version problem. The SDK's exports fail to resolve on Node 23 and Node 26. Midnight documents 22 as the floor and pins 24 in `example-hello-world`.",
+    fix: (
+      <p>
+        <strong>Node 22 or 24 only</strong> — 22.12.0 and 24.19.0 are both verified against Preview. Check{" "}
+        <code>node -v</code> before debugging anything else, and pin it in{" "}
+        <code>.nvmrc</code> / <code>package.json</code> engines.
+      </p>
+    ),
+  },
+  {
+    id: "sync-cache-genesis-replay",
+    title: "Every command re-syncs from genesis (687s cold vs 54s warm)",
+    symptom:
+      "A single Preview deposit takes ~687s wall clock with ~644s of CPU, of which ~710s is wallet sync — proving is 27s and confirmation 1.4s. The next identical run costs exactly the same.",
+    cause:
+      "`FluentWalletBuilder` can only build from a seed, and a from-seed wallet starts at `appliedIndex === 0`. Both `shielded/src/v1/Sync.ts` and `dust-wallet/src/v1/Sync.ts` compute `resumeFrom = appliedIndex - 1n` and open the subscription with no cursor when that is negative — so it streams every indexer event from the beginning, every invocation.",
+    fix: (
+      <>
+        <p>
+          Persist the sub-wallet states and restore them on the next build. Measured on Preview: 687.5s cold →{" "}
+          <strong>53.8s warm</strong> (12.8x), CPU 644s → 12s — that is trial-decryption replay disappearing.
+        </p>
+        <ul className="list-disc pl-5 space-y-1 mt-2">
+          <li>
+            Use <code>serializeState()</code> / <code>restore()</code> on all three sub-wallets.
+          </li>
+          <li>
+            <strong>All three sub-wallets and the facade must share one <code>txHistoryStorage</code></strong> —
+            otherwise shielded and unshielded writes go to a storage the facade never reads.
+          </li>
+          <li>
+            <strong>Never cache before sync completes.</strong> A mid-sync position restores cleanly and resumes
+            from somewhere the wallet never applied.
+          </li>
+          <li>Make restore best-effort: any missing/unreadable file falls back to the from-seed build.</li>
+          <li>
+            The cache holds the wallet's coins — key it by a hash of master seed + network id and write it{" "}
+            <code>0600</code>. It is a wallet secret.
+          </li>
+          <li>
+            Bonus: <code>@midnight-ntwrk/testkit-js</code> costs ~5.2s just to import. Load it lazily so{" "}
+            <code>--help</code>, <code>--version</code> and dry-runs don't pay for a wallet builder they never call.
+          </li>
+        </ul>
+      </>
+    ),
+    links: [
+      { label: "m402 constraints ↗", href: "https://github.com/julianariel/m402/blob/main/docs/constraints.md" },
+    ],
+  },
+  {
     id: "currentblocktime-roadmap",
     title: "currentBlockTime() / in-circuit block metadata",
     symptom: "No public in-circuit readable block time or height API today — only `blockTime*` comparators.",
@@ -431,6 +586,7 @@ const wallet = await WalletBuilder.buildFromSeed(
     links: [{ label: "Service Desk ↗", href: SERVICE_DESK }],
   },
 ];
+
 
 function KnownIssuesPage() {
   return (

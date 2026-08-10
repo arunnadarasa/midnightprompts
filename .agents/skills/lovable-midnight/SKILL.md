@@ -791,3 +791,134 @@ bun run dev
 
 Log long proves with `tee` + `rg` (see the prove-log rule above) while working through this —
 piping through `awk`/`head` SIGPIPEs the prove and makes recovery look like flakiness.
+
+---
+
+## 2026-08 update — m402 / private agentic payments (Hack Buenos Aires open-track winner)
+
+Source: [`julianariel/m402`](https://github.com/julianariel/m402) — x402's 402-and-retry flow on
+Midnight, where **the payment carries no payer**. Its `docs/constraints.md` is the most rigorously
+measured set of Midnight platform limits published so far. Treat every rule below as verified on
+Preview (Aug 2026), not as guidance.
+
+### The payment rail (copy this shape for any pay-per-call design)
+
+- **NIGHT is unshielded; DUST is non-transferable fee gas.** Neither can be the private payment
+  asset. Pool NIGHT in a vault and **mint a shielded credit 1:1** against it. Deposits and
+  redemptions are public; the payments between them are unlinkable — the trade every shielded pool
+  makes. This is the correct justification for a mimic-token rail (mUSDC etc.), not "USDC isn't on
+  Midnight yet".
+- **`pay` takes no payer argument and reads no caller identity.** It proves possession of a valid
+  credit and nothing more:
+  ```compact
+  assert(coin.color == tokenType(creditDomain(), kernel.self()), "not an m402 credit");
+  assert(coin.value == price as Uint<128>, "wrong amount");
+  ```
+  Contract token colours are collision-resistant so only the vault can mint its credit — but `pay`
+  **must still assert the colour**, or any minted token buys API calls.
+- **Privacy is "who paid", not "how much".** Prices stay public because a marketplace needs a price
+  list. Never sell amount-hiding you don't have.
+- **The gateway is a pure reader.** The agent submits its own transaction; the gateway watches the
+  indexer for the receipt and then dispatches. It never signs, never holds funds, and cannot fake a
+  payment. If your design has the server signing on the user's behalf, say so explicitly — it is a
+  different trust model.
+- **`sendShielded` can only pay the caller** (it creates no coin ciphertexts). Pay merchants in
+  **unshielded NIGHT via `sendUnshielded`** to the address recorded at registration — then anyone may
+  call `withdraw` and the payout still goes to the right party.
+- **A contract cannot hold a coin in ledger state.** Ledger state is public in full, including a
+  `QualifiedShieldedCoinInfo` written to a cell — consecutive pot totals differ by exactly the amount
+  just paid. Keep only `merchantBalance` public; pass the spendable pot in as a **witness** (Zswap
+  independently validates it is real and contract-owned) and bound the payout by the recorded
+  balance. Cost: the change coin must be persisted off-chain by the caller.
+- **`pay` cannot mint its own change.** The compiler rejects it:
+  `the call to standard-library circuit mintShieldedToken might disclose the value of a token mint
+  given by the result of a subtraction involving the witness value`. Change comes from the **wallet
+  balancer one layer down** — it splits a larger coin, sends `price` to the vault and returns the
+  remainder to the payer in the same transaction, with the change output's value hidden. So one
+  deposit funds many calls and payability is `creditTotal >= price`, **not** a denomination match.
+  This is not a spending limit; it only says which layer does the splitting.
+- **`disclose()` is a visibility annotation only** — compile-time permission for a witness-derived
+  value to become public. It performs no encryption and targets no recipient key. Selective
+  disclosure = commitment on-chain + opening delivered off-chain encrypted to the auditor's key.
+- **There is no Midnight↔EVM bridge** (only Cardano→Midnight, one-way). An EVM relayer is a
+  **trusted operator fronting USDC**, reimbursed from the vault. Never call it a bridge.
+- **Contract-held unshielded balances are not indexed** — `queryUnshieldedBalances(contractAddress)`
+  returns `[]` for a contract that demonstrably holds NIGHT. Assert solvency from the payer's own
+  wallet instead (deposit lowers NIGHT, redeem raises it, payments move neither).
+
+### Quote cost honestly (measured, Preview)
+
+| Phase | Cost |
+| --- | --- |
+| Verify a proof | ~3.4 ms |
+| `pay` end-to-end | 23–25 s → **proof 1.4 s · submit 22.5 s · chain 1.5 s** |
+| `deploy` / `registerService` / `deposit` / `redeem` / `withdraw` | 18–32 s (±20% run variance) |
+| Trivial-contract floor | ~19 s |
+
+**Submission dominates. Attributing 25 s to "generating a zero-knowledge proof" is wrong by an order
+of magnitude.** The circuit body is a modest share of the cost, so a heavier circuit is not
+proportionally slower — and pre-proving optimisations save under 2 s of 25. Any latency win must come
+from taking the on-chain round trip off the per-call path.
+
+### Wallet sync is the real cost — cache it
+
+A cold Preview deposit measured **687.5 s** wall clock (643.9 s CPU); the same command warm measured
+**53.8 s** (12.4 s CPU). **12.8x.** Cause: `FluentWalletBuilder` can only build from a seed, so
+`appliedIndex === 0`; both `shielded/src/v1/Sync.ts` and `dust-wallet/src/v1/Sync.ts` compute
+`resumeFrom = appliedIndex - 1n` and open the subscription with **no cursor** when negative — every
+invocation replays every indexer event from genesis.
+
+Fix, and the non-obvious parts of it:
+- Persist all three sub-wallet states with `serializeState()` and `restore()` on the next build.
+- **All three sub-wallets and the facade must share one `txHistoryStorage`**, or shielded and
+  unshielded writes land in a storage the facade never reads.
+- **Never cache before sync completes** — a mid-sync position restores cleanly and resumes from
+  somewhere the wallet never applied.
+- Restore is best-effort: a missing or unreadable file falls back to the from-seed build.
+- The cache holds the wallet's coins. Key it by hash(master seed + network id), write mode `0600`,
+  treat it as a wallet secret.
+- `@midnight-ntwrk/testkit-js` costs **~5.2 s just to import** (it is essentially all of a
+  `contracts/client` import; `contracts/pure` costs 0.20 s). Load it **lazily** so `--help`,
+  `--version`, a mistyped command and `--dry-run` never pay for a wallet builder they don't call, and
+  assert the startup budget in a test so a top-level import can't creep back.
+- Set a **10-minute** sync deadline (`MIDNIGHT_SYNC_TIMEOUT_MS`), not 60 minutes: a transient indexer
+  WS error kills one sub-wallet's sync fibre (`Wallet.Sync: [object ErrorEvent]`) while the facade
+  keeps emitting never-complete state, so the deadline is the only thing that ends the command.
+  Implement it as an explicit `Rx.race` against a timer — `Rx.timeout({ each })` placed after a
+  `filter` silently behaves as a total deadline instead of an inter-emission one.
+
+### Error table (add to the existing 117/104/196 table)
+
+| Symptom | Cause | Action |
+| --- | --- | --- |
+| `1010 Custom error: 192` (`InputsSignaturesLengthMismatch`) | A circuit touching unshielded value pulled a NIGHT UTXO; `balanceUnboundTransaction` does not sign it | `await wallet.signRecipe(recipe, (p) => keystore.signData(p))` between balance and finalize. Shielded-only calls pass without it, so the bug only appears once NIGHT is touched |
+| `1010 Custom error: 170` (`InvalidDustSpendProof`) | Two txs from one wallet at once — both build a DUST spend proof against the same wallet state | Serialize calls per wallet. A rejected submit never settles its promise, so wrap submits in a timeout or the test hangs instead of failing |
+| `LEVEL_LOCKED` / `lock midnight-level-db/LOCK: already held` | `midnightDbName` is the **directory**; `privateStateStoreName` is a store **inside** it. LevelDB is single-writer | Give concurrent callers different `midnightDbName`. Different `privateStateStoreName` changes nothing |
+| "No private state found at private state ID …" | Fresh store is empty | `provider.setContractAddress(addr)` then `provider.set(id, emptyPrivateState())` |
+| "Contract address not set" | Store scopes keys by contract address | Same: `setContractAddress` before seeding |
+| `first argument 'location' must be a non-empty string` | `midnightDbName: undefined` overwrites the default via `{ ...DEFAULT_CONFIG, ...config }` | Spread the key in only when set |
+| `ERR_PACKAGE_PATH_NOT_EXPORTED` inside a `tsx` stack | Node 23 or 26 — the SDK's ESM exports don't resolve | **Node 22 or 24 only.** Check `node -v` first; it reads like a dependency problem |
+| `ENOENT: open '.mnemonic'` | Relative paths in an env file resolve against CWD, not the env file | Resolve env-file-sourced paths against `dirname(envFile)`; keep CLI flags resolving against CWD, and report the resolved absolute path on ENOENT |
+| Indexer subscription "no activity" | Subscriptions replay history from genesis; short listen windows give false negatives indistinguishable from a real empty result | Use a long window, or read state directly |
+
+**All four LevelDB failures look exactly like on-chain contention.** Rule out the local causes before
+reading any concurrency result as a property of the chain.
+
+### Agent-facing CLI shape worth copying
+
+```
+m402 init                            # sync the wallet, report holdings; submits nothing
+m402 deposit 5000                    # once: NIGHT -> shielded credit
+m402 call https://gw.example/s/<id>  # per request, resource on stdout
+m402 redeem 4500 --yes               # unspent credit -> NIGHT
+```
+
+- Consuming a paid service needs **no Midnight code**: the gateway speaks ordinary HTTP 402, so any
+  client completes it in two requests (`GET /s/<id>` → 402 `{serviceId, price, vaultAddress}`, then
+  the same GET with `X-Payment: <hex>` → 200 + resource).
+- Paying is the part worth a client: build, prove and submit a Midnight tx, then hold the payment
+  secret **durably** until the resource actually arrives.
+- stdout carries only the resource body so it pipes; progress goes to stderr; exit codes distinguish
+  "retry" from "fix your config".
+- Payment and delivery are separate steps — health-check the origin before returning a 402 to narrow
+  (not close) the window where an agent pays and gets nothing.

@@ -56,6 +56,31 @@ function X402Page() {
             <Link to="/themes" className="underline hover:text-primary">agentic · x402</Link>.
           </p>
         </section>
+
+        <section className="space-y-2 text-sm text-muted-foreground font-light leading-relaxed border border-border p-4">
+          <div className="eyebrow text-primary">Prior art · m402</div>
+          <p>
+            <a href="https://github.com/julianariel/m402" target="_blank" rel="noreferrer" className="underline hover:text-primary">m402</a>{" "}
+            (Hack Buenos Aires open-track winner) runs the same 402-and-retry flow on Midnight with{" "}
+            <strong>no payer in the payment</strong>: a vault pools NIGHT and mints a shielded credit
+            1:1, and its <code>pay</code> circuit takes no payer argument and reads no caller
+            identity. The gateway only reads the chain — the agent submits its own transaction.
+          </p>
+          <p>
+            Quote the cost honestly. Measured on Preview, a <code>pay</code> is{" "}
+            <strong>23–25 s end to end: proof 1.4 s, submit 22.5 s, chain 1.5 s</strong>, and
+            verifying a proof takes ~3.4 ms. Submission dominates; calling the whole 25 s
+            "generating a zero-knowledge proof" is wrong by an order of magnitude. The bigger cost is
+            wallet sync — 687 s cold from seed vs 54 s with the sub-wallet states cached.
+          </p>
+          <p>
+            Its{" "}
+            <a href="https://github.com/julianariel/m402/blob/main/docs/constraints.md" target="_blank" rel="noreferrer" className="underline hover:text-primary">docs/constraints.md</a>{" "}
+            is required reading before you design a payment circuit; the failure modes are on our{" "}
+            <Link to="/known-issues" className="underline hover:text-primary">Known issues</Link> page.
+          </p>
+        </section>
+
       </article>
     </SiteShell>
   );
