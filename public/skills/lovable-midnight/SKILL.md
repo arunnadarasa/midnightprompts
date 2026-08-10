@@ -1126,3 +1126,90 @@ mn airdrop 10000 --wallet <addr> --network undeployed
 - `mn` CLI install and Undeployed prerequisites: see `midnight-environment-setup`.
 - The four-app Fly.io topology from the earlier flymidnight section is still valid as the indexer/proof backend if you'd rather host than run `mn localnet` on a laptop — point the Kuira SDK config at `https://choreo-indexer.fly.dev/api/v4/graphql` and `https://choreo-proof.fly.dev` the same way the web demos do.
 - Reference build: `https://github.com/arunnadarasa/mobilemidnight` (Tokenized Choreo Kits).
+
+---
+
+## 2026-08 update — zealymidnight / MoveNft NFT rail on Undeployed
+
+Source: `github.com/arunnadarasa/zealymidnight` (StreetRail Move Rights NFT). First verified
+Compact NFT rail — **mint → list → buy settled in mUSDC** — on Local Undeployed, with
+activity visible in the local ledger + indexer (`bun scripts/z-check.mjs` prints `E2E_OK`).
+Read this BEFORE writing any NFT / marketplace Compact contract.
+
+### NFT design rules (the headline lesson)
+
+1. **Public ledger maps must be insert-only / append-only for v1.** The dust wallet's fee
+   balancer panics when a circuit **updates an existing map key** — symptoms are
+   `Wallet.Other: wasm.transaction_feesWithMargin` or `transaction_merge` *Unreachable* on the
+   SECOND `callTx` against the same genesis wallet. It looks like cache invalidation or
+   process isolation; it is not. Fix the ledger shape, not the plumbing.
+   - `mint` and `listSale` insert NEW keys.
+   - `buy` / `transfer` append to a `sales` map under a **fresh random id**.
+   - Current owner lives in the server-side JSON mirror, not in an overwritten map cell.
+2. **Do NOT start from an ERC-721-shaped Compact contract.** `_owners[tokenId] = newOwner`
+   is exactly the overwrite that breaks. Defer lookup-heavy ownership checks to the server
+   mirror (or a later shielded design).
+3. **`list` is a reserved Compact keyword.** Name the circuit `listSale` and regenerate
+   prover/verifier artefacts. Calling `callTx.list` against `listSale` keys is a silent footgun.
+4. **Owner PK derivation must be identical everywhere.** Server used
+   `sha256("movenft:owner:v1:" + label)` while an ad-hoc diagnostic script used raw
+   `sha256(label)` → on-chain `not owner` while the local ledger looked correct. One helper,
+   imported by server routes AND scripts.
+5. **No cross-contract Compact call in v1.** Sequence `musdcFaucet` / `musdcTransfer`, then
+   `MoveNft.buy`, inside ONE server handler; document it as demo-only atomicity (same genesis
+   wallet). Do not promise atomic cross-contract settlement.
+6. **Fresh wallet per call.** `withMoveNft(...)` mirroring `withMusdc(...)`, with `stop()`
+   between contract families. Order that worked for the full rail:
+   `mint → list → faucet (if needed) → pay → buy`. Opening mUSDC then MoveNft on the shared
+   genesis LevelDB in one session leaves the next MoveNft submit broken.
+7. **Undeployed writes stay server-append.** Lace cannot sign on Undeployed — reuse the
+   MoveRegistry / mUSDC pattern (genesis wallet + `findDeployedContract` + `callTx`). Never
+   half-wire Lace signing locally.
+
+### Operational rules
+
+- **Address resolution: deploy JSON first, env second.** Vite caches `VITE_*` across
+  redeploys, so a stale `VITE_DEFAULT_CONTRACT` mints to a dead contract. Read
+  `src/data/midnight-contract.undeployed.json`, reset per-contract local state on deploy, and
+  keep the resolution in ONE unit-tested helper.
+- **Redeploy checklist after ANY Compact change:**
+  `midnight:compile` → `midnight:artefacts` → `rm -rf midnight-level-db .midnight` →
+  `midnight:deploy` → restart `bun run dev` → run e2e. Never mix new verifier keys with an old
+  LevelDB or old on-chain state. SSR keeps old addresses until the dev process restarts.
+- **One exclusive "stack owner" process for e2e.** A single uniquely named script
+  (`z-check.mjs`) does compile → artefacts → wipe → deploy → mint/list/buy, exits non-zero on
+  any failure, and prints one `E2E_OK` line. Take a `mkdir`-based marker lock and refuse to
+  start if another owner holds it. Never broadly `pkill` shared patterns (`bun -e`, `deploy-*`)
+  while another job holds the stack — parallel agents wiping `midnight-level-db` mid-prove
+  produce "exit 0" with truncated logs and deploy JSON timestamps that don't match the run.
+- **Never pipe long proves through `awk`/`head`.** SIGPIPE kills the prove process and the e2e
+  looks flaky. `tee` to `/tmp/<run>.log`, then `rg` the file.
+- **Pinata is server-only.** `PINATA_JWT` / `PINATA_GATEWAY` — never `VITE_PINATA_*` (the
+  Worker/Cloudflare secret-leak trap). Document in `.env.example` only, gate clip UI on server
+  config, and restart dev after env changes.
+- **macOS has no `flock`.** Use `mkdir`-based locks or unique process names.
+- **Keep submission artefacts pushed as you go.** README, Compact sources, managed artefacts
+  and the notes file should match every green e2e — not a final dump after the demo works.
+- **Park the nice-to-haves** (OZ NonFungibleToken vendor, true atomic cross-contract buy,
+  external-chain mint) until Undeployed mint/list/buy is boringly reliable.
+
+### New failure modes
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| `wasm.transaction_feesWithMargin` / `transaction_merge` Unreachable on the 2nd `callTx` | Circuit UPDATES an existing public map key; dust fee balancing panics | Redesign insert-only/append-only; fresh wallet per call (`withX`), `stop()` between contract families |
+| `callTx.list` does nothing / key not found | `list` is a reserved Compact keyword; circuit is actually `listSale` | Rename circuit to `listSale`, regenerate artefacts, call `callTx.listSale` |
+| On-chain `not owner` but local ledger looks right | Owner PK derived differently in server vs script | One shared helper: `sha256("movenft:owner:v1:" + label)` |
+| `RpcError 117` | Stale private state — LevelDB vs chain (concurrent clients, killed mid-prove, wiped LevelDB without redeploy) | Wipe `midnight-level-db .midnight` AND redeploy, then restart Vite |
+| `RpcError 104` | Dirty LevelDB after a failed faucet → mint handoff | Wipe + redeploy; sequence faucet and mint with `stop()` between |
+| `RpcError 196` | Verifier key mismatch — recompiled artefacts without redeploying, or deployed against wrong keys | Recompile → refresh artefacts → redeploy in one pass |
+| Mint targets a dead contract after redeploy | Stale `VITE_*` address cached by Vite | Resolve from `midnight-contract.undeployed.json` first; restart dev after deploy |
+| e2e "flaky", logs truncated, exit 0 | Prove piped through `awk`/`head` (SIGPIPE), or a parallel agent `pkill`ed the run | `tee` to a log file; single stack-owner process with a `mkdir` lock |
+
+### Anti-patterns (add to the main list)
+
+- Don't half-wire Lace signing on Undeployed — the demo write path is the server genesis wallet.
+- Don't model NFTs as ERC-721 in Compact with overwriting owner maps.
+- Don't run parallel agents/shells against one Docker stack or LevelDB.
+- Don't let the README claim features whose code isn't pushed yet.
+- Don't prefix Pinata secrets with `VITE_`.
