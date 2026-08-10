@@ -1786,7 +1786,132 @@ const AGENTIC_INFRA_LESSONS = `AGENTIC INFRA — NON-NEGOTIABLES (learned from t
     are DIFFERENT strings — both are real. Never string-match one against the
     other. Never accept \`0xSIMULATED\` as success in the UI.
     After every \`midnight:down\`/\`up\`: redeploy AND restart Vite (LevelDB is
-    wiped, and \`ctxPromise\` is cached in-process).`;
+    wiped, and \`ctxPromise\` is cached in-process).
+
+13) PRIVATE PAYMENT RAIL — the m402 pattern (source: github.com/julianariel/m402,
+    Hack Buenos Aires open-track winner; every number below measured on Preview):
+    • NIGHT is UNSHIELDED and DUST is NON-TRANSFERABLE fee gas, so neither can be
+      the private payment asset. Pool NIGHT in a vault and MINT A SHIELDED CREDIT
+      1:1 against it. Deposits/redemptions are public; the payments between them
+      are unlinkable. That is the correct justification for a mimic token (mUSDC),
+      not "USDC isn't on Midnight yet".
+    • The pay circuit MUST take NO payer argument and read NO caller identity.
+      It proves possession of a valid credit and nothing more:
+        assert(coin.color == tokenType(creditDomain(), kernel.self()), "not a credit");
+        assert(coin.value == price as Uint<128>, "wrong amount");
+      The colour assert is MANDATORY — without it any minted token buys calls.
+    • Privacy = WHO paid, not HOW MUCH. Prices stay public (a marketplace needs a
+      price list). Never claim amount-hiding you do not have.
+    • The gateway/server MUST be a pure READER: the agent submits its own tx, the
+      server watches the indexer for the receipt, then dispatches. It never signs,
+      never holds funds, cannot fake a payment. If your design has the server
+      signing (Undeployed server-append), say so explicitly — different trust model.
+    • \`sendShielded\` can only pay the CALLER (no coin ciphertexts). Pay merchants
+      in UNSHIELDED NIGHT via \`sendUnshielded\` to the address recorded at
+      registration, so anyone may call \`withdraw\` and the payout still lands right.
+    • A contract CANNOT hold a coin in ledger state: a \`QualifiedShieldedCoinInfo\`
+      in a cell has a publicly readable \`value\`, and consecutive pot totals differ
+      by exactly the amount just paid. Keep only \`merchantBalance\` public, pass the
+      spendable pot in as a WITNESS (Zswap validates it is real + contract-owned),
+      bound payout by the recorded balance — and persist the change coin off-chain.
+    • The pay circuit CANNOT mint its own change (\`mintShieldedToken might disclose
+      the value of a token mint given by the result of a subtraction involving the
+      witness value\`). Change comes from the WALLET BALANCER one layer down, so
+      payability is \`creditTotal >= price\`, NOT a denomination match. One deposit
+      funds many calls.
+    • \`disclose()\` is a VISIBILITY ANNOTATION only — no encryption, no recipient
+      key. Selective disclosure = on-chain commitment + off-chain opening encrypted
+      to the auditor's key.
+    • There is NO Midnight↔EVM bridge (only Cardano→Midnight, one-way). An EVM
+      relayer is a TRUSTED OPERATOR fronting USDC, reimbursed from the vault.
+      Never call it a bridge in copy, README or UI.
+    • \`queryUnshieldedBalances(contractAddress)\` returns [] for a contract that
+      demonstrably holds NIGHT — assert solvency from the payer's OWN wallet
+      (deposit lowers NIGHT, redeem raises it, payments move neither).
+
+14) QUOTE COST HONESTLY (measured, Preview, Aug 2026):
+    verify a proof ~3.4ms · pay end-to-end 23–25s = PROOF 1.4s + SUBMIT 22.5s +
+    CHAIN 1.5s · deploy/register/deposit/redeem/withdraw 18–32s (±20%) ·
+    trivial-contract floor ~19s.
+    SUBMISSION DOMINATES. Never tell the user "25s to generate a zero-knowledge
+    proof" — that is wrong by an order of magnitude. A heavier circuit is NOT
+    proportionally slower. Latency wins must come from taking the on-chain round
+    trip off the per-call path, not from cheaper proving.
+
+15) WALLET SYNC IS THE REAL COST — CACHE IT (12.8x, measured):
+    cold from-seed deposit 687.5s wall / 643.9s CPU → warm restored 53.8s / 12.4s.
+    Cause: \`FluentWalletBuilder\` builds only from a seed, so \`appliedIndex === 0\`;
+    Sync.ts computes \`resumeFrom = appliedIndex - 1n\` and opens the subscription
+    with NO CURSOR when negative → replays every indexer event from genesis, every
+    invocation. Required implementation:
+      • persist all three sub-wallet states via \`serializeState()\` / \`restore()\`;
+      • ALL THREE sub-wallets AND the facade must share ONE \`txHistoryStorage\`,
+        or shielded/unshielded writes go where the facade never reads;
+      • NEVER cache before sync completes (a mid-sync position restores cleanly and
+        resumes from somewhere the wallet never applied);
+      • restore is best-effort — missing/unreadable file falls back to from-seed;
+      • the cache holds the wallet's COINS: key it by hash(masterSeed + networkId),
+        write mode 0600, treat it as a wallet secret, never commit it;
+      • import \`@midnight-ntwrk/testkit-js\` LAZILY — it costs ~5.2s on its own, so
+        \`--help\`, \`--version\`, a typo'd command and \`--dry-run\` must not pay for a
+        wallet builder they never call. Assert the startup budget in a test.
+      • sync deadline = 10 MINUTES, env-overridable (\`MIDNIGHT_SYNC_TIMEOUT_MS\`).
+        A transient indexer WS error kills one sub-wallet's sync fibre
+        (\`Wallet.Sync: [object ErrorEvent]\`) while the facade keeps emitting
+        never-complete state — the deadline is the only thing that ends the command.
+        Implement it as an explicit \`Rx.race\` against a timer; \`Rx.timeout({each})\`
+        placed after a \`filter\` silently becomes a total deadline.
+
+16) SERIALIZE EVERY SUBMIT PER WALLET:
+    two txs from one wallet at once → \`1010 Custom error: 170\`
+    (InvalidDustSpendProof) — both build a DUST spend proof against the same wallet
+    state and the node rejects the second BEFORE contract execution. A rejected
+    submission NEVER settles its promise, so wrap submits in a timeout or the run
+    hangs instead of failing. Contract-level write contention cannot be measured
+    from a single-wallet harness at all — a low "landed" count measures the wallet.
+
+17) UNSHIELDED INPUTS MUST BE SIGNED:
+    any circuit touching unshielded value (\`receiveUnshielded\`) pulls a NIGHT UTXO,
+    and UTXO inputs carry Schnorr signatures. Balancing does NOT add them:
+      const recipe = await wallet.balanceUnboundTransaction(tx, keys, { ttl });
+      const signed = await wallet.signRecipe(recipe, (p) => keystore.signData(p));
+      return wallet.finalizeRecipe(signed);
+    Omitting \`signRecipe\` proves fine and is then rejected with
+    \`1010 Custom error: 192\` (InputsSignaturesLengthMismatch). Shielded-only calls
+    pass without it, so the bug appears only once a circuit touches NIGHT.
+
+18) LOCAL FAILURES THAT LOOK LIKE CHAIN CONTENTION (rule these out FIRST):
+    \`midnightDbName\` is the LevelDB DIRECTORY (default \`midnight-level-db\`);
+    \`privateStateStoreName\` is a store INSIDE it (default \`private-states\`).
+    LevelDB is single-writer, so concurrent callers need different
+    \`midnightDbName\` — different \`privateStateStoreName\` changes NOTHING and the
+    second caller dies with \`LEVEL_LOCKED: lock midnight-level-db/LOCK\`.
+    Also: seed a fresh store (\`setContractAddress(addr)\` THEN
+    \`set(id, emptyPrivateState())\`) or you get "No private state found at private
+    state ID …" / "Contract address not set"; and \`midnightDbName: undefined\` is
+    NOT the same as omitting it (it overwrites the default via
+    \`{ ...DEFAULT_CONFIG, ...config }\` and throws "first argument 'location' must
+    be a non-empty string") — spread the key in only when set.
+    NODE VERSION: 22 or 24 ONLY. Node 23/26 fail as
+    \`ERR_PACKAGE_PATH_NOT_EXPORTED\` inside a \`tsx\` stack trace, which reads like a
+    dependency problem. Check \`node -v\` before debugging anything else.
+    ENV PATHS: a relative path inside an env file resolves against CWD, not the env
+    file — resolve env-file-sourced paths against \`dirname(envFile)\` and report the
+    resolved absolute path on ENOENT.
+    INDEXER SUBSCRIPTIONS replay from genesis: a short listen window produces false
+    negatives indistinguishable from a genuine "no activity".
+
+19) HTTP-402 SURFACE (if the idea sells API calls):
+    keep the paid surface plain HTTP so any client in any language completes it in
+    two requests — \`GET /s/<id>\` → 402 \`{ serviceId, price, vaultAddress }\`, then
+    the same GET with \`X-Payment: <hex>\` → 200 + the resource. Consuming needs NO
+    Midnight code; paying is the part that needs a client. Hold the payment secret
+    DURABLY until the resource actually arrives, put only the resource body on
+    stdout (progress on stderr), and use exit codes that distinguish "retry" from
+    "fix your config". Payment and delivery are separate steps: health-check the
+    origin before returning the 402 to narrow — not close — the window where an
+    agent pays and receives nothing.`;
+
 
 
 const A2A_AP2_BLOCK = `AGENTIC OVERLAY — A2A + AP2 (Google Agent-to-Agent + Agent Payments Protocol)
@@ -2149,6 +2274,14 @@ FAILURE MODES (self-diagnostic table — copy into README):
   | Etherscan verify: \`Invalid API Key\` on a valid key                           | Foundry hit V1 host                                         | V2 with \`--skip-is-verified-check\`                              |
   | \`gas limit too high (cap: 16777216, tx: 21000000)\`                           | estimateGas failed → MetaMask 21M fallback → Infura cap     | Fund + approve first; surface balance vs required                |
   | \`forge create\` "succeeded" but nothing on-chain                              | Missing \`--broadcast\`                                       | Add \`--broadcast\`; verify explorer receipt                      |
+  | \`1010 Custom error: 192\` (InputsSignaturesLengthMismatch)                     | Circuit touched unshielded NIGHT; balancing does not sign    | \`signRecipe\` after \`balanceUnboundTransaction\` — §17           |
+  | \`1010 Custom error: 170\` (InvalidDustSpendProof)                              | Two txs from one wallet at once                              | Serialize submits + timeout — §16                                |
+  | \`LEVEL_LOCKED\` / "No private state found" / "Contract address not set"        | \`midnightDbName\` vs \`privateStateStoreName\`; unseeded store  | See §18 before blaming the chain                                 |
+  | \`ERR_PACKAGE_PATH_NOT_EXPORTED\` in a \`tsx\` stack                             | Node 23 or 26                                               | Node 22 or 24 only — §18                                         |
+  | "It takes 25s to generate the proof"                                          | Wrong attribution: proof 1.4s, submit 22.5s, chain 1.5s      | Quote the split — §14                                            |
+  | Every CLI run re-syncs for ~11 minutes                                        | From-seed wallet replays the indexer from genesis            | Persist/restore sub-wallet states — §15                          |
+
+
 
 ${AGENTIC_INFRA_LESSONS}
 

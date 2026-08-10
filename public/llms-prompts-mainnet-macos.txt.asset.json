@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "9b064d4b-2a12-4e47-95a6-d733f34eb480",
+  "asset_id": "5c405ef7-dda9-47ac-ad3a-6099a3f5022c",
   "project_id": "71d463f1-0973-4f3e-85ba-7f4fa6a73783",
-  "url": "/__l5e/assets-v1/9b064d4b-2a12-4e47-95a6-d733f34eb480/llms-prompts-mainnet-macos.txt",
-  "r2_key": "a/v1/71d463f1-0973-4f3e-85ba-7f4fa6a73783/9b064d4b-2a12-4e47-95a6-d733f34eb480/llms-prompts-mainnet-macos.txt",
+  "url": "/__l5e/assets-v1/5c405ef7-dda9-47ac-ad3a-6099a3f5022c/llms-prompts-mainnet-macos.txt",
+  "r2_key": "a/v1/71d463f1-0973-4f3e-85ba-7f4fa6a73783/5c405ef7-dda9-47ac-ad3a-6099a3f5022c/llms-prompts-mainnet-macos.txt",
   "original_filename": "llms-prompts-mainnet-macos.txt",
-  "size": 159795167,
+  "size": 168854671,
   "content_type": "text/plain",
-  "created_at": "2026-08-10T20:37:30Z"
+  "created_at": "2026-08-10T20:55:36Z"
 }

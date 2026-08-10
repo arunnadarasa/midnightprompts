@@ -163,7 +163,33 @@ const DEMOS: DemoCard[] = [
       </>
     ),
   },
+  {
+    key: "m402",
+    href: "https://m402-web-three.vercel.app/",
+    tag: "Agentic · x402 · no payer",
+    badge: "Preview · hackathon winner",
+    networks: ["preview"],
+    title: "m402 — private agentic payments",
+    body: (
+      <>
+        The reference private-payments rail: the same 402-and-retry flow, but the payment{" "}
+        <strong>carries no payer</strong>. A vault pools NIGHT and mints a shielded credit 1:1, and{" "}
+        <code>pay</code> takes no payer argument and reads no caller identity — it only proves it
+        holds a valid credit worth the published price. The gateway is a pure reader: the agent
+        submits its own transaction and the gateway watches the indexer for the receipt, so it never
+        signs and cannot fake a payment. Open-track winner at Hack Buenos Aires. Live at{" "}
+        <a href="https://m402-web-three.vercel.app/" target="_blank" rel="noreferrer" className="underline hover:text-primary">m402-web-three.vercel.app</a>; source on{" "}
+        <a href="https://github.com/julianariel/m402" target="_blank" rel="noreferrer" className="underline hover:text-primary">GitHub</a>{" "}
+        — read{" "}
+        <a href="https://github.com/julianariel/m402/blob/main/docs/constraints.md" target="_blank" rel="noreferrer" className="underline hover:text-primary">docs/constraints.md</a>{" "}
+        before you design any payment circuit. Its findings are folded into our{" "}
+        <Link to="/known-issues" className="underline hover:text-primary">Known issues</Link> page and
+        every mega-prompt.
+      </>
+    ),
+  },
 ];
+
 
 
 export const Route = createFileRoute("/showcase/")({
