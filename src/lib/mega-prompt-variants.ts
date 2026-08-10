@@ -346,63 +346,63 @@ Apply this whenever the idea mints tokens, tickets, licences, certificates, rece
     JWT to every browser.
 
 11. INSERT-ONLY APPLIES TO TOKEN CONTRACTS TOO. An mUSDC-style contract that does
-    `balances[from] = ...; balances[to] = ...` reproduces the SAME fee-balancer panic — it just
+    \`balances[from] = ...; balances[to] = ...\` reproduces the SAME fee-balancer panic — it just
     surfaces later, on settle/claim instead of mint. Safe shapes:
-    ```compact
+    \`\`\`compact
     export ledger credits:        Map<Bytes<32>, Field>;      // nonce -> amount   (insert once)
     export ledger credit_to:      Map<Bytes<32>, Bytes<32>>;  // nonce -> payee pk (insert once)
     export ledger faucet_claimed: Set<Bytes<32>>;             // one claim per pk
     export ledger spent_nonces:   Set<Bytes<32>>;             // replay protection
-    ```
-    A balance is a fold over `credits` filtered by `credit_to`, computed off-chain.
+    \`\`\`
+    A balance is a fold over \`credits\` filtered by \`credit_to\`, computed off-chain.
 
 12. MULTI-CONTRACT TOPOLOGY (one genesis wallet, one witness domain per contract):
     | key          | source                | circuits                                    | witness domain      |
     |--------------|-----------------------|---------------------------------------------|---------------------|
-    | moveRegistry | `MoveRegistry.compact`| `appendEntry`                               | `abodc:author:v1`   |
-    | moveNft      | `MoveNft.compact`     | `mint`,`listSale`,`buy`,`cancel`,`transfer`  | `movenft:minter:v1` |
-    | mandateVault | `MandateVault.compact`| `anchorMandate`                             | `ap2:buyer:v1`      |
-    | orderLedger  | `OrderLedger.compact` | `recordOrder`                               | `ucp:merchant:v1`   |
-    | midnightUsdc | `MidnightUSDC.compact`| `faucet`,`transfer`                         | `musdc:signer:v1`   |
+    | moveRegistry | \`MoveRegistry.compact\`| \`appendEntry\`                               | \`abodc:author:v1\`   |
+    | moveNft      | \`MoveNft.compact\`     | \`mint\`,\`listSale\`,\`buy\`,\`cancel\`,\`transfer\`  | \`movenft:minter:v1\` |
+    | mandateVault | \`MandateVault.compact\`| \`anchorMandate\`                             | \`ap2:buyer:v1\`      |
+    | orderLedger  | \`OrderLedger.compact\` | \`recordOrder\`                               | \`ucp:merchant:v1\`   |
+    | midnightUsdc | \`MidnightUSDC.compact\`| \`faucet\`,\`transfer\`                         | \`musdc:signer:v1\`   |
     Domain separators are NEVER reused across contracts and must be <= 32 UTF-8 bytes. Keep ONE
-    registry (`src/lib/contracts.ts` -> `CONTRACTS`) and derive every user-facing count from
-    `CONTRACTS.length` — a hardcoded "four deployed contracts" heading goes stale immediately.
+    registry (\`src/lib/contracts.ts\` -> \`CONTRACTS\`) and derive every user-facing count from
+    \`CONTRACTS.length\` — a hardcoded "four deployed contracts" heading goes stale immediately.
 
-13. NEVER CACHE A WALLET PROVIDER ACROSS HTTP REQUESTS. Open -> `callTx` -> `stop()` in a
-    `finally`, one wallet per request (`withMusdc` / `withMoveNft` / `append-entry.server.ts`).
-    A module-level `ctxPromise` holding a `MidnightWalletProvider` keeps LevelDB open and the
-    NEXT contract family's call dies with `SubmissionError`.
+13. NEVER CACHE A WALLET PROVIDER ACROSS HTTP REQUESTS. Open -> \`callTx\` -> \`stop()\` in a
+    \`finally\`, one wallet per request (\`withMusdc\` / \`withMoveNft\` / \`append-entry.server.ts\`).
+    A module-level \`ctxPromise\` holding a \`MidnightWalletProvider\` keeps LevelDB open and the
+    NEXT contract family's call dies with \`SubmissionError\`.
 
-14. ONE MIDNIGHT WRITE AT A TIME. A `busy` flag disabling the write button in the UI, and exactly
+14. ONE MIDNIGHT WRITE AT A TIME. A \`busy\` flag disabling the write button in the UI, and exactly
     ONE process owning the Docker stack / LevelDB in ops. Parallel clicks or parallel agents give
-    `Database failed to open`.
+    \`Database failed to open\`.
 
 15. SOFT-FAIL SECONDARY APPENDS. When an action does a primary token write PLUS a secondary
-    registry `appendEntry`, wrap the append in its own try/catch — it must never fail the whole
+    registry \`appendEntry\`, wrap the append in its own try/catch — it must never fail the whole
     action. The token transfer is the receipt. Instrument the two legs separately when debugging,
     otherwise you get "Claim failed" in the UI while the transfer is already on chain.
 
-16. RPCERROR 117 RECOVERY CHECKLIST — IN ORDER. `SubmissionError` / `FiberFailure` usually WRAP
-    `RpcError 1010: Invalid Transaction: Custom error: 117`. Do NOT retry the same click:
-    ```bash
+16. RPCERROR 117 RECOVERY CHECKLIST — IN ORDER. \`SubmissionError\` / \`FiberFailure\` usually WRAP
+    \`RpcError 1010: Invalid Transaction: Custom error: 117\`. Do NOT retry the same click:
+    \`\`\`bash
     # 1. stop the dev server
     rm -rf midnight-level-db .midnight                      # 2. wipe local private state
     docker compose -p <project> -f docker-compose.yml up -d  # 3. recreate node/indexer/proof
     bun run midnight:deploy                                  # 4. FULL deploy, not one contract
     bun scripts/debug-<token>-transfer.mjs                   # 5. verify twice: expect TWO OK lines
     bun run dev                                              # 6. restart, hard-refresh, ONE action
-    ```
+    \`\`\`
     | code | action |
     |------|--------|
     | 117  | run the checklist above; never keep retrying the same UI click |
     | 104  | wipe LevelDB + full deploy |
     | 196  | recompile artefacts + wipe + full deploy |
-    | UI rows stuck "Pending" | indexer miss or pre-wipe hash in `localStorage` — offer Refresh, then Clear |
+    | UI rows stuck "Pending" | indexer miss or pre-wipe hash in \`localStorage\` — offer Refresh, then Clear |
 
 17. HUMANIZE RECOVERABLE RPC ERRORS. Map 117 / 104 / 196 to plain-language copy naming the
-    recovery action; never leak a `FiberFailure` stack into the UI. Skip optional external
+    recovery action; never leak a \`FiberFailure\` stack into the UI. Skip optional external
     verifiers (e.g. an ERC-1271 check) when the network is Undeployed or the secret is absent,
-    instead of surfacing `missing_secret: <KEY>` to the user.
+    instead of surfacing \`missing_secret: <KEY>\` to the user.
 
 NFT-RAIL FAILURE MODES
 | Symptom                                                            | Cause                                        | Fix                                                        |
