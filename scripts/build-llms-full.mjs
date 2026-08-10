@@ -2,7 +2,8 @@
 // Generate public/llms-full.txt, public/llms-core.txt, and per-combo prompt files.
 // Run with:  bun run scripts/build-llms-full.mjs
 
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, createWriteStream } from "node:fs";
+import { once } from "node:events";
 import { join } from "node:path";
 import { SITE_HEADER, GUIDES } from "../src/data/llms-content.ts";
 import { ALL_IDEAS, THEMES } from "../src/data/ideas.ts";
@@ -121,9 +122,9 @@ for (const net of NETWORKS) {
 
 sizes["undeployed-mobile"] = write("llms-prompts-undeployed-mobile.txt", promptsDoc("undeployed-mobile", "macos"));
 
-// The all-variants bundle is ~2 GB and OOMs the generator; build it only on demand
-// (BUILD_FULL=1) on a big machine. The published llms-full.txt asset pointer is kept as-is.
-if (process.env.BUILD_FULL === "1") sizes.full = write("llms-full.txt", fullDoc());
+// The all-variants bundle is multi-GB; it is streamed to disk (never held in memory)
+// and only built on demand with BUILD_FULL=1.
+if (process.env.BUILD_FULL === "1") sizes.full = await writeFullStreaming("llms-full.txt");
 
 const meta = {
   generatedAt: new Date().toISOString(),
