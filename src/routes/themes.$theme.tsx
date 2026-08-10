@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-rout
 import { useMemo, useState } from "react";
 import { SiteShell } from "@/components/site-shell";
 import { IdeaCard } from "@/components/idea-card";
-import { getTheme, IDEAS_BY_THEME, HOOKS, PROTOCOL_LABELS, type Protocol } from "@/data/ideas";
+import { getTheme, IDEAS_BY_THEME, HOOKS, PROTOCOL_LABELS, type Protocol, type Theme } from "@/data/ideas";
 
 type ProtocolFilter = Protocol | "base" | null;
 
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/themes/$theme")({
 });
 
 function ThemePage() {
-  const { theme } = Route.useLoaderData();
+  const { theme } = Route.useLoaderData() as { theme: Theme };
   const ideas = IDEAS_BY_THEME[theme.slug];
   const [q, setQ] = useState("");
   const [hookFilter, setHookFilter] = useState<string | null>(null);
