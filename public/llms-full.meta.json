@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-10T20:39:33.245Z",
+  "generatedAt": "2026-08-10T20:57:08Z",
   "ideaCount": 1996,
   "networks": [
     "preview",
@@ -16,23 +16,23 @@
   ],
   "variantCount": 31936,
   "sizes": {
-    "core": 13646,
-    "preview-macos": 153849083,
-    "preview-windows": 155284209,
-    "preview-linux": 153607567,
-    "preprod-macos": 153751285,
-    "preprod-windows": 155186411,
-    "preprod-linux": 153509769,
-    "undeployed-macos": 191663314,
-    "undeployed-windows": 195537552,
-    "undeployed-linux": 191677286,
-    "undeployed-fly-macos": 185054559,
-    "undeployed-fly-windows": 186489685,
-    "undeployed-fly-linux": 184813043,
-    "mainnet-macos": 159795167,
-    "mainnet-windows": 161230293,
-    "mainnet-linux": 159553651,
-    "undeployed-mobile": 23516132,
-    "full": 2556981818
+    "mainnet-linux": 168613155,
+    "mainnet-macos": 168854671,
+    "mainnet-windows": 170289797,
+    "preprod-linux": 162569273,
+    "preprod-macos": 162810789,
+    "preprod-windows": 164245915,
+    "preview-linux": 162667071,
+    "preview-macos": 162908587,
+    "preview-windows": 164343713,
+    "undeployed-fly-linux": 193872547,
+    "undeployed-fly-macos": 194114063,
+    "undeployed-fly-windows": 195549189,
+    "undeployed-linux": 200736790,
+    "undeployed-macos": 200722818,
+    "undeployed-mobile": 23514136,
+    "undeployed-windows": 204597056,
+    "full": 2692904317,
+    "core": 13646
   }
 }
