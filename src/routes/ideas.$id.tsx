@@ -3,7 +3,7 @@ import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-rout
 import { SiteShell } from "@/components/site-shell";
 import { CopyButton } from "@/components/copy-button";
 import { QuantumChip } from "@/components/quantum-chip";
-import { getIdea, getTheme, getHook, IDEAS_BY_THEME, type NetworkVariant } from "@/data/ideas";
+import { getIdea, getTheme, getHook, IDEAS_BY_THEME, type NetworkVariant, type Idea, type Theme, type Hook } from "@/data/ideas";
 import { buildVariant, OS_LABELS, type OSTarget } from "@/lib/mega-prompt-variants";
 import { getPlainProposition } from "@/lib/plain-language";
 
@@ -63,7 +63,7 @@ const SECRETS = [
 ];
 
 function IdeaPage() {
-  const { idea, theme, hook } = Route.useLoaderData();
+  const { idea, theme, hook } = Route.useLoaderData() as { idea: Idea; theme: Theme; hook: Hook | undefined };
   const related = IDEAS_BY_THEME[theme.slug]
     .filter((i) => i.id !== idea.id && (i.subDiscipline === idea.subDiscipline || i.quantumHookId === idea.quantumHookId))
     .slice(0, 4);

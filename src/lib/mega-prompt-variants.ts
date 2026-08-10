@@ -278,7 +278,86 @@ Best practice from Choreo Kits:
 - Dedupe by \`publishedAt\` and prefer the local row that already has \`txId\` when the indexer
   catches up (usually a few seconds later).`;
 
-const REDFLAGS = "RED FLAGS \u2014 DO NOT ATTEMPT:\n- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.\n- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.\n- No recursion in Compact. Loops must be bounded by compile-time constants.\n- No sub-second finality UX. Proofs for k=14 circuits take 30\u2013120s \u2014 build for that latency.\n- No SSR for the write path. MidnightJS uses `window`, `Buffer`, and WASM top-level-await;\n  load every `@midnight-ntwrk/*` behind `<ClientOnly>` + `useEffect`. On TanStack Start, keep\n  nitro ENABLED and stub Midnight packages in the SSR pass (see `midnightSsrStub()`).\n- Do NOT set `nitro: false` on TanStack Start to 'escape SSR'. That splits the SSR output into\n  chunks (`assets/server-*.js` importing `assets/react-*.js`) that the Cloudflare Worker cannot\n  resolve at runtime \u2014 you get `Error: No such module \"assets/react\"` on every request. Keep\n  nitro on and use the `midnightSsrStub()` swap instead.\n- Do NOT sign Undeployed writes with Lace. Lace cannot balance/sign on the local `undeployed`\n  chain \u2014 the proof completes but submit fails silently. Route every write through a server\n  `/api/append-entry` (or `/api/mint`) route that reuses the genesis seed (see SIGNING STRATEGY block).\n- Do NOT let `privateStateStoreName` drift between `scripts/deploy-midnight.mjs` and the\n  server-append route. Mismatch \u2192 `findDeployedContract` samples a FRESH signing key \u2192 chain\n  rejects with `RpcError 1010: Invalid Transaction: Custom error: 117`. Import ONE shared\n  constant (e.g. `PRIVATE_STATE_STORE` from `src/lib/midnight-shared.ts`) in BOTH files. Debug\n  by logging the first/last 8 chars of the signing key on each side \u2014 they must match.\n- Do NOT pass the raw `ContractState` wrapper to `ledger()`. Symptom:\n  `expected instance of ChargedState`. Pass `contractState.data` (from `getPublicStates`) or\n  `result.public.nextContractState` (after a successful `callTx`).\n- Do NOT skip re-deploying after `midnight:down` / `midnight:up`. The chain state is wiped and\n  the address in `src/data/midnight-contract.undeployed.json` is dead. Always run\n  `bun run midnight:deploy` and restart the dev server, or invalidate the server route's\n  `ctxPromise` cache when the JSON changes \u2014 otherwise the 2nd+ append silently targets the\n  previous contract and fails with a stale-state or 117 error.\n- Do NOT diagnose a disabled 'Prove & submit' / 'Mint' button as a wallet or chain bug before\n  checking the form. In 90% of cases `canFund` / `canMint` just needs both fields non-empty.\n  Ship a tooltip that names the missing field so no one loses an hour on this.\n- Do NOT omit `@midnight-ntwrk/testkit-js`, `pino`, `ws`, `ssh2`, `cpu-features` from\n  `optimizeDeps.exclude` when using the server-append pattern. Rolldown/Vite tries to\n  pre-bundle those Node-only transitive deps and the dev server hangs indefinitely on the\n  'Loading \u2026' fallback.\n- Do NOT ship Mainnet without the persistent red risk banner AND the README disclaimer at the top\n  of `README.md`. Mainnet handles REAL value \u2014 this codebase is vibe-coded / unaudited / hackathon-grade.\n- Do NOT route Mainnet writes through a server `/api/mint`. There is no genesis wallet on Mainnet;\n  signing MUST be Lace-only, initiated by the user.\n- Do NOT prompt users for NIGHT seed/recovery phrases. On Mainnet, funds arrive via a withdrawal from\n  an official exchange partner (https://midnight.network/night?tag=exchange) directly to the Lace\n  unshielded address. Never accept a phrase in chat, form, screenshot, or issue tracker.\n- Do NOT ship `levelPrivateStateProvider` to the browser. Its `browser-level` \u2192 `abstract-level`\n  chain breaks under production Rollup with `Class extends value undefined is not a constructor or null`.\n  Use a `localStorage`-backed PrivateStateProvider in the browser; keep `levelPrivateStateProvider`\n  only in Node deploy scripts.\n- No deploying from a Cloudflare Worker / TanStack server function. Deploys are a local `bun`\n  script only \u2014 they need Docker, the proof server, and localhost.\n- Do NOT use `midnightntwrk/midnight-node:latest` (tag often missing) or the partner-chain 2.x\n  tags (need Cardano follower + Postgres). For public networks pin the matrix tags: proof-server:8.1.0,\n  midnight-node:1.0.1 (Preview), indexer:4.3.3. For local Undeployed use the local-dev triple:\n  proof-server:8.0.3, midnight-node:0.22.5, indexer-standalone:4.0.2.\n- Do NOT accept a user's recovery phrase in chat. Ship `scripts/check-midnight-wallet.mjs` that\n  reads `MIDNIGHT_WALLET_SEED` from their shell env and prints only PUBLIC addresses.\n- Do NOT derive shielded and unshielded addresses through different `NetworkId` values \u2014 use ONE\n  `NetworkId` across both encoders and validate the emitted bech32 prefix before writing `.env`";
+const NFT_LEDGER_LESSONS = `NFT / MARKETPLACE LEDGER DESIGN — HARD-WON LESSONS (\`zealymidnight\` / MoveNft rail)
+Apply this whenever the idea mints tokens, tickets, licences, certificates, receipts, or resells anything.
+
+1. PUBLIC LEDGER MAPS ARE INSERT-ONLY / APPEND-ONLY IN v1. THIS IS THE BIG ONE.
+   Writing to a key that ALREADY exists makes the dust fee balancer panic on the NEXT callTx:
+     \`RuntimeError: unreachable\` inside \`wasm.transaction_feesWithMargin\` / \`transaction_merge\`.
+   The first tx "succeeds", the second one dies and the whole rail looks broken.
+   Model every mutation as a NEW key:
+   \`\`\`compact
+   export ledger tokens:   Map<Bytes<32>, Bytes<32>>;   // tokenId -> metadata/CID hash  (insert once)
+   export ledger listings: Map<Bytes<32>, Field>;       // tokenId -> price               (insert once)
+   export ledger sales:    Map<Bytes<32>, Bytes<32>>;   // saleId  -> buyer commitment    (append only)
+   \`\`\`
+   \`mint\` inserts into \`tokens\`; \`listSale\` inserts into \`listings\`; \`buy\` appends to \`sales\`
+   under a FRESH random \`saleId\` (\`crypto.getRandomValues(new Uint8Array(32))\`) — it never
+   rewrites \`tokens[tokenId]\`. Current ownership is derived off-chain: replay \`sales\` from the
+   indexer, or mirror it in the server JSON (\`src/data/<app>-owners.json\`). The chain stays the
+   audit log; the mirror is the index.
+
+2. DO NOT PORT ERC-721 INTO COMPACT. \`_owners[tokenId] = newOwner\` is EXACTLY the overwrite in
+   rule 1. There is no ERC-721 on Midnight. Ownership transfer = append a sale row.
+
+3. \`list\` IS A RESERVED COMPACT KEYWORD. \`export circuit list(...)\` fails to compile; worse, if
+   you compile as \`listSale\` and call \`callTx.list(...)\` from TypeScript you get an undefined
+   entry point and a silent no-op. Name the circuit \`listSale\` and call \`callTx.listSale(...)\`.
+   Verify the entry point that actually landed via the indexer:
+   \`contractAction(address:$a){ ... on ContractCall { entryPoint transaction { hash } } }\`.
+
+4. ONE SHARED OWNER-PK HELPER. Put it in \`src/lib/midnight-shared.ts\` and import it in BOTH the
+   server routes and every script — never re-derive inline:
+   \`\`\`ts
+   export const ownerPk = (label: string) =>
+     sha256(new TextEncoder().encode(\\\`myapp:owner:v1:\\\${label}\\\`));  // domain ≤ 32 UTF-8 bytes
+   \`\`\`
+   Two derivations = the diagnostics disagree with the chain and you chase a phantom "not owner".
+
+5. NO CROSS-CONTRACT CALLS IN COMPACT v1. A marketplace \`buy\` cannot move mUSDC inside the NFT
+   contract. Sequence it in ONE server handler: token \`faucet\`/\`transfer\` tx, then the NFT \`buy\`
+   tx, then return BOTH tx hashes. Label it in the UI: "demo-only atomicity — two transactions".
+
+6. FRESH WALLET PER SERVER CALL, \`await wallet.close()\` / \`stop()\` in a \`finally\`, and never reuse
+   one wallet across two contract families (token + NFT) in the same request. Working rail order:
+   \`mint → listSale → faucet → pay → buy\`.
+
+7. CONTRACT ADDRESS RESOLUTION ORDER: deploy JSON FIRST (\`src/data/midnight-contract.undeployed.json\`),
+   \`import.meta.env.VITE_DEFAULT_CONTRACT\` only as fallback. Vite bakes env at build time and
+   yesterday's address survives a redeploy — you get \`Couldn't find template\` on every write.
+
+8. REDEPLOY CHECKLIST AFTER ANY \`.compact\` CHANGE (skip a step and you burn an hour):
+   \`\`\`bash
+   compact compile contracts/MyContract.compact contracts/managed/my-contract
+   cp -r contracts/managed/my-contract/{keys,zkir,contract} public/contract/
+   rm -rf midnight-level-db .midnight            # stale verifier keys = RpcError 196
+   bun run midnight:deploy
+   # restart the dev server (server routes cache ctxPromise)
+   \`\`\`
+   NEVER mix freshly compiled verifier keys with an old LevelDB.
+
+9. ONE EXCLUSIVE STACK OWNER. Add \`scripts/e2e.mjs\` that runs the whole rail and prints a single
+   final line \`E2E_OK <mintTx> <listTx> <buyTx>\`. Do NOT run two agents/terminals against one
+   Docker stack or one LevelDB. Never \`pkill -f node\`/\`bun\` broadly — you kill the dev server and
+   the deploy mid-flight. Tail prove logs with \`… | tee /tmp/prove.log\`, NOT \`| head\`/\`| awk\`:
+   the closed pipe SIGPIPEs the proving process and the tx dies at 90%.
+
+10. PINATA / IPFS SECRETS ARE SERVER-ONLY: \`PINATA_JWT\`. Never \`VITE_PINATA_*\` — that ships the
+    JWT to every browser.
+
+NFT-RAIL FAILURE MODES
+| Symptom                                                            | Cause                                        | Fix                                                        |
+|--------------------------------------------------------------------|----------------------------------------------|------------------------------------------------------------|
+| \`unreachable\` in \`transaction_feesWithMargin\` / \`transaction_merge\` | Overwrote an existing ledger map key         | Insert-only design (rule 1); append sales rows             |
+| \`callTx.list is not a function\` / entry point missing              | \`list\` is reserved; artefacts say \`listSale\`  | Rename circuit + call site to \`listSale\`                    |
+| \`not owner\` on a token you just minted                             | Two different owner-PK derivations           | ONE \`ownerPk()\` helper imported everywhere (rule 4)         |
+| \`RpcError 1010 … Custom error: 117\`                                | Stale private state / store-name drift       | Share \`PRIVATE_STATE_STORE\`; wipe LevelDB; redeploy        |
+| \`RpcError … 104\`                                                   | Dirty / half-written LevelDB                 | \`rm -rf midnight-level-db .midnight\`, redeploy              |
+| \`RpcError … 196\`                                                   | Verifier key mismatch (recompiled contract)  | Full redeploy checklist (rule 8)                            |
+| Prove stalls ~90% then process exits                               | SIGPIPE from \`| head\` on the prove log        | \`tee\` to a file instead                                     |`;
+
+
+const REDFLAGS = "RED FLAGS \u2014 DO NOT ATTEMPT:\n- No bridging to Ethereum / any EVM chain. Midnight is a standalone L1; there is no bridge.\n- No oracle / external HTTP data inside a circuit. Circuits are bounded and cannot do I/O.\n- No recursion in Compact. Loops must be bounded by compile-time constants.\n- No sub-second finality UX. Proofs for k=14 circuits take 30\u2013120s \u2014 build for that latency.\n- No SSR for the write path. MidnightJS uses `window`, `Buffer`, and WASM top-level-await;\n  load every `@midnight-ntwrk/*` behind `<ClientOnly>` + `useEffect`. On TanStack Start, keep\n  nitro ENABLED and stub Midnight packages in the SSR pass (see `midnightSsrStub()`).\n- Do NOT set `nitro: false` on TanStack Start to 'escape SSR'. That splits the SSR output into\n  chunks (`assets/server-*.js` importing `assets/react-*.js`) that the Cloudflare Worker cannot\n  resolve at runtime \u2014 you get `Error: No such module \"assets/react\"` on every request. Keep\n  nitro on and use the `midnightSsrStub()` swap instead.\n- Do NOT sign Undeployed writes with Lace. Lace cannot balance/sign on the local `undeployed`\n  chain \u2014 the proof completes but submit fails silently. Route every write through a server\n  `/api/append-entry` (or `/api/mint`) route that reuses the genesis seed (see SIGNING STRATEGY block).\n- Do NOT let `privateStateStoreName` drift between `scripts/deploy-midnight.mjs` and the\n  server-append route. Mismatch \u2192 `findDeployedContract` samples a FRESH signing key \u2192 chain\n  rejects with `RpcError 1010: Invalid Transaction: Custom error: 117`. Import ONE shared\n  constant (e.g. `PRIVATE_STATE_STORE` from `src/lib/midnight-shared.ts`) in BOTH files. Debug\n  by logging the first/last 8 chars of the signing key on each side \u2014 they must match.\n- Do NOT pass the raw `ContractState` wrapper to `ledger()`. Symptom:\n  `expected instance of ChargedState`. Pass `contractState.data` (from `getPublicStates`) or\n  `result.public.nextContractState` (after a successful `callTx`).\n- Do NOT skip re-deploying after `midnight:down` / `midnight:up`. The chain state is wiped and\n  the address in `src/data/midnight-contract.undeployed.json` is dead. Always run\n  `bun run midnight:deploy` and restart the dev server, or invalidate the server route's\n  `ctxPromise` cache when the JSON changes \u2014 otherwise the 2nd+ append silently targets the\n  previous contract and fails with a stale-state or 117 error.\n- Do NOT diagnose a disabled 'Prove & submit' / 'Mint' button as a wallet or chain bug before\n  checking the form. In 90% of cases `canFund` / `canMint` just needs both fields non-empty.\n  Ship a tooltip that names the missing field so no one loses an hour on this.\n- Do NOT omit `@midnight-ntwrk/testkit-js`, `pino`, `ws`, `ssh2`, `cpu-features` from\n  `optimizeDeps.exclude` when using the server-append pattern. Rolldown/Vite tries to\n  pre-bundle those Node-only transitive deps and the dev server hangs indefinitely on the\n  'Loading \u2026' fallback.\n- Do NOT ship Mainnet without the persistent red risk banner AND the README disclaimer at the top\n  of `README.md`. Mainnet handles REAL value \u2014 this codebase is vibe-coded / unaudited / hackathon-grade.\n- Do NOT route Mainnet writes through a server `/api/mint`. There is no genesis wallet on Mainnet;\n  signing MUST be Lace-only, initiated by the user.\n- Do NOT prompt users for NIGHT seed/recovery phrases. On Mainnet, funds arrive via a withdrawal from\n  an official exchange partner (https://midnight.network/night?tag=exchange) directly to the Lace\n  unshielded address. Never accept a phrase in chat, form, screenshot, or issue tracker.\n- Do NOT ship `levelPrivateStateProvider` to the browser. Its `browser-level` \u2192 `abstract-level`\n  chain breaks under production Rollup with `Class extends value undefined is not a constructor or null`.\n  Use a `localStorage`-backed PrivateStateProvider in the browser; keep `levelPrivateStateProvider`\n  only in Node deploy scripts.\n- No deploying from a Cloudflare Worker / TanStack server function. Deploys are a local `bun`\n  script only \u2014 they need Docker, the proof server, and localhost.\n- Do NOT use `midnightntwrk/midnight-node:latest` (tag often missing) or the partner-chain 2.x\n  tags (need Cardano follower + Postgres). For public networks pin the matrix tags: proof-server:8.1.0,\n  midnight-node:1.0.1 (Preview), indexer:4.3.3. For local Undeployed use the local-dev triple:\n  proof-server:8.0.3, midnight-node:0.22.5, indexer-standalone:4.0.2.\n- Do NOT accept a user's recovery phrase in chat. Ship `scripts/check-midnight-wallet.mjs` that\n  reads `MIDNIGHT_WALLET_SEED` from their shell env and prints only PUBLIC addresses.\n- Do NOT derive shielded and unshielded addresses through different `NetworkId` values \u2014 use ONE\n  `NetworkId` across both encoders and validate the emitted bech32 prefix before writing `.env`\n- Do NOT overwrite an existing key in a public ledger Map. The dust fee balancer panics on the NEXT\n  callTx (`transaction_feesWithMargin` / `transaction_merge` unreachable). Insert-only / append-only\n  in v1 \u2014 see NFT / MARKETPLACE LEDGER DESIGN.\n- Do NOT port ERC-721 into Compact. There is no ERC-721 on Midnight; `_owners[tokenId] = newOwner`\n  is exactly the forbidden overwrite. Ownership transfer = append a new sale row + off-chain mirror.\n- Do NOT run two agents / terminals against ONE Docker stack or ONE LevelDB, and never `pkill -f`\n  broad patterns. One exclusive stack owner; `tee` prove logs instead of piping to `head`/`awk`\n  (SIGPIPE kills the prove at ~90%).";
 
 const EXPERIMENTAL_DISCLAIMER = `EXPERIMENTAL DAPP DISCLAIMER (MANDATORY on ALL networks, non-negotiable on Mainnet):
 
@@ -2092,7 +2171,11 @@ NON-NEGOTIABLES — each of these has cost teams a full day:
 7. Soft keyboard on emulator (blocks every text field until you do this):
        adb shell settings put secure show_ime_with_hard_keyboard 1
 
-8. Form-enablement pattern — Compose sometimes doesn't re-evaluate
+8. Compact ledger maps are INSERT-ONLY here too. Never rewrite an existing map key
+   (mint/list insert; buy appends a sale row) and never name a circuit \`list\` — it is a
+   reserved keyword; use \`listSale\`. Same panic/silent-no-op traps as the web variants.
+
+9. Form-enablement pattern — Compose sometimes doesn't re-evaluate
    \`enabled = ...\` on Buttons when the ViewModel's readiness flag flips
    after async wallet sync. Fix with rememberSaveable + LaunchedEffect
    write-through:
@@ -2205,6 +2288,8 @@ ${MIDNIGHTJS_BOOT}
 ${ASYNC_BUFFER_CLIENT_ENTRY}
 
 ${SIGNING_STRATEGY}
+
+${NFT_LEDGER_LESSONS}
 
 ${KIT_FEED_PERSISTENCE}
 
