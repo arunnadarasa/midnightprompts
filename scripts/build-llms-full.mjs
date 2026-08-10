@@ -2,7 +2,8 @@
 // Generate public/llms-full.txt, public/llms-core.txt, and per-combo prompt files.
 // Run with:  bun run scripts/build-llms-full.mjs
 
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, readFileSync, mkdirSync, createWriteStream } from "node:fs";
+import { once } from "node:events";
 import { join } from "node:path";
 import { SITE_HEADER, GUIDES } from "../src/data/llms-content.ts";
 import { ALL_IDEAS, THEMES } from "../src/data/ideas.ts";
@@ -58,28 +59,47 @@ function promptsDoc(filterNet, filterOs) {
 
 const VARIANTS_PER_IDEA = NETWORKS.length * OSES.length + 1; // + 1 mobile (OS-independent)
 
-function fullDoc() {
-  const parts = [coreDoc()];
-  parts.push(`\n\n===============================================================\n# Mega-prompts (all ${VARIANTS_PER_IDEA} variants per idea)\n===============================================================\n`);
-  parts.push(`${ALL_IDEAS.length} ideas × (${NETWORKS.length} networks × 3 OSes + 1 Android/mobile) = ${ALL_IDEAS.length * VARIANTS_PER_IDEA} variants.\n`);
+// Streaming writer — the all-variants bundle is multi-GB, so never build it as one string.
+async function writeFullStreaming(name) {
+  const path = join(OUT, name);
+  const stream = createWriteStream(path, { encoding: "utf8" });
+  let size = 0;
+  const put = (chunk) => {
+    size += Buffer.byteLength(chunk, "utf8");
+    if (!stream.write(chunk)) return once(stream, "drain");
+    return null;
+  };
+  const emit = async (chunk) => {
+    const wait = put(chunk);
+    if (wait) await wait;
+  };
+
+  await emit(coreDoc());
+  await emit(`\n\n===============================================================\n# Mega-prompts (all ${VARIANTS_PER_IDEA} variants per idea)\n===============================================================\n`);
+  await emit(`${ALL_IDEAS.length} ideas × (${NETWORKS.length} networks × 3 OSes + 1 Android/mobile) = ${ALL_IDEAS.length * VARIANTS_PER_IDEA} variants.\n`);
+
   for (const idea of ALL_IDEAS) {
     const theme = themesById[idea.theme];
     if (!theme) continue;
-    parts.push(`\n\n===============================================================`);
-    parts.push(`## ${idea.id} — ${idea.title}`);
-    parts.push(`Theme: ${theme.name} · Sub-discipline: ${idea.subDiscipline}`);
-    parts.push(`===============================================================`);
+    await emit(
+      `\n\n===============================================================\n## ${idea.id} — ${idea.title}\nTheme: ${theme.name} · Sub-discipline: ${idea.subDiscipline}\n===============================================================\n`,
+    );
     for (const net of NETWORKS) {
       for (const os of OSES) {
-        parts.push(`\n\n### ${NET_LABEL[net]} · ${OS_LABELS[os]}\n`);
-        parts.push(buildVariant(idea, theme, net, os));
+        await emit(`\n\n### ${NET_LABEL[net]} · ${OS_LABELS[os]}\n\n`);
+        await emit(buildVariant(idea, theme, net, os));
       }
     }
-    parts.push(`\n\n### ${NET_LABEL["undeployed-mobile"]}\n`);
-    parts.push(buildVariant(idea, theme, "undeployed-mobile", "macos"));
+    await emit(`\n\n### ${NET_LABEL["undeployed-mobile"]}\n\n`);
+    await emit(buildVariant(idea, theme, "undeployed-mobile", "macos"));
   }
-  return parts.join("\n");
+
+  stream.end();
+  await once(stream, "finish");
+  console.log(`  ${name.padEnd(38)} ${(size / 1024 / 1024).toFixed(2)} MB`);
+  return size;
 }
+
 
 function write(name, content) {
   const path = join(OUT, name);
@@ -93,18 +113,27 @@ console.log("Building LLM bundles …");
 const sizes = {};
 sizes.core = write("llms-core.txt", coreDoc());
 
-for (const net of NETWORKS) {
-  for (const os of OSES) {
-    const name = `llms-prompts-${net}-${os}.txt`;
-    sizes[`${net}-${os}`] = write(name, promptsDoc(net, os));
+// SKIP_COMBOS=1 regenerates only the full bundle and keeps the previously recorded
+// per-combo sizes (their .txt files are already externalised as CDN assets).
+const skipCombos = process.env.SKIP_COMBOS === "1";
+if (skipCombos) {
+  try {
+    const prev = JSON.parse(readFileSync(join(OUT, "llms-full.meta.json"), "utf8"));
+    Object.assign(sizes, prev.sizes ?? {});
+  } catch {}
+} else {
+  for (const net of NETWORKS) {
+    for (const os of OSES) {
+      const name = `llms-prompts-${net}-${os}.txt`;
+      sizes[`${net}-${os}`] = write(name, promptsDoc(net, os));
+    }
   }
+  sizes["undeployed-mobile"] = write("llms-prompts-undeployed-mobile.txt", promptsDoc("undeployed-mobile", "macos"));
 }
 
-sizes["undeployed-mobile"] = write("llms-prompts-undeployed-mobile.txt", promptsDoc("undeployed-mobile", "macos"));
-
-// The all-variants bundle is ~2 GB and OOMs the generator; build it only on demand
-// (BUILD_FULL=1) on a big machine. The published llms-full.txt asset pointer is kept as-is.
-if (process.env.BUILD_FULL === "1") sizes.full = write("llms-full.txt", fullDoc());
+// The all-variants bundle is multi-GB; it is streamed to disk (never held in memory)
+// and only built on demand with BUILD_FULL=1.
+if (process.env.BUILD_FULL === "1") sizes.full = await writeFullStreaming("llms-full.txt");
 
 const meta = {
   generatedAt: new Date().toISOString(),
