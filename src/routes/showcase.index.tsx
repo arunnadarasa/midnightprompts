@@ -57,6 +57,26 @@ const DEMOS: DemoCard[] = [
     ),
   },
   {
+    key: "zealymidnight",
+    href: "https://github.com/arunnadarasa/zealymidnight",
+    tag: "NFT rail · Undeployed",
+    badge: "Undeployed",
+    networks: ["undeployed"],
+    title: "StreetRail Move Rights NFT",
+    body: (
+      <>
+        A Compact NFT rail for move rights: mint → <code>listSale</code> → buy, settled in mUSDC on
+        the local Undeployed stack. Writes go through the server-append genesis wallet, and the
+        public ledger maps are strictly insert-only / append-only — the fix for the dust
+        fee-balancer panic (<code>transaction_feesWithMargin</code> / <code>transaction_merge</code>)
+        that hits any circuit overwriting an existing map key. Verified end to end
+        (<code>E2E_OK</code>). Source on{" "}
+        <a href="https://github.com/arunnadarasa/zealymidnight" target="_blank" rel="noreferrer" className="underline hover:text-primary">GitHub</a>.
+      </>
+    ),
+  },
+
+  {
     key: "choreokits",
     href: "https://choreokits.lovable.app/",
     tag: "Hackathon starter · Live build",
