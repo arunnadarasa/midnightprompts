@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-10T20:36:31.409Z",
+  "generatedAt": "2026-08-10T20:39:33.245Z",
   "ideaCount": 1996,
   "networks": [
     "preview",
@@ -32,6 +32,7 @@
     "mainnet-macos": 159795167,
     "mainnet-windows": 161230293,
     "mainnet-linux": 159553651,
-    "undeployed-mobile": 23516132
+    "undeployed-mobile": 23516132,
+    "full": 2556981818
   }
 }
