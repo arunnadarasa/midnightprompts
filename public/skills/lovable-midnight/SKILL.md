@@ -139,7 +139,7 @@ optimizeDeps: {
 - `pad(32, "<domain>:<role>")` — the string must be **≤ 32 UTF-8 bytes** or Compact refuses to compile with `cannot pad "…" to length 32 since its utf8-equivalent already exceeds that length`. Keep domain separators short (`ap2:buyer:v1`, `ucp:merchant:v1`, `musdc:signer:v1`, `abodc:author:v1`). Never use a full product name.
 - `Opaque<"string">` ledger fields **cannot** be initialised in `constructor()` with a string literal like `"(empty)"` — literals are `Bytes<N>`. Drop the init and let the field start uninitialised; guard reads in the circuit.
 - Any Compact-side signing key that a TypeScript witness will re-derive later MUST use the **exact** byte layout the circuit expects: `persistentHash<Vector<2, Bytes<32>>>([pad(32, "<domain>:v1"), sk])` — no extra fields, no reordered inputs, no different arity.
-- **Public ledger maps must be insert-only / append-only** on Undeployed: updating an existing map key makes the dust fee balancer panic (`transaction_feesWithMargin` / `transaction_merge` Unreachable) on the next `callTx`. Also, `list` is a reserved keyword — name marketplace circuits `listSale`. See "2026-08 update — zealymidnight / MoveNft NFT rail on Undeployed" at the end of this skill before writing any NFT or marketplace contract.
+- **Public ledger maps must be insert-only / append-only** on Undeployed — for token contracts as well as NFTs: updating an existing map key (including `balances[from]` / `balances[to]`) makes the dust fee balancer panic (`transaction_feesWithMargin` / `transaction_merge` Unreachable) on the next `callTx`. Also, `list` is a reserved keyword — name marketplace circuits `listSale`, and never cache a wallet provider across HTTP requests (`stop()` in `finally`). See "2026-08 update — zealymidnight / MoveNft NFT rail on Undeployed" at the end of this skill before writing any NFT, token, or marketplace contract.
 
 
 ### 6. React "Page Unresponsive" on wallet-connect panels
@@ -1207,6 +1207,14 @@ Read this BEFORE writing any NFT / marketplace Compact contract.
 | `RpcError 196` | Verifier key mismatch — recompiled artefacts without redeploying, or deployed against wrong keys | Recompile → refresh artefacts → redeploy in one pass |
 | Mint targets a dead contract after redeploy | Stale `VITE_*` address cached by Vite | Resolve from `midnight-contract.undeployed.json` first; restart dev after deploy |
 | e2e "flaky", logs truncated, exit 0 | Prove piped through `awk`/`head` (SIGPIPE), or a parallel agent `pkill`ed the run | `tee` to a log file; single stack-owner process with a `mkdir` lock |
+| `SubmissionError` on the next `musdcTransfer` / `callTx` | A `MidnightWalletProvider` was cached across HTTP requests and still holds LevelDB open | Open → `callTx` → `stop()` in `finally`, one wallet per request (`withMusdc` / `withMoveNft` / `append-entry.server.ts`) |
+| Partial single-contract redeploy still fails 117 / key mismatch | Redeployed only mUSDC (or only one contract) on top of dirty private state | Prefer a full `midnight:deploy`; only use a single-contract redeploy when state is known-clean |
+| "Claim failed" in the UI but the transfer is on chain | The secondary registry `appendEntry` threw after the primary transfer succeeded | Soft-fail secondary appends; the token transfer is the receipt |
+| `Database failed to open` | Parallel UI clicks or parallel agents writing the shared genesis LevelDB | UI busy flag on the write action; one exclusive stack owner in ops |
+| Old branding / wrong UX on `:8080` | Dev server is serving a different working tree than the repo you edited | Confirm cwd and which tree Vite serves before calling it a UX bug |
+| `bun <<'EOF'` prints help, runs nothing | Bun does not read a program from stdin that way | `bun scripts/foo.mjs` |
+| Containers orphaned after moving the repo | Docker compose workdir vanished | Recreate from this repo's `docker-compose.yml` with an explicit `-p` project name |
+| `/judge`-style panel stuck on "Pending" after a chain wipe | Pre-wipe tx hashes cached in `localStorage`; indexer lookup misses | Offer Refresh + Clear; these are not live stuck transactions |
 
 ### Anti-patterns (add to the main list)
 
@@ -1215,3 +1223,84 @@ Read this BEFORE writing any NFT / marketplace Compact contract.
 - Don't run parallel agents/shells against one Docker stack or LevelDB.
 - Don't let the README claim features whose code isn't pushed yet.
 - Don't prefix Pinata secrets with `VITE_`.
+- Don't cache a wallet provider across HTTP requests — always `stop()` in `finally`.
+- Don't hardcode a contract count in user-facing copy; derive it from the contract registry length.
+- Don't keep re-clicking a failing UI action through an `RpcError 117` — run the recovery checklist.
+- Don't leave the previous chain's branding in user-visible strings after migrating a demo to Midnight.
+
+### Multi-contract topology (five contracts, one genesis wallet)
+
+| Key | Compact source | Circuits | Witness domain |
+| --- | --- | --- | --- |
+| moveRegistry | `MoveRegistry.compact` | `appendEntry` | `abodc:author:v1` |
+| moveNft | `MoveNft.compact` | `mint`, `listSale`, `buy`, `cancel`, `transfer` | `movenft:minter:v1` |
+| mandateVault | `MandateVault.compact` | `anchorMandate` | `ap2:buyer:v1` |
+| orderLedger | `OrderLedger.compact` | `recordOrder` | `ucp:merchant:v1` |
+| midnightUsdc | `MidnightUSDC.compact` | `faucet`, `transfer` | `musdc:signer:v1` |
+
+Keep one UI registry (`src/lib/contracts.ts` → `CONTRACTS`) and derive every user-facing count
+from `CONTRACTS.length`. A hardcoded "four deployed contracts" heading goes stale the moment a
+contract is added.
+
+Ledger shapes that survive Undeployed:
+
+```
+MoveNft:      owners       // insert on mint only
+              listed_price // insert on listSale / cancel under a NEW key
+              sales        // append buy/transfer with a fresh random id
+
+MidnightUSDC: credits / credit_to  // insert by nonce (transfer) or once by pk (faucet)
+              faucet_claimed       // Set
+              spent_nonces         // Set
+```
+
+**Insert-only applies to the token contract too.** Overwriting `balances[from]` /
+`balances[to]` reproduces the exact `feesWithMargin` panic that the NFT redesign fixed — it
+just surfaces later, on settle/claim instead of mint.
+
+### Additional non-negotiables
+
+1. **Never cache a `MidnightWalletProvider` across HTTP requests.** Open → `callTx` →
+   `stop()` in `finally`, every request. A cached wallet holds LevelDB open and breaks the next
+   contract family's call. No long-lived `ctxPromise`.
+2. **One Midnight write at a time.** A UI busy flag on the write action, and exactly one
+   process owning the Docker stack / LevelDB in ops. No parallel agents wiping state mid-prove.
+3. **Soft-fail secondary appends.** When an action does a primary token write plus a secondary
+   registry `appendEntry`, the append must never fail the whole action — the transfer is the
+   receipt. Instrument transfer and append separately when debugging.
+4. **Deploy JSON first, `VITE_*` second** — and after a redeploy restart Vite **and**
+   hard-refresh the browser. HMR is not enough; SSR keeps the old address.
+5. **Third-party keys stay server-only.** `PINATA_JWT` / `PINATA_GATEWAY`, never
+   `VITE_PINATA_*`. Skip optional external verifiers (e.g. an ERC-1271 check) when the network
+   is Undeployed or the secret is absent, instead of surfacing `missing_secret: <KEY>` in the UI.
+6. **Humanize the recoverable RPC errors.** Map 117/104/196 to plain-language copy with the
+   recovery action, rather than leaking `FiberFailure` stacks to the user.
+
+### RpcError 117 recovery checklist (in order)
+
+`SubmissionError` / `FiberFailure` usually **wrap** `RpcError 1010: Invalid Transaction: Custom
+error: 117`. Don't retry the same click — run this:
+
+```bash
+# 1. stop the dev server
+# 2. wipe local private state
+rm -rf midnight-level-db .midnight
+# 3. recreate node/indexer/proof if the chain may be dirty
+docker compose -p <project> -f docker-compose.yml up -d
+# 4. full deploy (not a single-contract redeploy)
+bun run midnight:deploy
+# 5. verify twice — expect TWO OK lines
+bun scripts/debug-musdc-transfer.mjs
+# 6. restart dev, hard-refresh the browser, then ONE action only
+bun run dev
+```
+
+| Code | Action |
+| --- | --- |
+| 117 | Run the checklist above; do not keep retrying the same UI click |
+| 104 | Wipe LevelDB + full deploy |
+| 196 | Recompile artefacts + wipe + full deploy |
+| UI "Pending" rows | Indexer miss or pre-wipe hash in `localStorage` — Refresh, then Clear if the chain was wiped |
+
+Log long proves with `tee` + `rg` (see the prove-log rule above) while working through this —
+piping through `awk`/`head` SIGPIPEs the prove and makes recovery look like flakiness.
