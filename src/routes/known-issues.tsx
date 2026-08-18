@@ -62,7 +62,7 @@ curl -s -o /dev/null -w '%{http_code}\\n' https://<app>.fly.dev:9944`}
         </pre>
       </>
     ),
-    links: [{ label: "Identus / Fly invariants", href: "/identus" }],
+    links: [{ label: "Identus / Fly invariants", href: "https://midnightprompts.lovable.app/identus" }],
   },
   {
     id: "fly-http-handler-kills-ws",
@@ -81,7 +81,7 @@ curl -s -o /dev/null -w '%{http_code}\\n' https://<app>.fly.dev:9944`}
         </p>
       </>
     ),
-    links: [{ label: "Fly-hosted Undeployed", href: "/undeployed" }],
+    links: [{ label: "Fly-hosted Undeployed", href: "https://midnightprompts.lovable.app/undeployed" }],
   },
   {
 
