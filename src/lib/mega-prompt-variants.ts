@@ -901,7 +901,19 @@ const FRONTEND_STANDARDS = `FRONTEND STANDARDS (Lovable-agent rules — non-nego
    - When the user reports a bug, reproduce first: read console logs, network
      requests, and DOM state before proposing a fix.
    - Do NOT introduce new deps for anything the current stack already solves.
+
+8. STATUS QUERIES MUST DEGRADE, NEVER THROW (\\\`ipsmidnight\\\` lesson).
+   - Any function that reports stack/host/infra status must return an
+     \\\`{ state: "unconfigured", reason }\\\` result when its secret or env var is
+     missing. A throw inside a loader or status query blanks the whole page and
+     hides the one instruction the user needs ("add the secret").
+   - Never render a green "ready" pill from a stored row alone. Re-probe the
+     real resource (host API, RPC, contract state) and downgrade the row when
+     the probe fails — external infra gets destroyed outside your app.
+   - Humanize infra errors in the UI: name the component, the measured fact,
+     and the next action. No raw stack traces in the happy path.
 `;
+
 
 const WALLET_BOILERPLATE = "\n\n--- BEGIN: Connect-Lace boilerplate (self-contained, DApp Connector v4) ---\n\nAdd a working \"Connect Lace\" button to the primary page of the app. This\nsection is self-contained \u2014 do NOT install any @midnight-ntwrk/* package for\nthe connect step; the Lace browser extension injects everything you need at\n`window.midnight`. Follow the DApp Connector API v4 exactly as written below.\n\nHARD RULES\n- Do NOT call `enable()` or `state()` \u2014 DApp Connector v4.0 removed them.\n- Do NOT read `window.midnight` at module scope or during SSR \u2014 only inside\n  `useEffect`. Gate the panel render until after hydration.\n- Do NOT hardcode the network \u2014 try Preview, Preprod, and Mainnet in order\n  and use whichever `connect(networkId)` accepts.\n- Reading a shielded address is a permission-only handshake \u2014 no signing,\n  no funds moved.\n- Style the button with shadcn \\`Button\\` + semantic tokens (\\`bg-primary\\`,\n  \\`text-primary-foreground\\`) \u2014 no hardcoded colors, see FRONTEND STANDARDS \u00a71.\n\nCREATE FILE: src/lib/use-midnight-wallet.ts\n```ts\nimport { useCallback, useEffect, useState } from \"react\";\n\nexport type WalletStatus =\n  | \"idle\" | \"detecting\" | \"ready\" | \"connecting\" | \"connected\" | \"error\";\n\ntype Connector = {\n  apiVersion: string;\n  name?: string;\n  connect: (networkId: string) => Promise<ConnectedApi>;\n  isEnabled?: () => Promise<boolean>;\n};\n\ntype ConnectedApi = {\n  getShieldedAddresses?: () => Promise<string[] | Record<string, string>>;\n  getUnshieldedAddress?: () => Promise<string>;\n  getDustAddress?: () => Promise<string>;\n  getConfiguration?: () => Promise<{\n    indexerUri?: string; indexerWsUri?: string; proverServerUri?: string;\n  }>;\n};\n\nfunction pickConnector(): Connector | null {\n  if (typeof window === \"undefined\") return null;\n  const m = (window as unknown as { midnight?: Record<string, Connector> }).midnight;\n  if (!m) return null;\n  for (const v of Object.values(m)) {\n    if (v && typeof v === \"object\" && \"apiVersion\" in v && /^4\\\\./.test(String(v.apiVersion))) {\n      return v as Connector;\n    }\n  }\n  const first = Object.values(m)[0];\n  return first && \"apiVersion\" in first ? (first as Connector) : null;\n}\n\nexport function useMidnightWallet() {\n  const [status, setStatus] = useState<WalletStatus>(\"idle\");\n  const [address, setAddress] = useState<string | null>(null);\n  const [apiVersion, setApiVersion] = useState<string | null>(null);\n  const [network, setNetwork] = useState<string | null>(null);\n  const [error, setError] = useState<string | null>(null);\n  const [tick, setTick] = useState(0);\n\n  useEffect(() => {\n    if (typeof window === \"undefined\") return;\n    setStatus((p) => (p === \"connected\" ? p : \"detecting\"));\n    setError(null);\n    const t0 = Date.now();\n    const iv = window.setInterval(() => {\n      const c = pickConnector();\n      if (c) {\n        window.clearInterval(iv);\n        setApiVersion(c.apiVersion);\n        setStatus((p) => (p === \"connected\" ? p : \"ready\"));\n      } else if (Date.now() - t0 > 5000) {\n        window.clearInterval(iv);\n        setStatus(\"error\");\n        setError(\"No Midnight wallet detected. Install Lace from lace.io.\");\n      }\n    }, 100);\n    return () => window.clearInterval(iv);\n  }, [tick]);\n\n  const connect = useCallback(async () => {\n    try {\n      setError(null);\n      setStatus(\"connecting\");\n      const c = pickConnector();\n      if (!c) throw new Error(\"No Midnight wallet detected.\");\n      const preferred = (import.meta.env.VITE_NETWORK_ID as string) || \"preprod\";\n      const candidates = Array.from(new Set([preferred, \"preview\", \"preprod\", \"undeployed\", \"mainnet\"]));\n      let api: ConnectedApi | null = null;\n      let used: string | null = null;\n      for (const n of candidates) {\n        try { api = await c.connect(n); used = n; break; } catch {}\n      }\n      if (!api || !used) throw new Error(\"Failed to connect to Lace.\");\n      let addr: string | null = null;\n      if (typeof api.getShieldedAddresses === \"function\") {\n        try {\n          const s = await api.getShieldedAddresses();\n          if (Array.isArray(s)) addr = s[0] ?? null;\n          else if (s && typeof s === \"object\") addr = Object.values(s)[0] ?? null;\n        } catch {}\n      }\n      if (!addr && typeof api.getUnshieldedAddress === \"function\") {\n        try { addr = await api.getUnshieldedAddress(); } catch {}\n      }\n      if (!addr) throw new Error(\"Connected but couldn't read an address.\");\n      setAddress(addr);\n      setNetwork(used);\n      setStatus(\"connected\");\n    } catch (e) {\n      setError(e instanceof Error ? e.message : String(e));\n      setStatus(\"error\");\n    }\n  }, []);\n\n  return { status, address, apiVersion, network, error, connect,\n    disconnect: () => { setAddress(null); setNetwork(null); setStatus(\"ready\"); setError(null); },\n    redetect: () => setTick((n) => n + 1) };\n}\n```\n\nMOUNT on the primary page and gate render until hydrated. See\nhttps://midnightprompts.lovable.app for the full component reference.\n\n--- END: Connect-Lace boilerplate ---\n";
 
@@ -1460,6 +1472,91 @@ on a live Fly-hosted stack. All of them are non-obvious; skip any one and hours 
 
 Cross-reference: the \`flymidnight\` repo (github.com/arunnadarasa/flymidnight) is the canonical
 working example \u2014 mirror the file layout when in doubt.`;
+
+
+const FLY_RUNNER_LESSONS = `FLY-HOSTED RPC + RUNNER MACHINE — HARD-WON LESSONS (\`ipsmidnight\`, 2026-08):
+
+1. **Node RPC has exactly ONE working shape: \`wss://<app>.fly.dev:9944\`.** Publish the node's
+   9944 as a **pure \\\`tls\\\` service** on the Fly edge — no \`http\` handler, no \`http_options\`.
+   Why every alternative fails:
+   - \`<app>.internal\` is IPv6-only 6PN while the node binds IPv4 (dual-binding is fragile).
+   - \`<app>.flycast:9944\` needs a private IP allocation and still answers \`000\` from inside
+     the app.
+   - Fly's \`http\` handler terminates the WebSocket partway through a long proof submission, so
+     writes die after minutes of proving — which looks like a Midnight bug and is not.
+
+2. **The indexer fails SILENTLY.** If it cannot reach the node RPC it does not error: it serves
+   an empty chain and the UI reports block 0 forever, which reads as "nothing anchored yet".
+   Make \`node reachable from indexer\` its own explicit timeline/preflight step and never trust
+   an indexer answer before it passes.
+
+3. **Report reachability as measured facts, not assumptions.** Probe \`127.0.0.1:9944/health\`
+   from the node machine, probe the edge URL from the indexer machine, and read public-IP /
+   flycast presence back from the host API (\`flycast: present|absent · public IP: …\`).
+
+4. **Runner-machine pattern — deploy from the UI, not from a chat session.** Compile → deploy →
+   anchor → verify needs a persistent disk, the Compact toolchain, and connections held open for
+   minutes. The app runtime (edge / Worker) has none of that.
+   - Add a 4th **runner** machine to the same Fly app as node / indexer / proof server, with a
+     volume holding the contract bundle, keys, and the LevelDB private state.
+   - Drive it with the Machines \`exec\` API from a server function: \`prepare\` (pull the toolchain
+     bundle) first, then fire-and-poll jobs. NEVER block an HTTP request on proving.
+   - Runner scripts print machine-readable \`RESULT {json}\` lines **plus** human log output, so one
+     poll returns both a parsed result and a log tail the UI can render as a terminal.
+   - Ship the toolchain as a versioned tarball and require an explicit "Prepare runner" run after
+     you bump it — otherwise users silently run last week's contract code.
+   - Existence-probe stored state: a "ready" row must be re-verified against the host and
+     downgraded, never shown green on faith.
+
+5. **Read a crash-looping machine's logs through the machine \`exec\` API**, not the log stream — a
+   machine that restarts every few seconds never stays up long enough for the stream to be useful.
+   \`tee\` the boot log to a file inside the machine and \`tail\` it via \`exec\`.
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| Indexer stuck at block 0, no errors anywhere | Indexer cannot reach node RPC | Publish 9944 as \`tls\`; point the indexer at \`wss://<app>.fly.dev:9944\`; add an explicit reachability step |
+| Submit dies after minutes of proving | Fly \`http\` handler closed the WebSocket | Pure \`tls\` handler on 9944 |
+| \`000\` from \`<app>.flycast:9944\` even inside the app | No private IP / IPv6-only path to an IPv4 listener | Route traffic over the public edge |
+| Contract "compiled but never deployed" | Runner never prepared, or stale toolchain bundle | Bump the bundle version, require "Prepare runner" |
+| Stack shows ready but the host app is gone | Stored state trusted without probing | Existence-probe app + machines, downgrade the row |
+| Page blanks with \`FLY_API_TOKEN is not configured\` | Status function throws | Return an \`unconfigured\` state |
+
+Cross-reference: github.com/arunnadarasa/ipsmidnight and
+https://midnightprompts.lovable.app/identus (Fly + agent invariants).`;
+
+
+const VERIFICATION_HONESTY = `VERIFICATION HONESTY + SDK PROVIDER GOTCHAS (from a public code review of \`ipsmidnight\`):
+
+VERIFICATION (applies to every anchoring / attestation / receipt feature)
+- **Ledger membership is the only proof.** Reading \`commitments.member(commitment)\` (or the
+  equivalent set/map lookup) from the DEPLOYED contract's public state is verification. A stored
+  tx hash, a "confirmed" status column, or a green badge derived from your own database is NOT.
+  If the UI says "verified", the code path behind it must have read chain state in that request.
+- **Persist the salt** alongside every salted commitment. A commitment whose salt was never
+  stored can never be re-derived, which makes the anchor permanently unverifiable — and no
+  reviewer accepts "trust the row".
+- **Minimise claims.** Never put raw PII (name, full DOB, document body) in a credential or
+  on-chain payload whose only job is to prove a predicate. Derive the predicate (\`over18\`,
+  \`isLicensed\`, \`digestMatches\`) and ship that.
+- **Label what you did NOT check.** Simulated artefacts, unresolvable DIDs, and unverified
+  signatures render as *unverifiable / not checked* — never as pass. Reject simulated artefacts
+  outright inside signature-check paths. Decoding a JWT is not verifying it.
+
+SDK v4 PROVIDER GOTCHAS
+- \`privateStoragePasswordProvider\` has a **minimum length**; a short password throws during
+  wallet construction with an unrelated-looking error. Read a long value from env.
+- \`httpClientProofProvider(url, zkConfigProvider)\` must receive the **same**
+  \`NodeZkConfigProvider(CONTRACT_DIR)\` instance you pass as \`zkConfigProvider\`. Omit it and the
+  proof server answers \`400 Bad Request\` on \`/check\`.
+- The genesis wallet must be fully synced BEFORE deploy, and resynced after any chain-data volume
+  rebuild.
+
+KEY + STATE HYGIENE
+- \`.gitignore\` must cover \`.env\`, the LevelDB private-state directory (\`midnight-level-db/\`), and
+  any \`*.tgz\` toolchain bundle. Untrack them if they already landed in a commit.
+- Dev seeds, storage passwords, and contract addresses come from \`process.env\` with a documented
+  fallback — never hardcoded literals inside \`scripts/*.mjs\`.`;
+
 
 
 function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
@@ -2444,7 +2541,7 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, 
   const localBlock = isUndeployedLocal ? `\n\n${localStackSetup(os)}\n` : "";
   const undeployedFundBlock = isUndeployedLocal ? `\n${UNDEPLOYED_FUND_LACE}\n` : "";
   const flyioBlock = isUndeployedLocal || isUndeployedFly ? `\n${HOSTING_FLYIO}\n` : "";
-  const flyLessonsBlock = isUndeployedFly ? `\n${FLYMIDNIGHT_LESSONS}\n` : "";
+  const flyLessonsBlock = isUndeployedFly ? `\n${FLYMIDNIGHT_LESSONS}\n\n${FLY_RUNNER_LESSONS}\n` : "";
   const mainnetBlock = network === "mainnet" ? `\n${MAINNET_ACQUIRE}\n` : "";
   const protocolBlock = idea.protocol ? `\n\n${PROTOCOL_BLOCKS[idea.protocol]}\n` : "";
 
@@ -2490,6 +2587,9 @@ ${ASYNC_BUFFER_CLIENT_ENTRY}
 ${SIGNING_STRATEGY}
 
 ${NFT_LEDGER_LESSONS}
+
+${VERIFICATION_HONESTY}
+
 
 ${KIT_FEED_PERSISTENCE}
 

@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "9d17a5ac-eb83-43f0-a140-2e8e92a085a4",
+  "asset_id": "55c734e6-3fae-4bb8-afe8-bb97d4506102",
   "project_id": "71d463f1-0973-4f3e-85ba-7f4fa6a73783",
-  "url": "/__l5e/assets-v1/9d17a5ac-eb83-43f0-a140-2e8e92a085a4/llms-prompts-undeployed-fly-windows.txt",
-  "r2_key": "a/v1/71d463f1-0973-4f3e-85ba-7f4fa6a73783/9d17a5ac-eb83-43f0-a140-2e8e92a085a4/llms-prompts-undeployed-fly-windows.txt",
+  "url": "/__l5e/assets-v1/55c734e6-3fae-4bb8-afe8-bb97d4506102/llms-prompts-undeployed-fly-windows.txt",
+  "r2_key": "a/v1/71d463f1-0973-4f3e-85ba-7f4fa6a73783/55c734e6-3fae-4bb8-afe8-bb97d4506102/llms-prompts-undeployed-fly-windows.txt",
   "original_filename": "llms-prompts-undeployed-fly-windows.txt",
-  "size": 195549189,
+  "size": 208718797,
   "content_type": "text/plain",
-  "created_at": "2026-08-10T20:55:11Z"
+  "created_at": "2026-08-18T07:09:53Z"
 }
