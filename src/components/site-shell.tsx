@@ -54,6 +54,8 @@ function SiteHeader() {
               { to: "/blog", label: "Field Notes" },
               { to: "/llms", label: "LLM Docs" },
               { to: "/about", label: "About" },
+              { href: "https://midnight.network/aliit", label: "ALIIT" },
+              { href: "https://midnight.network/nightforce", label: "NIGHTFORCE" },
             ]}
           />
           <span className="mx-2 h-5 w-px bg-border" aria-hidden />
@@ -66,6 +68,14 @@ function SiteHeader() {
             Docs ↗
           </a>
           <a
+            href="https://academy.midnight.network/"
+            target="_blank"
+            rel="noreferrer"
+            className="px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
+          >
+            Academy ↗
+          </a>
+          <a
             href="https://midskills.sevryn.xyz/"
             target="_blank"
             rel="noreferrer"
@@ -73,6 +83,7 @@ function SiteHeader() {
           >
             Midskills ↗
           </a>
+
           <a
             href="https://creativequantum.lovable.app/"
             target="_blank"
