@@ -42,7 +42,18 @@ function About() {
           <li>Run the Compact toolchain locally (<code>compact update</code>, <code>compact compile</code>) and start the proof-server Docker container on port 6300.</li>
           <li>Copy the mega-prompt into Lovable. It scaffolds the app, wires Lace + proof server + Indexer, and ships a Compact contract with the hackathon credit baked in.</li>
         </ol>
+        <h2 className="font-display text-2xl font-semibold mt-10 mb-3 text-foreground italic">Keep going after the hackathon</h2>
+        <p className="text-muted-foreground font-light">
+          Midnight runs two community tracks and a learning platform:{" "}
+          <a href="https://midnight.network/aliit" target="_blank" rel="noreferrer" className="text-foreground underline decoration-primary">ALIIT ambassadors</a>{" "}
+          for community leaders and educators,{" "}
+          <a href="https://midnight.network/nightforce" target="_blank" rel="noreferrer" className="text-foreground underline decoration-primary">NIGHTFORCE</a>{" "}
+          for builders and advocates shipping in public, and{" "}
+          <a href="https://academy.midnight.network/" target="_blank" rel="noreferrer" className="text-foreground underline decoration-primary">Midnight Academy</a>{" "}
+          for structured courses on ZK, Compact and the wider stack.
+        </p>
         <h2 className="font-display text-2xl font-semibold mt-10 mb-3 text-foreground italic">Credits</h2>
+
         <p className="text-muted-foreground font-light">
           Built during the <strong className="text-foreground">Creative AI &amp; Quantum Hackathon</strong> organised by{" "}
           <strong className="text-foreground">StreetKode Fam</strong> during <strong className="text-foreground">Indian Krump Festival 14</strong>.
