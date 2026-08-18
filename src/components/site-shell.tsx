@@ -110,6 +110,7 @@ function SiteHeader() {
               <MobileLink to="/undeployed" onClick={close}>Undeployed</MobileLink>
               <MobileLink to="/undeployed-preflight" onClick={close}>Preflight</MobileLink>
               <MobileLink to="/mobile" onClick={close}>Mobile Dev</MobileLink>
+              <MobileLink to="/identus" onClick={close}>Identus</MobileLink>
               <MobileLink to="/strategy" onClick={close}>Strategy</MobileLink>
               <MobileLink to="/quantum-primer" onClick={close}>Primer</MobileLink>
               <MobileLink to="/blog" onClick={close}>Field Notes</MobileLink>
