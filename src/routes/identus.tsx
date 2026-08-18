@@ -199,6 +199,12 @@ function IdentusPage() {
               title="Skip it with connectionless issuance"
               body="A Mediator lets remote wallets exchange DIDComm messages. If you only need a credential over a digest, connectionless issuance avoids the whole invitation dance — one REST call, an invitation URL, no established connection."
             />
+            <Card
+              tag="ZK binding (optional)"
+              title="Prove a predicate, not the credential"
+              body="A credential carrying a date of birth can back a browser-side age proof: hash the signed JWT into two 128-bit field limbs as a binding, prove over18 with Noir + UltraHonk in the page, and store only the commitment and public inputs. The JWT never leaves the browser, and a credential with no birth claim must be shown as unprovable rather than silently offered."
+            />
+
           </div>
         </section>
 
