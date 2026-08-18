@@ -54,6 +54,8 @@ function SiteHeader() {
               { to: "/blog", label: "Field Notes" },
               { to: "/llms", label: "LLM Docs" },
               { to: "/about", label: "About" },
+              { href: "https://midnight.network/aliit", label: "ALIIT" },
+              { href: "https://midnight.network/nightforce", label: "NIGHTFORCE" },
             ]}
           />
           <span className="mx-2 h-5 w-px bg-border" aria-hidden />
@@ -66,6 +68,14 @@ function SiteHeader() {
             Docs ↗
           </a>
           <a
+            href="https://academy.midnight.network/"
+            target="_blank"
+            rel="noreferrer"
+            className="px-2.5 py-1.5 text-muted-foreground text-[10px] font-semibold tracking-[0.24em] uppercase hover:text-primary transition-colors duration-500"
+          >
+            Academy ↗
+          </a>
+          <a
             href="https://midskills.sevryn.xyz/"
             target="_blank"
             rel="noreferrer"
@@ -73,6 +83,7 @@ function SiteHeader() {
           >
             Midskills ↗
           </a>
+
           <a
             href="https://creativequantum.lovable.app/"
             target="_blank"
@@ -136,6 +147,33 @@ function SiteHeader() {
                 Midskills ↗
               </a>
               <a
+                href="https://academy.midnight.network/"
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+                className="mt-1 px-4 py-2.5 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+              >
+                Academy ↗
+              </a>
+              <a
+                href="https://midnight.network/aliit"
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+                className="mt-1 px-4 py-2.5 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+              >
+                ALIIT Ambassadors ↗
+              </a>
+              <a
+                href="https://midnight.network/nightforce"
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+                className="mt-1 px-4 py-2.5 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+              >
+                NIGHTFORCE ↗
+              </a>
+              <a
                 href="https://preview.midnightexplorer.com/"
                 target="_blank"
                 rel="noreferrer"
@@ -173,9 +211,9 @@ function NavLink({ to, children }: { to: string; children: ReactNode }) {
   );
 }
 
-function NavGroup({ label, items }: { label: string; items: { to: string; label: string }[] }) {
+function NavGroup({ label, items }: { label: string; items: { to?: string; href?: string; label: string }[] }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const active = items.some((i) => pathname === i.to || pathname.startsWith(i.to + "/"));
+  const active = items.some((i) => i.to && (pathname === i.to || pathname.startsWith(i.to + "/")));
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -186,20 +224,32 @@ function NavGroup({ label, items }: { label: string; items: { to: string; label:
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="min-w-[12rem] bg-background/95 backdrop-blur border-border">
         {items.map((item) => (
-          <DropdownMenuItem key={item.to} asChild>
-            <Link
-              to={item.to}
-              className="px-3 py-2 text-[11px] tracking-[0.22em] uppercase font-medium text-muted-foreground hover:text-primary cursor-pointer"
-              activeProps={{ className: "px-3 py-2 text-[11px] tracking-[0.22em] uppercase font-medium text-primary cursor-pointer" }}
-            >
-              {item.label}
-            </Link>
+          <DropdownMenuItem key={item.to ?? item.href} asChild>
+            {item.href ? (
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                className="px-3 py-2 text-[11px] tracking-[0.22em] uppercase font-medium text-muted-foreground hover:text-primary cursor-pointer"
+              >
+                {item.label} ↗
+              </a>
+            ) : (
+              <Link
+                to={item.to!}
+                className="px-3 py-2 text-[11px] tracking-[0.22em] uppercase font-medium text-muted-foreground hover:text-primary cursor-pointer"
+                activeProps={{ className: "px-3 py-2 text-[11px] tracking-[0.22em] uppercase font-medium text-primary cursor-pointer" }}
+              >
+                {item.label}
+              </Link>
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
 }
+
 
 function MobileLink({ to, onClick, children }: { to: string; onClick: () => void; children: ReactNode }) {
   return (

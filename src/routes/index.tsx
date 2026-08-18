@@ -233,7 +233,58 @@ function Index() {
               </div>
             </div>
           </div>
+
+          <div className="bg-card border border-border p-7 md:col-span-2">
+            <div className="h-full border-l border-primary/30 pl-5 flex flex-col justify-center gap-3">
+              <span className="eyebrow">Community · Grow with Midnight</span>
+              <p className="font-display text-xl italic text-foreground leading-tight">
+                After the hackathon: ambassador tracks and the Academy.
+              </p>
+              <div className="flex flex-col gap-3 mt-1">
+                <a
+                  href="https://midnight.network/aliit"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group block"
+                >
+                  <span className="text-[11px] uppercase tracking-[0.24em] text-primary group-hover:text-foreground transition-colors">
+                    ALIIT Ambassadors ↗
+                  </span>
+                  <span className="block text-sm text-muted-foreground leading-relaxed">
+                    The official ambassador track for community leaders and educators.
+                  </span>
+                </a>
+                <a
+                  href="https://midnight.network/nightforce"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group block"
+                >
+                  <span className="text-[11px] uppercase tracking-[0.24em] text-primary group-hover:text-foreground transition-colors">
+                    NIGHTFORCE ↗
+                  </span>
+                  <span className="block text-sm text-muted-foreground leading-relaxed">
+                    Builder and advocate force — ship, evangelise, earn recognition.
+                  </span>
+                </a>
+                <a
+                  href="https://academy.midnight.network/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group block"
+                >
+                  <span className="text-[11px] uppercase tracking-[0.24em] text-primary group-hover:text-foreground transition-colors">
+                    Midnight Academy ↗
+                  </span>
+                  <span className="block text-sm text-muted-foreground leading-relaxed">
+                    Structured courses on ZK, Compact and the Midnight stack.
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
+
       </section>
 
       <section className="max-w-7xl mx-auto px-5 sm:px-8 py-16 border-t border-border">
