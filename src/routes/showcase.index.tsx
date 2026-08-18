@@ -75,6 +75,29 @@ const DEMOS: DemoCard[] = [
       </>
     ),
   },
+  {
+    key: "ipsmidnight",
+    href: "https://ipsmidnight.lovable.app/",
+    tag: "Health · Identus + Compact",
+    badge: "Undeployed · Fly.io",
+    networks: ["undeployed", "undeployed-fly"],
+    title: "IPS Compass (Identus × Midnight)",
+    body: (
+      <>
+        Author an International Patient Summary (FHIR), digest it with SHA-256, issue a{" "}
+        <strong>Hyperledger Identus</strong> credential over the digest, then anchor{" "}
+        <code>H("ips:anchor:v1" ‖ digest ‖ salt)</code> in the append-only{" "}
+        <code>IpsAnchorRegistry</code> Compact set — so a verifier confirms the summary existed
+        unchanged without seeing any patient data. Both stacks (Midnight node/indexer/proof and the
+        Identus Cloud Agent) are provisioned onto Fly Machines from inside the app: no local Docker,
+        no compose, no CI. Live at{" "}
+        <a href="https://ipsmidnight.lovable.app/" target="_blank" rel="noreferrer" className="underline hover:text-primary">ipsmidnight.lovable.app</a>; source on{" "}
+        <a href="https://github.com/arunnadarasa/ipsmidnight" target="_blank" rel="noreferrer" className="underline hover:text-primary">GitHub</a>. Setup rules and failure
+        modes on our{" "}
+        <Link to="/identus" className="underline hover:text-primary">Identus page</Link>.
+      </>
+    ),
+  },
 
   {
     key: "choreokits",
