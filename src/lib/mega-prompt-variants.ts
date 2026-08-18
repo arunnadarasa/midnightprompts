@@ -1512,6 +1512,38 @@ const FLY_RUNNER_LESSONS = `FLY-HOSTED RPC + RUNNER MACHINE — HARD-WON LESSONS
    machine that restarts every few seconds never stays up long enough for the stream to be useful.
    \`tee\` the boot log to a file inside the machine and \`tail\` it via \`exec\`.
 
+6. **Pin the WHOLE toolchain on the runner — including transitive alphas.**
+   - \`@midnight-ntwrk/compact-js@2.5.3\` depends on \`@midnight-ntwrk/ledger-v9@^0.1.0-alpha.1\`,
+     which is **not published**. Every install dies with
+     \`npm error code ETARGET / notarget No matching version found for @midnight-ntwrk/ledger-v9\`.
+     Pin \`compact-js@2.5.1\`.
+   - Runner bootstrap installs **exact pinned versions only** — never \`@latest\`, never a caret on
+     a Midnight package. A toolchain bump is a deliberate change with a bundle-version bump.
+   - Before retrying a failed install, delete the stale \`package-lock.json\` and \`node_modules\`
+     from the half-finished attempt — otherwise the bad resolution is cached on the volume and
+     every retry reproduces the same failure. Ship a **"Clear toolchain"** action that resets the
+     install WITHOUT destroying the volume (which holds the chain + private state).
+
+7. **A stalled install is an OOM kill, not a hang.** Symptom: the install step stops mid-way with
+   no error line, the UI retries forever, the job eventually exits \`status=1\`.
+   - Size the runner at **4 vCPU / 4 GB RAM / 10 GB volume**. 1 GB machines die silently.
+   - Install in **small sequential groups** with a persistent npm cache on the volume — not one
+     giant \`npm i\`.
+   - Emit a **heartbeat every ~30 s** so the UI can tell "slow" from "dead".
+   - Surface host **machine events** (OOM flag, exit code) in the UI, not just the log tail: the
+     log tail of an OOM-killed process is empty, which is exactly why it looks like a hang.
+
+8. **Detached jobs need step markers, not raw logs.**
+   - Runner scripts print \`STEP_<name>\` on entry to each phase and
+     \`JOB_FAILED status=<n> during: <phase>\` on exit, alongside the \`RESULT {json}\` lines.
+   - The UI maps markers onto a **monotonic** step timeline with per-step timers and a progress
+     bar — a later log line must never move the timeline backwards.
+   - On failure, name the **exact command** that failed and include the npm debug-log tail.
+   - **Persist** the failed job's state and log (auto-expanded) after the run ends; a toast alone
+     loses the only diagnostic the user could have pasted. Always ship a **copy-log** button.
+   - Never pipe long proving logs through \`head\`/\`awk\` — SIGPIPE kills the prove and the failure
+     looks flaky.
+
 | Symptom | Cause | Fix |
 | --- | --- | --- |
 | Indexer stuck at block 0, no errors anywhere | Indexer cannot reach node RPC | Publish 9944 as \`tls\`; point the indexer at \`wss://<app>.fly.dev:9944\`; add an explicit reachability step |
@@ -1520,9 +1552,15 @@ const FLY_RUNNER_LESSONS = `FLY-HOSTED RPC + RUNNER MACHINE — HARD-WON LESSONS
 | Contract "compiled but never deployed" | Runner never prepared, or stale toolchain bundle | Bump the bundle version, require "Prepare runner" |
 | Stack shows ready but the host app is gone | Stored state trusted without probing | Existence-probe app + machines, downgrade the row |
 | Page blanks with \`FLY_API_TOKEN is not configured\` | Status function throws | Return an \`unconfigured\` state |
+| \`ETARGET\` / \`notarget … @midnight-ntwrk/ledger-v9@^0.1.0-alpha.1\` | \`compact-js@2.5.3\` needs an unpublished transitive alpha | Pin \`compact-js@2.5.1\`; pin every Midnight package exactly |
+| Install fails identically on every retry | Stale lockfile / \`node_modules\` cached on the volume | Clear them in bootstrap; expose "Clear toolchain" (keeps the volume) |
+| Install stalls with no error, then \`status=1\` | Runner OOM-killed (empty log tail) | 4 vCPU / 4 GB, sequential install groups, npm cache on volume, 30 s heartbeats, surface machine events + exit code |
+| Detached job "failed" with nothing to debug | Error only shown as a toast | Persist failed job state + log tail, auto-expand, add copy-log |
+| Step timeline jumps backwards mid-job | Step recomputed from the newest matching log line | Make step derivation monotonic — only advance |
 
 Cross-reference: github.com/arunnadarasa/ipsmidnight and
 https://midnightprompts.lovable.app/identus (Fly + agent invariants).`;
+
 
 
 const VERIFICATION_HONESTY = `VERIFICATION HONESTY + SDK PROVIDER GOTCHAS (from a public code review of \`ipsmidnight\`):
