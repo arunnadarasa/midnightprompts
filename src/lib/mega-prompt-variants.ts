@@ -2541,7 +2541,7 @@ export function buildVariant(idea: Idea, theme: Theme, network: NetworkVariant, 
   const localBlock = isUndeployedLocal ? `\n\n${localStackSetup(os)}\n` : "";
   const undeployedFundBlock = isUndeployedLocal ? `\n${UNDEPLOYED_FUND_LACE}\n` : "";
   const flyioBlock = isUndeployedLocal || isUndeployedFly ? `\n${HOSTING_FLYIO}\n` : "";
-  const flyLessonsBlock = isUndeployedFly ? `\n${FLYMIDNIGHT_LESSONS}\n` : "";
+  const flyLessonsBlock = isUndeployedFly ? `\n${FLYMIDNIGHT_LESSONS}\n\n${FLY_RUNNER_LESSONS}\n` : "";
   const mainnetBlock = network === "mainnet" ? `\n${MAINNET_ACQUIRE}\n` : "";
   const protocolBlock = idea.protocol ? `\n\n${PROTOCOL_BLOCKS[idea.protocol]}\n` : "";
 
