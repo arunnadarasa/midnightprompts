@@ -20,6 +20,7 @@ import { Route as ProofServerRouteImport } from './routes/proof-server'
 import { Route as MobileRouteImport } from './routes/mobile'
 import { Route as LlmsRouteImport } from './routes/llms'
 import { Route as KnownIssuesRouteImport } from './routes/known-issues'
+import { Route as IdentusRouteImport } from './routes/identus'
 import { Route as AgenticExperimentalRouteImport } from './routes/agentic-experimental'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -91,6 +92,11 @@ const LlmsRoute = LlmsRouteImport.update({
 const KnownIssuesRoute = KnownIssuesRouteImport.update({
   id: '/known-issues',
   path: '/known-issues',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IdentusRoute = IdentusRouteImport.update({
+  id: '/identus',
+  path: '/identus',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgenticExperimentalRoute = AgenticExperimentalRouteImport.update({
@@ -187,6 +193,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/agentic-experimental': typeof AgenticExperimentalRoute
+  '/identus': typeof IdentusRoute
   '/known-issues': typeof KnownIssuesRoute
   '/llms': typeof LlmsRoute
   '/mobile': typeof MobileRoute
@@ -217,6 +224,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/agentic-experimental': typeof AgenticExperimentalRoute
+  '/identus': typeof IdentusRoute
   '/known-issues': typeof KnownIssuesRoute
   '/llms': typeof LlmsRoute
   '/mobile': typeof MobileRoute
@@ -246,6 +254,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/agentic-experimental': typeof AgenticExperimentalRoute
+  '/identus': typeof IdentusRoute
   '/known-issues': typeof KnownIssuesRoute
   '/llms': typeof LlmsRoute
   '/mobile': typeof MobileRoute
@@ -278,6 +287,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/agentic-experimental'
+    | '/identus'
     | '/known-issues'
     | '/llms'
     | '/mobile'
@@ -308,6 +318,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/agentic-experimental'
+    | '/identus'
     | '/known-issues'
     | '/llms'
     | '/mobile'
@@ -336,6 +347,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/agentic-experimental'
+    | '/identus'
     | '/known-issues'
     | '/llms'
     | '/mobile'
@@ -367,6 +379,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AgenticExperimentalRoute: typeof AgenticExperimentalRoute
+  IdentusRoute: typeof IdentusRoute
   KnownIssuesRoute: typeof KnownIssuesRoute
   LlmsRoute: typeof LlmsRoute
   MobileRoute: typeof MobileRoute
@@ -461,6 +474,13 @@ declare module '@tanstack/react-router' {
       path: '/known-issues'
       fullPath: '/known-issues'
       preLoaderRoute: typeof KnownIssuesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/identus': {
+      id: '/identus'
+      path: '/identus'
+      fullPath: '/identus'
+      preLoaderRoute: typeof IdentusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agentic-experimental': {
@@ -628,6 +648,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AgenticExperimentalRoute: AgenticExperimentalRoute,
+  IdentusRoute: IdentusRoute,
   KnownIssuesRoute: KnownIssuesRoute,
   LlmsRoute: LlmsRoute,
   MobileRoute: MobileRoute,
