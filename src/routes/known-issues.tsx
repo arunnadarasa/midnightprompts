@@ -81,7 +81,9 @@ curl -s -o /dev/null -w '%{http_code}\\n' https://<app>.fly.dev:9944`}
         </p>
       </>
     ),
+    links: [{ label: "Fly-hosted Undeployed", href: "https://midnightprompts.lovable.app/undeployed" }],
   },
+
   {
     id: "compact-js-ledger-v9-etarget",
     title: "`npm error code ETARGET` — no matching version for `@midnight-ntwrk/ledger-v9`",
