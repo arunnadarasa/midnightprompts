@@ -42,6 +42,7 @@ function SiteHeader() {
               { to: "/undeployed", label: "Undeployed" },
               { to: "/undeployed-preflight", label: "Preflight" },
               { to: "/mobile", label: "Mobile Dev" },
+              { to: "/identus", label: "Identus" },
               { to: "/known-issues", label: "Known Issues" },
             ]}
           />
