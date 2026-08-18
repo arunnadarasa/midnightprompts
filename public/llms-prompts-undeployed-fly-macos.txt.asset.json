@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "deea9670-e623-43e1-98f1-55cb64db3bc4",
+  "asset_id": "f1ef9273-1b3d-4d90-a830-68c643fc668c",
   "project_id": "71d463f1-0973-4f3e-85ba-7f4fa6a73783",
-  "url": "/__l5e/assets-v1/deea9670-e623-43e1-98f1-55cb64db3bc4/llms-prompts-undeployed-fly-macos.txt",
-  "r2_key": "a/v1/71d463f1-0973-4f3e-85ba-7f4fa6a73783/deea9670-e623-43e1-98f1-55cb64db3bc4/llms-prompts-undeployed-fly-macos.txt",
+  "url": "/__l5e/assets-v1/f1ef9273-1b3d-4d90-a830-68c643fc668c/llms-prompts-undeployed-fly-macos.txt",
+  "r2_key": "a/v1/71d463f1-0973-4f3e-85ba-7f4fa6a73783/f1ef9273-1b3d-4d90-a830-68c643fc668c/llms-prompts-undeployed-fly-macos.txt",
   "original_filename": "llms-prompts-undeployed-fly-macos.txt",
-  "size": 207283671,
+  "size": 218351491,
   "content_type": "text/plain",
-  "created_at": "2026-08-18T07:09:44Z"
+  "created_at": "2026-08-18T07:56:15Z"
 }

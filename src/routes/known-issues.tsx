@@ -83,6 +83,60 @@ curl -s -o /dev/null -w '%{http_code}\\n' https://<app>.fly.dev:9944`}
     ),
     links: [{ label: "Fly-hosted Undeployed", href: "https://midnightprompts.lovable.app/undeployed" }],
   },
+
+  {
+    id: "compact-js-ledger-v9-etarget",
+    title: "`npm error code ETARGET` — no matching version for `@midnight-ntwrk/ledger-v9`",
+    symptom:
+      "Installing the Compact/Midnight toolchain fails with `notarget No matching version found for @midnight-ntwrk/ledger-v9@^0.1.0-alpha.1`, and every retry fails identically.",
+    cause:
+      "`@midnight-ntwrk/compact-js@2.5.3` depends on a transitive alpha (`ledger-v9@^0.1.0-alpha.1`) that was never published to npm. A half-finished attempt also leaves a stale `package-lock.json` + `node_modules`, so the bad resolution is cached and reproduces on every retry.",
+    fix: (
+      <>
+        <p>
+          Pin <code>@midnight-ntwrk/compact-js@2.5.1</code> — it resolves cleanly and has no{" "}
+          <code>ledger-v9</code> edge. Pin every Midnight package to an exact version: never{" "}
+          <code>@latest</code>, never a caret. Before retrying, delete the stale lockfile and{" "}
+          <code>node_modules</code>.
+        </p>
+        <pre className="mt-2 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto whitespace-pre">
+{`rm -rf node_modules package-lock.json
+npm i @midnight-ntwrk/compact-js@2.5.1 --save-exact`}
+        </pre>
+        <p className="mt-2">
+          On a persistent build/runner machine, expose a “Clear toolchain” action that resets the
+          install <strong>without</strong> destroying the volume — the volume holds the chain data and
+          the LevelDB private state.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "runner-install-oom-looks-like-hang",
+    title: "Toolchain install stalls with no error, then exits status=1",
+    symptom:
+      "The install step stops part-way through, the log tail is empty, the UI retries forever, and the job eventually reports a non-zero exit. Reads exactly like a hang.",
+    cause:
+      "The machine was OOM-killed. The Midnight SDK install is memory-hungry and a 1 GB machine dies silently — an OOM-killed process leaves no error line, which is why it looks like a stall rather than a crash.",
+    fix: (
+      <>
+        <p>
+          Give the build/runner machine <strong>4 vCPU / 4 GB RAM and a 10 GB volume</strong>. Install
+          in small sequential groups with an npm cache on the volume instead of one giant{" "}
+          <code>npm i</code>. Emit a heartbeat every ~30 s so “slow” is distinguishable from “dead”,
+          and surface the host’s machine events (OOM flag, exit code) in the UI — not just the log
+          tail.
+        </p>
+        <p className="mt-2">
+          For any detached job, print <code>STEP_&lt;name&gt;</code> markers and{" "}
+          <code>JOB_FAILED status=&lt;n&gt; during: &lt;phase&gt;</code>, drive a{" "}
+          <strong>monotonic</strong> step timeline off them, and persist the failed job’s log
+          auto-expanded with a copy button. A toast loses the only diagnostic you had.
+        </p>
+      </>
+    ),
+
+  },
   {
 
     id: "seed-to-bech32",
