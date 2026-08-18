@@ -39,6 +39,52 @@ type Issue = {
 
 const ISSUES: Issue[] = [
   {
+    id: "indexer-silent-empty-chain",
+    title: "Indexer stuck at block 0 with no error (hosted stack)",
+    symptom:
+      "Every read returns nothing and the UI reports block 0 forever, so it looks like your anchor never landed — but no request errors and no log line complains.",
+    cause:
+      "The indexer does not fail loudly when it cannot reach the node RPC: it serves an EMPTY chain. On Fly this normally means the indexer is pointed at `<app>.internal:9944` (IPv6-only 6PN) or `<app>.flycast:9944` (no private IP allocated) while the node binds IPv4.",
+    fix: (
+      <>
+        <p>
+          Publish the node's 9944 as a <strong>pure <code>tls</code></strong> service on the host
+          edge and point every consumer at <code>wss://&lt;app&gt;.fly.dev:9944</code>. Then make
+          node-reachable-from-indexer its own explicit preflight step — never trust an indexer
+          answer before that check passes.
+        </p>
+        <pre className="mt-2 p-3 bg-background border border-border font-mono text-[11px] overflow-x-auto whitespace-pre">
+{`# measured facts, not assumptions
+# on the node machine
+curl -s -o /dev/null -w '%{http_code}\\n' http://127.0.0.1:9944/health
+# on the indexer machine
+curl -s -o /dev/null -w '%{http_code}\\n' https://<app>.fly.dev:9944`}
+        </pre>
+      </>
+    ),
+    links: [{ label: "Identus / Fly invariants", href: "/identus" }],
+  },
+  {
+    id: "fly-http-handler-kills-ws",
+    title: "Submit dies after minutes of proving on a hosted node",
+    symptom:
+      "Proving completes locally, then the submit fails or hangs — always after several minutes, never immediately. Looks like a Midnight node bug.",
+    cause:
+      "The host's `http` handler terminates a long-lived WebSocket mid-request. A proof submission holds that socket open for minutes, so it is the first thing to get cut.",
+    fix: (
+      <>
+        <p>
+          Serve 9944 with a <code>tls</code> handler only — no <code>http</code> handler and no{" "}
+          <code>http_options</code> on that service. Keep <code>.internal</code> / private-network
+          names for server-to-server calls that stay inside the stack, and probe reachability from
+          the consuming machine instead of assuming it.
+        </p>
+      </>
+    ),
+    links: [{ label: "Fly-hosted Undeployed", href: "/undeployed" }],
+  },
+  {
+
     id: "seed-to-bech32",
     title: "How do I turn my seed into a bech32 preprod/preview address?",
     symptom:
