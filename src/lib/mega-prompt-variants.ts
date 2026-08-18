@@ -1474,6 +1474,91 @@ Cross-reference: the \`flymidnight\` repo (github.com/arunnadarasa/flymidnight) 
 working example \u2014 mirror the file layout when in doubt.`;
 
 
+const FLY_RUNNER_LESSONS = `FLY-HOSTED RPC + RUNNER MACHINE — HARD-WON LESSONS (\`ipsmidnight\`, 2026-08):
+
+1. **Node RPC has exactly ONE working shape: \`wss://<app>.fly.dev:9944\`.** Publish the node's
+   9944 as a **pure \\\`tls\\\` service** on the Fly edge — no \`http\` handler, no \`http_options\`.
+   Why every alternative fails:
+   - \`<app>.internal\` is IPv6-only 6PN while the node binds IPv4 (dual-binding is fragile).
+   - \`<app>.flycast:9944\` needs a private IP allocation and still answers \`000\` from inside
+     the app.
+   - Fly's \`http\` handler terminates the WebSocket partway through a long proof submission, so
+     writes die after minutes of proving — which looks like a Midnight bug and is not.
+
+2. **The indexer fails SILENTLY.** If it cannot reach the node RPC it does not error: it serves
+   an empty chain and the UI reports block 0 forever, which reads as "nothing anchored yet".
+   Make \`node reachable from indexer\` its own explicit timeline/preflight step and never trust
+   an indexer answer before it passes.
+
+3. **Report reachability as measured facts, not assumptions.** Probe \`127.0.0.1:9944/health\`
+   from the node machine, probe the edge URL from the indexer machine, and read public-IP /
+   flycast presence back from the host API (\`flycast: present|absent · public IP: …\`).
+
+4. **Runner-machine pattern — deploy from the UI, not from a chat session.** Compile → deploy →
+   anchor → verify needs a persistent disk, the Compact toolchain, and connections held open for
+   minutes. The app runtime (edge / Worker) has none of that.
+   - Add a 4th **runner** machine to the same Fly app as node / indexer / proof server, with a
+     volume holding the contract bundle, keys, and the LevelDB private state.
+   - Drive it with the Machines \`exec\` API from a server function: \`prepare\` (pull the toolchain
+     bundle) first, then fire-and-poll jobs. NEVER block an HTTP request on proving.
+   - Runner scripts print machine-readable \`RESULT {json}\` lines **plus** human log output, so one
+     poll returns both a parsed result and a log tail the UI can render as a terminal.
+   - Ship the toolchain as a versioned tarball and require an explicit "Prepare runner" run after
+     you bump it — otherwise users silently run last week's contract code.
+   - Existence-probe stored state: a "ready" row must be re-verified against the host and
+     downgraded, never shown green on faith.
+
+5. **Read a crash-looping machine's logs through the machine \`exec\` API**, not the log stream — a
+   machine that restarts every few seconds never stays up long enough for the stream to be useful.
+   \`tee\` the boot log to a file inside the machine and \`tail\` it via \`exec\`.
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| Indexer stuck at block 0, no errors anywhere | Indexer cannot reach node RPC | Publish 9944 as \`tls\`; point the indexer at \`wss://<app>.fly.dev:9944\`; add an explicit reachability step |
+| Submit dies after minutes of proving | Fly \`http\` handler closed the WebSocket | Pure \`tls\` handler on 9944 |
+| \`000\` from \`<app>.flycast:9944\` even inside the app | No private IP / IPv6-only path to an IPv4 listener | Route traffic over the public edge |
+| Contract "compiled but never deployed" | Runner never prepared, or stale toolchain bundle | Bump the bundle version, require "Prepare runner" |
+| Stack shows ready but the host app is gone | Stored state trusted without probing | Existence-probe app + machines, downgrade the row |
+| Page blanks with \`FLY_API_TOKEN is not configured\` | Status function throws | Return an \`unconfigured\` state |
+
+Cross-reference: github.com/arunnadarasa/ipsmidnight and
+https://midnightprompts.lovable.app/identus (Fly + agent invariants).`;
+
+
+const VERIFICATION_HONESTY = `VERIFICATION HONESTY + SDK PROVIDER GOTCHAS (from a public code review of \`ipsmidnight\`):
+
+VERIFICATION (applies to every anchoring / attestation / receipt feature)
+- **Ledger membership is the only proof.** Reading \`commitments.member(commitment)\` (or the
+  equivalent set/map lookup) from the DEPLOYED contract's public state is verification. A stored
+  tx hash, a "confirmed" status column, or a green badge derived from your own database is NOT.
+  If the UI says "verified", the code path behind it must have read chain state in that request.
+- **Persist the salt** alongside every salted commitment. A commitment whose salt was never
+  stored can never be re-derived, which makes the anchor permanently unverifiable — and no
+  reviewer accepts "trust the row".
+- **Minimise claims.** Never put raw PII (name, full DOB, document body) in a credential or
+  on-chain payload whose only job is to prove a predicate. Derive the predicate (\`over18\`,
+  \`isLicensed\`, \`digestMatches\`) and ship that.
+- **Label what you did NOT check.** Simulated artefacts, unresolvable DIDs, and unverified
+  signatures render as *unverifiable / not checked* — never as pass. Reject simulated artefacts
+  outright inside signature-check paths. Decoding a JWT is not verifying it.
+
+SDK v4 PROVIDER GOTCHAS
+- \`privateStoragePasswordProvider\` has a **minimum length**; a short password throws during
+  wallet construction with an unrelated-looking error. Read a long value from env.
+- \`httpClientProofProvider(url, zkConfigProvider)\` must receive the **same**
+  \`NodeZkConfigProvider(CONTRACT_DIR)\` instance you pass as \`zkConfigProvider\`. Omit it and the
+  proof server answers \`400 Bad Request\` on \`/check\`.
+- The genesis wallet must be fully synced BEFORE deploy, and resynced after any chain-data volume
+  rebuild.
+
+KEY + STATE HYGIENE
+- \`.gitignore\` must cover \`.env\`, the LevelDB private-state directory (\`midnight-level-db/\`), and
+  any \`*.tgz\` toolchain bundle. Untrack them if they already landed in a commit.
+- Dev seeds, storage passwords, and contract addresses come from \`process.env\` with a documented
+  fallback — never hardcoded literals inside \`scripts/*.mjs\`.`;
+
+
+
 function inAppSetupPanel(network: NetworkVariant, os: OSTarget): string {
   const dockerInstall: Record<OSTarget, string> = {
     macos: "Install Docker Desktop for Mac (`brew install --cask docker`, then `open -a Docker`).",
