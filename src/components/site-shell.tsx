@@ -147,6 +147,33 @@ function SiteHeader() {
                 Midskills ↗
               </a>
               <a
+                href="https://academy.midnight.network/"
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+                className="mt-1 px-4 py-2.5 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+              >
+                Academy ↗
+              </a>
+              <a
+                href="https://midnight.network/aliit"
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+                className="mt-1 px-4 py-2.5 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+              >
+                ALIIT Ambassadors ↗
+              </a>
+              <a
+                href="https://midnight.network/nightforce"
+                target="_blank"
+                rel="noreferrer"
+                onClick={close}
+                className="mt-1 px-4 py-2.5 border border-border text-foreground text-[11px] tracking-[0.28em] uppercase font-semibold text-center"
+              >
+                NIGHTFORCE ↗
+              </a>
+              <a
                 href="https://preview.midnightexplorer.com/"
                 target="_blank"
                 rel="noreferrer"
