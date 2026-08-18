@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "d912100f-a01a-48e5-9ec7-faea6cf88191",
+  "asset_id": "d5ab14ec-cf18-413e-897b-5f4dcb7c6509",
   "project_id": "71d463f1-0973-4f3e-85ba-7f4fa6a73783",
-  "url": "/__l5e/assets-v1/d912100f-a01a-48e5-9ec7-faea6cf88191/llms-prompts-undeployed-linux.txt",
-  "r2_key": "a/v1/71d463f1-0973-4f3e-85ba-7f4fa6a73783/d912100f-a01a-48e5-9ec7-faea6cf88191/llms-prompts-undeployed-linux.txt",
+  "url": "/__l5e/assets-v1/d5ab14ec-cf18-413e-897b-5f4dcb7c6509/llms-prompts-undeployed-linux.txt",
+  "r2_key": "a/v1/71d463f1-0973-4f3e-85ba-7f4fa6a73783/d5ab14ec-cf18-413e-897b-5f4dcb7c6509/llms-prompts-undeployed-linux.txt",
   "original_filename": "llms-prompts-undeployed-linux.txt",
-  "size": 200736790,
+  "size": 206529182,
   "content_type": "text/plain",
-  "created_at": "2026-08-10T20:54:53Z"
+  "created_at": "2026-08-18T07:10:00Z"
 }
