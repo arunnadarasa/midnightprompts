@@ -124,7 +124,23 @@ const FAILURES: { symptom: string; cause: string; fix: string }[] = [
     cause: "GHCR is not anonymously pullable",
     fix: "Use the Docker Hub tags with explicit versions; never :latest (a re-pushed proof-server:latest shipped incompatible proving keys mid-demo)",
   },
+  {
+    symptom: "Agent wallet resource acquisition fails after any restart, deep in a ZIO trace",
+    cause: "DEFAULT_WALLET_SEED regenerated randomly per boot",
+    fix: "Derive the seed deterministically (hash of app name + a stored salt) so it survives restarts — and never invent env vars upstream does not document",
+  },
+  {
+    symptom: "Provisioning an Identus stack overwrites the Midnight one for the same user",
+    cause: "unique (user_id) on the stack/connection table",
+    fix: "Scope the unique index (user_id, kind) so records for different stacks coexist",
+  },
+  {
+    symptom: "A credential shows a green \"verified\" badge that no reviewer accepts",
+    cause: "Status read from your own database, or a JWT merely decoded rather than signature-checked",
+    fix: "Verify against the source of truth in-request — contract membership for the anchor, a real signature check for the credential — and render simulated or unresolvable artefacts as not checked",
+  },
 ];
+
 
 function IdentusPage() {
   return (
