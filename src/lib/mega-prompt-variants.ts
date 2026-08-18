@@ -1580,6 +1580,25 @@ VERIFICATION (applies to every anchoring / attestation / receipt feature)
   signatures render as *unverifiable / not checked* — never as pass. Reject simulated artefacts
   outright inside signature-check paths. Decoding a JWT is not verifying it.
 
+STATUS VOCABULARY (submitted ≠ verified)
+- A transaction that landed on-chain is **\`anchored\`**, not \`verified\`. Until an explicit
+  read-only membership check runs against the contract's public state, label the row
+  **"anchored · not re-checked"**. Only that check promotes it to \`verified\`.
+- Derive the status **dot colour AND the badge from ONE shared tone helper**. Two independent
+  mappings drift, and a healthy \`anchored\` row then renders amber/red — which reads as a failure.
+- Once a record is anchored, demote the write action to secondary (\`Re-anchor\`, outline) and
+  promote the verification action to primary. The next useful click is verification, not a resubmit.
+- A long-running operation's failure must survive the toast: persist the job's state and log tail
+  and auto-expand it, plus a copy-log button.
+
+LONG-OPERATION ROW LAYOUT (mobile-first)
+- Single column on mobile: **metadata first**, then full-width, equal-width action buttons in a
+  2-up grid. Side-by-side buttons squeeze tx hashes and block numbers into hard-wrapped noise.
+- Step timelines and log tails span the **full card width** — never nested inside the metadata column.
+- \`truncate\` record/bundle titles in queue lists so one long title cannot stretch the layout.
+
+
+
 SDK v4 PROVIDER GOTCHAS
 - \`privateStoragePasswordProvider\` has a **minimum length**; a short password throws during
   wallet construction with an unrelated-looking error. Read a long value from env.
